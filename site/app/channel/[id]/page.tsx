@@ -3,11 +3,11 @@ import {
   getChannels,
   getChannelData,
   getArchiveList,
-  groupByBatch,
+  groupByDate,
   itemId,
   formatTime,
 } from "@/lib/data";
-import type { NewsItem, BatchGroup } from "@/lib/data";
+import type { NewsItem, DateGroup } from "@/lib/data";
 
 export const revalidate = 300;
 
@@ -49,7 +49,7 @@ export default async function ChannelPage({
     );
   }
 
-  const batches = groupByBatch(data);
+  const dateGroups = groupByDate(data);
 
   return (
     <main className="mx-auto max-w-2xl px-5 py-12">
@@ -100,9 +100,9 @@ export default async function ChannelPage({
         </section>
       )}
 
-      {/* 按批次分组 */}
-      {batches.map((batch) => (
-        <BatchSection key={batch.batch_time} batch={batch} channelId={id} />
+      {/* 按新闻日期分组 */}
+      {dateGroups.map((group) => (
+        <DateSection key={group.date} group={group} channelId={id} />
       ))}
 
       {/* 历史存档 */}
@@ -147,31 +147,35 @@ export default async function ChannelPage({
   );
 }
 
-function BatchSection({
-  batch,
+function DateSection({
+  group,
   channelId,
 }: {
-  batch: BatchGroup;
+  group: DateGroup;
   channelId: string;
 }) {
-  if (batch.isLatest) {
+  const hasNew = group.items.some((it) => it.isNew);
+
+  if (group.isRecent) {
     return (
       <section className="mb-8">
         <h2
           className="mb-3 flex items-center gap-2 text-xs font-medium uppercase tracking-wider"
-          style={{ color: "var(--accent)" }}
+          style={{ color: hasNew ? "var(--accent)" : "var(--text-secondary)" }}
         >
-          <span
-            className="inline-block h-2 w-2 rounded-full"
-            style={{ background: "var(--accent)" }}
-          />
-          {batch.label}
+          {hasNew && (
+            <span
+              className="inline-block h-2 w-2 rounded-full"
+              style={{ background: "var(--accent)" }}
+            />
+          )}
+          {group.label}
           <span style={{ color: "var(--text-tertiary)" }}>
-            · {batch.items.length} 条
+            · {group.items.length} 条
           </span>
         </h2>
         <div className="space-y-3">
-          {batch.items.map((item, i) => (
+          {group.items.map((item, i) => (
             <NewsCard key={i} item={item} channelId={channelId} />
           ))}
         </div>
@@ -186,11 +190,11 @@ function BatchSection({
         style={{ color: "var(--text-tertiary)" }}
       >
         <span className="transition-transform group-open:rotate-90">&#9654;</span>
-        {batch.label}
-        <span>· {batch.items.length} 条</span>
+        {group.label}
+        <span>· {group.items.length} 条</span>
       </summary>
       <div className="space-y-3">
-        {batch.items.map((item, i) => (
+        {group.items.map((item, i) => (
           <NewsCard key={i} item={item} channelId={channelId} />
         ))}
       </div>
@@ -202,7 +206,7 @@ function NewsCard({
   item,
   channelId,
 }: {
-  item: NewsItem;
+  item: NewsItem & { isNew?: boolean };
   channelId: string;
 }) {
   const detailHref = item.url
@@ -214,7 +218,8 @@ function NewsCard({
       className="rounded-xl border px-5 py-4"
       style={{
         background: "var(--bg-card)",
-        borderColor: "var(--border)",
+        borderColor: item.isNew ? "var(--accent)" : "var(--border)",
+        borderWidth: item.isNew ? "1.5px" : undefined,
       }}
     >
       <div className="flex items-start justify-between gap-3">
@@ -222,6 +227,14 @@ function NewsCard({
           className="font-medium leading-snug"
           style={{ color: "var(--text-primary)" }}
         >
+          {item.isNew && (
+            <span
+              className="mr-1.5 inline-block rounded px-1.5 py-0.5 align-middle text-[10px] font-bold uppercase leading-none"
+              style={{ background: "var(--accent)", color: "#fff" }}
+            >
+              NEW
+            </span>
+          )}
           {detailHref ? (
             <Link href={detailHref} className="hover:underline">
               {item.title}

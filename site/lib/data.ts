@@ -51,6 +51,13 @@ export interface BatchGroup {
   isLatest: boolean;
 }
 
+export interface DateGroup {
+  date: string;        // YYYY-MM-DD
+  label: string;       // "今天", "昨天", "3月10日" etc.
+  items: (NewsItem & { isNew?: boolean })[];
+  isRecent: boolean;   // first 2 groups expanded
+}
+
 export interface ChannelData {
   channel_id: string;
   channel_name: string;
@@ -119,6 +126,55 @@ export function groupByBatch(data: ChannelData): BatchGroup[] {
     items,
     isLatest: idx === 0,
   }));
+}
+
+export function groupByDate(data: ChannelData): DateGroup[] {
+  // Find the latest batch_time to mark NEW items
+  const batchTimes = data.items
+    .map((it) => it.batch_time || data.generated_at)
+    .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
+  const latestBatch = batchTimes[0] || data.generated_at;
+
+  // Group items by news date (timestamp)
+  const groups = new Map<string, (NewsItem & { isNew?: boolean })[]>();
+  for (const item of data.items) {
+    const d = new Date(item.timestamp);
+    const dateKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    if (!groups.has(dateKey)) groups.set(dateKey, []);
+    const isNew = (item.batch_time || data.generated_at) === latestBatch;
+    groups.get(dateKey)!.push({ ...item, isNew });
+  }
+
+  // Sort each group by importance desc
+  for (const items of groups.values()) {
+    items.sort((a, b) => b.importance - a.importance);
+  }
+
+  // Sort date groups by date desc
+  const sorted = [...groups.entries()].sort((a, b) => b[0].localeCompare(a[0]));
+
+  const now = new Date();
+  const todayKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+  const yesterday = new Date(now.getTime() - 86400000);
+  const yesterdayKey = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, "0")}-${String(yesterday.getDate()).padStart(2, "0")}`;
+
+  return sorted.map(([dateKey, items], idx) => {
+    let label: string;
+    if (dateKey === todayKey) {
+      label = "今天";
+    } else if (dateKey === yesterdayKey) {
+      label = "昨天";
+    } else {
+      const d = new Date(dateKey + "T00:00:00");
+      label = `${d.getMonth() + 1}月${d.getDate()}日`;
+    }
+    return {
+      date: dateKey,
+      label,
+      items,
+      isRecent: idx < 2, // first 2 date groups expanded
+    };
+  });
 }
 
 export function formatTime(isoStr: string): string {
