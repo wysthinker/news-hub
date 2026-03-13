@@ -20,6 +20,14 @@ export interface NewsItem {
   timestamp: string;
   importance: number;
   tags: string[];
+  batch_time?: string;
+}
+
+export interface BatchGroup {
+  batch_time: string;
+  label: string;
+  items: NewsItem[];
+  isLatest: boolean;
 }
 
 export interface ChannelData {
@@ -61,6 +69,35 @@ export function getArchiveData(
   const filePath = path.join(DATA_DIR, id, "archive", `${archiveId}.json`);
   if (!fs.existsSync(filePath)) return null;
   return JSON.parse(fs.readFileSync(filePath, "utf-8"));
+}
+
+export function groupByBatch(data: ChannelData): BatchGroup[] {
+  const latestBatchTime = data.generated_at;
+
+  // Group items by batch_time
+  const groups = new Map<string, NewsItem[]>();
+  for (const item of data.items) {
+    const bt = item.batch_time || latestBatchTime;
+    if (!groups.has(bt)) groups.set(bt, []);
+    groups.get(bt)!.push(item);
+  }
+
+  // Sort each group by importance desc
+  for (const items of groups.values()) {
+    items.sort((a, b) => b.importance - a.importance);
+  }
+
+  // Sort batch groups by time desc (newest first)
+  const sorted = [...groups.entries()].sort(
+    (a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()
+  );
+
+  return sorted.map(([bt, items], idx) => ({
+    batch_time: bt,
+    label: idx === 0 ? "最新更新" : `更新于 ${formatTime(bt)}`,
+    items,
+    isLatest: idx === 0,
+  }));
 }
 
 export function formatTime(isoStr: string): string {

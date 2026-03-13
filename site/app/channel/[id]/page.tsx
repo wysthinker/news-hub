@@ -3,9 +3,10 @@ import {
   getChannels,
   getChannelData,
   getArchiveList,
+  groupByBatch,
   formatTime,
 } from "@/lib/data";
-import type { NewsItem } from "@/lib/data";
+import type { NewsItem, BatchGroup } from "@/lib/data";
 
 export const revalidate = 300;
 
@@ -30,7 +31,7 @@ export default async function ChannelPage({
           className="text-sm hover:underline"
           style={{ color: "var(--text-tertiary)" }}
         >
-          ← 返回
+          &larr; 返回
         </Link>
         <div
           className="mt-8 rounded-xl border px-6 py-16 text-center"
@@ -47,11 +48,7 @@ export default async function ChannelPage({
     );
   }
 
-  const highItems = data.items.filter((i) => i.importance >= 7);
-  const midItems = data.items.filter(
-    (i) => i.importance >= 4 && i.importance < 7
-  );
-  const lowItems = data.items.filter((i) => i.importance < 4);
+  const batches = groupByBatch(data);
 
   return (
     <main className="mx-auto max-w-2xl px-5 py-12">
@@ -60,7 +57,7 @@ export default async function ChannelPage({
         className="text-sm hover:underline"
         style={{ color: "var(--text-tertiary)" }}
       >
-        ← 返回
+        &larr; 返回
       </Link>
 
       <header className="mt-6 mb-8">
@@ -102,20 +99,10 @@ export default async function ChannelPage({
         </section>
       )}
 
-      {/* 重要新闻 */}
-      {highItems.length > 0 && (
-        <NewsSection title="重要" items={highItems} />
-      )}
-
-      {/* 一般新闻 */}
-      {midItems.length > 0 && (
-        <NewsSection title="关注" items={midItems} />
-      )}
-
-      {/* 其他 */}
-      {lowItems.length > 0 && (
-        <NewsSection title="其他" items={lowItems} />
-      )}
+      {/* 按批次分组 */}
+      {batches.map((batch) => (
+        <BatchSection key={batch.batch_time} batch={batch} />
+      ))}
 
       {/* 历史存档 */}
       {archives.length > 1 && (
@@ -159,95 +146,122 @@ export default async function ChannelPage({
   );
 }
 
-function NewsSection({
-  title,
-  items,
-}: {
-  title: string;
-  items: NewsItem[];
-}) {
+function BatchSection({ batch }: { batch: BatchGroup }) {
+  if (batch.isLatest) {
+    return (
+      <section className="mb-8">
+        <h2
+          className="mb-3 flex items-center gap-2 text-xs font-medium uppercase tracking-wider"
+          style={{ color: "var(--accent)" }}
+        >
+          <span
+            className="inline-block h-2 w-2 rounded-full"
+            style={{ background: "var(--accent)" }}
+          />
+          {batch.label}
+          <span style={{ color: "var(--text-tertiary)" }}>
+            · {batch.items.length} 条
+          </span>
+        </h2>
+        <div className="space-y-3">
+          {batch.items.map((item, i) => (
+            <NewsCard key={i} item={item} />
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  // Older batches — collapsible via <details>
   return (
-    <section className="mb-8">
-      <h2
-        className="mb-3 text-xs font-medium uppercase tracking-wider"
+    <details className="mb-8 group">
+      <summary
+        className="mb-3 flex cursor-pointer items-center gap-2 text-xs font-medium uppercase tracking-wider list-none"
         style={{ color: "var(--text-tertiary)" }}
       >
-        {title}
-      </h2>
+        <span className="transition-transform group-open:rotate-90">&#9654;</span>
+        {batch.label}
+        <span>· {batch.items.length} 条</span>
+      </summary>
       <div className="space-y-3">
-        {items.map((item, i) => (
-          <article
-            key={i}
-            className="rounded-xl border px-5 py-4"
-            style={{
-              background: "var(--bg-card)",
-              borderColor: "var(--border)",
-            }}
-          >
-            <div className="flex items-start justify-between gap-3">
-              <h3
-                className="font-medium leading-snug"
-                style={{ color: "var(--text-primary)" }}
-              >
-                {item.url ? (
-                  <a
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:underline"
-                  >
-                    {item.title}
-                  </a>
-                ) : (
-                  item.title
-                )}
-              </h3>
-              <span
-                className="shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold tabular-nums"
-                style={{
-                  background:
-                    item.importance >= 7
-                      ? "var(--accent-soft)"
-                      : "var(--bg-secondary)",
-                  color:
-                    item.importance >= 7
-                      ? "var(--accent)"
-                      : "var(--text-tertiary)",
-                }}
-              >
-                {item.importance}
-              </span>
-            </div>
-
-            <p
-              className="mt-2 text-sm leading-relaxed"
-              style={{ color: "var(--text-secondary)" }}
-            >
-              {item.summary}
-            </p>
-
-            <div className="mt-3 flex items-center gap-3 text-xs">
-              <span style={{ color: "var(--text-tertiary)" }}>
-                {item.source}
-              </span>
-              <span style={{ color: "var(--text-tertiary)" }}>·</span>
-              <span style={{ color: "var(--text-tertiary)" }}>
-                {formatTime(item.timestamp)}
-              </span>
-              {item.tags?.length > 0 && (
-                <>
-                  <span style={{ color: "var(--text-tertiary)" }}>
-                    ·
-                  </span>
-                  <span style={{ color: "var(--text-tertiary)" }}>
-                    {item.tags.join(" ")}
-                  </span>
-                </>
-              )}
-            </div>
-          </article>
+        {batch.items.map((item, i) => (
+          <NewsCard key={i} item={item} />
         ))}
       </div>
-    </section>
+    </details>
+  );
+}
+
+function NewsCard({ item }: { item: NewsItem }) {
+  return (
+    <article
+      className="rounded-xl border px-5 py-4"
+      style={{
+        background: "var(--bg-card)",
+        borderColor: "var(--border)",
+      }}
+    >
+      <div className="flex items-start justify-between gap-3">
+        <h3
+          className="font-medium leading-snug"
+          style={{ color: "var(--text-primary)" }}
+        >
+          {item.url ? (
+            <a
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline"
+            >
+              {item.title}
+            </a>
+          ) : (
+            item.title
+          )}
+        </h3>
+        <span
+          className="shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold tabular-nums"
+          style={{
+            background:
+              item.importance >= 7
+                ? "var(--accent-soft)"
+                : "var(--bg-secondary)",
+            color:
+              item.importance >= 7
+                ? "var(--accent)"
+                : "var(--text-tertiary)",
+          }}
+        >
+          {item.importance}
+        </span>
+      </div>
+
+      <p
+        className="mt-2 text-sm leading-relaxed"
+        style={{ color: "var(--text-secondary)" }}
+      >
+        {item.summary}
+      </p>
+
+      <div className="mt-3 flex items-center gap-3 text-xs">
+        <span style={{ color: "var(--text-tertiary)" }}>
+          {item.source}
+        </span>
+        <span style={{ color: "var(--text-tertiary)" }}>&middot;</span>
+        <span style={{ color: "var(--text-tertiary)" }}>
+          {formatTime(item.timestamp)}
+        </span>
+        {item.tags?.length > 0 && (
+          <>
+            <span style={{ color: "var(--text-tertiary)" }}>
+              &middot;
+            </span>
+            <span style={{ color: "var(--text-tertiary)" }}>
+              {item.tags.join(" ")}
+            </span>
+          </>
+        )}
+      </div>
+    </article>
   );
 }
