@@ -14,6 +14,7 @@ export interface ChannelIndex {
 export interface NewsItem {
   title: string;
   summary: string;
+  detail_content?: string;
   source: string;
   source_type: string;
   url: string;
@@ -21,6 +22,26 @@ export interface NewsItem {
   importance: number;
   tags: string[];
   batch_time?: string;
+}
+
+/** Stable item ID: hash of URL for URL-based lookup */
+export function itemId(url: string): string {
+  let h = 0;
+  for (let i = 0; i < url.length; i++) {
+    h = ((h << 5) - h + url.charCodeAt(i)) | 0;
+  }
+  return Math.abs(h).toString(36);
+}
+
+export function getItemById(
+  channelId: string,
+  id: string
+): { item: NewsItem; index: number } | null {
+  const data = getChannelData(channelId);
+  if (!data) return null;
+  const idx = data.items.findIndex((it) => itemId(it.url) === id);
+  if (idx === -1) return null;
+  return { item: data.items[idx], index: idx };
 }
 
 export interface BatchGroup {

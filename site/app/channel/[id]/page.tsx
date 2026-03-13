@@ -4,6 +4,7 @@ import {
   getChannelData,
   getArchiveList,
   groupByBatch,
+  itemId,
   formatTime,
 } from "@/lib/data";
 import type { NewsItem, BatchGroup } from "@/lib/data";
@@ -101,7 +102,7 @@ export default async function ChannelPage({
 
       {/* 按批次分组 */}
       {batches.map((batch) => (
-        <BatchSection key={batch.batch_time} batch={batch} />
+        <BatchSection key={batch.batch_time} batch={batch} channelId={id} />
       ))}
 
       {/* 历史存档 */}
@@ -146,7 +147,13 @@ export default async function ChannelPage({
   );
 }
 
-function BatchSection({ batch }: { batch: BatchGroup }) {
+function BatchSection({
+  batch,
+  channelId,
+}: {
+  batch: BatchGroup;
+  channelId: string;
+}) {
   if (batch.isLatest) {
     return (
       <section className="mb-8">
@@ -165,14 +172,13 @@ function BatchSection({ batch }: { batch: BatchGroup }) {
         </h2>
         <div className="space-y-3">
           {batch.items.map((item, i) => (
-            <NewsCard key={i} item={item} />
+            <NewsCard key={i} item={item} channelId={channelId} />
           ))}
         </div>
       </section>
     );
   }
 
-  // Older batches — collapsible via <details>
   return (
     <details className="mb-8 group">
       <summary
@@ -185,14 +191,24 @@ function BatchSection({ batch }: { batch: BatchGroup }) {
       </summary>
       <div className="space-y-3">
         {batch.items.map((item, i) => (
-          <NewsCard key={i} item={item} />
+          <NewsCard key={i} item={item} channelId={channelId} />
         ))}
       </div>
     </details>
   );
 }
 
-function NewsCard({ item }: { item: NewsItem }) {
+function NewsCard({
+  item,
+  channelId,
+}: {
+  item: NewsItem;
+  channelId: string;
+}) {
+  const detailHref = item.url
+    ? `/channel/${channelId}/item/${itemId(item.url)}`
+    : undefined;
+
   return (
     <article
       className="rounded-xl border px-5 py-4"
@@ -206,15 +222,10 @@ function NewsCard({ item }: { item: NewsItem }) {
           className="font-medium leading-snug"
           style={{ color: "var(--text-primary)" }}
         >
-          {item.url ? (
-            <a
-              href={item.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:underline"
-            >
+          {detailHref ? (
+            <Link href={detailHref} className="hover:underline">
               {item.title}
-            </a>
+            </Link>
           ) : (
             item.title
           )}
@@ -259,6 +270,18 @@ function NewsCard({ item }: { item: NewsItem }) {
             <span style={{ color: "var(--text-tertiary)" }}>
               {item.tags.join(" ")}
             </span>
+          </>
+        )}
+        {detailHref && (
+          <>
+            <span style={{ color: "var(--text-tertiary)" }}>&middot;</span>
+            <Link
+              href={detailHref}
+              className="hover:underline"
+              style={{ color: "var(--accent)" }}
+            >
+              详情 &rarr;
+            </Link>
           </>
         )}
       </div>
