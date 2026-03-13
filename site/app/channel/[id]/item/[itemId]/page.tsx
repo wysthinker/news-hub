@@ -157,7 +157,7 @@ export default async function ItemPage({
             }}
           >
             阅读原文
-            <span className="text-xs">&nearr;</span>
+            <span className="text-xs">↗</span>
           </a>
         )}
       </article>
