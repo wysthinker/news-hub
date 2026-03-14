@@ -1,0 +1,143 @@
+{
+  "channel_id": "ai-frontier",
+  "channel_name": "AI 前沿",
+  "generated_at": "2026-03-14T09:00:00+08:00",
+  "digest": "本周 AI 前沿最大的看点集中在 Anthropic：Claude Opus 4.6 的 1M 上下文窗口正式全面开放（API 无加价），Claude Code 新增 /loop 持续任务和 Code Review 多智能体审查功能，Boris Cherny 还宣布可以用手机远程启动笔记本上的 Claude Code session。OpenAI 方面发布了 Responses API 的容器化 agent 运行时，并宣布收购 AI 安全平台 Promptfoo。Karpathy 的 autoresearch 项目引发广泛关注——用 AI 自动迭代训练超参数，连续跑两天找到约 20 个改进且全部可迁移到更大模型。Jack Clark 宣布转型专注于向公众传达强 AI 挑战的信息，成立 The Anthropic Institute。整体看，行业正从模型竞赛进入「工具链+生态+社会影响」的新阶段。",
+  "items": [
+    {
+      "title": "Claude Code 发布 /loop：持续运行的自动化任务调度",
+      "summary": "Boris Cherny 宣布 Claude Code 新增 /loop 功能，允许用户设定最长 3 天的循环任务。典型用例包括自动监控所有 PR、在构建失败时自动修复、收到代码评论时自动用 worktree agent 处理，以及每天早上通过 Slack MCP 生成工作摘要。该推文获得超过 1.2 万赞和 839 转发，是本周 Claude Code 社区反响最大的功能更新。",
+      "detail_content": "【核心事件】Anthropic 工程负责人 Boris Cherny 于 3 月 7 日宣布 Claude Code 新增 /loop 命令，这是一种全新的循环任务调度机制，用户可以设定最长 3 天的持续运行任务。\n\n【关键细节与引用】Boris 给出了两个典型用例：\n- \"babysit all my PRs. Auto-fix build issues and when comments come in, use a worktree agent to fix them\"（自动看管所有 PR，构建失败时自动修复，收到评论时用 worktree agent 处理）\n- \"every morning use the Slack MCP to give me a summary\"（每天早上用 Slack MCP 生成工作摘要）\n\n该推文获得 12,889 个赞和 839 次转发，是本周 AI 圈最热门的技术产品推文之一，反映出开发者对 agent 持续运行能力的强烈需求。\n\n【背景与上下文】/loop 代表 Claude Code 从「一次性对话」向「持续自动化 agent」演进的重要一步。此前 Claude Code 已支持 worktree 多分支并行开发，/loop 则让 agent 可以在后台持续监控和响应事件，更接近 DevOps 自动化助手的形态。\n\n【影响与前瞻】这一功能意味着 AI 编程助手开始从被动响应走向主动运维。开发者可以把 PR 审查、CI/CD 修复、日报生成等重复工作完全委托给 Claude Code，进一步释放工程生产力。",
+      "source": "@bcherny (Boris Cherny)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/bcherny/status/2031368930820964352",
+      "timestamp": "2026-03-07T08:08:47Z",
+      "importance": 9,
+      "tags": [
+        "Claude Code",
+        "自动化",
+        "Agent",
+        "开发工具"
+      ],
+      "batch_time": "2026-03-14T09:00:00+08:00"
+    },
+    {
+      "title": "Claude Code 新增多智能体 Code Review：Anthropic 工程师产出提升 200%",
+      "summary": "Claude Code 推出 Code Review 功能，在每个 PR 上部署一组 agent 进行深度审查。Boris Cherny 透露该功能先在 Anthropic 内部使用——今年 Anthropic 工程师人均代码产出增长 200%，code review 已成为瓶颈。他个人使用数周后表示该功能能捕获人工浏览容易遗漏的 bug。获 7,403 赞。",
+      "detail_content": "【核心事件】3 月 9 日，Boris Cherny 宣布 Claude Code 正式推出 Code Review 功能（研究预览阶段），面向 Team 和 Enterprise 用户开放。该功能在每个 Pull Request 上自动部署多个 agent 进行深度代码审查。\n\n【关键细节与引用】Boris 透露了重要的内部数据：\"Code output per Anthropic engineer is up 200% this year and reviews were the bottleneck\"（Anthropic 工程师今年代码产出提升 200%，审查成了瓶颈）。他个人使用几周后评价该功能\"catches bugs that skims miss\"（能捕获快速浏览容易遗漏的 bug）。\n\nClaude Blog 的描述是：\"Claude Code now dispatches a team of agents on every PR to catch bugs that skims miss\"。这意味着每个 PR 不是一个 agent 看一遍，而是一个 agent 团队协作审查。\n\n【背景与上下文】这是 Claude Code 系列重大更新之一。AI 代码产出量的爆发式增长（200%）本身是行业趋势：Karpathy 近期也指出编程在 2025 年 12 月之后发生了质变。但产出增长带来的审查瓶颈是新问题，用 AI 审查 AI 生成的代码是自然的解决方案。\n\n【影响与前瞻】多智能体 Code Review 有望成为企业级 AI 开发工作流的标配。它不仅能加速审查，还可能发现人类审查员因疲劳或盲点遗漏的安全漏洞。预计其他 AI IDE 和代码平台也会跟进类似功能。",
+      "source": "@bcherny (Boris Cherny)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/bcherny/status/2031971937778778112",
+      "timestamp": "2026-03-09T19:27:06Z",
+      "importance": 9,
+      "tags": [
+        "Claude Code",
+        "Code Review",
+        "Agent",
+        "开发工具"
+      ],
+      "batch_time": "2026-03-14T09:00:00+08:00"
+    },
+    {
+      "title": "Opus 4.6 1M 上下文全面开放，API 取消长上下文加价",
+      "summary": "Alex Albert 宣布 Opus 4.6 1M token 上下文窗口成为 Claude Code Max/Team/Enterprise 的默认模型，API 不再收取长上下文溢价，且无需 beta header。同时支持单次请求最多 600 张图片。Boris Cherny 确认 Pro 和 Sonnet 用户可通过 /extra-usage 开启。获超 1,100 赞。",
+      "detail_content": "【核心事件】3 月 13 日，Anthropic 产品负责人 Alex Albert 宣布 Claude Opus 4.6 的 1M token 上下文窗口正式全面开放，带来多项重要改进。\n\n【关键细节与引用】具体变更包括：\n- Opus 4.6 1M 成为 Claude Code 用户在 Max、Team 和 Enterprise 计划的默认 Opus 模型\n- API 不再收取长上下文价格溢价（\"No more long context price increase in the API\"）\n- 不再需要 beta header\n- 支持单次请求最多 600 张图片\n\nBoris Cherny 补充确认：\"Pro and Sonnet users can opt in with /extra-usage\"（Pro 和 Sonnet 用户可通过 /extra-usage 选项启用）。\n\n【背景与上下文】此前 1M 上下文一直处于 beta 阶段且需要额外的 API header。取消长上下文加价是一个重要的商业决策——此前业界的长上下文 API 通常按比例收取更高费用。Anthropic 此举意味着 1M 上下文成为标准功能而非高级附加服务。\n\n【影响与前瞻】对开发者来说，1M 上下文无加价意味着大规模代码库分析、长文档处理、多轮对话等场景的成本大幅降低。600 张图片的限制也为多模态批量处理（如文档 OCR、设计审查）打开了新可能。",
+      "source": "@alexalbert__ / @bcherny",
+      "source_type": "opentwitter",
+      "url": "https://x.com/alexalbert__/status/2032522722551689363",
+      "timestamp": "2026-03-13T18:22:34Z",
+      "importance": 9,
+      "tags": [
+        "Claude",
+        "Opus 4.6",
+        "API",
+        "上下文窗口"
+      ],
+      "batch_time": "2026-03-14T09:00:00+08:00"
+    },
+    {
+      "title": "Karpathy autoresearch：AI 自动跑了两天，找到 20 个可迁移的训练改进",
+      "summary": "Karpathy 将 autoresearch 项目开源为独立 repo，这是一个约 630 行代码的单 GPU 训练框架。他让 AI 自动在 depth=12 模型上迭代调优约两天，发现约 20 个改善验证损失的变更——所有改进都是叠加的，且成功迁移到更大的 depth=24 模型。该项目推文获 2.8 万赞。",
+      "detail_content": "【核心事件】Andrej Karpathy 于 3 月 7-9 日连续发布 autoresearch 项目进展。该项目是一个精简到约 630 行代码的单 GPU LLM 训练框架（nanochat），核心创新在于用 AI agent 自动迭代训练超参数和架构细节。\n\n【关键细节与引用】关键实验结果：\n- Karpathy 让 autoresearch 在 depth=12 模型上自动运行约 2 天\n- AI 找到约 20 个改善验证损失（validation loss）的变更\n- \"I tested these changes yesterday and all of them were additive and transferred to larger (depth=24) models\"（所有改进都是叠加的，且成功迁移到更大模型）\n\n开源 repo 的初始推文获得 28,035 个赞和 3,591 次转发，是本周 AI 推特最热门内容。\n\nKarpathy 还提出了下一步方向：\"asynchronously massively collaborative for agents (think: SETI@home style). The goal is not to emulate a single PhD student, it's to emulate a research community\"（目标不是模拟一个博士生，而是模拟一个研究社区）。\n\n【背景与上下文】autoresearch 代表了「AI 自动做 ML 研究」这一趋势的具体落地。与传统超参数搜索（如 grid search、Bayesian optimization）不同，autoresearch 让 LLM agent 理解代码、提出修改假设、执行实验并评估结果。这本质上是在用 AI 加速 AI 研究本身。\n\n【影响与前瞻】如果 autoresearch 的模式被大规模采用，ML 研究的迭代速度可能出现指数级提升。Karpathy 的 SETI@home 类比暗示分布式 AI 研究的可能性——让成百上千个 agent 并行探索不同的改进方向，然后合并最优解。这可能是 AI 自我改进（recursive self-improvement）的早期雏形。",
+      "source": "@karpathy (Andrej Karpathy)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/karpathy/status/2031387145261756416",
+      "timestamp": "2026-03-07T19:53:15Z",
+      "importance": 8,
+      "tags": [
+        "Karpathy",
+        "autoresearch",
+        "AI研究",
+        "开源"
+      ],
+      "batch_time": "2026-03-14T09:00:00+08:00"
+    },
+    {
+      "title": "OpenAI Responses API 容器化 agent 运行时：从模型到 agent 的基础设施",
+      "summary": "OpenAI 发布博文介绍如何基于 Responses API、shell 工具和托管容器构建 agent 运行时。该方案让 AI agent 拥有独立的文件系统、工具和状态管理，可安全、可扩展地运行。配合 Responses API 一周年博文，展示了 5 个开发者用该 API 构建 agentic 产品的案例。",
+      "detail_content": "【核心事件】3 月 12 日，OpenAI 发布技术博文「From model to agent: Equipping the Responses API with a computer environment」，详细介绍了如何利用 Responses API、shell 工具和托管容器构建安全可扩展的 agent 运行时环境。\n\n【关键细节与引用】核心架构要点：\n- 基于 Responses API 的 agent 获得独立的容器化环境\n- 内置 shell 工具让 agent 可以执行命令、操作文件\n- 有状态的沙箱环境确保安全隔离\n- 支持 agent 在多轮交互中保持上下文和文件状态\n\n同日发布的还有「From prompts to products: One year of Responses」，分享了 5 个开发者的 agentic 产品故事，记录 Responses API 一年来的演进。\n\n【背景与上下文】这是 OpenAI 在 agent 基础设施领域的又一步。此前 OpenAI 已通过 Codex（代码执行环境）、GPT-5.4 的 computer use 能力等布局 agent 基建。容器化 agent 运行时意味着 OpenAI 正在构建完整的 PaaS（Platform as a Service）级别的 agent 托管服务。\n\n【影响与前瞻】这与 Anthropic 的 Claude Code（本地 agent）形成有趣对比——OpenAI 走的是云托管路线，Anthropic 走的是本地优先路线。两种路线各有优劣：云托管更安全可控但受限，本地更灵活但需要信任用户环境。未来可能走向融合。",
+      "source": "OpenAI Blog",
+      "source_type": "tavily",
+      "url": "https://openai.com/index/equip-responses-api-computer-environment/",
+      "timestamp": "2026-03-12T00:00:00Z",
+      "importance": 7,
+      "tags": [
+        "OpenAI",
+        "Agent",
+        "Responses API",
+        "基础设施"
+      ],
+      "batch_time": "2026-03-14T09:00:00+08:00"
+    },
+    {
+      "title": "可以用手机远程启动笔记本上的 Claude Code session",
+      "summary": "Boris Cherny 宣布 Claude Code 支持从手机远程启动笔记本电脑上的 session，表示这个功能第一次用时让他\"mind blown\"。这意味着开发者可以随时随地通过手机发起代码编辑任务，agent 在远程机器上执行。获 1,540 赞。",
+      "detail_content": "【核心事件】3 月 13 日，Boris Cherny 宣布 Claude Code 支持从手机远程启动和控制笔记本电脑上的 Claude Code session。\n\n【关键细节与引用】Boris 的原话：\"You can now launch Claude Code sessions on your laptop *from your phone*. This blew my mind the first time I tried it.\"（你现在可以从手机启动笔记本上的 Claude Code session，第一次试的时候我都震惊了。）\n\n推文获得 1,540 赞和 80 次转发。\n\n【背景与上下文】这一功能与同期发布的 /loop 持续任务调度形成配合——用户不仅可以设定 agent 持续运行，还可以在任何地方通过手机远程启动和管理 agent。这大大扩展了 Claude Code 的使用场景：不在电脑前也能让 AI 开始处理代码任务。\n\n【影响与前瞻】手机远程控制 + /loop 持续运行的组合，让 Claude Code 开始具备「随时待命的远程开发助手」形态。可以预见的场景包括：通勤路上用手机让 agent 开始修 bug、外出时远程启动大规模重构任务、半夜想到 idea 时用手机让 agent 先搭框架。",
+      "source": "@bcherny (Boris Cherny)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/bcherny/status/2032566759878991872",
+      "timestamp": "2026-03-13T22:04:45Z",
+      "importance": 7,
+      "tags": [
+        "Claude Code",
+        "远程开发",
+        "移动端"
+      ],
+      "batch_time": "2026-03-14T09:00:00+08:00"
+    },
+    {
+      "title": "Jack Clark 转型：专注向公众传达强 AI 的社会挑战",
+      "summary": "Anthropic 联合创始人 Jack Clark 宣布调整在公司内的角色，将更多时间用于向世界传达强大 AI 带来的挑战。此前他牵头成立了 The Anthropic Institute，整合了前沿红队、社会影响和经济研究三个团队。获 1,910 赞。",
+      "detail_content": "【核心事件】3 月 11 日，Anthropic 联合创始人 Jack Clark 宣布调整角色方向，从内部产品和研究转向公众沟通。\n\n【关键细节与引用】Jack Clark 原话：\"AI progress continues to accelerate and the stakes are getting higher, so I've changed my role at Anthropic to spend more time creating information for the world about the challenges of powerful AI.\"（AI 进步持续加速且风险越来越高，因此我改变了在 Anthropic 的角色，将更多时间用于为世界创造关于强 AI 挑战的信息。）\n\n此前他一直负责 Import AI 周报，这是 AI 圈最受尊敬的深度分析通讯之一。此次角色转变意味着他的公众沟通将获得 Anthropic 的机构性支持。\n\n同时，他还在撰写关于语言模型在模拟核危机中行为的论文——这种将 AI 能力与地缘政治风险结合的研究，正是他新角色的方向。\n\n【背景与上下文】Jack Clark 的角色转型与 The Anthropic Institute 的成立（3 月 11 日同日）呼应。该研究所整合了前沿红队（AI 极限能力测试）、社会影响和经济研究三个团队。这是 Anthropic 「负责任扩展」理念在组织架构上的体现。\n\n【影响与前瞻】当一家顶级 AI 公司的联合创始人转型做公众沟通，这本身就是一个信号：业内人士认为 AI 发展速度已经快到需要有人专门做「公众预警」。",
+      "source": "@jackclarkSF (Jack Clark)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/jackclarkSF/status/2031631826428309504",
+      "timestamp": "2026-03-11T14:58:33Z",
+      "importance": 7,
+      "tags": [
+        "Anthropic",
+        "Jack Clark",
+        "AI安全",
+        "社会影响"
+      ],
+      "batch_time": "2026-03-14T09:00:00+08:00"
+    },
+    {
+      "title": "Karpathy：编程在去年 12 月发生了质变，IDE 时代没有结束而是需要更大的 IDE",
+      "summary": "Karpathy 发表两条高影响力观点：一是编程在 2025 年 12 月之后发生了根本性变化（\"coding agents basically didn't work before December\"），获 3.7 万赞；二是对\"IDE 时代结束\"的反驳——人类只是上移了一层抽象（\"the basic unit of interest is not one file but one agent\"），编程本质没变，只是需要更大的 IDE。获 9,800 赞。",
+      "detail_content": "【核心事件】Karpathy 在 2 月 25 日和 3 月 11 日分别发表了两条引发广泛讨论的技术观点推文。\n\n【关键细节与引用】第一条（2/25，37,165 赞）：\"It is hard to communicate how much programming has changed due to AI in the last 2 months: not gradually and over time in the 'progress as usual' way, but specifically this last December. There are a number of asterisks but imo coding agents basically didn't work before December.\"（很难传达 AI 在过去两个月里对编程的改变有多大：不是渐进式的，而是从去年 12 月开始的质变。虽有各种附加说明，但我认为编码 agent 在 12 月之前基本不能用。）\n\n第二条（3/11，9,809 赞）：\"Expectation: the age of the IDE is over. Reality: we're going to need a bigger IDE. It just looks very different because humans now move upwards and program at a higher level — the basic unit of interest is not one file but one agent. It's still programming.\"（预期：IDE 时代结束了。现实：我们需要更大的 IDE。只是看起来不同了——人类上移了一层，基本单位不再是文件而是 agent。但本质还是编程。）\n\n【背景与上下文】Karpathy 指向的 12 月质变，对应的是 Opus 4.5 发布（2025 年 11 月底）和 Claude Code 生态的成熟，以及 OpenAI 的 Codex 重大更新。多个编程 agent 在这个时间窗口同时跨过了「能用」的门槛。\n\n【影响与前瞻】\"the basic unit of interest is not one file but one agent\" 可能成为定义这个时代的名句。它精确描述了编程抽象层的跃迁：从管理代码文件到管理 AI agent。未来的开发工具需要围绕 agent 编排、监控、调试来重新设计。",
+      "source": "@karpathy (Andrej Karpathy)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/karpathy/status/2031648010926465024",
+      "timestamp": "2026-03-11T16:22:27Z",
+      "importance": 8,
+      "tags": [
+        "Karpathy",
+        "编程变革",
+        "IDE",
+        "Agent"
+      ],
+      "batch_time": "2026-03-14T09:00:00+08:00"
+    }
+  ]
+}
