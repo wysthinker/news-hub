@@ -172,7 +172,7 @@ export function groupByDate(data: ChannelData): DateGroup[] {
       date: dateKey,
       label,
       items,
-      isRecent: idx < 2, // first 2 date groups expanded
+      isRecent: idx < 1, // only latest date group expanded
     };
   });
 }
