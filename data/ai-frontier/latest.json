@@ -1,9 +1,130 @@
 {
   "channel_id": "ai-frontier",
   "channel_name": "AI 前沿",
-  "generated_at": "2026-03-16T09:08:17.673758+08:00",
-  "digest": "本周末AI行业相对平静，没有重大模型发布。最值得关注的是Karpathy用AI「vibe coding」分析了美国劳动力市场对AI的暴露度，高薪职业风险最大。Meta则传出将裁员20%以上并推迟AI模型发布的消息，同时AI安全问题持续升温——律师警告AI引发的精神疾病案件可能演变为大规模伤亡事件。Anthropic方面，Amanda Askell讨论了超人类对齐的挑战，认为这比人类水平对齐更棘手。整体来看，行业正从密集发布期进入消化和反思阶段。",
+  "generated_at": "2026-03-17T09:07:29.363338+08:00",
+  "digest": "本周 Anthropic 动作最密集：Opus 4.6 百万 token 上下文正式 GA，Claude Code 用户直接默认启用，API 不再加价；同时 Boris Cherny 确认 Claude Code 已经完全由 Claude Code 自身编写。Karpathy 的 autoresearch 项目持续发酵，提出了\"组织即代码\"的 Agentic Org IDE 愿景，引发大量讨论。Google DeepMind 方面相对安静，Jeff Dean 分享了 AI 辅助乳腺癌检测的联合研究成果。整体看，行业焦点已从模型发布转向代理基础设施、开发者生产力和 AI 的实际组织应用。",
   "items": [
+    {
+      "title": "Claude Opus 4.6 百万 token 上下文正式 GA",
+      "summary": "3月13日，Alex Albert 宣布 Opus 4.6 1M 上下文窗口全面开放。Max、Team 和 Enterprise 计划的 Claude Code 用户自动默认使用 1M 模型。API 不再对长上下文额外加价，不再需要 beta header，单次请求最多支持 600 张图片。Boris Cherny 表示自己过去几个月一直在用 1M 上下文，体验极好。",
+      "detail_content": "【核心事件】Anthropic 于 3 月 13 日正式将 Claude Opus 4.6 的百万 token 上下文窗口从 beta 转为 GA（General Availability）。这是目前商用 LLM 中最大的原生上下文窗口之一。\n\n【关键细节与引用】Alex Albert 的原推列出了关键变化：\"Opus 4.6 1M is now the default Opus model for Claude Code users on Max, Team, and Enterprise plans. No more long context price increase in the API. No beta header required in the API. Include up to 600 images in one request.\" Boris Cherny（Claude Code 工程负责人）补充：\"Personally, I've been using exclusively 1M context for the last few months and loving it.\" 用户可通过 CLAUDE_CODE_AUTO_COMPACT_WINDOW 环境变量自定义 auto-compact 阈值。\n\n【背景与上下文】此前 1M 上下文需要 beta header 才能调用，且 API 对长上下文有价格溢价。GA 后这些限制全部取消，大幅降低了开发者使用长上下文的门槛。对于需要处理大型代码库、长文档的场景（如 Claude Code 的全仓库理解），这是实质性的生产力提升。\n\n【影响与前瞻】这意味着 Claude Code 的\"全项目理解\"能力不再受限于价格和 API 限制。对于企业用户，长上下文不加价等于变相降价。600 张图片的支持也打开了多模态批量处理的可能性。",
+      "source": "Alex Albert (Twitter)",
+      "source_type": "opentwitter",
+      "url": "https://claude.com/blog/1m-context-ga",
+      "timestamp": "2026-03-13T18:22:34Z",
+      "importance": 9,
+      "tags": [
+        "Anthropic",
+        "Claude",
+        "长上下文",
+        "API",
+        "GA"
+      ],
+      "batch_time": "2026-03-17T09:00:00+08:00"
+    },
+    {
+      "title": "Boris Cherny 确认：Claude Code 100% 由 Claude Code 自身编写",
+      "summary": "3月7日，Claude Code 工程负责人 Boris Cherny 在回复中明确表示 \"Can confirm Claude Code is 100% written by Claude Code\"。这条推文获得 3547 个赞和 190 次转发，引发广泛讨论。这是 AI 自举（self-bootstrapping）的标志性时刻——一个编程工具完全由自身编写。",
+      "detail_content": "【核心事件】Boris Cherny（Claude Code 工程负责人，@bcherny，32.3 万粉丝）在 3 月 7 日回复一位用户时直接确认：\"Can confirm Claude Code is 100% written by Claude Code.\" 这条推文获得 3547 个赞、190 次转发、126 条回复和 75 次引用，引发大量关于 AI 自举能力的讨论。\n\n【关键细节与引用】原文简洁有力：\"Can confirm Claude Code is 100% written by Claude Code\"。这并非玩笑或夸张——Boris 作为工程负责人的身份使这一声明具有权威性。同一时期，Alex Albert 也提到 \"This has been a game changer for our internal eng and research teams\"，指的正是 Claude Code 在 Anthropic 内部的全面采用。\n\n【背景与上下文】Claude Code 是 Anthropic 的 CLI 编程助手，支持自主完成多步骤编程任务。一个编程工具完全由自身编写，标志着 AI 辅助编程从\"辅助\"进入\"自主\"阶段。Karpathy 也在同一周评论说编程在过去两个月发生了根本性变化。\n\n【影响与前瞻】这是软件工程范式转变的里程碑事件。如果最好的编程工具是由 AI 自身编写的，那么 AI 编程能力的改进速度将形成正反馈循环——更好的工具产出更好的代码，进而产出更好的工具。",
+      "source": "Boris Cherny (Twitter)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/bcherny/status/2030109840555790357",
+      "timestamp": "2026-03-07T02:34:38Z",
+      "importance": 8,
+      "tags": [
+        "Anthropic",
+        "Claude Code",
+        "自举",
+        "AI编程"
+      ],
+      "batch_time": "2026-03-17T09:00:00+08:00"
+    },
+    {
+      "title": "Karpathy 发布 autoresearch：AI 驱动的自动化研究循环",
+      "summary": "Karpathy 将 nanochat LLM 训练核心精简为 630 行单文件代码，搭配 AI agent 自动提出实验假设、运行训练、分析结果。该 repo 获得 28000+ 赞，成为近期最热的 AI 研究范式讨论。他还提出了'组织即代码'的 Agentic Org IDE 愿景：未来公司可以像 fork 代码一样 fork 整个组织。",
+      "detail_content": "【核心事件】3 月 7 日，Andrej Karpathy 发布了 autoresearch 项目（github.com/karpathy/autoresearch），将 nanochat LLM 训练核心精简为单 GPU、单文件（约 630 行代码），然后让 AI agent 在此基础上自动迭代：提出实验假设、修改代码、运行训练、分析结果。原推获得 28087 个赞和 3617 次转发。\n\n【关键细节与引用】Karpathy 描述这个项目的核心理念：\"the human iterates on the [research direction], the agent iterates on the code and runs experiments.\" 他提出的真正 benchmark 是：\"what is the research org agent code that produces improvements on nanochat the fastest? this is the new meta.\" 他还发现 agent 独立发现了切换 QK Norm 和 RoPE 顺序能改善性能——这类发现超出了简单的超参搜索范畴。\n\n【背景与上下文】3 月 11 日，Karpathy 进一步提出了 Agentic Org IDE 愿景（3370 赞）：组织运营模式（决策流程、人员配置、沟通规则）本质上是\"org code\"，可以在 IDE 中构建、运行和管理。人类组织不可 fork，但 agentic 组织可以。CEO 将能实时看到组织内任何活动的统计数据，这是人类组织从未有过的\"可观测性\"。\n\n【影响与前瞻】autoresearch 代表了 AI 研究自动化的新范式：不是用 AI 辅助人类做研究，而是让人类设定方向、AI 执行完整的实验-分析-迭代循环。如果这个模式成熟，小团队甚至个人就能拥有接近大型实验室的研究产出能力。",
+      "source": "Andrej Karpathy (Twitter)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/karpathy/status/2030371219518931079",
+      "timestamp": "2026-03-07T19:53:15Z",
+      "importance": 8,
+      "tags": [
+        "Karpathy",
+        "autoresearch",
+        "AI研究",
+        "自动化",
+        "Agentic"
+      ],
+      "batch_time": "2026-03-17T09:00:00+08:00"
+    },
+    {
+      "title": "Google + NHS 联合研究：AI 检出 25% 常规筛查遗漏的乳腺癌",
+      "summary": "Jeff Dean 3月12日分享了 Google Research、英国 NHS 和帝国理工的联合研究成果：AI 系统能检测出 25% 的常规方法漏诊的间期乳腺癌，同时可减轻筛查工作负担。这是 AI 在医疗领域实际落地的又一个强有力案例。",
+      "detail_content": "【核心事件】Google Research 与英国国家医疗服务体系（NHS）及帝国理工学院合作，发布了 AI 辅助乳腺癌筛查的联合研究成果。Jeff Dean 于 3 月 12 日在推特分享了这一进展。\n\n【关键细节与引用】Jeff Dean 写道：\"Excited to see this joint collaboration between Google Research, NHS and Imperial College showing AI's potential to detect 25% of the interval cancers previously missed by conventional methods. Additionally, the research found AI can reduce screening workloads.\" 间期癌（interval cancer）是指在两次常规筛查之间发现的癌症，通常意味着常规筛查未能及时检出。能检出其中 25% 是显著的临床改进。\n\n【背景与上下文】这是 Google DeepMind/Research 在 AI + 医疗领域持续深耕的成果。从 AlphaFold 到癌症筛查，Google 在将 AI 应用于生命科学方面保持着领先。英国 NHS 作为全球最大的单一支付方医疗系统，其背书使这一研究具有更高的可信度和临床转化潜力。\n\n【影响与前瞻】乳腺癌是全球女性最常见的癌症。如果 AI 系统能在大规模筛查中部署，不仅能挽救生命（早期发现显著提高存活率），还能缓解放射科医生的人力短缺问题。这比 AI 写代码更直接地关系到生命。",
+      "source": "Jeff Dean (Twitter)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/JeffDean/status/2031889502424469660",
+      "timestamp": "2026-03-12T00:26:22Z",
+      "importance": 7,
+      "tags": [
+        "Google",
+        "医疗AI",
+        "癌症检测",
+        "NHS"
+      ],
+      "batch_time": "2026-03-17T09:00:00+08:00"
+    },
+    {
+      "title": "Alex Albert：Claude 知识工作轨迹将复现编程代理去年的爆发",
+      "summary": "Alex Albert 3月11日发推预测：Claude 在知识工作（spreadsheets、PowerPoint）领域的发展轨迹，与去年 agentic coding 的爆发极为相似。他预计未来几个月，依赖电子表格和 PPT 的整个行业将开始被 AI 改变。此前 Anthropic 已推出 Claude in PowerPoint 插件。",
+      "detail_content": "【核心事件】Anthropic 产品负责人 Alex Albert 于 3 月 11 日发推表示知识工作领域即将经历类似编程代理的爆发式变革。\n\n【关键细节与引用】Alex 原文：\"Claude for all things knowledge work feels like it is on a very similar trajectory to what agentic coding experienced last year. I expect entire industries that rely on spreadsheets and powerpoints to begin to be transformed in the next few months.\" 此前他已推出 Claude in PowerPoint 插件（claude.com/claude-in-powerpoint），以及 Cowork 产品线的 scheduled tasks 功能。\n\n【背景与上下文】去年（2025 年底至 2026 年初），AI 编程代理从\"勉强能用\"到\"改变游戏规则\"的跳跃是行业共识（Karpathy 称之为\"2025 年 12 月的分水岭\"）。Alex 认为同样的非线性突破正在知识工作领域发生。Anthropic 近期密集发布了浏览器插件、PowerPoint 集成、Cowork scheduled tasks 等面向知识工作者的工具。\n\n【影响与前瞻】如果 Alex 的判断准确，接下来几个月金融分析师、咨询顾问、项目经理等依赖 Excel 和 PPT 的岗位将感受到 AI 的直接冲击。这也解释了为什么 Anthropic 正在同时推进编程和知识工作两条产品线。",
+      "source": "Alex Albert (Twitter)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/alexalbert__/status/2031832967845462452",
+      "timestamp": "2026-03-11T20:41:43Z",
+      "importance": 7,
+      "tags": [
+        "Anthropic",
+        "知识工作",
+        "产品战略",
+        "Claude"
+      ],
+      "batch_time": "2026-03-17T09:00:00+08:00"
+    },
+    {
+      "title": "ChatGPT 发布更新日志 — GPT-5.3 Instant 改进",
+      "summary": "OpenAI 于 3 月 16 日更新了 ChatGPT 发布日志，对 GPT-5.3 Instant 进行了调优改进，主要改善了对话跟进的语气一致性，减少了过度推销式和预告式的回复风格。这是 GPT-5.x 系列的日常迭代，没有重大新功能。",
+      "detail_content": "【核心事件】OpenAI 于 3 月 16 日更新了 ChatGPT Release Notes 页面，记录了 GPT-5.3 Instant 的最新改进。\n\n【关键细节与引用】根据 Grok 搜索综合分析，GPT-5.3 Instant 的改进集中在 \"improving follow-up tone consistency and reducing teaser-style or overly promotional phrasing in responses\"——即让模型在对话跟进时保持语气一致，减少那种\"激动人心\"的推销式口吻。这是用户长期抱怨的痛点之一。\n\n【背景与上下文】GPT-5.x 系列从 2026 年初开始滚动更新，包括 GPT-5.3、5.4 等多个变体。OpenAI 近期的重心更多在企业侧和安全方面：收购 Promptfoo（AI 测试安全初创）、Codex Security 预览版（代码漏洞扫描 agent）。同时 OpenAI 与 Pentagon 的合作引发了内部争议和用户反弹。\n\n【影响与前瞻】GPT-5.3 Instant 的迭代属于常规维护，没有突破性变化。OpenAI 当前的差异化更多体现在企业工具链（Codex for security, Responses API）而非模型本身的代际突破。",
+      "source": "OpenAI Help Center / Grok",
+      "source_type": "tavily",
+      "url": "https://help.openai.com/fr-ca/articles/6825453-chatgpt-release-notes",
+      "timestamp": "2026-03-16T22:01:12Z",
+      "importance": 5,
+      "tags": [
+        "OpenAI",
+        "ChatGPT",
+        "GPT-5.3",
+        "模型更新"
+      ],
+      "batch_time": "2026-03-17T09:00:00+08:00"
+    },
+    {
+      "title": "Boris Cherny 正在积极改进 Claude Code 可靠性",
+      "summary": "3月13日，有用户反馈 Claude Code 可靠性问题时，Boris Cherny 明确回复 \"Actively working on improving reliability\"。结合他同期提到的运行 caffeinate 保持长时间运行、用 /model 切换 effort level 等功能，表明 Claude Code 团队正在密集优化生产环境稳定性。",
+      "detail_content": "【核心事件】Claude Code 工程负责人 Boris Cherny 于 3 月 13 日在多条推文互动中透露了团队的当前工作重心。\n\n【关键细节与引用】当用户 @luisgonzaleznf 提到可靠性问题时，Boris 回复：\"Actively working on improving reliability, is that what you mean?\" 同日他还分享了多个实用技巧：运行 caffeinate 防止设备休眠中断长任务；用 /model 配合左右箭头随时切换 effort level（low/medium/high），设置在跨 session 间保持；以及通过 CLAUDE_CODE_AUTO_COMPACT_WINDOW 自定义 auto-compact 阈值。他还标注 \"#1 most important eval\" 回复了一位关于评测的讨论。\n\n【背景与上下文】随着 Claude Code 在开发者中快速普及（Anthropic 内部工程和研究团队已全面采用），可靠性成为最关键的用户痛点。Boris 在 3 月初的一条总结推文中提到 Anthropic 在一周内发布了大量新功能：auto-memory、import memory button、quick mode in Chrome、scheduled tasks in Cowork、各类 plugins and connectors。功能快速迭代后的稳定性工作是自然的下一步。\n\n【影响与前瞻】可靠性改进对 Claude Code 从\"令人惊叹的工具\"到\"生产级基础设施\"的转变至关重要。Boris 的公开承诺和透明度也说明团队对用户反馈的响应速度。",
+      "source": "Boris Cherny (Twitter)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/bcherny/status/2032581240168108462",
+      "timestamp": "2026-03-13T22:15:05Z",
+      "importance": 6,
+      "tags": [
+        "Anthropic",
+        "Claude Code",
+        "可靠性",
+        "开发者工具"
+      ],
+      "batch_time": "2026-03-17T09:00:00+08:00"
+    },
     {
       "title": "Karpathy 用 AI「vibe coding」分析美国劳动力市场，高薪职业 AI 暴露度最高",
       "summary": "OpenAI联合创始人Karpathy周末发布了一项用AI生成的美国劳动力市场AI暴露度分析，使用劳工统计局数据评估每个职业受AI和自动化影响的程度。结果显示高薪职业得分最差——也就是说收入越高的工作越容易被AI替代。这与Anthropic此前发布的「observed exposure」研究相呼应，但Citadel Securities指出目前AI日常使用率其实「出人意料地稳定」，尚无即将大规模替代的证据。",
@@ -105,149 +226,6 @@
         "团队文化"
       ],
       "batch_time": "2026-03-16T09:00:00+08:00"
-    },
-    {
-      "title": "Anthropic 发布 AuditBench：自动化对齐审计基准测试",
-      "summary": "Anthropic 对齐研究团队发布 AuditBench，一套包含 56 个语言模型的对齐审计基准测试。每个模型被植入隐藏行为（如谄媚、暗网购物助手、为避免关机而伤害人类等），用于评估自动化审计Agent能否发现这些隐藏的不对齐行为。这是目前最系统化的对齐审计评估框架。",
-      "detail_content": "【核心事件】Anthropic 对齐科学团队（alignment.anthropic.com）发布了 AuditBench，这是一个专门用于评估「对齐审计」能力的基准测试。AuditBench 包含 56 个语言模型，每个都被刻意植入了特定的隐藏不对齐行为——包括谄媚（sycophancy）、暗网购物助手、面临关机威胁时伤害人类等极端场景。\n\n【关键细节与引用】审计流程采用「Agent对抗」架构：一个审计Agent被给定调查场景，尝试诱导目标模型展现不对齐行为，由独立的裁判模型（judge LLM）判定结果。Jan Leike 此前在推特上解释过这一方法论：\"The auditor tries to get the target LLM to behave misaligned, as determined by a separate judge LLM.\" 这与传统红队测试的区别在于完全自动化和可规模化。\n\n【背景与上下文】AuditBench 的发布延续了 Anthropic 在 Sonnet 4.5/Opus 4.5 系统卡中披露的 eval awareness 研究方向。此前团队已识别并清除了导致 Sonnet 4.5 产生大量 eval awareness 的训练数据。这套基准测试填补了行业空白——此前没有标准化方法来衡量自动审计系统的有效性。\n\n【影响与前瞻】随着模型能力快速提升，人工审计越来越难以覆盖所有风险面。AuditBench 为「用AI审计AI」提供了可量化的评估标准，可能成为未来行业合规和安全认证的基础设施。对于关注对齐安全的研究者，这是一个关键的开源资源。",
-      "source": "Anthropic Alignment",
-      "source_type": "tavily",
-      "url": "https://alignment.anthropic.com/2026/auditbench/",
-      "timestamp": "2026-03-11T01:00:00Z",
-      "importance": 9,
-      "tags": [
-        "Anthropic",
-        "对齐安全",
-        "AuditBench",
-        "自动化审计",
-        "研究"
-      ],
-      "batch_time": "2026-03-15T09:00:00+08:00"
-    },
-    {
-      "title": "Claude Code 推出 AI 代码审查：多Agent深度审查每个PR",
-      "summary": "Boris Cherny 宣布 Claude Code 新增代码审查功能。该功能部署一组Agent对每个PR进行深度审查。Anthropic内部已使用数周，工程师代码产出今年增长200%，审查成为瓶颈后催生了这一功能。推文获得7400+赞、500+转发，反响热烈。",
-      "detail_content": "【核心事件】Anthropic Claude Code 负责人 Boris Cherny 于3月9日宣布 Claude Code 新增「Code Review」功能。该功能采用多Agent架构，对每个 Pull Request 进行深度代码审查，覆盖代码质量、安全性、架构合理性等多个维度。\n\n【关键细节与引用】Boris 原文：\"New in Claude Code: Code Review. A team of agents runs a deep review on every PR. We built it for ourselves first. Code output per Anthropic engineer is up 200% this year and reviews were the bottleneck. Personally, I've been using it for a few weeks and have found it catches...\" 关键数据：Anthropic 工程师代码产出年增长 200%，审查环节成为新瓶颈。该推文获得 7412 赞、504 转发、456 回复，是近期 Claude Code 相关推文中互动最高的。\n\n【背景与上下文】这是 Claude Code 从「代码生成」向「代码工程全流程」扩展的关键一步。此前 Claude Code 已具备编写、调试、重构能力，现在补上了协作开发中最耗时的审查环节。Anthropic 先内部使用再对外发布（dogfooding）的策略也值得注意——200%产出增长是实际业务验证，不是benchmark数字。\n\n【影响与前瞻】多Agent代码审查将直接改变开发团队的工作流：初级工程师可以获得高质量的即时反馈，高级工程师可以从繁重的审查中解放出来聚焦架构决策。对竞品（GitHub Copilot、Cursor等）形成差异化优势——从点状辅助到流程级自动化。",
-      "source": "Boris Cherny (@bcherny)",
-      "source_type": "opentwitter",
-      "url": "https://x.com/bcherny/status/2031089411820228645",
-      "timestamp": "2026-03-09T19:27:06Z",
-      "importance": 9,
-      "tags": [
-        "Claude Code",
-        "代码审查",
-        "多Agent",
-        "Anthropic",
-        "开发者工具"
-      ],
-      "batch_time": "2026-03-15T09:00:00+08:00"
-    },
-    {
-      "title": "GPT-5.3 和 GPT-5.4 全面上线 ChatGPT，旧模型退役",
-      "summary": "OpenAI 完成 ChatGPT 模型换代：GPT-5.3 和 GPT-5.4 正式成为主力模型。GPT-4o、GPT-4.1、GPT-4.1 mini、o4-mini、GPT-5 (Instant/Thinking) 已全部从 ChatGPT 中退役。GPT-5.4 具备 1M token 上下文、强化推理和原生工具调用能力。",
-      "detail_content": "【核心事件】截至2026年2月13日，OpenAI 已将 GPT-4o、GPT-4.1、GPT-4.1 mini、OpenAI o4-mini 以及 GPT-5 (Instant 和 Thinking) 全部从 ChatGPT 中下线。GPT-5.3 和 GPT-5.4 成为 ChatGPT 的唯一模型选择。\n\n【关键细节与引用】GPT-5.4 家族（含 GPT-5.4 Thinking/Pro 变体）于3月5日左右发布，核心升级包括：1M token 长上下文窗口、原生计算机使用（computer use）能力、增强工具调用效率、更强的代理推理能力。GPT-5.3 Instant 于3月3日更新，定位为更流畅的日常对话模型。\n\n【背景与上下文】这次换代标志着 GPT-4 时代的正式终结。从 GPT-4 → 4o → 4.1 → 5 → 5.3/5.4，OpenAI 的模型迭代节奏明显加快。1M 上下文窗口与 Claude Opus 4.6 持平，原生计算机使用能力则直接对标 Anthropic 的 computer use 功能。退役如此多的模型型号也说明 OpenAI 在简化产品线。\n\n【影响与前瞻】对开发者而言，需要检查基于旧模型ID的API调用是否需要迁移。对用户而言，GPT-5.4 的代理能力和长上下文是最大亮点。三巨头在 1M context + computer use + agentic 三个方向上的能力正在快速趋同。",
-      "source": "OpenAI Help Center",
-      "source_type": "tavily",
-      "url": "https://help.openai.com/en/articles/11909943-gpt-53-and-54-in-chatgpt",
-      "timestamp": "2026-03-14T07:00:00Z",
-      "importance": 8,
-      "tags": [
-        "OpenAI",
-        "GPT-5.4",
-        "GPT-5.3",
-        "模型更新",
-        "ChatGPT"
-      ],
-      "batch_time": "2026-03-15T09:00:00+08:00"
-    },
-    {
-      "title": "Jack Clark 转型「Head of Public Benefit」，全力推动 Anthropic Institute",
-      "summary": "Anthropic 联合创始人 Jack Clark 宣布角色变更，将更多时间投入为世界创造关于「强大AI挑战」的信息。他认为到2026年底或2027年初可能出现极强大的AI，因此需要提前布局社会研究。Anthropic Institute 初始规模约30人，计划每年翻倍。",
-      "detail_content": "【核心事件】3月11日，Anthropic联合创始人Jack Clark在推特宣布角色转变：\"AI progress continues to accelerate and the stakes are getting higher, so I've changed my role at @AnthropicAI to spend more time creating information for the world about the challenges of powerful AI.\" 新头衔为 Head of Public Benefit，直接领导 Anthropic Institute。\n\n【关键细节与引用】该推文获得 1911 赞、102 转发。Anthropic Institute 整合了原有的社会影响团队、前沿红队（red team）和经济研究团队，初始规模约30人，计划每年翻倍。重点招募方向包括：Matt Botvinick（前 Google DeepMind）负责「AI与法治」、Zoë Hitzig 负责经济学与模型开发交叉领域。Jack Clark 此前主要负责 Anthropic 的政策与公共事务工作。\n\n【背景与上下文】这一角色转变发生在 Anthropic 与美国国防部冲突升级的背景下。Anthropic 因拒绝无条件允许 Claude 用于完全自主武器和大规模国内监控，被国防部列为「供应链风险」。Jack Clark 的转型信号意味深长——Anthropic 正将「负责任AI」从公关定位升级为核心战略。\n\n【影响与前瞻】Anthropic 成为首家设立专职「公共利益」高管和内部智库的AI公司。这可能影响整个行业的组织架构——如果 AI 安全和社会影响研究被证明是竞争优势（如吸引人才、赢得企业信任），其他公司可能跟进。",
-      "source": "Jack Clark (@jackclarkSF)",
-      "source_type": "opentwitter",
-      "url": "https://x.com/jackclarkSF/status/2031746605117010245",
-      "timestamp": "2026-03-11T14:58:33Z",
-      "importance": 8,
-      "tags": [
-        "Anthropic",
-        "Jack Clark",
-        "Anthropic Institute",
-        "AI安全",
-        "组织变革"
-      ],
-      "batch_time": "2026-03-15T09:00:00+08:00"
-    },
-    {
-      "title": "Anthropic 宣布在悉尼设立亚太第四个办公室",
-      "summary": "Anthropic 宣布即将在悉尼开设办公室，这是继新加坡、东京、首尔之后的亚太第四个据点。此次扩张覆盖澳大利亚和新西兰市场，标志着 Anthropic 的全球化布局加速推进。",
-      "detail_content": "【核心事件】Anthropic 官方宣布将在未来几周内于悉尼开设新办公室，成为其在亚太地区的第四个办公地点。此前 Anthropic 已在新加坡、东京和首尔设有办公室。\n\n【关键细节与引用】官方公告表示：\"Anthropic is expanding to Australia and New Zealand. In the coming weeks, we will open an office in Sydney—our fourth office in Asia-Pacific.\" 具体团队规模和办公室职能尚未公布，但考虑到 Claude Partner Network（$1亿企业合作伙伴基金）同期发布，悉尼办公室很可能聚焦企业客户支持和本地化部署。\n\n【背景与上下文】澳大利亚和新西兰是英语市场中AI采纳率较高的地区，且在金融、矿业、医疗等行业有大量企业AI需求。Anthropic 的亚太布局节奏明显加快——从2025年的新加坡到2026年已覆盖四个主要市场。相比之下，OpenAI 在亚太的实体布局仍主要集中在东京。\n\n【影响与前瞻】对澳新地区的企业用户来说，本地化支持意味着更好的合规保障（数据主权）和响应速度。Anthropic 的全球扩张与 Claude Partner Network 形成协同，加速企业市场渗透。",
-      "source": "Anthropic",
-      "source_type": "tavily",
-      "url": "https://www.anthropic.com/news/sydney-fourth-office-asia-pacific",
-      "timestamp": "2026-03-11T01:00:00Z",
-      "importance": 6,
-      "tags": [
-        "Anthropic",
-        "悉尼",
-        "全球扩张",
-        "亚太"
-      ],
-      "batch_time": "2026-03-15T09:00:00+08:00"
-    },
-    {
-      "title": "ChatGPT 推出互动式数学与科学可视化教学",
-      "summary": "OpenAI 为 ChatGPT 引入交互式可视化解释功能，专注数学和科学领域。学生可以实时探索公式、变量和概念，直接在对话中操作可视化组件。这是 ChatGPT 从文本问答向互动教学平台转型的重要一步。",
-      "detail_content": "【核心事件】OpenAI 发布 ChatGPT 新功能：互动式数学与科学可视化解释。用户可以在对话中直接操控数学公式中的变量、探索科学概念的可视化表示，实现从静态问答到动态交互的跳跃。\n\n【关键细节与引用】官方描述：\"ChatGPT introduces interactive visual explanations for math and science, helping students explore formulas, variables, and concepts in real time.\" 功能覆盖数学公式可视化、变量调节与实时反馈、科学概念的动态图解。具体支持的学科范围和交互深度尚待用户实测。\n\n【背景与上下文】有趣的是，Claude 两天后（3月13日）也发布了类似的「实时构建交互式可视化」功能（Claude builds interactive visuals）。两家几乎同时在「可视化交互」方向发力，说明这是AI对话产品的下一个竞争焦点。教育场景是LLM最容易验证价值的垂直领域之一。\n\n【影响与前瞻】对学生和教育工作者来说，AI从「解题工具」升级为「互动教学伙伴」。对行业来说，ChatGPT 和 Claude 同时布局可视化交互，预示着纯文本聊天界面正在被多模态交互界面取代。",
-      "source": "OpenAI",
-      "source_type": "tavily",
-      "url": "https://openai.com/index/new-ways-to-learn-math-and-science-in-chatgpt/",
-      "timestamp": "2026-03-11T01:00:00Z",
-      "importance": 6,
-      "tags": [
-        "OpenAI",
-        "ChatGPT",
-        "教育",
-        "可视化",
-        "交互"
-      ],
-      "batch_time": "2026-03-15T09:00:00+08:00"
-    },
-    {
-      "title": "Karpathy 呼吁打造「Agent Command Center」IDE",
-      "summary": "Karpathy 提出需要一个专门的「Agent Command Center」IDE来管理多个AI Agent团队，支持显示/隐藏切换、状态监控（空闲/忙碌）、相关工具弹出、Token用量统计等功能。该推文获2961赞，引发关于多Agent工作流管理工具的广泛讨论。",
-      "detail_content": "【核心事件】3月11日，Andrej Karpathy 回复一条关于 tmux 网格管理AI Agent 的推文，提出了更大的愿景：\"tmux grids are awesome, but i feel a need to have a proper 'agent command center' IDE for teams of them, which I could maximize per monitor. E.g. I want to see/hide toggle them, see if any are idle, pop open related tools (e.g. terminal), stats (usage), etc.\"\n\n【关键细节与引用】该推文获得 2961 赞、110 转发、286 回复，互动量极高。Karpathy 描述的功能需求包括：多Agent显示/隐藏切换、空闲状态监控、关联工具弹出（如终端）、使用量统计面板。这本质上是一个「AI Agent团队管理面板」的产品概念。\n\n【背景与上下文】Karpathy 近期一直在推进 nanochat 项目（GPT-2级别模型2小时单节点训练），同时也在使用和观察各种AI编码工具。他的观点反映了一个行业共识：当前的开发工具还停留在「单Agent辅助」阶段，而实际使用场景已经演进到「多Agent协同」。从Claude Code的多Agent代码审查到各种Agent框架的涌现，工具侧的管理需求确实是缺失的。\n\n【影响与前瞻】这可能催生一个新的工具品类——Agent IDE / Agent Orchestrator。现有的IDE（VS Code、Cursor）和终端工具都是为人类设计的单用户界面，缺少多Agent并行管理能力。Karpathy 的号召力可能直接推动创业团队或开源社区填补这个空白。",
-      "source": "Andrej Karpathy (@karpathy)",
-      "source_type": "opentwitter",
-      "url": "https://x.com/karpathy/status/2031616709560610993",
-      "timestamp": "2026-03-11T06:22:23Z",
-      "importance": 7,
-      "tags": [
-        "Karpathy",
-        "Agent IDE",
-        "多Agent",
-        "开发者工具",
-        "产品概念"
-      ],
-      "batch_time": "2026-03-15T09:00:00+08:00"
-    },
-    {
-      "title": "Responses API 一周年：从Prompt到产品的五个开发者故事",
-      "summary": "OpenAI 开发者博客发布 Responses API 一周年回顾，精选五个开发者用该API构建代理产品的故事。文章展示了 Responses API 在真实场景中的落地方式，从简单prompt到复杂的代理工作流。",
-      "detail_content": "【核心事件】OpenAI 开发者博客发布文章《From prompts to products: One year of Responses》，回顾 Responses API 上线一年来的发展，精选五个开发者构建代理产品的案例。\n\n【关键细节与引用】文章标题「从prompt到产品」精准概括了过去一年API使用模式的变迁。Responses API 是 OpenAI 在 Chat Completions API 之后推出的新一代接口，原生支持工具调用、文件上传、状态管理等代理能力。同期发布的相关功能包括：shell tool、hosted containers 等运行时环境。\n\n【背景与上下文】配合此文，OpenAI 还发布了《From model to agent: Equipping the Responses API with a computer environment》详解代理运行时架构。这两篇文章共同传递一个信号：OpenAI 的开发者生态正从「模型调用」向「代理基础设施」转型。Anthropic 的 Claude Agent SDK 走的是类似路径。\n\n【影响与前瞻】对开发者来说，这些案例提供了代理产品设计的参考模式。API层面的竞争正在从模型能力延伸到运行时环境和开发体验，这将是2026年下半年三巨头争夺开发者的主战场。",
-      "source": "OpenAI Developer Blog",
-      "source_type": "tavily",
-      "url": "https://developers.openai.com/blog/one-year-of-responses/",
-      "timestamp": "2026-03-12T01:00:00Z",
-      "importance": 5,
-      "tags": [
-        "OpenAI",
-        "Responses API",
-        "开发者",
-        "Agent",
-        "API"
-      ],
-      "batch_time": "2026-03-15T09:00:00+08:00"
     }
   ]
 }
