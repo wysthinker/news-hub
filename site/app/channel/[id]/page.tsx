@@ -91,12 +91,11 @@ export default async function ChannelPage({
           >
             形势综述
           </h2>
-          <p
-            className="text-sm leading-relaxed"
-            style={{ color: "var(--text-primary)" }}
-          >
-            {data.digest}
-          </p>
+          <div className="space-y-2 text-sm leading-relaxed" style={{ color: "var(--text-primary)" }}>
+            {data.digest.split("\n").filter(Boolean).map((para, i) => (
+              <p key={i}>{para}</p>
+            ))}
+          </div>
         </section>
       )}
 
