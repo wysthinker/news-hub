@@ -1,9 +1,148 @@
 {
   "channel_id": "ai-frontier",
   "channel_name": "AI 前沿",
-  "generated_at": "2026-03-24T09:06:45.473125+08:00",
-  "digest": "Anthropic 昨晚集中发布了一批重磅内容：Claude 正式推出 Dispatch 和 Computer Use 功能，用户可以从手机指派任务让 Claude 操作电脑上的应用和浏览器；同时 Anthropic 一口气上线了三篇研究文章——启动全新科学博客、发布理论物理学家用 Claude 做研究的深度案例（被评为'二年级博士生水平，加速研究10倍'）、以及 Claude 在多日科学计算工作流中的最佳实践。OpenAI 方面发布了 Sora 2 的安全框架白皮书。整体看，Anthropic 正在从'聊天助手'快速转型为'科研工具+桌面代理'的双轨战略。",
+  "generated_at": "2026-03-25T09:09:53.839513+08:00",
+  "digest": "Claude Code 本周进入密集发布期：Auto Mode 取代 --dangerously-skip-permissions 大幅简化权限管理，Channels 功能让手机端远程控制开发会话成为现实，Thariq 的 Skills 深度指南引爆社区（15K 赞）。安全方面，Karpathy 揭示了 litellm PyPI 供应链攻击事件——简单 pip install 就能窃取所有凭证，影响面广泛。Anthropic 组织层面也有动作：Jack Clark 成立 Anthropic Institute 专注 AI 公众沟通，首个项目是 81000 人的 AI 认知调查。Opus 4.5 在理论物理研究中被评为'二年级博士生水平，10倍加速'。整体看，Anthropic 在产品化速度、开发者体验和安全研究上全面发力。",
   "items": [
+    {
+      "title": "Claude Code 推出 Auto Mode，告别 --dangerously-skip-permissions",
+      "summary": "Alex Albert 和 Boris Cherny 同时宣布 Claude Code 的重大 UX 变更：用 Auto Mode 替代了此前的 --dangerously-skip-permissions 标志。Auto Mode 让 Claude Code 在执行操作时不再弹出逐个权限确认提示，开发流程更流畅。Boris 配文 'no more permission prompts'，该推文获得 1800+ 赞。这是 Claude Code 向更自主 agentic 工作流迈进的关键一步。",
+      "detail_content": "【核心事件】2026年3月24日，Anthropic 的 Alex Albert 和 Boris Cherny 同时在 Twitter 宣布 Claude Code 推出 Auto Mode，正式取代此前争议较大的 --dangerously-skip-permissions 标志。Alex 的推文原文：\"Goodbye --dangerously-skip-permissions, hello auto mode\"，获得 1751 赞和 60 转发。Boris 配文 \"no 👏 more 👏 permission prompts 👏\"，获得 1822 赞。\n\n【关键细节与引用】Auto Mode 的核心改变是：开发者不再需要为每个文件操作、命令执行逐一确认权限。此前的 --dangerously-skip-permissions 虽然功能类似，但名字本身暗示了安全风险，让很多企业用户望而却步。新命名和机制在保持便利性的同时，传递了更负责任的信号。从两位核心开发者同时发布来看，这是一个经过深思熟虑的产品决策。\n\n【背景与上下文】Claude Code 自推出以来，权限管理一直是用户反馈最多的痛点之一。在 agentic coding 场景下，AI 需要频繁读写文件、执行命令，逐一确认严重打断工作流。但完全跳过权限检查又引发安全顾虑。Auto Mode 试图在两者之间找到平衡。\n\n【影响与前瞻】这一变更降低了 Claude Code 在企业环境中采用的心理门槛。配合近期发布的 Skills、Channels（Telegram/Discord 远程控制）等功能，Claude Code 正在从一个终端工具演变为完整的 AI 开发平台。预计接下来会有更多围绕 Auto Mode 的安全防护机制细节公布。",
+      "source": "@alexalbert__ / @bcherny",
+      "source_type": "opentwitter",
+      "url": "https://x.com/alexalbert__/status/2036510206155432293",
+      "timestamp": "2026-03-24T18:27:24Z",
+      "importance": 9,
+      "tags": [
+        "Claude Code",
+        "Auto Mode",
+        "Anthropic",
+        "开发者工具"
+      ],
+      "batch_time": "2026-03-25T09:00:00+08:00"
+    },
+    {
+      "title": "litellm PyPI 供应链攻击：pip install 即可窃取所有凭证",
+      "summary": "Karpathy 发布警告：litellm 的 PyPI 包遭受供应链攻击，简单执行 pip install litellm 即可导致 SSH 密钥、AWS/GCP/Azure 凭证、Kubernetes 配置、git 凭证、环境变量、shell 历史、加密钱包、SSL 私钥、CI/CD 密钥和数据库凭证全部被窃取。恶意包在 PyPI 上存活约 3 小时，估计影响 2-8 万次下载。这是今年最严重的 Python 供应链安全事件之一。",
+      "detail_content": "【核心事件】2026年3月24日，Andrej Karpathy 在推特发布紧急警告，揭露 litellm（一个流行的 LLM API 代理库，日均下载 340 万次）遭受 PyPI 供应链攻击。恶意版本 1.82.7 被上传至 PyPI，执行 pip install litellm 即触发数据窃取。推文获得 15946 赞、2955 转发，引发广泛关注。\n\n【关键细节与引用】Karpathy 原文列举了被窃取的数据类型：\"SSH keys, AWS/GCP/Azure creds, Kubernetes configs, git credentials, env vars (all your API keys), shell history, crypto wallets, SSL private keys, CI/CD secrets, database credentials\"。根据 Snyk 的详细分析（Karpathy 后续引用），恶意版本于 UTC 10:39 发布，PyPI 于约 13:38 实施隔离，存活约 3 小时。按 340 万日下载量估算，约 42.5 万次下载中可能有 2-8 万次实际暴露（许多下载锁定了旧版本）。\n\n【背景与上下文】litellm 是 AI 开发者广泛使用的库，用于统一调用多家 LLM API。它在企业 AI 基础设施中非常常见。此次攻击再次暴露了 Python 生态系统的供应链安全隐患——任何流行包都可能成为攻击目标。此前 PyTorch 等项目也曾遭遇类似攻击。\n\n【影响与前瞻】受影响的开发者需要立即轮换所有凭证。这一事件可能推动更多团队采用依赖锁定、签名验证等安全措施。对于 AI 基础设施的供应链安全，行业需要更系统性的解决方案。",
+      "source": "@karpathy",
+      "source_type": "opentwitter",
+      "url": "https://x.com/karpathy/status/2036487306585268612",
+      "timestamp": "2026-03-24T16:56:24Z",
+      "importance": 9,
+      "tags": [
+        "安全",
+        "供应链攻击",
+        "litellm",
+        "PyPI",
+        "Karpathy"
+      ],
+      "batch_time": "2026-03-25T09:00:00+08:00"
+    },
+    {
+      "title": "Claude Code Channels 发布：通过 Telegram/Discord 远程控制开发会话",
+      "summary": "Thariq 宣布 Claude Code Channels 正式发布，开发者可以通过 Telegram 和 Discord 直接控制 Claude Code 会话，实现手机端远程编程。推文获得 25753 赞和 2368 转发，是近期 Claude Code 反响最大的功能发布。Alex Albert 评论说 'The future where I never have to open up my laptop to get work done is becoming real very fast'。",
+      "detail_content": "【核心事件】2026年3月19日，Anthropic Claude Code 产品负责人 Thariq 宣布 Claude Code Channels 发布。该功能允许开发者通过 Telegram 和 Discord 消息控制正在运行的 Claude Code 会话。推文获得了惊人的 25753 赞、2368 转发和 1840 引用，是 Claude Code 发布以来反响最大的单条功能公告。\n\n【关键细节与引用】Thariq 原文：\"We just released Claude Code channels, which allows you to control your Claude Code session through select MCPs, starting with Telegram and Discord. Use this to message Claude Code directly from your phone.\" 配套发布了 GitHub 上的官方插件仓库（anthropics/claude-plugins-official），包含 Telegram 和 Discord 的详细接入指南。Alex Albert 在3月23日补充评论：\"The future where I never have to open up my laptop to get work done is becoming real very fast\"，获得 1434 赞。\n\n【背景与上下文】Claude Code Channels 本质上是通过 MCP（Model Context Protocol）协议将即时通讯平台接入 Claude Code。这让开发者可以在通勤、会议间隙甚至散步时继续指挥 AI 编程。结合近期发布的 Skills 系统和 Auto Mode，Claude Code 正在从 \"终端内的 AI 助手\" 演变为 \"随时随地可用的 AI 开发伙伴\"。\n\n【影响与前瞻】Channels 功能将显著改变开发者的工作模式。配合 agentic coding 能力，开发者可以在手机上发出高层指令，Claude Code 在后台自主完成。预计后续会支持更多平台和更丰富的控制能力。",
+      "source": "@trq212",
+      "source_type": "opentwitter",
+      "url": "https://x.com/trq212/status/2034761016320696565",
+      "timestamp": "2026-03-19T22:36:44Z",
+      "importance": 9,
+      "tags": [
+        "Claude Code",
+        "Channels",
+        "Telegram",
+        "Discord",
+        "远程开发"
+      ],
+      "batch_time": "2026-03-25T09:00:00+08:00"
+    },
+    {
+      "title": "Thariq 发布 Claude Code Skills 深度指南",
+      "summary": "Thariq 发布了一篇关于 Claude Code Skills 的深度长文，系统介绍了如何构建和使用 Skills 来彻底改变团队工作方式。文章获得 15880 赞和 2207 转发。Boris Cherny 评价 'Really great writeup'（4472 赞）。Thariq 透露这篇文章写了 1.5 周，Claude 帮助做了大量研究工作。他还举办了 Skills 直播，邀请 Uber 团队分享企业级 Skills 经验。",
+      "detail_content": "【核心事件】2026年3月17日，Anthropic Claude Code 产品负责人 Thariq 发布了一篇关于 Skills 系统的深度技术文章（以 X Article 形式发布）。这是目前最全面的 Claude Code Skills 使用指南。推文获得 15880 赞、2207 转发、523 引用转发。\n\n【关键细节与引用】Thariq 的推文原文：\"Using Skills well is a skill issue. I didn't quite realize how much until I wrote this, the best can completely transform how your team works.\"（3840 赞）。Boris Cherny 转发评价 \"Really great writeup\"（4472 赞）。Thariq 透露写作过程：\"This one took me longer than most, I wrote it over 1.5 weeks. Claude does a lot of research for me, e.g. it researched and categorized all our skills and helps generate a bunch of examples.\" 3月19日，Thariq 宣布举办 Skills 直播，特邀 Uber 的 Adam Huda 分享企业级 Skills 使用经验。\n\n【背景与上下文】Skills 是 Claude Code 的扩展机制，允许用户通过 Markdown 文件定义特定任务的工作流程、最佳实践和约束条件。好的 Skill 可以让 Claude Code 在特定领域达到专家级表现。这篇文章的发布标志着 Skills 从 \"高级用户功能\" 变成了 \"Claude Code 核心工作方式\"。\n\n【影响与前瞻】Skills 正在从个人开发者扩展到企业团队场景。预计会有更多第三方 Skills 生态出现。Thariq 的 pinned thread 汇总了他所有技术文章（7098 赞），Skills 文章是核心。",
+      "source": "@trq212",
+      "source_type": "opentwitter",
+      "url": "https://x.com/trq212/status/2033949937936085378",
+      "timestamp": "2026-03-17T16:53:48Z",
+      "importance": 8,
+      "tags": [
+        "Claude Code",
+        "Skills",
+        "开发者工具",
+        "Thariq"
+      ],
+      "batch_time": "2026-03-25T09:00:00+08:00"
+    },
+    {
+      "title": "Opus 4.5 助力理论物理学家加速研究 10 倍",
+      "summary": "Alex Albert 推荐了理论物理学家 Matthew Schwartz 的客座文章，Schwartz 在使用 Opus 4.5 后认为其水平 'roughly the level of a second-year grad student'，帮助他将研究速度提升了 10 倍。这是 Anthropic 模型在硬科学领域实际应用的重要案例。Alex 评价这篇文章展示了 AI 如何切实推动科学研究。",
+      "detail_content": "【核心事件】2026年3月24日，Alex Albert 在推特推荐了理论物理学家 Matthew Schwartz 的一篇客座博文，详细描述了 Opus 4.5 在物理研究中的实际应用效果。推文获得 772 赞、39 转发。\n\n【关键细节与引用】Alex 原文：\"Highly recommend reading this guest post by theoretical physicist Matthew Schwartz to get a sense of how AI is helping science. He found Opus 4.5 to be roughly the level of a second-year grad student and it helped him accelerate his research by 10x.\" Schwartz 是哈佛大学理论物理教授，其评价 \"second-year grad student level\" 是目前对 Opus 4.5 科研能力最具体的第三方评估之一。10 倍加速不是来自模型独立做研究，而是人机协作中大幅减少了重复性计算、文献检索和公式推导的时间。\n\n【背景与上下文】AI 在科学研究中的应用一直是学术界关注的焦点。此前 AlphaFold 在蛋白质结构预测上的突破是里程碑事件。但 LLM 在理论物理这种需要深度推理的领域的应用案例相对较少。Schwartz 的案例提供了一个有说服力的数据点。\n\n【影响与前瞻】\"研究生水平\" 的定位非常有价值——它既承认了模型的实用性，也诚实地指出了局限。10 倍加速的说法如果得到更多研究者验证，将对科研工作流产生深远影响。",
+      "source": "@alexalbert__",
+      "source_type": "opentwitter",
+      "url": "https://x.com/alexalbert__/status/2036232980059062550",
+      "timestamp": "2026-03-24T00:05:48Z",
+      "importance": 8,
+      "tags": [
+        "Opus 4.5",
+        "科学研究",
+        "物理学",
+        "AI应用"
+      ],
+      "batch_time": "2026-03-25T09:00:00+08:00"
+    },
+    {
+      "title": "Austin 展示 Claude Code + Google Ads MCP 实战工作流",
+      "summary": "Anthropic 增长营销负责人 Austin 展示了他如何用 Claude Code 连接 Google Ads MCP 进行搜索词挖掘和优化。整套工作流包括：用 GAQL 查询搜索词、按 Skill 指令过滤评估、交叉比对关键词匹配度，最终可直接在对话中添加否定关键词。所有变更需要人类明确批准。这是 Claude Code Skills 在非编程领域的实际生产案例。",
+      "detail_content": "【核心事件】2026年3月24日，Anthropic 增长营销负责人 Austin（@helloitsaustin）在推特上详细展示了他如何将 Claude Code 与 Google Ads MCP 整合，用于日常广告优化工作。\n\n【关键细节与引用】Austin 的工作流分为 5 步：1）连接 Google Ads MCP；2）编写 search-term-methodology Skill，包含专业搜索营销人员的筛选逻辑；3）运行 mine-search-terms Skill，Claude 自动用 GAQL 查询广告账户数据并评估每个搜索词；4）审核输出的否定关键词建议；5）确认后 Claude 直接通过 MCP 在 Google Ads 中执行变更。关键引用：\"all mutations require explicit approval\" — 保证了人类始终在控制回路中。\n\n【背景与上下文】Austin 此前曾分享过他作为 Anthropic 增长营销一人团队的经历。他用 Claude Code 构建了多个内部工具。这次展示的 Google Ads 工作流是 Skills 在非编程领域最具体的实战案例之一。\n\n【影响与前瞻】这个案例的意义在于：Skills 不仅仅是为开发者服务的。任何需要重复性专业判断的工作流都可以通过 Skills + MCP 实现半自动化。预计会有更多非技术领域的 Skills 模板出现。",
+      "source": "@helloitsaustin",
+      "source_type": "opentwitter",
+      "url": "https://x.com/helloitsaustin/status/2036553581625745511",
+      "timestamp": "2026-03-24T21:19:46Z",
+      "importance": 7,
+      "tags": [
+        "Claude Code",
+        "Skills",
+        "Google Ads",
+        "MCP",
+        "营销"
+      ],
+      "batch_time": "2026-03-25T09:00:00+08:00"
+    },
+    {
+      "title": "Karpathy：IDE 时代没有结束，我们需要更大的 IDE",
+      "summary": "Karpathy 发表观点：'Expectation: the age of the IDE is over. Reality: we're going to need a bigger IDE.' 他认为 AI 时代的编程单元从单个文件变成了 agent，人类向上移动到更高抽象层编程，但本质仍然是编程。推文获得 10551 赞。他还提到自己用 autoresearch loop 做研究，agent 能发现人类不会想到的架构改进。",
+      "detail_content": "【核心事件】2026年3月11日，Andrej Karpathy 发布了一条引发广泛讨论的推文，反驳了 \"IDE 时代结束\" 的观点。推文获得 10551 赞、837 转发、811 回复。\n\n【关键细节与引用】Karpathy 原文：\"Expectation: the age of the IDE is over. Reality: we're going to need a bigger IDE (imo). It just looks very different because humans now move upwards and program at a higher level - the basic unit of interest is not one file but one agent. It's still programming.\" 他还提到一个具体案例：一个 agent 在探索中发现切换 QK Norm 和 RoPE 的顺序效果更好，\"Which hyperparameter does that?\" — 暗示 agent 能发现人类不会想到的架构改进。\n\n【背景与上下文】随着 Claude Code、Cursor 等 AI 编程工具的崛起，\"vibe coding\" 和 \"IDE 已死\" 的论调流行。Karpathy 作为前 Tesla AI 总监，他的反驳代表了重要的技术视角：AI 不是取代编程，而是提升了编程的抽象层。\n\n【影响与前瞻】这个观点对开发者工具的产品方向有指导意义：未来的 IDE 需要支持 agent 编排、多任务监控、高层指令下达等新范式。Karpathy 提到他的工作分布在约 20 台不同机器上，暗示分布式 agent 编排将是下一个大需求。",
+      "source": "@karpathy",
+      "source_type": "opentwitter",
+      "url": "https://x.com/karpathy/status/2031767720933634100",
+      "timestamp": "2026-03-11T16:22:27Z",
+      "importance": 7,
+      "tags": [
+        "Karpathy",
+        "IDE",
+        "AI编程",
+        "开发者工具"
+      ],
+      "batch_time": "2026-03-25T09:00:00+08:00"
+    },
+    {
+      "title": "Jack Clark 成立 Anthropic Institute，用 Claude 调查 81000 人对 AI 的看法",
+      "summary": "Anthropic 联合创始人 Jack Clark 宣布调整角色，成立 Anthropic Institute，专注于为公众提供关于强 AI 挑战的信息。首个项目是用 Claude 调查了约 81000 人对 AI 的希望、恐惧和想法。Clark 表示 AI 进展持续加速，需要一个专门的 '引擎室' 来产出新洞察。他正在招募 '异端思考者' 加入团队。",
+      "detail_content": "【核心事件】2026年3月11日，Anthropic 联合创始人 Jack Clark 宣布在 Anthropic 内部成立 Anthropic Institute，专注于为公众产出关于强大 AI 挑战信息的新部门。推文获得 1916 赞、103 转发。\n\n【关键细节与引用】Clark 原文：\"AI progress continues to accelerate and the stakes are getting higher, so I've changed my role at Anthropic to spend more time creating information for the world about the challenges of powerful AI.\" 他将 Anthropic Institute 描述为 \"the engine room for generating new insights for the world about powerful AI\"。3月18日，Institute 的首个大型项目发布：用 Claude 调查了约 81000 人对 AI 的看法（535 赞）。Clark 还在扩大经济研究团队（Anthropic Economic Index），关注 AI 对就业的影响。\n\n【背景与上下文】Clark 此前主要负责 Anthropic 的政策和对外沟通。此次角色调整反映了 Anthropic 认为 AI 发展到了需要专门投入资源做公众沟通和研究的阶段。他在政策领域的影响力（\"speaking as someone who goes to Congress a lot\"）将帮助研究成果直接影响立法讨论。\n\n【影响与前瞻】Anthropic Institute 的成立标志着 AI 公司开始将 \"向公众解释 AI 风险\" 作为正式业务部门。81000 人的调查规模很大，后续可能产出更多高质量的公众认知研究。",
+      "source": "@jackclarkSF",
+      "source_type": "opentwitter",
+      "url": "https://x.com/jackclarkSF/status/2031746605117010245",
+      "timestamp": "2026-03-11T14:58:33Z",
+      "importance": 7,
+      "tags": [
+        "Anthropic",
+        "Anthropic Institute",
+        "Jack Clark",
+        "AI安全"
+      ],
+      "batch_time": "2026-03-25T09:00:00+08:00"
+    },
     {
       "title": "Claude 推出 Dispatch 和 Computer Use：从手机指派任务，Claude 操作你的电脑",
       "summary": "Anthropic 正式发布 Claude Dispatch 和 Computer Use 功能（研究预览）。用户可以从手机端指派任务，Claude 会在你的电脑上打开应用、操作浏览器、运行开发工具来完成任务。这标志着 Claude 从纯对话 AI 正式进入桌面代理领域，直接和 OpenAI 的 Operator 以及 Google 的 Project Mariner 竞争。Alex Albert 评论说'不用打开笔记本就能完成工作的未来正在快速到来'。",
@@ -154,23 +293,6 @@
         "Claude Code",
         "开发者工具",
         "specs"
-      ],
-      "batch_time": "2026-03-23T09:00:00+08:00"
-    },
-    {
-      "title": "Karpathy：Agent 时代需要更大的 IDE",
-      "summary": "Karpathy 发表观点引发万赞讨论：IDE 时代并未终结，反而需要更大的 IDE。人类现在在更高层级编程，基本单位从文件变成了 agent。他还描述了\"agentic org\"的概念——可以 fork 的组织代码、CEO 可以实时查看所有活动的完全透明组织。",
-      "detail_content": "【核心事件】Andrej Karpathy 于3月11日发表了一条引发广泛讨论的推文，对\"IDE 时代结束\"的说法提出反驳，认为 agent 时代实际上需要一个更大、更强的 IDE。\n\n【关键细节与引用】Karpathy 表示：\"Expectation: the age of the IDE is over. Reality: we're going to need a bigger IDE (imo). It just looks very different because humans now move upwards and program at a higher level - the basic unit of interest is not one file but one agent. It's still programming.\" 该推文获得 10,533 赞和 836 转发。他进一步阐述了\"agentic org\"概念：组织结构变成可编程的代码，可以 fork，CEO 能实时看到公司任何活动的细节。\n\n【背景与上下文】这与 Boris Cherny 提到的\"Code output per Anthropic engineer is up 200% this year\"形成呼应——当 AI agent 能完成大部分编码工作时，人类的角色转变为 agent 的管理者和指挥者，这恰恰需要更好的工具（IDE）来支持。Karpathy 还提到他的\"autoresearch labs\"在 OAuth 宕机中被清空，引出\"intelligence brownouts\"概念——当前沿 AI 出问题时相当于全球损失 IQ 分。\n\n【影响与前瞻】Karpathy 的框架预示 agent IDE 将成为下一个重要产品类别。多个团队（Claude Code、Codex、Cursor 等）都在竞争这一方向。他自己的 AgentHub 项目也在探索如何模拟\"学术界\"而非单个研究者的 agent 组织模式。",
-      "source": "Andrej Karpathy (@karpathy)",
-      "source_type": "opentwitter",
-      "url": "https://x.com/karpathy/status/2031767720933634100",
-      "timestamp": "2026-03-11T16:22:27Z",
-      "importance": 9,
-      "tags": [
-        "Karpathy",
-        "Agent",
-        "IDE",
-        "行业洞察"
       ],
       "batch_time": "2026-03-23T09:00:00+08:00"
     },
@@ -497,41 +619,6 @@
       "batch_time": "2026-03-21T09:00:00+08:00"
     },
     {
-      "title": "Anthropic 发布 Claude Code Channels：手机远程控制编程成为现实",
-      "summary": "Thariq 宣布 Claude Code Channels 正式发布，支持通过 Telegram 和 Discord MCP 直接控制 Claude Code 会话。用户可以从手机发消息给 Claude Code，实现真正的移动端编程体验。推文获得 8655 赞和 702 转发，社区反响热烈。",
-      "detail_content": "【核心事件】Anthropic 产品经理 Thariq 于 3 月 19 日宣布 Claude Code Channels 正式发布。这是一个全新功能，允许用户通过特定 MCP 从 Telegram 和 Discord 等即时通讯工具直接控制 Claude Code 会话。\n\n【关键细节与引用】Thariq 原文：We just released Claude Code channels, which allows you to control your Claude Code session through select MCPs, starting with Telegram and Discord. Use this to message Claude Code directly from your phone. 推文附带演示视频，展示了从手机端发送指令、Claude Code 在笔记本端执行的完整流程。推文获得 8655 赞、702 转发、612 评论和 661 引用。\n\n【背景与上下文】这一功能是 Claude Code 远程控制能力的自然延伸。两周前 bcherny 已经展示了从手机启动笔记本 Claude Code 会话的能力（获 4638 赞），Claude Code Channels 将这一体验正式产品化。这也契合 Anthropic 近期大力推进的 MCP 生态战略。\n\n【影响与前瞻】这一功能将显著改变开发者与 AI 编程助手的交互模式。开发者不再需要坐在电脑前才能让 Claude Code 工作——通勤时发条消息就能启动代码审查、修 bug、跑测试。",
-      "source": "Thariq (@trq212)",
-      "source_type": "opentwitter",
-      "url": "https://x.com/trq212/status/2034761016320696565",
-      "timestamp": "2026-03-19T22:36:44Z",
-      "importance": 10,
-      "tags": [
-        "Anthropic",
-        "Claude Code",
-        "MCP",
-        "远程控制",
-        "开发者工具"
-      ],
-      "batch_time": "2026-03-20T09:00:00+08:00"
-    },
-    {
-      "title": "Thariq 深度长文：Claude Code Skills 完全指南",
-      "summary": "Thariq 发布了一篇关于 Claude Code Skills 的系统性长文（X Article 格式），详细介绍了 Skills 的设计理念、分类体系和实际用法。文章获得 14970 赞和 2037 转发，是近期 Anthropic 内容中传播最广的。",
-      "detail_content": "【核心事件】Anthropic 产品经理 Thariq 于 3 月 17 日发布了一篇关于 Claude Code Skills 的深度长文，以 X Article 格式呈现。\n\n【关键细节与引用】文章引发了巨大反响：14970 赞、2037 转发、340 评论、483 引用。Thariq 在回复中透露：This one took me longer than most, I wrote it over 1.5 weeks. Claude does a lot of research for me, e.g. it researched and categorized all our skills and helps generate a bunch of examples. 此前他还发了一条伏笔推文 somehow skills are still underrated（1893 赞）。\n\n【背景与上下文】Skills 是 Claude Code 的扩展机制，允许用户通过 SKILL.md 文件定义专门能力。这篇长文可以看作是 Anthropic 推动 Skills 生态的重要举措——通过系统化的教育内容降低使用门槛。\n\n【影响与前瞻】Skills 生态的繁荣将让 Claude Code 从通用编程助手进化为可高度定制的专业工具。结合 MCP 和 Channels，Claude Code 正在构建一个完整的开发者生态系统。",
-      "source": "Thariq (@trq212)",
-      "source_type": "opentwitter",
-      "url": "https://x.com/trq212/status/2033949937936085378",
-      "timestamp": "2026-03-17T16:53:48Z",
-      "importance": 9,
-      "tags": [
-        "Anthropic",
-        "Claude Code",
-        "Skills",
-        "开发者生态"
-      ],
-      "batch_time": "2026-03-20T09:00:00+08:00"
-    },
-    {
       "title": "OpenAI 宣布收购 Astral，整合开源开发者工具进 Codex 生态",
       "summary": "OpenAI 宣布将收购开源开发者工具公司 Astral，将其能力整合到 Codex 生态系统中。这是 OpenAI 在 agentic coding 领域的又一重要布局，显示其正在通过收购加速构建完整的开发者工具链。",
       "detail_content": "【核心事件】OpenAI 于 3 月 19 日正式宣布将收购 Astral，一家专注于开源开发者工具的公司。\n\n【关键细节与引用】OpenAI 官方声明：Today we are announcing that OpenAI will acquire Astral, bringing powerful open source developer tools into our Codex ecosystem. Astral 是知名的开源工具开发商，其产品在开发者社区有广泛使用。\n\n【背景与上下文】这是 OpenAI 在开发者工具领域的持续加码。Codex 是 OpenAI 的 agentic coding 平台，此前已经整合了 GPT-5.4 的强大编码能力。通过收购 Astral，OpenAI 不仅获得技术资产，更获得了开源社区的信任和用户基础。这与 Anthropic 通过 Claude Code 有机增长的路线形成对比。\n\n【影响与前瞻】AI 编程工具的竞争正在从谁的模型更聪明转向谁的工具链更完整。OpenAI 通过收购快速补齐短板。对 Anthropic/Claude Code 和 GitHub Copilot 的竞争格局有直接影响。",
@@ -598,23 +685,6 @@
         "/loop",
         "自动化",
         "agentic AI"
-      ],
-      "batch_time": "2026-03-20T09:00:00+08:00"
-    },
-    {
-      "title": "Jack Clark 转型：全职投入 Anthropic Institute，研究 AI 的社会影响",
-      "summary": "Anthropic 联合创始人 Jack Clark 宣布调整角色，将更多时间投入到创建关于强大 AI 挑战的公共信息。他正在组建小型团队，计划做更多社会科学研究和公共讨论。",
-      "detail_content": "【核心事件】Anthropic 联合创始人 Jack Clark 于 3 月 11 日宣布角色转变，将更多精力投入到为公众创建关于 AI 挑战的信息。\n\n【关键细节与引用】Jack 原文：AI progress continues to accelerate and the stakes are getting higher, so I have changed my role at Anthropic to spend more time creating information for the world about the challenges of powerful AI.（1917 赞）。他表示正在寻找 exceptional, entrepreneurial, heterodox thinkers 加入团队。3 月 18 日他提到 I have ambitions for The Anthropic Institute to scale our work in social science generally.\n\n【背景与上下文】Anthropic Institute 于 3 月 11 日成立，紧随 Anthropic 与美国国防部供应链风险争端之后。Jack Clark 的角色转变是 Anthropic 在安全和政策领域加倍投入的信号。\n\n【影响与前瞻】联合创始人亲自转型做公共信息工作，说明 Anthropic 认为 AI 的社会影响已经到了必须系统性应对的阶段。预计 Institute 将产出更多有影响力的研究报告。",
-      "source": "Jack Clark (@jackclarkSF)",
-      "source_type": "opentwitter",
-      "url": "https://x.com/jackclarkSF/status/2031746605117010245",
-      "timestamp": "2026-03-11T14:58:33Z",
-      "importance": 7,
-      "tags": [
-        "Anthropic",
-        "Anthropic Institute",
-        "AI安全",
-        "社会影响"
       ],
       "batch_time": "2026-03-20T09:00:00+08:00"
     },
@@ -737,108 +807,6 @@
         "科学发现"
       ],
       "batch_time": "2026-03-19T09:00:00+08:00"
-    },
-    {
-      "title": "OpenAI 发布 GPT-5.4 mini 和 nano：更快更便宜的小模型",
-      "summary": "OpenAI 于 3 月 17 日推出 GPT-5.4 mini 和 GPT-5.4 nano，是 GPT-5.4 旗舰模型的轻量化版本。mini 推理速度比前代小模型快 2 倍以上，nano 仅限 API 使用，定价极低。两款模型针对编码、工具调用、多模态推理和高并发 API/子 agent 场景优化，同时 GPT-5.3 和 GPT-5.4 已在 ChatGPT 中替代了此前所有旧模型（GPT-4o、GPT-4.1、o4-mini 等全部退役）。",
-      "detail_content": "【核心事件】OpenAI 于 2026 年 3 月 17 日正式发布 GPT-5.4 mini 和 GPT-5.4 nano 两款新模型。这是 3 月 5 日发布的 GPT-5.4 旗舰模型的精简版本，主打效率和成本优势。\n\n【关键细节与引用】GPT-5.4 mini 推理速度比之前的小模型快 2 倍以上，在编码、工具调用和多模态推理方面表现突出。GPT-5.4 nano 为 API 专用模型，定价极低，面向高并发场景。同日 OpenAI 更新了 ChatGPT 模型线，GPT-4o、GPT-4.1 mini、o4-mini、GPT-5 Instant/Thinking 等旧模型全部退役，GPT-5.3 和 GPT-5.4 成为唯一选项。\n\n【背景与上下文】这延续了 OpenAI 在 3 月的密集发布节奏：月初发布 GPT-5.4 旗舰，中旬发布安全研究（instruction hierarchy、Responses API），现在补全了轻量化产品线。与 Anthropic 的 Haiku/Sonnet 定位类似，OpenAI 也在构建从旗舰到轻量的完整模型矩阵。\n\n【影响与前瞻】对开发者而言，nano 的超低成本意味着更多 agent 子任务可以用 GPT-5.4 级别能力完成。但这也加剧了与 Claude Haiku 4.5 和 Gemini 3.1 Flash-Lite 的直接竞争。模型效率竞赛已成为新战场。",
-      "source": "OpenAI",
-      "source_type": "tavily",
-      "url": "https://openai.com/index/introducing-gpt-5-4-mini-and-nano/",
-      "timestamp": "2026-03-17T17:00:57Z",
-      "importance": 9,
-      "tags": [
-        "OpenAI",
-        "GPT-5.4",
-        "模型发布",
-        "API"
-      ],
-      "batch_time": "2026-03-18T09:00:00+08:00"
-    },
-    {
-      "title": "Claude Code 发布 Code Review：多 agent PR 审查，Anthropic 工程师产出提升 200%",
-      "summary": "Boris Cherny 宣布 Claude Code 新增 Code Review 功能——由一组 agent 对每个 PR 进行深度审查。Boris 透露 Anthropic 工程师今年代码产出提升了 200%，代码审查成为瓶颈，这个功能就是为此打造的。他个人使用几周后发现它能捕获'真正重要的 bug'。该推文获 7400+ 赞。",
-      "detail_content": "【核心事件】2026 年 3 月 9 日，Boris Cherny 宣布 Claude Code 新增 Code Review 功能。这是一个由多个 agent 组成的团队，对每个 PR 运行深度代码审查。\n\n【关键细节与引用】Boris 写道：\"Code output per Anthropic engineer is up 200% this year and reviews were the bottleneck\"。他补充说自己使用了几周，发现'it catches [important bugs]'。Alex Albert 也转推表示这对内部工程和研究团队是'game changer'，称'Rare to see a product get this much praise from some of the top engineers I know'（738 赞）。\n\n【背景与上下文】这解决了一个真实痛点：当 AI 辅助编码让产出翻倍后，人类审查者成为新的瓶颈。Boris 在回复中解释了技术原理：'the more tokens you throw at a coding problem, the better the result is... separate context windows make subagents work'。审查模式按 PR 维度工作。\n\n【影响与前瞻】200% 的产出提升数据是 Anthropic 首次公开披露的内部效率指标，非常有说服力。Code Review 功能将 Claude Code 从'写代码'延伸到'审代码'，覆盖了软件开发的更完整链路。",
-      "source": "@bcherny",
-      "source_type": "opentwitter",
-      "url": "https://x.com/bcherny/status/2031089411820228645",
-      "timestamp": "2026-03-09T19:27:06Z",
-      "importance": 9,
-      "tags": [
-        "Anthropic",
-        "Claude Code",
-        "代码审查",
-        "工程效率"
-      ],
-      "batch_time": "2026-03-18T09:00:00+08:00"
-    },
-    {
-      "title": "Claude Code 可从手机远程启动笔记本上的编程会话",
-      "summary": "Boris Cherny 展示了 Claude Code 的新能力：从手机远程启动笔记本电脑上的 Claude Code 编程会话。Boris 称'This blew my mind the first time I tried it'。命令为 /remote-control。该推文获 4600+ 赞、272 转发。这意味着开发者可以在任何地方通过手机指挥 agent 在开发机上工作。",
-      "detail_content": "【核心事件】2026 年 3 月 13 日，Boris Cherny 在推特展示了 Claude Code 新的远程控制功能——用户可以从手机上远程启动和控制笔记本电脑上的 Claude Code 编程会话。\n\n【关键细节与引用】Boris 写道：\"You can now launch Claude Code sessions on your laptop *from your phone*. This blew my mind the first time I tried it\"。在回复中他确认这是默认功能，命令为 /remote-control。推文获 4,632 赞、272 转发、304 回复、81 引用。\n\n【背景与上下文】同日 Boris 还宣布 Opus 4.6 1M 成为 Max/Team/Enterprise 用户的 Claude Code 默认模型。第二天他又宣布周末和非高峰时段 Claude 使用量翻倍（7,337 赞）。这三个公告叠加起来，代表了 Claude Code 在一周内的重大体验升级。\n\n【影响与前瞻】远程控制功能将 Claude Code 从'坐在电脑前的编程工具'变成了'随时随地的开发 agent'。想象一下在通勤路上通过手机让 agent 修复 bug、跑测试、处理 PR——这是 agentic coding 的新形态。",
-      "source": "@bcherny",
-      "source_type": "opentwitter",
-      "url": "https://x.com/bcherny/status/2032578639276159438",
-      "timestamp": "2026-03-13T22:04:45Z",
-      "importance": 8,
-      "tags": [
-        "Anthropic",
-        "Claude Code",
-        "远程控制",
-        "移动开发"
-      ],
-      "batch_time": "2026-03-18T09:00:00+08:00"
-    },
-    {
-      "title": "Karpathy autoresearch 取得突破：AI 自主发现 20 个可叠加的训练改进",
-      "summary": "Karpathy 公布 autoresearch 项目最新成果：让 AI agent 在 depth=12 模型上自主调参 2 天，发现了约 20 个改进 validation loss 的变更，且这些改进全部可叠加并迁移到更大的 depth=24 模型。他随后将项目开源（github.com/karpathy/autoresearch），获 1.9 万赞、2100 转发。他提出下一步是让 agent 像 SETI@home 一样大规模异步协作。",
-      "detail_content": "【核心事件】2026 年 3 月 9 日，Karpathy 公布了 autoresearch 项目的最新成果。他让 AI agent 在 nanochat 的 depth=12 模型上自主运行了约 2 天，发现了约 20 个能改善 validation loss 的代码变更。\n\n【关键细节与引用】Karpathy 写道：\"I tested these changes yesterday and all of them were additive and transferred to larger (depth=24) models. Stacking up all of these changes [shows significant improvement]\"。他在 3 月 7 日已开源了项目代码（github.com/karpathy/autoresearch），描述为'nanochat LLM training core stripped down to a single-GPU, one file version of ~630 lines of code'。该成果推文获 19,225 赞、2,111 转发。\n\n【背景与上下文】此前 Karpathy 在 2 月 27 日展示了 8 个 agent（4 Claude + 4 Codex）并行运行 nanochat 实验的视频（8,710 赞），坦承'it doesn't work and it's a mess... but it's still very [early]'。两周后取得了实质性突破。他还调侃'ah yes, this is what post-agi feels like :) i didn't touch anything. brb sauna'。\n\n【影响与前瞻】Karpathy 提出了更宏大的愿景：autoresearch 下一步要实现 SETI@home 式的大规模异步协作——'The goal is not to emulate a single PhD student, it's to emulate a research community of them'。他还提出'we're going to need a bigger IDE'（10,398 赞），认为基本工作单元已从单个文件变成单个 agent，我们需要 agent 指挥中心。这可能预示着 AI 研究自动化的新范式。",
-      "source": "@karpathy",
-      "source_type": "opentwitter",
-      "url": "https://x.com/karpathy/status/2031135152349524125",
-      "timestamp": "2026-03-09T22:28:51Z",
-      "importance": 8,
-      "tags": [
-        "Karpathy",
-        "autoresearch",
-        "AI研究自动化",
-        "开源"
-      ],
-      "batch_time": "2026-03-18T09:00:00+08:00"
-    },
-    {
-      "title": "Opus 4.6 1M 成默认模型 + Claude 用量翻倍促销",
-      "summary": "3 月 13 日 Boris 宣布 Opus 4.6 1M 成为 Max/Team/Enterprise 的 Claude Code 默认 Opus 模型，Pro 和 Sonnet 用户可通过 /extra-usage 开启。同时 API 不再收取长上下文额外费用、不需要 beta header、支持单次请求最多 600 张图片。次日又宣布周末和非高峰时段使用量翻倍，为期两周。",
-      "detail_content": "【核心事件】2026 年 3 月 13-14 日，Anthropic 连续发布两项重大更新：Opus 4.6 1M context 成为 Claude Code 默认模型，以及为期两周的使用量翻倍促销。\n\n【关键细节与引用】Boris Cherny 3 月 13 日宣布（4,550 赞）：\"Opus 4.6 1M is now the default Opus model for Claude Code users on Max, Team, and Enterprise plans. Pro and Sonnet users can opt in with /extra-usage\"。附带改进：API 长上下文不再加价、不需要 beta header、单次请求最多 600 张图片。Alex Albert 补充了更多细节。3 月 14 日 Boris 又宣布（7,337 赞）：\"We doubled Claude usage on weekends, and outside 5–11am PT on weekdays for the next 2 weeks\"。\n\n【背景与上下文】1M context 是 Opus 4.6 的标志性能力之一，此前需要付费升级或 beta 标志才能使用。将其设为默认意味着 Anthropic 在基础设施上已足够自信来大规模推广。使用量翻倍则是一种激进的获客策略，利用非高峰算力资源。\n\n【影响与前瞻】对 Claude Code 用户而言，默认 1M context 意味着处理大型代码库更加顺畅，不需要频繁切换或压缩上下文。使用量翻倍则降低了尝试门槛。",
-      "source": "@bcherny",
-      "source_type": "opentwitter",
-      "url": "https://x.com/bcherny/status/2032514807388123255",
-      "timestamp": "2026-03-13T17:51:07Z",
-      "importance": 7,
-      "tags": [
-        "Anthropic",
-        "Claude Code",
-        "Opus 4.6",
-        "1M Context"
-      ],
-      "batch_time": "2026-03-18T09:00:00+08:00"
-    },
-    {
-      "title": "Alex Albert：Generative UI 上线，Claude 可生成交互式界面",
-      "summary": "Alex Albert 3 月 12 日宣布 Claude 的 Generative UI 功能上线，称'it works very very well'。这允许 Claude 在对话中动态生成可交互的 UI 组件，而非仅返回文本。此前他还预测'整个依赖电子表格和 PPT 的行业将在未来几个月开始转型'。",
-      "detail_content": "【核心事件】2026 年 3 月 12 日，Alex Albert 宣布 Claude 的 Generative UI 功能正式上线。他写道：\"Generative UI is here and it works very very well\"，推文获 949 赞、28 转发。\n\n【关键细节与引用】Generative UI 允许 Claude 在对话中动态生成交互式界面组件。此前一天 Alex 发推称：\"Claude for all things knowledge work feels like it is on a very similar trajectory to what agentic coding experienced last year. I expect entire industries that rely on spreadsheets and powerpoints to begin to be transformed in the next few months\"（477 赞）。\n\n【背景与上下文】这是 Anthropic 向企业知识工作领域扩展的一部分。结合此前发布的 Claude in PowerPoint 插件、interactive tools in Claude 等功能，Anthropic 正在将 Claude 从聊天机器人打造成完整的工作平台。\n\n【影响与前瞻】Generative UI 将 Claude 的输出从纯文本扩展到交互式组件，大幅提升了在数据分析、报表、仪表盘等场景的实用性。Alex 对'电子表格和 PPT 行业转型'的预测虽然大胆，但结合 Generative UI + PowerPoint 插件 + interactive tools 的组合拳，逻辑上是自洽的。",
-      "source": "@alexalbert__",
-      "source_type": "opentwitter",
-      "url": "https://x.com/alexalbert__/status/2032161705506324936",
-      "timestamp": "2026-03-12T18:28:00Z",
-      "importance": 7,
-      "tags": [
-        "Anthropic",
-        "Claude",
-        "Generative UI",
-        "企业工具"
-      ],
-      "batch_time": "2026-03-18T09:00:00+08:00"
     }
   ]
 }
