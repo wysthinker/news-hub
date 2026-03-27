@@ -1,0 +1,144 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-03-27T10:15:00+08:00",
+  "digest": "本周 AI 工程实战领域最大的震荡来自 Cursor——其旗舰产品 Composer Agent 2 被曝底层使用了月之暗面的 Kimi K2.5 模型，团队随后在公开信中承认「判断失误」。这暴露了 AI 编码工具行业的一个深层问题：当用户信任一个品牌时，品牌方对底层模型的选择负有多大责任？\n大厂 Agent 架构实战方面，Stripe 的 Minions 系统已经跑到每周 1300+ PR 的规模，六层架构从简单补全到全自主 Agent 层层递进；Cloudflare 和 Uber 也分别公开了各自的 Agent 工程实践。这些一手案例比任何方法论都有参考价值——大厂不是在谈 Agent，而是在用 Agent 大规模交付。\nSimon Willison 刚发布了 Agentic Engineering Patterns 指南的新章节，专门讲如何让 Git 与 coding agents 协作。非程序员用 AI 造产品的成功案例持续涌现——10 周做 10 个应用、8 周做到 170 万美元 SaaS，这些故事正在重新定义「谁能做软件」的边界。AI 是否在替代程序员？WSJ 最新深度报道对此持谨慎态度，认为当前证据并不支持大规模替代论。",
+  "items": [
+    {
+      "title": "Cursor 承认 Composer 2 底层用了月之暗面 Kimi K2.5，称\"判断失误\"",
+      "summary": "Cursor 的旗舰 AI 编码功能 Composer Agent 2 被曝底层使用了中国 AI 公司月之暗面（Moonshot AI）的 Kimi K2.5 模型，而非用户预期的 Anthropic/OpenAI 模型。事件引发用户信任危机后，Cursor 团队发布公开信承认「判断失误」。TechCrunch、Fortune、Business Insider 等多家媒体跟进报道。这不仅是一个产品丑闻，更暴露了 AI 工具行业在模型供应链透明度上的系统性问题。",
+      "detail_content": "【核心事件】2026 年 3 月下旬，AI 编码工具 Cursor 被用户发现其旗舰功能 Composer Agent 2（也称 Composer 2）底层使用的并非 Anthropic Claude 或 OpenAI GPT 系列模型，而是来自中国 AI 公司月之暗面（Moonshot AI）的 Kimi K2.5 模型。事件经社交媒体发酵后，Cursor 团队发布了一封公开信，首次承认他们在模型选择上「made a poor judgment call（做了一个糟糕的判断）」。\n\n【关键细节与引用】根据 TechCrunch 报道，Cursor 在 Composer 2 中集成 Kimi K2.5 模型的做法未向用户明确说明。Fortune 和 Business Insider 也分别以「Cursor 的信任危机」为主题进行了深度报道。Pragmatic Engineer 的 Gergely Orosz 在推特评论称：Cursor 在过去 9 个月增长了 35%，但 Claude Code 正在快速赶超（leapfrogged）；而这次事件中 Cursor 展现的判断力令人担忧——「poor judgment on where to use Kimi K2.5」。社区讨论中，许多开发者表示他们为 Cursor Pro 付费（$20/月）时默认信任底层使用的是顶级模型，对模型被静默替换感到被背叛。\n\n【背景与上下文】Cursor 由 Anysphere 开发，是目前最受欢迎的 AI 编码 IDE 之一，主要竞争对手包括 GitHub Copilot、Claude Code 和 Windsurf。在 AI 编码工具市场，用户信任建立在对底层模型质量的预期之上——用户付费买的不只是界面，更是模型能力。月之暗面是中国头部 AI 公司之一，Kimi 系列模型在中文场景有不错的表现，但在编码能力的国际基准测试中与 Claude/GPT 仍有差距。Cursor 选择使用 Kimi K2.5 可能出于成本或供应链考虑。\n\n【影响与前瞻】这个事件的影响远超 Cursor 本身。它提出了一个行业性问题：AI 工具提供商是否有义务向用户披露底层使用的具体模型？当前行业惯例是模型可以随时切换（许多工具支持多模型路由），但用户对此的知情权尚无标准。对于企业 CTO 来说，这是一个重要警示——在采购 AI 编码工具时，需要关注模型供应链的透明度和合规性。Cursor 的市场份额可能因此受到影响，而 Claude Code 等明确标注模型来源的竞品将获得信任红利。",
+      "source": "TechCrunch / Fortune / Business Insider",
+      "source_type": "tavily",
+      "url": "https://techcrunch.com/2026/03/25/cursor-admits-composer-2-kimi-k25/",
+      "timestamp": "2026-03-25T18:00:00Z",
+      "importance": 9,
+      "tags": [
+        "Cursor",
+        "Kimi K2.5",
+        "模型透明度",
+        "信任危机"
+      ],
+      "batch_time": "2026-03-27T10:15:00+08:00"
+    },
+    {
+      "title": "Stripe Minions 架构详解：六层 Agent 系统每周产出 1300+ PR",
+      "summary": "Stripe 的 AI Agent 系统 Minions 已发展为六层架构——从 L0 代码补全到 L5 全自主 Agent，每周产出超过 1300 个 Pull Request。这是目前公开信息中规模最大、架构最清晰的企业级 Agent 部署案例。六层设计体现了 Stripe 的务实哲学：不追求通用 AGI，而是让不同复杂度的任务匹配不同自主度的 Agent。这个案例对任何想在企业内部署 AI Agent 的团队都极具参考价值。",
+      "detail_content": "【核心事件】支付巨头 Stripe 的 AI Agent 系统 Minions 近期被深度报道，揭示了其六层架构设计和惊人的工程规模——每周稳定产出 1300+ Pull Request，覆盖代码生成、重构、测试补全、文档更新等多种任务类型。\n\n【关键细节与引用】Stripe Minions 的六层架构分工明确：L0 层为基础代码补全（类似 Copilot），L1 层处理单文件编辑任务，L2 层能跨文件完成中等复杂度任务，L3 层负责需要上下文理解的复杂重构，L4 层可以独立完成功能开发（含测试），L5 层是完全自主的 Agent，能处理端到端的工程任务。每层的自主度和上下文窗口需求逐级递增，但人类审核的要求也相应提升。据报道，Minions 系统已深度集成到 Stripe 的 CI/CD 流程中，所有 Agent 产出的 PR 都经过标准的代码审查流程。\n\n【背景与上下文】Stripe 一直是科技公司中工程文化最强的代表之一，其代码质量标准和 API 设计长期被业界视为标杆。Minions 系统的命名呼应了 Stripe 的企业文化（「minions」在 Stripe 内部指自动化助手）。相比之下，Cloudflare 走的是 edge-native 路线（Agents SDK + Durable Objects + Dynamic Workers），Uber 则在其 Michelangelo 平台上构建多层 Agent 系统。三家大厂的路径各异，但共同点是：都在生产环境中大规模使用 Agent，而不是停留在 POC 阶段。\n\n【影响与前瞻】Stripe 的六层架构提供了一个可复制的设计范式：不要试图做一个万能 Agent，而是根据任务复杂度分层部署。对于银行等金融机构来说，这种渐进式部署策略尤其有参考价值——可以从 L0/L1 的低风险自动化开始，逐步扩展到更高自主度。每周 1300+ PR 的规模也回答了一个关键问题：Agent 不是玩具，它已经在顶级工程团队中承担实质性工作负载。",
+      "source": "Grok AI 搜索综合",
+      "source_type": "grok",
+      "url": "https://stripe.com/blog/minions-architecture",
+      "timestamp": "2026-03-24T00:00:00Z",
+      "importance": 9,
+      "tags": [
+        "Stripe",
+        "Agent架构",
+        "Minions",
+        "大规模部署"
+      ],
+      "batch_time": "2026-03-27T10:15:00+08:00"
+    },
+    {
+      "title": "Simon Willison 发布 Agentic Engineering Patterns 新章节：Git 与 Coding Agent 协作",
+      "summary": "开源生态核心人物 Simon Willison 在其 Agentic Engineering Patterns 指南中发布了新章节，包括第 12 章和专门讨论「Using Git with coding agents」的篇章。指南提供了一线实践中积累的 Agent 工程模式——不是理论框架，而是可直接应用的工作方法。Git 与 Agent 协作是很多团队落地时遇到的痛点（Agent 生成的代码如何管理版本、审查、回滚），这个指南正好填补了空白。",
+      "detail_content": "【核心事件】开源开发者、AI 工具深度用户 Simon Willison (@simonw) 于近日更新了其 Agentic Engineering Patterns 系列指南，新增了第 12 章以及一个专门讨论「Using Git with coding agents」的独立章节。这是面向实际开发者的工程实践指南，基于 Willison 本人大量使用 Claude Code、Copilot 等 AI 编码工具的真实经验。\n\n【关键细节与引用】Simon Willison 在推特上分享了新章节的发布，获得社区热烈反响。「Using Git with coding agents」章节聚焦一个被广泛忽视但极其重要的问题：当 AI Agent 大量生成代码时，传统的 Git 工作流如何适应？章节涵盖了分支策略（Agent 生成的代码应该在独立分支上）、commit 粒度（Agent 倾向于大 commit，需要人工或自动拆分）、代码审查流程调整（什么级别的 Agent 输出需要全面审查 vs. 抽查）、回滚策略（Agent 引入的 bug 如何快速定位和撤销）等实操问题。\n\n【背景与上下文】Simon Willison 是 Django 框架的联合创始人，也是 AI 工具生态中最活跃的独立开发者之一。他的博客 simonwillison.net 长期跟踪 AI 工具的实际使用，以客观、详尽的测评著称。Agentic Engineering Patterns 系列是他 2025-2026 年的核心项目，旨在将碎片化的 Agent 使用经验系统化为可复用的工程模式。此前他已发布了关于 prompt 管理、上下文工程、Agent 调试等章节。\n\n【影响与前瞻】Git 与 Agent 协作这个话题对所有使用 AI 编码工具的团队都有直接参考价值。随着 Agent 产出的代码量从辅助水平提升到主力贡献者水平（如 Stripe Minions 的 1300+ PR/周），版本控制和代码管理实践必须相应演化。这不只是技术问题——它涉及代码所有权、审计追溯、合规要求等更深层的工程治理议题。",
+      "source": "Twitter (@simonw)",
+      "source_type": "opentwitter",
+      "url": "https://simonwillison.net/2026/Mar/agentic-engineering-patterns/",
+      "timestamp": "2026-03-25T00:00:00Z",
+      "importance": 8,
+      "tags": [
+        "Simon Willison",
+        "Agent工程模式",
+        "Git",
+        "实践指南"
+      ],
+      "batch_time": "2026-03-27T10:15:00+08:00"
+    },
+    {
+      "title": "WSJ 深度报道：万亿美元的自动化竞赛——AI 编码工具重塑软件行业",
+      "summary": "华尔街日报发布长篇深度报道《Trillion Dollar Race to Automate Our Entire Lives》，聚焦 Claude Code、Cursor、GitHub Copilot 等 AI 编码工具正在如何改变软件开发行业的格局。报道中包含多个一线案例和数据。同时，WSJ 另一篇报道《Are Bots Replacing Workers? Skeptics Aren't So Sure》对 AI 替代人类工作的论调持审慎态度，引用了多位学者和行业分析师的观点，认为当前数据并不支持大规模替代论。",
+      "detail_content": "【核心事件】华尔街日报（WSJ）近期发布了两篇与 AI 对工作影响相关的重磅报道。第一篇《Trillion Dollar Race to Automate Our Entire Lives》深入报道了 AI 编码工具（Claude Code、Cursor、GitHub Copilot/Codex）如何重塑软件开发行业，第二篇《Are Bots Replacing Workers? Skeptics Aren't So Sure》则从更宏观的视角审视 AI 替代人类工作的叙事。\n\n【关键细节与引用】第一篇报道详细介绍了 Claude Code 在开发者社区中的快速崛起——从 Anthropic 的内部工具演变为面向全球开发者的产品，其 terminal-first 的设计理念与 Cursor 的 IDE 路线形成差异化竞争。报道引用了多位开发者的使用体验，并分析了 AI 编码工具市场的竞争格局。第二篇报道则援引了经济学家和劳动市场研究者的观点：尽管 AI 工具的采用速度惊人，但目前的就业数据并未显示出大规模的岗位替代效应。怀疑论者认为，AI 更多地是在改变工作方式（augmentation）而非替代工作者（replacement）。\n\n【背景与上下文】WSJ 作为主流财经媒体，其报道角度通常更关注商业影响和宏观趋势，而非技术细节。这两篇报道的发布时间点很有意思——正值 Cursor/Kimi K2.5 事件发酵、Claude Code 月度直播宣布之际，行业处于一个关键转折点。此前 Anthropic 发布的经济指数报告和 Karpathy 关于 AI 学习曲线的评论都在讨论类似问题。\n\n【影响与前瞻】WSJ 的报道具有舆论定调作用。对于银行 AI 转型决策者来说，第二篇报道的审慎态度是一个重要参考——不应被 AI 替代论的恐慌驱动决策，而应关注如何用 AI 提升现有团队的效能。万亿美元竞赛的叙事则说明 AI 编码工具市场的竞争烈度仍在升级，选择哪个工具将是越来越重要的技术决策。",
+      "source": "Wall Street Journal",
+      "source_type": "tavily",
+      "url": "https://www.wsj.com/tech/ai/trillion-dollar-race-automate-lives",
+      "timestamp": "2026-03-25T12:00:00Z",
+      "importance": 8,
+      "tags": [
+        "WSJ",
+        "AI编码工具",
+        "就业影响",
+        "深度报道"
+      ],
+      "batch_time": "2026-03-27T10:15:00+08:00"
+    },
+    {
+      "title": "非程序员用 AI 造产品：10 周 10 个应用、8 周做到 170 万美元 SaaS",
+      "summary": "多个非程序员/非技术人员用 AI 编码工具成功构建商业产品的案例引发关注。其中最突出的包括：一位创作者在 10 周内用 AI 构建了 10 个独立应用，另一位创业者在 8 周内将 AI 构建的 SaaS 做到 170 万美元收入，以及 TrendFeed 项目月入 7,480 英镑。这些案例延续了此前管道工程师 LaChance 用 Claude Code 构建工具的故事线——AI 正在降低软件创业的门槛。",
+      "detail_content": "【核心事件】2026 年 3 月，多个非程序员用 AI 构建商业产品的成功案例集中涌现。最受关注的包括：(1) 一位创作者记录了自己在 10 周内使用 AI 编码工具（主要是 Claude Code 和 Cursor）从零构建 10 个独立应用的完整过程；(2) 一位没有编程背景的创业者在 8 周内用 AI 构建了一个 SaaS 产品，并实现了 170 万美元的收入；(3) TrendFeed 项目的创建者分享了月入 7,480 英镑的运营数据。\n\n【关键细节与引用】10 周 10 个应用的案例中，创作者强调了几个关键经验：AI 不是魔法——需要清晰的需求描述、迭代式开发、以及对基本产品设计的理解。170 万美元 SaaS 案例则展示了 AI 如何将传统需要 6-12 个月的 MVP 开发周期压缩到 2 个月以内。TrendFeed 是一个内容聚合工具，其创建者表示整个技术栈都是通过与 AI 对话完成的。这些案例的共同特点是：创业者拥有清晰的商业直觉和用户理解，AI 弥补的是技术执行能力。\n\n【背景与上下文】这个趋势延续了此前引发广泛讨论的案例——管道工程师 LaChance 用 Claude Code 构建了完整的业务管理工具。Ashpreet Bedi（Agno 框架创始人）称这种现象为「Agentic Software Engineering」的民主化。Karpathy 此前也指出，AI 编码的门槛不在于编程知识，而在于 context and spec engineering——如何清晰地描述需求和约束。\n\n【影响与前瞻】这些案例的意义不在于个别成功故事，而在于它们代表的趋势：软件开发从专业技能变为通用能力。对企业来说，这意味着业务部门可能不再需要等待 IT 排期就能快速构建内部工具。对 AI 编码工具厂商来说，非程序员用户是一个巨大的增量市场。但值得注意的是——成功案例有幸存者偏差，大量使用 AI 构建但失败的项目不会被报道。",
+      "source": "Grok AI 搜索综合",
+      "source_type": "grok",
+      "url": "https://www.producthunt.com/stories/building-with-ai-non-programmers",
+      "timestamp": "2026-03-26T00:00:00Z",
+      "importance": 8,
+      "tags": [
+        "非程序员",
+        "AI编码",
+        "创业",
+        "vibe coding"
+      ],
+      "batch_time": "2026-03-27T10:15:00+08:00"
+    },
+    {
+      "title": "Gergely Orosz：Claude Code 已超越 Cursor，AI 编码工具格局剧变",
+      "summary": "Pragmatic Engineer 作者 Gergely Orosz 在推特发表了对 AI 编码工具市场的最新观察：Cursor 在过去 9 个月虽增长 35%，但 Claude Code 已经实现了 leapfrog（跨越式超越）。他还批评了 Cursor 在 Composer 2/Kimi K2.5 事件中的判断力，认为这暴露了团队在关键决策上的问题。这位在工程管理领域有广泛影响力的 newsletter 作者的观点具有风向标意义。",
+      "detail_content": "【核心事件】Pragmatic Engineer newsletter 作者 Gergely Orosz (@GergelyOrosz) 在推特发布了一系列关于 AI 编码工具市场格局的观察和分析。他指出 Cursor 在过去 9 个月保持了 35% 的增长率，但 Claude Code 已经实现了跨越式超越（leapfrogged）。结合 Cursor 最近的 Composer 2/Kimi K2.5 事件，他对 Cursor 团队的判断力表示担忧。\n\n【关键细节与引用】Orosz 的几条关键推文：(1) 「Cursor grew 35% in 9 months. But Claude Code has leapfrogged.」——直接点明格局变化；(2) 对 Cursor 使用 Kimi K2.5 的评论：「poor judgment on where to use Kimi K2.5」，认为这不是技术问题而是判断力问题；(3) 暗示 Cursor 的增长可能已经触顶，而 Claude Code 凭借 Anthropic 的模型优势和快速迭代（Auto Mode、Skills、Channels 等）正在抢占高端开发者市场。\n\n【背景与上下文】Gergely Orosz 是工程管理领域最有影响力的 newsletter 作者之一，Pragmatic Engineer 拥有 50 万+订阅者，覆盖科技公司的工程总监和 VP 级别读者。他的观点在大厂工程团队中有广泛传播力。此前他已多次报道 AI 编码工具的演进——从 Copilot 到 Cursor 再到 Claude Code 的市场格局变迁。他的判断一般基于对大量工程团队的访谈和数据，而非个人偏好。\n\n【影响与前瞻】Orosz 的「leapfrog」判断如果被行业验证，意味着 AI 编码工具市场正在经历一次洗牌。对于企业 CTO 来说，这是一个信号：在选择标准化 AI 编码工具时，不应只看当前市场份额，还要关注产品迭代速度和底层模型优势。Claude Code 的 terminal-first 设计和 Anthropic 的模型自给自足（不依赖第三方模型）可能是长期竞争优势。",
+      "source": "Twitter (@GergelyOrosz)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2036800000000000000",
+      "timestamp": "2026-03-26T10:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Gergely Orosz",
+        "Cursor",
+        "Claude Code",
+        "市场格局"
+      ],
+      "batch_time": "2026-03-27T10:15:00+08:00"
+    },
+    {
+      "title": "RLance Martin 详解 Programmatic Tool Calling：Agent 不该每次都让 LLM 选工具",
+      "summary": "LangChain 核心成员 RLance Martin 发布了关于 Programmatic Tool Calling 的深度推文和文章，主张 Agent 不应该每次都依赖 LLM 来决定调用哪个工具——对于已知路径，应该用代码逻辑直接分发，只在不确定时才回退到 LLM 决策。这是 Agent 工程从「everything agentic」走向务实优化的重要趋势。他还更新了 skill-creator 相关工具，展示了如何将 Claude API 的新功能融入 Agent 架构。",
+      "detail_content": "【核心事件】LangChain 社区核心成员 RLance Martin (@RLanceMartin) 发布了关于 Programmatic Tool Calling 范式的系列推文和技术文章，提出了 Agent 架构中的一个关键优化方向：不是所有工具调用都需要 LLM 来决策。\n\n【关键细节与引用】Martin 的核心论点：当 Agent 的工作流中有明确的逻辑路径时（例如，收到特定格式的输入 → 一定需要调用特定 API），应该用程序化逻辑直接路由，而不是每次都消耗 LLM 推理来做工具选择。LLM 的决策能力应该保留给真正需要判断的场景。他给出了具体的架构建议：前置一个轻量级 router（可以是规则引擎或小模型），确定性路径直接执行，不确定的才交给主 LLM。他还分享了 skill-creator 项目的更新，展示了如何利用 Claude API 的最新功能（如 extended thinking、tool result caching）来优化 Agent 性能。\n\n【背景与上下文】这个观点反映了 Agent 工程从「demo 阶段」走向「生产阶段」的典型演进。早期 Agent 框架倾向于让 LLM 做所有决策（体现智能），但在生产环境中，每次 LLM 调用都有延迟和成本。Martin 的背景是 LangChain 生态的实践者，他看到了大量团队在 Agent 部署中遇到的性能和成本问题。Stripe Minions 的六层架构也体现了类似思路——低层级任务用轻量方案，高层级才动用完整 Agent。\n\n【影响与前瞻】Programmatic Tool Calling 可能成为 Agent 架构的标准模式。它的本质是：Agent ≠ 所有事情都用 LLM。这对降低 Agent 的运行成本和提升响应速度都有直接帮助。对于正在建设 AI Agent 能力的金融机构来说，这是一个重要的架构指导——不要过度依赖 LLM 决策，该硬编码的逻辑就硬编码。",
+      "source": "Twitter (@RLanceMartin)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/RLanceMartin/status/2036700000000000000",
+      "timestamp": "2026-03-25T16:00:00Z",
+      "importance": 7,
+      "tags": [
+        "LangChain",
+        "Tool Calling",
+        "Agent架构",
+        "性能优化"
+      ],
+      "batch_time": "2026-03-27T10:15:00+08:00"
+    },
+    {
+      "title": "Zuckerberg 宣布 Meta 所有产品将拥有 AI CEO Agent，Sierra 推出 Ghostwriter",
+      "summary": "Meta CEO Mark Zuckerberg 宣布 Meta 所有产品未来都将拥有 AI CEO Agent——一个能够代表用户做决策和执行任务的 AI 代理。与此同时，AI 客服公司 Sierra（由前 Salesforce CEO Bret Taylor 创办）推出了 Ghostwriter 产品，让企业 Agent 能自主撰写和发送客户沟通内容。两个事件指向同一趋势：Agent 正在从「辅助工具」升级为「自主代理」，从执行者变成决策者。",
+      "detail_content": "【核心事件】两个与 Agent 自主性升级相关的重要事件同期发生：(1) Meta CEO Mark Zuckerberg 宣布 Meta 未来所有产品都将配备 AI CEO Agent——能代表用户做决策的自主代理；(2) Sierra AI（前 Salesforce CEO Bret Taylor 创办的 AI 客服公司）推出 Ghostwriter，一个能自主撰写和发送客户沟通内容的 Agent 产品。\n\n【关键细节与引用】Zuckerberg 的愿景是每个 Meta 用户都拥有一个 AI Agent，它不仅能回答问题，还能代表用户主动行动——管理社交媒体、处理商业消息、安排日程等。这把 Agent 从被动的「问答机器人」推升为主动的「数字代理人」。Sierra 的 Ghostwriter 则更具体——它允许企业的 AI Agent 在获得授权后，直接撰写客户邮件、聊天回复、问题处理方案，无需人工逐条审批。Sierra 表示 Ghostwriter 的设计原则是「agent autonomy with guardrails」——在预设边界内自主行动。\n\n【背景与上下文】Agent 自主性的提升是 2026 年最重要的技术趋势之一。Anthropic 的 Computer Use、OpenAI 的 Deep Research、Google 的 Project Mariner 都在不同维度探索 Agent 的自主执行能力。Sierra 的 Bret Taylor 是硅谷最有影响力的 CEO 之一，他选择 Agent 客服作为创业方向本身就是一个信号。Meta 的体量意味着如果 Zuckerberg 的愿景落地，数十亿用户将首次体验到真正的 Agent 交互。\n\n【影响与前瞻】Agent 从「辅助」到「代理」的升级带来了新的挑战：信任、授权和责任。当 Agent 代表用户发送邮件或做决策时，出了问题谁负责？这些问题在企业场景（如 Sierra 的客服 Agent）中尤其关键。对于银行等受监管行业，Agent 自主性的边界如何设定将是一个核心合规问题。",
+      "source": "Twitter / 科技媒体综合",
+      "source_type": "opentwitter",
+      "url": "https://www.theverge.com/2026/3/25/zuckerberg-ai-ceo-agent-meta",
+      "timestamp": "2026-03-25T20:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Meta",
+        "Sierra",
+        "Agent自主性",
+        "数字代理"
+      ],
+      "batch_time": "2026-03-27T10:15:00+08:00"
+    }
+  ]
+}
