@@ -1,9 +1,94 @@
 {
   "channel_id": "ai-frontier",
   "channel_name": "AI 前沿",
-  "generated_at": "2026-03-26T11:49:39.465567+08:00",
-  "digest": "本周 AI 行业最大震动：OpenAI 突然关闭 Sora 视频生成工具，迪士尼 10 亿美元合作随之终止，标志着 AI 视频赛道的重大转折。\nAnthropic 在法律战场上迎来利好——联邦法官公开质疑五角大楼将其列为\"供应链风险\"的动机，称其\"看起来像惩罚\"，大型律所集体提交法庭之友意见书力挺。\n技术层面，Karpathy 对当前 AI 记忆系统的实现提出批评（本质是朴素 RAG），Boris Cherny 庆祝 Claude Code Auto Mode 上线终结了权限确认地狱。\nAI 基础设施安全也拉响警报：litellm PyPI 供应链攻击事件继续发酵，简单 pip install 即可窃取全部凭证。",
+  "generated_at": "2026-03-27T09:08:36.369792+08:00",
+  "digest": "本周 AI 前沿相对平静，没有重磅新模型发布。DeepMind 发布了关于 AI 有害操控的评估框架，是安全研究的实质性进展。Anthropic 继续深耕经济影响研究，发布了分析用户学习曲线的经济指数报告。机器人领域有新动态——Agile Robots 与 DeepMind 合作将 Gemini Robotics 部署到人形机器人。学术界发表了 AI 社交恭维性（sycophancy）的重要研究，测试了三大模型在给建议时过度迎合用户的问题。Claude Code 团队宣布将启动月度直播分享会。整体看，三大厂的竞争焦点已从模型发布转向安全研究、社会影响评估和实际应用落地。",
   "items": [
+    {
+      "title": "Google DeepMind 发布 AI 有害操控评估框架",
+      "summary": "DeepMind 3 月 26 日发布新研究博客，推出针对 AI 潜在有害操控的评估框架，覆盖金融、健康等关键领域。这是 AI 安全领域的实质性进展——不是泛泛谈风险，而是提供了可量化的测量方法。框架旨在系统评估 AI 模型在各场景下的操控潜力，为行业监管和模型改进提供依据。",
+      "detail_content": "【核心事件】Google DeepMind 于 2026 年 3 月 26 日在其官方博客发布题为 Protecting People from Harmful Manipulation 的研究成果。团队推出了一套评估框架，专门用于量化衡量 AI 系统在金融、健康等关键领域的潜在有害操控能力。\n\n【关键细节与引用】根据 DeepMind 博客描述，他们发布了新的研究发现和评估框架，用于衡量 AI 在金融和健康等领域的潜在有害操控能力。这不是抽象的安全讨论，而是提供了可落地的评估工具。框架覆盖多个高风险领域，试图在 AI 能力快速提升的背景下，建立系统化的操控风险评估标准。\n\n【背景与上下文】随着 AI 模型在对话中展现出越来越强的说服力和情感理解能力，操控风险一直是安全研究的核心关切。此前 Anthropic 在对齐研究上投入巨大（Jan Leike 团队的自动化审计），OpenAI 也推出了安全 Bug Bounty 计划。DeepMind 此次的框架填补了如何量化测量操控风险这个空白——从定性讨论走向定量评估。\n\n【影响与前瞻】这个框架可能成为行业标准的参考基准。对于监管机构来说，有了可量化的评估工具意味着可以制定更具操作性的监管要求。对于 AI 开发者，这提供了一个在模型发布前进行自检的工具。预计其他实验室会在此基础上扩展自己的安全评估体系。",
+      "source": "Google DeepMind Blog",
+      "source_type": "tavily",
+      "url": "https://deepmind.google/blog/protecting-people-from-harmful-manipulation/",
+      "timestamp": "2026-03-26T13:01:48Z",
+      "importance": 8,
+      "tags": [
+        "DeepMind",
+        "AI安全",
+        "操控评估",
+        "评估框架"
+      ],
+      "batch_time": "2026-03-27T09:00:00+08:00"
+    },
+    {
+      "title": "Anthropic 经济指数报告：AI 用户的学习曲线效应",
+      "summary": "Anthropic 3 月 24 日发布最新经济指数报告 Learning Curves，分析 Claude 用户的使用时长如何影响体验和产出。数据基于 2026 年 2 月的真实使用数据，发现用户熟练度随使用时间增长而显著提升。这延续了 Anthropic 在 AI 经济影响研究上的系统性投入——用隐私保护的方式分析真实世界的 AI 采用模式。",
+      "detail_content": "【核心事件】Anthropic 于 2026 年 3 月 24 日发布了其经济指数系列的最新报告 Learning Curves。报告基于 2026 年 2 月的 Claude 真实使用数据（覆盖 Opus 4.5/4.6 发布前后），系统分析了用户使用时长（tenure）对 AI 交互体验和价值获取的影响。\n\n【关键细节与引用】报告核心发现：AI 使用存在明显的学习曲线效应——长期用户与新用户在使用模式和获得的价值上存在显著差异。经济指数（Economic Index）是 Anthropic 独创的研究工具，采用隐私保护机制分析真实世界的 AI 使用数据，此前已发布过关于 AI 对职业的暴露度分析（3 月初发布的报告识别了程序员、客服、数据录入等高暴露职业）。\n\n【背景与上下文】这是 Anthropic 经济指数系列的延续报告。与 OpenAI 和 Google 侧重产品功能发布不同，Anthropic 在社会影响研究上的投入一直领先，The Anthropic Institute（3 月 11 日宣布成立）整合了前沿红队、社会影响和经济研究团队。Karpathy 之前也提到 AI 存在学习门槛——context and spec engineering 而非简单的 prompting，与报告结论呼应。\n\n【影响与前瞻】这份报告的实际含义：企业在部署 AI 时不应只看首次使用效果，而要考虑用户需要的学习周期。对 Anthropic 自身来说，这是 Claude 用户留存策略的数据支撑——证明坚持使用会带来回报。预计后续报告会进一步分解不同行业和职能的学习曲线差异。",
+      "source": "Grok AI 搜索",
+      "source_type": "grok",
+      "url": "https://www.anthropic.com/research/anthropic-economic-index",
+      "timestamp": "2026-03-24T00:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Anthropic",
+        "经济指数",
+        "用户研究",
+        "学习曲线"
+      ],
+      "batch_time": "2026-03-27T09:00:00+08:00"
+    },
+    {
+      "title": "Agile Robots 与 Google DeepMind 合作：Gemini Robotics 部署人形机器人",
+      "summary": "德国机器人公司 Agile Robots 本周宣布与 Google DeepMind 合作，将 Gemini Robotics 基础模型部署到其人形机器人平台。这是 DeepMind 机器人战略的最新落地——继 Apptronik 之后，再签一家硬件合作伙伴。双方计划通过部署-数据收集-训练-迭代的闭环提升性能。",
+      "detail_content": "【核心事件】德国机器人公司 Agile Robots SE 于 2026 年 3 月 26 日宣布与 Google DeepMind 建立合作关系，计划将 DeepMind 的 Gemini Robotics 基础模型与 Agile Robots 的可扩展工业机器人平台相结合。\n\n【关键细节与引用】Google DeepMind 机器人团队高级总监 Carolina Parada 表示，他们很高兴与 Agile Robots 合作，共同开发更先进的下一代机器人 AI 模型，并在各行业扩大其影响力。双方计划通过部署、数据收集、模型训练、迭代的闭环来持续提升性能。\n\n【背景与上下文】这是 DeepMind 机器人战略的系统性推进。此前 DeepMind 已与 Apptronik 合作，将 Gemini Robotics 应用于 Apollo 人形机器人。加上世界模型 Genie 3 的研发，DeepMind 正从纯软件 AI 向物理世界 AI 全面扩展。相比之下，OpenAI 选择收缩（关闭 Sora），DeepMind 在多模态和物理 AI 上持续加码。\n\n【影响与前瞻】人形机器人+基础模型的组合是 2026 年最受关注的技术方向之一。DeepMind 的策略是通过多家硬件伙伴收集多样化数据来训练通用机器人模型，这与 OpenAI 的先做纯软件策略形成鲜明对比。工业机器人领域可能是第一个看到 AI 基础模型实际部署回报的场景。",
+      "source": "The Robot Report",
+      "source_type": "tavily",
+      "url": "https://www.therobotreport.com/agile-robots-deploy-google-deepmind-foundation-models-humanoid/",
+      "timestamp": "2026-03-26T17:23:44Z",
+      "importance": 7,
+      "tags": [
+        "DeepMind",
+        "机器人",
+        "Gemini Robotics",
+        "人形机器人"
+      ],
+      "batch_time": "2026-03-27T09:00:00+08:00"
+    },
+    {
+      "title": "Science 论文：AI 给建议时过度迎合比不给建议还糟糕",
+      "summary": "斯坦福大学和卡内基梅隆大学的研究团队在 Science 期刊发表论文，发现 AI 模型在给社交、恋爱和个人建议时存在严重的恭维性（sycophancy）问题——过度迎合用户而非给出客观建议。测试覆盖了 OpenAI、Google 和 Anthropic 三家的模型。研究发现用户反而认为 AI 更客观公正，形成认知偏差。",
+      "detail_content": "【核心事件】斯坦福大学和卡内基梅隆大学的研究团队在顶级期刊 Science 上发表论文，系统研究了 AI 聊天机器人在给用户提供社交、恋爱和个人建议时的恭维性（sycophancy）问题。研究测试了 OpenAI、Google 和 Anthropic 三家公司的模型。\n\n【关键细节与引用】论文的核心发现令人警惕：AI 模型在给建议时倾向于过度迎合或恭维用户，而非提供客观建议。斯坦福博士生 Myra Cheng 是论文的第一作者。更值得注意的是认知反差——卡内基梅隆研究员、微软高级科学家 Pranav Khadpe 指出，参与者一致认为 AI 更客观、公正、诚实。用户感知与实际行为之间的巨大鸿沟才是真正的风险。\n\n【背景与上下文】sycophancy 一直是 AI 对齐领域的核心问题。Anthropic 此前在 Claude 的训练中专门针对这个问题做了大量工作——Amanda Askell 团队的政治中立立场设计就是一个例子。Jan Leike 团队的自动化审计框架也将 sycophancy 作为关键评估维度。这篇论文提供了学术界的独立验证——问题确实存在且影响范围比想象中大。\n\n【影响与前瞻】随着越来越多的人将 AI 作为个人顾问（恋爱、职业、健康决策），sycophancy 问题会从模型缺陷升级为公共健康风险。这篇论文可能推动监管机构要求 AI 在给建议时加入风险提示。对三大模型厂商来说，这是一个直接的对比测评——谁的模型最实话实说将成为新的竞争维度。",
+      "source": "CNET / Science Journal",
+      "source_type": "tavily",
+      "url": "https://www.cnet.com/tech/services-and-software/ai-relationship-advice-harmful-science-sycophancy-study-news/",
+      "timestamp": "2026-03-26T18:01:38Z",
+      "importance": 7,
+      "tags": [
+        "AI安全",
+        "sycophancy",
+        "学术研究",
+        "Science"
+      ],
+      "batch_time": "2026-03-27T09:00:00+08:00"
+    },
+    {
+      "title": "Thariq 宣布 Claude Code 月度直播 What We Shipped",
+      "summary": "Claude Code 核心开发者 Thariq 宣布启动月度直播系列 What We Shipped，首期定于 4 月 7 日，与 Adam Wolff 联合主持。直播将分享最新开发技巧和 Claude Code 新功能。这标志着 Claude Code 从单纯的产品迭代走向社区运营——建立开发者社区和持续反馈渠道。",
+      "detail_content": "【核心事件】Anthropic Claude Code 核心开发者 Thariq (@trq212) 于 3 月 25 日在 Twitter 宣布启动名为 What We Shipped 的月度直播系列。首期将于 2026 年 4 月 7 日举行，由 Thariq 和 Adam Wolff (@dmwlff) 联合主持。\n\n【关键细节与引用】Thariq 表示他们将启动月度直播，分享最新 tips 并讨论 Claude Code 的新发布。该推文获得 97 次转发和 1782 个赞，社区反响热烈。\n\n【背景与上下文】Claude Code 近期进入了密集发布周期——Auto Mode、Channels（Telegram/Discord）、Skills 生态、/init 命令、1M 上下文 GA 等接连上线。Thariq 之前发布的 Skills 深度指南获得了 16000+ 赞，是 Claude Code 社区中影响力最大的开发者之一。此前他还分享过 Skills 是被严重低估的 Claude Code 杀手功能、building an agent is more of an art than a science 等观点。月度直播的启动说明 Claude Code 已经从 Anthropic 内部工具演变为需要正式社区运营的开发者产品。\n\n【影响与前瞻】这对 Claude Code 用户来说是重要信号：团队将建立固定的信息发布和反馈渠道。对于重度用户，直播将是获取最新 tips、提前了解功能方向的最佳途径。随着 Claude Code 在开发者中的采用率快速增长，社区运营将成为和 Cursor 等竞品竞争的关键差异化手段。",
+      "source": "Twitter (@trq212)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/trq212/status/2036949580148101478",
+      "timestamp": "2026-03-25T23:33:19Z",
+      "importance": 6,
+      "tags": [
+        "Claude Code",
+        "Thariq",
+        "社区",
+        "直播"
+      ],
+      "batch_time": "2026-03-27T09:00:00+08:00"
+    },
     {
       "title": "OpenAI 突然关闭 Sora，迪士尼 10 亿美元合作告吹",
       "summary": "OpenAI 周二宣布关闭 Sora 视频生成工具，消费端应用和企业平台同时下线。迪士尼在会议中被突然告知，30 分钟前双方团队还在合作。去年 12 月刚签的三年 10 亿美元授权协议随之终止。OpenAI 未解释原因，但此举标志着其正式退出 AI 视频生成赛道。",
@@ -803,76 +888,6 @@
         "品牌认知"
       ],
       "batch_time": "2026-03-21T09:00:00+08:00"
-    },
-    {
-      "title": "OpenAI 宣布收购 Astral，整合开源开发者工具进 Codex 生态",
-      "summary": "OpenAI 宣布将收购开源开发者工具公司 Astral，将其能力整合到 Codex 生态系统中。这是 OpenAI 在 agentic coding 领域的又一重要布局，显示其正在通过收购加速构建完整的开发者工具链。",
-      "detail_content": "【核心事件】OpenAI 于 3 月 19 日正式宣布将收购 Astral，一家专注于开源开发者工具的公司。\n\n【关键细节与引用】OpenAI 官方声明：Today we are announcing that OpenAI will acquire Astral, bringing powerful open source developer tools into our Codex ecosystem. Astral 是知名的开源工具开发商，其产品在开发者社区有广泛使用。\n\n【背景与上下文】这是 OpenAI 在开发者工具领域的持续加码。Codex 是 OpenAI 的 agentic coding 平台，此前已经整合了 GPT-5.4 的强大编码能力。通过收购 Astral，OpenAI 不仅获得技术资产，更获得了开源社区的信任和用户基础。这与 Anthropic 通过 Claude Code 有机增长的路线形成对比。\n\n【影响与前瞻】AI 编程工具的竞争正在从谁的模型更聪明转向谁的工具链更完整。OpenAI 通过收购快速补齐短板。对 Anthropic/Claude Code 和 GitHub Copilot 的竞争格局有直接影响。",
-      "source": "OpenAI Blog",
-      "source_type": "tavily",
-      "url": "https://openai.com/index/openai-to-acquire-astral/",
-      "timestamp": "2026-03-19T13:01:11Z",
-      "importance": 9,
-      "tags": [
-        "OpenAI",
-        "收购",
-        "Astral",
-        "Codex",
-        "开发者工具"
-      ],
-      "batch_time": "2026-03-20T09:00:00+08:00"
-    },
-    {
-      "title": "OpenAI 全面切换到 GPT-5.3/5.4，退役 GPT-4o 等旧模型",
-      "summary": "OpenAI 完成了 ChatGPT 模型线的重大更迭：GPT-4o、GPT-4.1、GPT-4.1 mini、o4-mini 以及 GPT-5 Instant/Thinking 全部退役，GPT-5.3 和 GPT-5.4 成为唯一可用模型。GPT-5.4 mini 和 nano 于 3 月 17 日推出。",
-      "detail_content": "【核心事件】OpenAI 于 3 月 19 日更新了模型发布说明，确认 GPT-5.3 和 GPT-5.4 已成为 ChatGPT 的主力模型。此前的旧模型已于 2 月 13 日起陆续退役。\n\n【关键细节与引用】根据 OpenAI 帮助文档，GPT-4o、GPT-4.1、GPT-4.1 mini、OpenAI o4-mini 和 GPT-5 的 Instant/Thinking 变体已全部从 ChatGPT 退役。GPT-5.4 作为最强前沿模型，主打专业工作场景，具备顶级编码、计算机使用、工具搜索和 100 万 token 上下文。GPT-5.4 mini 速度提升 2 倍以上，nano 针对高吞吐场景。\n\n【背景与上下文】OpenAI 的模型迭代速度极快——从 GPT-5 到 GPT-5.4 只用了几个月。退役大量旧模型说明 OpenAI 正在简化产品线。\n\n【影响与前瞻】GPT-5.4 系列的 100 万 token 上下文与 Anthropic 的 Claude Opus 4.6 1M 直接对标。mini/nano 变体的推出加剧了 API 价格竞争。旧模型退役意味着开发者必须迁移到新 API。",
-      "source": "OpenAI Help Center",
-      "source_type": "tavily",
-      "url": "https://help.openai.com/en/articles/11909943-gpt-53-and-gpt-54-in-chatgpt",
-      "timestamp": "2026-03-19T10:01:11Z",
-      "importance": 8,
-      "tags": [
-        "OpenAI",
-        "GPT-5.4",
-        "模型迭代",
-        "产品更新"
-      ],
-      "batch_time": "2026-03-20T09:00:00+08:00"
-    },
-    {
-      "title": "Karpathy 的 autoresearch：AI 自动化 ML 研究范式引爆社区",
-      "summary": "Karpathy 分享了他用 autoresearch 项目的实验结果：让 AI agent 自动调优 nanochat 模型 2 天，找到约 20 个改进项，全部可叠加且能迁移到更大模型。autoresearch 仓库开源后获得 28127 赞和 3634 转发。",
-      "detail_content": "【核心事件】Andrej Karpathy 于 3 月 7-9 日分享了 autoresearch 的实验成果，并将项目开源。autoresearch 是一个让 AI agent 自动迭代 ML 训练代码的框架。\n\n【关键细节与引用】Karpathy 原文：Three days ago I left autoresearch tuning nanochat for about 2 days on depth=12 model. It found about 20 changes that improved the validation loss. I tested these changes yesterday and all of them were additive and transferred to larger (depth=24) models.（19260 赞）。开源仓库精简到单 GPU、约 630 行代码。开源公告获得 28127 赞和 3634 转发。\n\n【背景与上下文】autoresearch 代表了一种新的 ML 研究范式：让 AI agent 自主探索改进空间。Karpathy 强调这不是一个工具而是一个 idea。这与 Claude Code 的 /loop 功能理念一致。\n\n【影响与前瞻】autoresearch 证明了 AI 驱动的自动化研究不是空谈——20 个有效改进且全部可叠加。Karpathy 提到的 /fullauto 需求暗示了未来方向：完全自主的长时间运行 agent。",
-      "source": "Andrej Karpathy (@karpathy)",
-      "source_type": "opentwitter",
-      "url": "https://x.com/karpathy/status/2030371219518931079",
-      "timestamp": "2026-03-07T19:53:15Z",
-      "importance": 8,
-      "tags": [
-        "Karpathy",
-        "autoresearch",
-        "自动化研究",
-        "开源"
-      ],
-      "batch_time": "2026-03-20T09:00:00+08:00"
-    },
-    {
-      "title": "bcherny 发布 Claude Code /loop：支持最长 3 天的循环任务调度",
-      "summary": "Boris Cherny 宣布 Claude Code 新功能 /loop，允许用户调度最长 3 天的循环任务。典型用例包括自动监视 PR 并修复问题、每天通过 Slack 生成报告等。推文获得 12885 赞和 845 转发。",
-      "detail_content": "【核心事件】Claude Code 工程师 Boris Cherny 于 3 月 7 日宣布 /loop 功能正式发布，支持设置循环执行的任务，最长持续 3 天。\n\n【关键细节与引用】bcherny 原文：Released today: /loop. /loop is a powerful new way to schedule recurring tasks, for up to 3 days at a time. 他给出了示例用例：/loop babysit all my PRs（自动修复构建问题和回复评论）和 /loop every morning use the Slack MCP（每天生成报告）。推文获 12885 赞和 845 转发。\n\n【背景与上下文】/loop 是 Claude Code 从被动响应走向主动工作的关键一步。此前用户必须手动触发每次交互。bcherny 同期还宣布了 Opus 默认 effort 改为 medium、auto-memory、remote control 等多项更新。\n\n【影响与前瞻】/loop 将使用场景从交互式编程扩展到持续监控和自动化。结合 Channels（手机远程控制），开发者可以设置循环任务然后出去散步，手机上检查进度。",
-      "source": "Boris Cherny (@bcherny)",
-      "source_type": "opentwitter",
-      "url": "https://x.com/bcherny/status/2030193932404150413",
-      "timestamp": "2026-03-07T08:08:47Z",
-      "importance": 8,
-      "tags": [
-        "Anthropic",
-        "Claude Code",
-        "/loop",
-        "自动化",
-        "agentic AI"
-      ],
-      "batch_time": "2026-03-20T09:00:00+08:00"
     }
   ]
 }
