@@ -1,9 +1,111 @@
 {
   "channel_id": "ai-frontier",
   "channel_name": "AI 前沿",
-  "generated_at": "2026-03-30T09:10:08.715979+08:00",
-  "digest": "本周最重磅的消息是 Anthropic 内部模型 Claude Mythos 意外泄露——由于 CMS 配置错误，近 3000 份未发布文档被公开访问，其中包括一篇描述 Mythos 为「迄今最强 AI 模型」的博客草稿。Axios 报道称 Anthropic 正在私下警告政府官员该模型具有「前所未有的网络安全风险」。与此同时，Anthropic 正式发布了 Agent Capabilities API（代码执行、MCP 连接器、Files API、1 小时缓存），大幅降低了构建 AI Agent 的门槛。五角大楼与 Anthropic 的争端持续发酵，FT 深度分析显示这场冲突本质上是关于 AI 公司能否对军方设定使用红线的控制权之争。OpenAI 方面推出了 Safety Bug Bounty 计划，试图众包发现 AI 滥用风险。整体来看，AI 安全和治理话题本周占据主导地位。",
+  "generated_at": "2026-03-31T09:08:27.862951+08:00",
+  "digest": "本周 AI 前沿相对平静，没有重磅新模型发布。Anthropic 继续保持高频产品迭代节奏——发布了 Compliance API 为企业用户提供审计日志能力，同时第三方数据显示 Claude 付费用户在 2026 上半年翻倍增长，但五角大楼争端带来的下载量红利已开始消退。生态方面，Qodo 拿到 $70M 融资专攻 AI 生成代码的验证和审查，成为 Claude Code/OpenClaw 生态的重要补充。Anthropic Institute 此前发布的 81000 人 AI 大调查本周被广泛报道，揭示用户对 AI 的期待和矛盾心理。OpenAI 则继续完善 ChatGPT Business 的企业集成能力。今天也是 AlphaGo 战胜李世石十周年——一个提醒我们 AI 走了多远的里程碑。",
   "items": [
+    {
+      "title": "Anthropic 发布 Compliance API：企业级审计日志能力上线",
+      "summary": "Anthropic 在 claude.com/blog 发布 Compliance API，为 Claude Platform 组织管理员提供程序化的审计日志访问能力。管理员可以通过 API 追踪组织内的所有 Claude 使用活动，这是 Anthropic 面向企业合规需求的重要功能补充，尤其对金融、医疗等强监管行业的客户至关重要。",
+      "detail_content": "【核心事件】Anthropic 于 3 月 30 日在 claude.com/blog 发布了 Compliance API，正式为 Claude Platform 的企业客户提供审计日志功能。管理员可以通过程序化 API 访问组织内所有用户的 Claude 使用记录，包括对话、工具调用等活动数据。\n\n【关键细节与引用】原文标题为\"Audit Claude Platform activity with the Compliance API\"，明确定位为企业合规工具。该 API 允许管理员（admins）以编程方式获取审计日志（audit logs），覆盖整个 Claude Platform 组织的活动数据。这意味着企业不再依赖手动检查，可以自动化地满足合规审计要求。\n\n【背景与上下文】这一功能发布的时机值得注意——Anthropic 正在积极拓展企业市场，Claude 付费用户在 2026 上半年已翻倍增长。强监管行业（银行、医疗、政府）对 AI 工具的合规审计能力有刚性需求。此前 Anthropic 已推出 Claude for Enterprise，Compliance API 进一步补全了企业级部署的合规拼图。\n\n【影响与前瞻】对于正在评估 Claude 企业部署的 CTO/CISO 来说，这是一个关键能力——没有审计日志，很多行业根本不允许使用 AI 工具。预计后续会看到更多企业治理功能（如 DLP、数据驻留控制等）的发布。",
+      "source": "claude.com/blog",
+      "source_type": "tavily",
+      "url": "https://claude.com/blog/claude-platform-compliance-api",
+      "timestamp": "2026-03-30T17:00:53Z",
+      "importance": 8,
+      "tags": [
+        "Anthropic",
+        "企业合规",
+        "Claude Platform",
+        "API"
+      ],
+      "batch_time": "2026-03-31T09:00:00+08:00"
+    },
+    {
+      "title": "数据显示 Claude 付费用户半年翻倍，但五角大楼红利正在消退",
+      "summary": "Gigazine 和 Business Insider 报道，Anthropic 确认 Claude 付费用户在 2026 上半年翻倍增长。与五角大楼的合同争端一度将 Claude 推上美区 App Store 下载榜首，但 Appfigures 数据显示 ChatGPT 已重新超越 Claude 的每日下载量，Claude 日均下载增速自 3 月 25 日起出现 2% 的逐日下滑。Anthropic 的战略重心已转向更稳定的企业市场。",
+      "detail_content": "【核心事件】多家媒体在 3 月 30 日报道了 Anthropic 的用户增长数据。Anthropic 发言人向 TechCrunch 确认「Claude 付费订阅用户在 2026 年已翻倍」。但同时，此前因五角大楼争端带来的下载量激增正在回落。\n\n【关键细节与引用】Appfigures（应用情报公司）数据显示，ChatGPT 已在本月早些时候重新超越 Claude 的美区 App Store 和 Google Play 每日下载量。Sensor Tower 品牌分析师 Kara Lee 表示：\"Claude's daily download rate has largely plateaued, averaging a 2% DoD (day-over-day) decline\"（截至 3 月 25 日）。第三方估计 Claude 总用户数在 1800 万到 3000 万之间，但 Anthropic 未公布准确数字。CEO Dario Amodei 此前已明确表示企业市场是「更可靠的商业模式」。\n\n【背景与上下文】2-3 月间，Anthropic 因拒绝五角大楼关于 AI 军事用途的压力而引发大量关注，Claude 一度登顶美区下载榜。这是一次罕见的「因价值观立场而获得商业增长」的案例。但病毒式增长本质上不可持续，Anthropic 显然清楚这一点，正在将增长引擎转向企业。\n\n【影响与前瞻】付费用户翻倍是实打实的商业成果，但下载量回落说明消费者市场的留存仍是挑战。Anthropic 近期密集发布的 Compliance API、Agent Capabilities API 等企业功能，清晰表明 B2B 才是核心战场。值得关注后续是否会公布 ARR 等更硬的商业指标。",
+      "source": "Gigazine / Business Insider",
+      "source_type": "tavily",
+      "url": "https://gigazine.net/gsc_news/en/20260330-anthropics-claude-popularity/",
+      "timestamp": "2026-03-30T02:55:00Z",
+      "importance": 7,
+      "tags": [
+        "Anthropic",
+        "用户增长",
+        "商业化",
+        "App Store"
+      ],
+      "batch_time": "2026-03-31T09:00:00+08:00"
+    },
+    {
+      "title": "Anthropic Institute 史上最大 AI 调查：81000 人揭示人类对 AI 的真实期待与矛盾",
+      "summary": "The Next Web 深度报道了 Anthropic Institute 用 Claude 对 81000 人进行的大规模 AI 访谈调查。结果揭示了人们对 AI 的深层矛盾：看重 AI 学习能力的人，同时三倍更可能担忧认知退化；从 AI 获得情感支持的人，三倍更可能害怕产生依赖。这是一种全新的 AI 驱动的社会科学研究范式。",
+      "detail_content": "【核心事件】The Next Web 于 3 月 30 日深度报道了 Anthropic Institute 发起的大规模 AI 调查。在同一周内，81000 名受访者与 Anthropic 构建的 AI 访谈系统进行了开放式对话，回答了「如果你能挥魔法棒，你希望 AI 为你做什么？」等问题。这是迄今为止最大规模的 AI 公众意见调查之一。\n\n【关键细节与引用】调查揭示了几组显著的矛盾心理：(1) 看重 AI 学习价值的受访者，三倍更可能同时担忧「认知退化」(cognitive atrophy)；(2) 从 AI 对话中获得情感支持的人，三倍更可能害怕对 AI 产生依赖。仅 1% 的受访者无法表达自己对 AI 的愿景。TNW 指出：\"Using AI to conduct qualitative interviews at a scale that was previously impossible, and then using AI to classify the results, is a genuinely new form of social science.\"（用 AI 进行以前不可能的大规模定性访谈，再用 AI 分类结果，是一种全新的社会科学形式。）\n\n【背景与上下文】这项调查源自 Jack Clark 在 3 月中旬成立的 Anthropic Institute——一个研究 AI 社会影响的新机构。调查本身也是一个 meta 实验：用 AI 产品（Claude）来研究人们对 AI 的看法，研究工具和研究对象的重叠引发了方法论讨论。\n\n【影响与前瞻】这些数据对产品设计有直接价值——如果用户同时渴望和恐惧 AI 的某些能力，产品需要在功能和边界之间找到平衡。对 Anthropic 而言，这也是一种「负责任 AI」叙事的战略投资，区别于 OpenAI 和 Google 更偏技术导向的研究路线。",
+      "source": "The Next Web",
+      "source_type": "tavily",
+      "url": "https://thenextweb.com/news/the-largest-ai-survey-ever-reveals-what-humans-actually-want",
+      "timestamp": "2026-03-30T09:32:01Z",
+      "importance": 7,
+      "tags": [
+        "Anthropic Institute",
+        "AI社会影响",
+        "用户研究",
+        "社会科学"
+      ],
+      "batch_time": "2026-03-31T09:00:00+08:00"
+    },
+    {
+      "title": "Qodo 融资 $70M：AI 生成代码的验证成为下一个战场",
+      "summary": "TechCrunch 报道代码验证初创公司 Qodo 完成 7000 万美元融资。随着 Claude Code、OpenClaw 等 AI 编码工具每月生成数十亿行代码，确保代码质量和安全成为新瓶颈。Qodo 构建了 AI 驱动的代码审查、测试和治理 Agent，关注代码变更对整个系统的影响，而不仅仅是差异本身。",
+      "detail_content": "【核心事件】TechCrunch 3 月 30 日报道，以色列初创公司 Qodo（前身 CodiumAI）完成 7000 万美元融资，定位为 AI 生成代码的验证和治理层。\n\n【关键细节与引用】Qodo 创始人 Friedman 指出，与大多数 AI 代码审查工具关注「什么改变了」不同，Qodo 关注的是「代码变更如何影响整个系统」——综合考虑组织标准、历史上下文和风险容忍度。文章特别提到了 OpenClaw 和 Claude Code 作为 AI 编码工具的代表，称\"AI coding tools generate billions of lines of code each month\"（AI 编码工具每月生成数十亿行代码）。Friedman 还指出 OpenAI 和 Anthropic 主要专注于构建功能而非端到端解决方案，这为垂直玩家留出了空间。\n\n【背景与上下文】这笔融资反映了一个重要趋势：AI 编码能力的爆发式增长催生了对「AI 代码质量保证」的刚需。当 Claude Code 可以一键生成整个功能模块时，谁来确保这些代码不会引入安全漏洞或回归问题？Qodo 瞄准的正是这个缺口。此前 Anthropic 也与 CodeRabbit 合作探索 Agent 编排在代码审查中的应用。\n\n【影响与前瞻】AI 编码工具的「验证层」正在成为独立赛道。对于重度使用 Claude Code 的开发者和企业来说，这类工具将成为工作流的必备环节。预计会看到更多类似公司出现，以及 Anthropic/OpenAI 自身可能将代码验证能力集成到产品中。",
+      "source": "TechCrunch",
+      "source_type": "tavily",
+      "url": "https://techcrunch.com/2026/03/30/qodo-bets-on-code-verification-as-ai-coding-scales-raises-70m/",
+      "timestamp": "2026-03-30T12:30:00Z",
+      "importance": 6,
+      "tags": [
+        "AI编码",
+        "代码验证",
+        "融资",
+        "Claude Code生态"
+      ],
+      "batch_time": "2026-03-31T09:00:00+08:00"
+    },
+    {
+      "title": "OpenAI ChatGPT Business 更新：Box/Notion/Linear/Dropbox 集成扩展写入能力",
+      "summary": "OpenAI 为 ChatGPT Business 推出更新版的第三方应用集成，Box、Notion、Linear 和 Dropbox 应用新增写入操作能力（此前仅支持读取）。这标志着 ChatGPT 从「对话助手」向「可执行操作的企业 Agent」迈进了一步。",
+      "detail_content": "【核心事件】OpenAI 于 3 月 30 日更新了 ChatGPT Business 的应用集成功能，为 Box、Notion、Linear 和 Dropbox 应用新增了写入能力（write capabilities），此前这些集成仅支持读取操作。\n\n【关键细节与引用】根据 ChatGPT Business Release Notes 页面，更新内容包括\"updated Box, Notion, Linear, and Dropbox apps\"以及\"new app actions, including new write capabilities\"。这意味着 ChatGPT 不仅可以读取这些平台的数据，还可以直接在其中创建、修改内容——比如在 Notion 中创建页面、在 Linear 中创建任务、在 Box 中上传文件等。\n\n【背景与上下文】这是 OpenAI 「ChatGPT 即企业操作系统」战略的一部分。通过扩展第三方应用的操作能力，ChatGPT Business 正在从一个对话界面演变为一个可以跨应用执行工作流的 Agent 平台。与 Anthropic 的 Agent Capabilities API 和 Dispatch/Computer Use 路线不同，OpenAI 走的是「应用商店式集成」的路径。\n\n【影响与前瞻】写入能力的开放是质变——从「AI 帮你查信息」到「AI 帮你干活」。预计 OpenAI 会继续扩展支持的应用数量和操作类型。企业用户的关键关注点将是权限控制和审计（有趣的是，Anthropic 同一天发布了 Compliance API）。",
+      "source": "OpenAI Help Center",
+      "source_type": "tavily",
+      "url": "https://help.openai.com/en/articles/11391654-chatgpt-business-release-notes",
+      "timestamp": "2026-03-30T10:01:03Z",
+      "importance": 6,
+      "tags": [
+        "OpenAI",
+        "ChatGPT Business",
+        "企业集成",
+        "Agent"
+      ],
+      "batch_time": "2026-03-31T09:00:00+08:00"
+    },
+    {
+      "title": "AlphaGo 十周年：从围棋到推理模型，自我博弈如何塑造了今天的 AI",
+      "summary": "3 月 30 日恰好是 AlphaGo 2016 年以 4:1 击败李世石的十周年。回顾文章分析了 DeepMind 的双模型架构和强化学习自我博弈方法如何直接影响了 OpenAI、DeepMind 和 Anthropic 今天的推理模型设计，AlphaGo 引入的「给 AI 更多思考时间」维度成为当代推理模型的核心思想。",
+      "detail_content": "【核心事件】2026 年 3 月 30 日，AlphaGo 战胜李世石迎来十周年。Let's Data Science 发表回顾文章，分析了这场标志性事件如何深远影响了今天的 AI 推理技术。\n\n【关键细节与引用】文章指出 AlphaGo 的三个核心创新直接塑造了当代推理模型：(1) 双模型架构（策略网络 + 价值网络），(2) 强化学习自我博弈（self-play），(3) 「more time」规划维度——让 AI 用更多计算资源来提升决策质量。这些思想在 OpenAI 的 o1/GPT-5 Thinking、DeepMind 的 Gemini Deep Think、Anthropic 的 Claude Opus 推理链中都能看到直接继承。\n\n【背景与上下文】十年前 AlphaGo 击败李世石被认为是 AI 的「Sputnik 时刻」，直接催化了全球 AI 投资热潮。当时预计 AI 还需要十年才能在围棋上胜人类——AlphaGo 提前了至少五年。如今 AI 已从游戏走向通用推理，但核心方法论的基因可以追溯到那场比赛。\n\n【影响与前瞻】这篇回顾提醒我们，当下看似全新的「推理模型」热潮，其实根植于十年前的基础研究。对于关注 AI 技术演进的从业者来说，理解这条从 AlphaGo 到 o1/Opus 的技术谱系线，有助于判断下一步突破可能来自哪里。",
+      "source": "Let's Data Science",
+      "source_type": "tavily",
+      "url": "https://letsdatascience.com/news/alphago-shapes-modern-ai-reasoning-breakthroughs-0cc71dea",
+      "timestamp": "2026-03-30T23:41:08Z",
+      "importance": 5,
+      "tags": [
+        "DeepMind",
+        "AlphaGo",
+        "推理模型",
+        "AI历史"
+      ],
+      "batch_time": "2026-03-31T09:00:00+08:00"
+    },
     {
       "title": "Anthropic 内部最强模型 Claude Mythos 意外泄露：「前所未有的网络安全风险」",
       "summary": "由于 Anthropic CMS 配置错误，近 3000 份未发布文档被公开访问，暴露了正在内测的下一代模型 Claude Mythos。泄露的博客草稿称其为「迄今最强模型」，在编码、推理和网络安全能力上远超 Opus 4.6。Anthropic 已确认模型存在并称其为「阶跃式突破」，同时警告政府官员该模型具有前所未有的网络安全能力。",
@@ -761,125 +863,6 @@
         "AI安全"
       ],
       "batch_time": "2026-03-25T09:00:00+08:00"
-    },
-    {
-      "title": "Claude 推出 Dispatch 和 Computer Use：从手机指派任务，Claude 操作你的电脑",
-      "summary": "Anthropic 正式发布 Claude Dispatch 和 Computer Use 功能（研究预览）。用户可以从手机端指派任务，Claude 会在你的电脑上打开应用、操作浏览器、运行开发工具来完成任务。这标志着 Claude 从纯对话 AI 正式进入桌面代理领域，直接和 OpenAI 的 Operator 以及 Google 的 Project Mariner 竞争。Alex Albert 评论说'不用打开笔记本就能完成工作的未来正在快速到来'。",
-      "detail_content": "【核心事件】Anthropic 于3月23日正式发布了 Claude Dispatch 和 Computer Use 功能，目前作为研究预览（research preview）上线。这是 Claude 首次具备直接操控用户电脑的能力——打开应用程序、在浏览器中导航、运行开发工具，甚至通过手机远程指派任务。\n\n【关键细节与引用】Alex Albert（Claude 产品负责人）发推评论：\"The future where I never have to open up my laptop to get work done is becoming real very fast.\" 从产品形态上看，Dispatch 相当于一个手机端的任务管理器，用户可以在移动端给 Claude 下指令，Claude 在桌面端执行。Computer Use 则是 Claude 操控桌面的核心能力，早在2025年就作为概念发布，现在正式作为产品级功能推出。\n\n【背景与上下文】桌面代理是2026年 AI 竞争的核心战场。OpenAI 在1月发布了 Operator，Google 的 Project Mariner 也在测试中。Anthropic 的优势在于 Claude Code 已经在开发者群体中建立了强大口碑，Computer Use 是从代码编辑扩展到全桌面操作的自然延伸。此前 Boris Cherny 就透露 Cowork 可以从手机启动 Claude Code session，这次 Dispatch 把这个能力正式产品化。\n\n【影响与前瞻】这是 Claude 产品线从对话式 AI 转向代理式 AI 的里程碑。结合此前的 Cowork、Channels、Excel/PowerPoint 插件，Anthropic 正在构建一个完整的'AI 办公操作系统'。对用户来说，关键是 Computer Use 的可靠性和安全性——在研究预览阶段，预计会有一些 rough edges。",
-      "source": "Anthropic Blog",
-      "source_type": "tavily",
-      "url": "https://claude.com/blog/dispatch-and-computer-use",
-      "timestamp": "2026-03-23T22:00:58Z",
-      "importance": 10,
-      "tags": [
-        "Anthropic",
-        "Claude",
-        "Computer Use",
-        "Dispatch",
-        "桌面代理"
-      ],
-      "batch_time": "2026-03-24T09:00:00+08:00"
-    },
-    {
-      "title": "Vibe Physics：理论物理教授用 Claude 做研究，评价为'二年级博士生水平'",
-      "summary": "哈佛理论物理教授 Matthew Schwartz 在 Anthropic 科学博客发表客座文章，详细记录了他用 Claude（Opus 4.5）做真正的物理研究的全过程。他的评价是 Claude 大约相当于一个二年级博士生的水平，帮助他把研究速度提升了10倍。这是目前为止 Claude 在前沿科学研究中最有说服力的真实案例。Alex Albert 强烈推荐阅读。",
-      "detail_content": "【核心事件】哈佛大学理论物理教授 Matthew Schwartz 在 Anthropic 新上线的科学博客上发表了一篇深度客座文章《Vibe Physics: The AI Grad Student》，记录了他真正把 Claude（Opus 4.5）当作研究助手使用的完整体验。\n\n【关键细节与引用】Alex Albert 发推推荐时总结了核心发现：\"He found Opus 4.5 to be roughly the level of a second-year grad student and it helped him accelerate his research by 10x.\" Schwartz 教授让 Claude 参与了实际的理论物理研究工作，不是简单的问答或文献综述，而是真正的计算和推导。Tavily 的搜索结果还显示了与此相关的一篇 PDF 论文，涉及 Sudakov shoulder 重求和（Thrust/HJM 方向），表明 Schwartz 把 Claude 用于了这个具体的物理问题。\n\n【背景与上下文】'二年级博士生'这个评价非常关键——它意味着 Claude 已经超越了本科生水平的理解和简单的文本生成，达到了能在特定领域做出有意义贡献的程度。但也意味着它还没有达到独立研究者的水平，仍然需要导师（人类教授）的指导和判断。这个诚实的评估比夸大其词更有说服力。\n\n【影响与前瞻】这是 AI 辅助科研从概念到实践的重要里程碑。10倍的加速效果如果可复现，将对学术界产生巨大吸引力。但需要注意的是，这是物理学领域的单一案例，不同学科的适用性可能差异很大。预计会有更多学科的类似案例跟进。",
-      "source": "Anthropic Research",
-      "source_type": "tavily",
-      "url": "https://www.anthropic.com/research/vibe-physics",
-      "timestamp": "2026-03-23T22:01:00Z",
-      "importance": 9,
-      "tags": [
-        "Anthropic",
-        "Claude",
-        "科学研究",
-        "物理学",
-        "AI辅助科研"
-      ],
-      "batch_time": "2026-03-24T09:00:00+08:00"
-    },
-    {
-      "title": "Anthropic 启动科学博客：AI 与科学交叉领域的新阵地",
-      "summary": "Anthropic 宣布推出全新的科学博客（Science Blog），聚焦 AI 与科学的交叉研究。博客将分享 Anthropic 内部的科学研究、与外部科学家的合作成果，以及 Claude 在科学计算中的应用实践。这是 Anthropic 从'AI 安全公司'向'AI 科研平台'扩展的信号，首批就发布了三篇高质量文章。",
-      "detail_content": "【核心事件】Anthropic 于3月23日正式启动了一个全新的博客——Science Blog，专注于 AI 与科学的交叉领域。官方描述称将分享 Anthropic 内部和外部合作者的科学研究工作。\n\n【关键细节与引用】官方公告中提到：\"We're launching a new blog about AI and science. We'll share work happening at Anthropic and elsewhere, our collaborations with external researchers.\" 首批发布的文章包括理论物理学家 Matthew Schwartz 的客座文章和 Claude 在科学计算中的最佳实践指南，显示这个博客不是空壳，而是有实质内容储备。\n\n【背景与上下文】此前 Google DeepMind 在科学研究方面一直领先（AlphaFold、AlphaGo 等），OpenAI 也发布了多篇关于 AI 辅助科学发现的论文。Anthropic 启动科学博客，说明他们正在系统性地推进 Claude 在科学领域的应用。结合今天同时发布的物理学案例和科学计算文章，Anthropic 想传达的信息很明确：Claude 不只是写代码和聊天的工具，它是能做科研的。\n\n【影响与前瞻】对 Anthropic 的品牌定位有战略意义。科学研究是 AI 最高价值的应用场景之一，也是最能体现模型智力水平的领域。预计后续会有更多与顶级科学家合作的案例发布。",
-      "source": "Anthropic Research",
-      "source_type": "tavily",
-      "url": "https://www.anthropic.com/research/introducing-anthropic-science",
-      "timestamp": "2026-03-23T20:01:00Z",
-      "importance": 8,
-      "tags": [
-        "Anthropic",
-        "科学研究",
-        "Science Blog"
-      ],
-      "batch_time": "2026-03-24T09:00:00+08:00"
-    },
-    {
-      "title": "Long-running Claude：多日科学计算工作流最佳实践",
-      "summary": "Anthropic 研究人员 Siddharth Mishra-Sharma 发文介绍如何将 Claude 用于多日级别的科学计算工作流。文章详细讲解了测试预言机（test oracles）、持久记忆、编排策略等实践方法，让 Claude 能在长时间的科学计算任务中保持一致性和可靠性。这是 Claude 从'单次对话'向'持续工作流'进化的技术指南。",
-      "detail_content": "【核心事件】Anthropic 研究人员 Siddharth Mishra-Sharma 于3月23日在新科学博客上发布了一篇技术文章，详细介绍如何让 Claude 在多天的科学计算工作流中持续有效地工作。\n\n【关键细节与引用】文章涵盖了几个关键技术点：test oracles（测试预言机，用于验证长时间运行中 Claude 的输出是否一致和正确）、persistent memory（持久记忆，让 Claude 在多次会话之间保持上下文）、以及 orchestration patterns（编排策略，管理复杂多步骤的科学计算流程）。这些方法论本质上是在解决 AI agent 最难的问题之一：如何在长时间工作中保持可靠性。\n\n【背景与上下文】科学计算通常不是几分钟就能完成的任务——一个模拟可能跑几天，一组分析可能需要迭代数周。这篇文章实际上是在为 Claude 作为科研 agent 的使用场景提供工程化的解决方案。这和 Claude Code 的理念一脉相承：从简单的代码补全，到能管理整个项目的 AI 工程师。\n\n【影响与前瞻】对于正在尝试将 AI 用于科研的开发者和研究者来说，这篇文章的实用价值很高。它解决的不是'Claude 能不能做'的问题，而是'怎么让 Claude 做得好且可靠'的工程问题。",
-      "source": "Anthropic Research",
-      "source_type": "tavily",
-      "url": "https://www.anthropic.com/research/long-running-Claude",
-      "timestamp": "2026-03-23T20:01:00Z",
-      "importance": 7,
-      "tags": [
-        "Anthropic",
-        "Claude",
-        "科学计算",
-        "Agent工作流"
-      ],
-      "batch_time": "2026-03-24T09:00:00+08:00"
-    },
-    {
-      "title": "Thariq 深入 Channels 和 Skills 生态：直播回顾 + 设置分享",
-      "summary": "Claude Code 核心工程师 Thariq 过去几天持续分享 Claude Code 的进阶用法。他公开了自己的 Channels 设置命令，展示了 Skills 的 iMessage 示例开源项目，并做了一场 CC 直播。此外他提到 1M context 的性能'可能被低估了'，以及 /effort max 模式让 Claude 全力以赴不担心 token 消耗。",
-      "detail_content": "【核心事件】Claude Code 核心工程师 Thariq（@trq212）在3月19-22日间持续在 Twitter 上分享 Claude Code 的深度使用技巧和新功能。\n\n【关键细节与引用】几个关键信息点：1）Thariq 公开了自己使用 Channels 插件的完整命令：\"claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions -c\"，这说明他自己就在用 Telegram channel 来远程操控 Claude Code；2）他评论 1M context：\"i think we might have undersold 1M context tbh, the performance is so so good, I really just don't clear the context window much these days\"——这对于实际使用者很有参考价值；3）3月14日上线的 /effort max 功能可以让 Claude 'try your absolute best don't worry about tokens'；4）他做了一场 CC 直播，并表示将开源一个 iMessage skill 示例。\n\n【背景与上下文】Thariq 是 Claude Code 团队的核心开发者之一，他的使用习惯和推荐直接反映了产品团队对工具的理解。Channels 是 Claude Code 最近推出的重要功能，允许通过 Telegram/Discord 等平台远程控制 Claude Code session，本质上把 Claude Code 从本地终端工具升级为随时可用的远程助手。\n\n【影响与前瞻】Skills 的开源示例将降低用户自定义 Claude Code 的门槛。Thariq 对 1M context 的高度评价也暗示 Anthropic 在长上下文性能上的投入正在回报。对于重度 Claude Code 用户，跟进 Thariq 的分享是了解最佳实践的捷径。",
-      "source": "Twitter @trq212",
-      "source_type": "opentwitter",
-      "url": "https://x.com/trq212/status/2035491380923916506",
-      "timestamp": "2026-03-21T22:58:57Z",
-      "importance": 7,
-      "tags": [
-        "Claude Code",
-        "Channels",
-        "Skills",
-        "Thariq"
-      ],
-      "batch_time": "2026-03-24T09:00:00+08:00"
-    },
-    {
-      "title": "OpenAI 发布 Sora 2 安全框架：AI 视频生成的安全治理方案",
-      "summary": "OpenAI 发布了 Sora 2 及其社交创作平台的安全框架白皮书《Creating with Sora safely》。文档详细说明了如何应对视频生成模型带来的新型安全挑战，包括内容审核、社交平台治理等问题。这是首个系统性的 AI 视频生成安全方案。",
-      "detail_content": "【核心事件】OpenAI 于3月23日发布了一篇题为《Creating with Sora safely》的安全框架文章，详细阐述了 Sora 2 视频生成模型及其新社交创作平台的安全治理方案。\n\n【关键细节与引用】文章开头明确指出：\"To address the novel safety challenges posed by a state-of-the-art video model as well as a new social creation platform, we've built Sora 2 and the Sora social platform with safety in mind.\" 这意味着 Sora 不仅是一个视频生成工具，还有一个用户可以创作和分享内容的社交平台——这大大增加了安全治理的复杂性。\n\n【背景与上下文】AI 视频生成是2026年最具争议的技术领域之一。Deepfake、版权侵权、虚假信息等问题随着模型能力提升而愈发严重。OpenAI 选择在产品发布的同时发布详细的安全框架，可能是吸取了此前 DALL-E 和 ChatGPT 上线初期安全问题频发的教训。\n\n【影响与前瞻】这篇文章对整个 AI 视频行业都有参考意义——如何在保持创作自由的同时控制滥用风险。但实际效果还需要观察平台上线后的表现。",
-      "source": "OpenAI Blog",
-      "source_type": "tavily",
-      "url": "https://openai.com/index/creating-with-sora-safely/",
-      "timestamp": "2026-03-23T15:01:04Z",
-      "importance": 6,
-      "tags": [
-        "OpenAI",
-        "Sora",
-        "AI安全",
-        "视频生成"
-      ],
-      "batch_time": "2026-03-24T09:00:00+08:00"
-    },
-    {
-      "title": "Boris Cherny 确认：Claude Code CLI 不会被替代",
-      "summary": "Claude Code 负责人 Boris Cherny 明确回应用户担忧：CLI 不会消失（'Oh CLI is not going away'）。在 Dispatch 和 Desktop 版本接连发布的背景下，这个表态对 CLI 重度用户是重要的定心丸。他还在收集 Desktop 版 bug 反馈，并确认 1M context 在 Opus 4.6 上没有性能问题。",
-      "detail_content": "【核心事件】Claude Code 负责人 Boris Cherny（@bcherny）于3月23日明确回应社区疑虑，表示 Claude Code 的 CLI 版本不会被淘汰。\n\n【关键细节与引用】在用户 @teja2495 讨论 Desktop 版本时，Boris 直接回复：\"Oh CLI is not going away\"。此外他还主动收集 Desktop 版的 bug 反馈（\"Curious, what bugs are you hitting on desktop? Would love a short list\"），显示团队在积极迭代桌面版。他还确认了一个重要技术细节：\"I exclusively use 1m, haven't noticed issues with opus 4.6\"——这意味着 1M context 在最新模型上是稳定可用的。\n\n【背景与上下文】随着 Claude Cowork、Dispatch、Desktop 等新产品形态的推出，部分 CLI 用户担心 Anthropic 会逐渐边缘化 CLI。Boris 的表态说明 CLI 仍然是 Claude Code 的核心交互方式之一。Boris 表示自己 exclusively 使用 1M context，进一步验证了长上下文的可靠性。\n\n【影响与前瞻】对于开发者社区来说，CLI 和 Desktop/Cowork 将并行发展，针对不同场景。CLI 适合自动化、脚本化工作流，Desktop 适合视觉化操作。",
-      "source": "Twitter @bcherny",
-      "source_type": "opentwitter",
-      "url": "https://x.com/bcherny/status/2035953714104803573",
-      "timestamp": "2026-03-23T05:36:06Z",
-      "importance": 6,
-      "tags": [
-        "Claude Code",
-        "CLI",
-        "Boris Cherny"
-      ],
-      "batch_time": "2026-03-24T09:00:00+08:00"
     }
   ]
 }
