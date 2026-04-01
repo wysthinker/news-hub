@@ -1,0 +1,110 @@
+{
+  "channel_id": "ai-frontier",
+  "channel_name": "AI 前沿",
+  "generated_at": "2026-04-01T09:00:00+08:00",
+  "digest": "本次更新的焦点：Anthropic 与澳大利亚政府签署 AI 安全 MOU 并开设悉尼办公室，同步发布澳大利亚 Claude 使用专题研究；OpenAI 完成史上最大 AI 融资 $122B；Boris Cherny 发了一个 Claude Code 隐藏功能大合集推文引爆社区（2.2万赞）；Karpathy 持续关注供应链安全，继上周 litellm 事件后又曝光 npm axios 攻击。整体来看，Anthropic 持续在国际扩张和产品生态上加速，OpenAI 则在资本层面巩固领先。",
+  "items": [
+    {
+      "title": "OpenAI 完成 $122B 融资，AI 史上最大单笔融资",
+      "summary": "OpenAI 宣布完成 1220 亿美元融资，用于加速 AI 基础设施和下一代模型研发。公司表示算力驱动了 AI 的每一层——从前沿研究到模型、产品、部署和营收。这笔融资使 OpenAI 在资本层面拉开了与竞争对手的差距，凸显了 AI 军备竞赛中算力投入的惊人规模。",
+      "detail_content": "【核心事件】OpenAI 于 3 月 31 日宣布完成 1220 亿美元融资，这是 AI 行业乃至科技行业历史上最大的单笔融资。资金将用于扩大基础设施战略、训练更强大的模型、以及支持全球化部署。\n\n【关键细节与引用】公告原文表述：\"Compute powers every layer of AI: frontier research and models, products, deployment, and revenue.\" OpenAI 描述了一个飞轮效应：更好的基础设施 → 训练更强的模型 → 每个 token 更智能 → AI 适用于更复杂的工作流 → 使用量增长 → 算力需求增加 → 推动下一轮迭代。公司强调已从依赖少数核心供应商扩展到更广泛的基础设施战略，以满足全球 AI 部署的规模和可靠性要求。\n\n【背景与上下文】此前 Grok 搜索结果提到 OpenAI 融资规模在 $110B-$122B 之间，最终确认为 $122B。这笔融资远超此前所有记录，反映出投资者对 AI 长期前景的极度乐观。OpenAI 近期在产品端密集迭代 GPT-5.4 系列，同时面临 Sora 关闭、成本控制等挑战。\n\n【影响与前瞻】$122B 的融资规模意味着 OpenAI 在算力竞赛中获得了巨大的弹药储备。这将直接影响 Anthropic、Google 等竞争对手的融资和战略节奏。对行业而言，这笔融资强化了\"AI 是资本密集型游戏\"的叙事，小型创业公司在基础模型赛道上的生存空间进一步收窄。",
+      "source": "OpenAI 官方",
+      "source_type": "tavily",
+      "url": "https://openai.com/index/accelerating-the-next-phase-ai/",
+      "timestamp": "2026-03-31T20:07:12Z",
+      "importance": 9,
+      "tags": [
+        "OpenAI",
+        "融资",
+        "算力",
+        "AI基础设施"
+      ],
+      "batch_time": "2026-04-01T09:00:00+08:00"
+    },
+    {
+      "title": "Boris Cherny 发布 Claude Code 隐藏功能大合集：从 /voice 到 --bare，15 个被忽视的强大特性",
+      "summary": "Claude Code 工程负责人 Boris Cherny 发布了一个病毒式推文 thread（2.2万赞），系统梳理了 Claude Code 中最被低估的隐藏功能。亮点包括：/branch 分叉会话、--bare 加速 SDK 启动 10x、--agent 自定义系统提示和工具、/voice 语音输入（他本人大部分编码通过语音完成）。这是目前最全面的 Claude Code 高级技巧合集。",
+      "detail_content": "【核心事件】2026 年 3 月 30 日，Anthropic Claude Code 工程负责人 Boris Cherny 在 Twitter 上发布了一个 15+ 条的 thread，系统介绍他最常用但被用户忽视的 Claude Code 功能。这条推文迅速引爆社区，获得 2458 转发、22644 赞。\n\n【关键细节与引用】核心功能亮点：\n- /branch 和 --fork-session：分叉当前会话，创建并行探索路径。Boris 原文：\"People often ask how to fork an existing session. Two ways: 1. Run /branch from your session 2. From the CLI, run claude --resume <session-id> --fork-session\"\n- --bare 模式：跳过 CLAUDE.md、settings、MCP 的搜索和加载，SDK 启动速度提升最高 10 倍，适合非交互式场景\n- --agent 自定义代理：在 .claude/agents 中定义自定义 agent，可以指定独立的系统提示和工具集。Boris 评价：\"Custom agents are a powerful primitive that often gets overlooked\"\n- /voice 语音输入：Boris 透露 \"Fun fact: I do most of my coding by speaking to Claude, rather than typing\"，支持 CLI 空格键长按、Desktop 按钮、iOS 听写\n- Claude Code Review：Boris 声称 \"finds 99%+ of the bugs, then an engineer sanity checks Claude didn't miss something obvious\"\n\n【背景与上下文】这条 thread 发布于 Claude Code Auto Mode 上线一周之后，社区对 Claude Code 的关注度处于历史高位。Boris 的角色使得这些技巧具有最高可信度——他就是写这些功能的人。\n\n【影响与前瞻】对于 Claude Code 深度用户而言，这是一份必读的功能手册。--agent 和 --bare 的组合暗示了 Claude Code 作为 Agent 基础设施平台的发展方向——不只是一个编码助手，而是可以被编程和定制的 Agent 运行时。",
+      "source": "Boris Cherny (@bcherny)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/bcherny/status/2038454336355999749",
+      "timestamp": "2026-03-30T03:12:41Z",
+      "importance": 9,
+      "tags": [
+        "Claude Code",
+        "Anthropic",
+        "开发者工具",
+        "产品功能"
+      ],
+      "batch_time": "2026-04-01T09:00:00+08:00"
+    },
+    {
+      "title": "Anthropic 与澳大利亚政府签署 AI 安全合作 MOU，悉尼办公室即将开业",
+      "summary": "Anthropic 与澳大利亚政府签署谅解备忘录，将在 AI 安全研究方面展开合作，支持澳大利亚的 AI 战略目标。同时宣布将在悉尼开设新办公室，这是其亚太区第四个据点。配套发布了《澳大利亚如何使用 Claude》研究报告，基于经济指数数据分析澳大利亚用户的使用模式。",
+      "detail_content": "【核心事件】Anthropic 于 2026 年 3 月 31 日宣布与澳大利亚政府签署谅解备忘录（MOU），双方将在 AI 安全研究领域展开正式合作。MOU 的核心目标是支持澳大利亚国家 AI 战略中关于安全和负责任 AI 开发的相关目标。与此同时，Anthropic 将在悉尼开设新办公室，这是继日本、新加坡之后在亚太区的第四个办公地点。\n\n【关键细节与引用】公告原文指出：\"Today, Anthropic signed a Memorandum of Understanding with the Australian government to cooperate on AI safety research and support the goals of Australia's\" AI 战略。配套发布的研究报告《How Australia Uses Claude》基于 Anthropic Economic Index 数据，深度分析了澳大利亚用户使用 Claude 的具体模式和行业分布，为当地政策制定者提供了一手数据参考。\n\n【背景与上下文】这是 Anthropic 在五角大楼争端之后的又一次国际扩张动作。在美国市场面临政治压力的同时，Anthropic 正在加速海外布局。澳大利亚近年来积极推进 AI 治理框架，此次合作标志着两国在 AI 安全领域的深度对接。\n\n【影响与前瞻】MOU 的签署意味着 Anthropic 在政府级合作方面迈出了重要一步，从单纯的企业客户关系升级为国家级战略合作。悉尼办公室将帮助 Anthropic 更好地服务亚太区企业客户，同时在 AI 安全研究方面获得更多国际背书。",
+      "source": "Anthropic 官方",
+      "source_type": "tavily",
+      "url": "https://www.anthropic.com/news/australia-MOU",
+      "timestamp": "2026-03-31T23:02:51Z",
+      "importance": 8,
+      "tags": [
+        "Anthropic",
+        "澳大利亚",
+        "AI安全",
+        "国际扩张"
+      ],
+      "batch_time": "2026-04-01T09:00:00+08:00"
+    },
+    {
+      "title": "Karpathy 警告 npm axios 供应链攻击：300M 周下载量的 HTTP 库被投毒",
+      "summary": "继上周曝光 litellm PyPI 供应链攻击后，Karpathy 再次拉响警报：npm 生态中最流行的 HTTP 客户端库 axios（每周 3 亿下载）发现供应链攻击。Karpathy 本人也中招——通过 googleworkspace/cli 引入了受污染版本，所幸安装的版本不含恶意代码。连续两周出现针对开发者工具链的攻击，软件供应链安全形势严峻。",
+      "detail_content": "【核心事件】2026 年 3 月 31 日，Karpathy 在 Twitter 上发出警告（1060 转发，9773 赞）：npm axios——最流行的 HTTP 客户端库，每周下载量 3 亿——被发现供应链攻击。这是继上周 litellm PyPI 攻击（5402 转发，28086 赞）之后，开发者社区面临的又一重大安全事件。\n\n【关键细节与引用】Karpathy 原文透露了亲身经历：\"Scanning my system I found a use imported from googleworkspace/cli from a few days ago when I was experimenting with gmail/gcal cli. The installed version (luckily)\" 不含恶意载荷。他引用了另一位安全研究者的详细分析。上周他曝光的 litellm 攻击更为严重——pip install litellm 即可窃取 SSH keys、AWS/GCP/Azure 凭证、K8s 配置、git 凭证、所有 API keys、crypto 钱包等几乎所有敏感信息。\n\n【背景与上下文】两周内连续两起针对开发者工具链的供应链攻击，攻击目标精准指向 AI 开发者群体（litellm 是 LLM 统一调用库，axios 是全栈开发标配）。这与 AI 开发者普遍使用大量第三方包、且安全意识相对薄弱的现状有关。\n\n【影响与前瞻】Karpathy 连续两周主动警示供应链安全，凸显了 AI 时代开发者面临的系统性安全风险。当 AI 编码工具可以自动安装依赖时，供应链攻击的影响面被进一步放大。预计会有更多安全工具和审计机制被集成到 AI 编码工作流中。",
+      "source": "Andrej Karpathy (@karpathy)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/karpathy/status/2038849654423798197",
+      "timestamp": "2026-03-31T05:23:32Z",
+      "importance": 8,
+      "tags": [
+        "供应链安全",
+        "npm",
+        "Karpathy",
+        "开发者安全"
+      ],
+      "batch_time": "2026-04-01T09:00:00+08:00"
+    },
+    {
+      "title": "Anthropic 发布澳大利亚 Claude 使用专题研究：经济指数的首个国家级深度分析",
+      "summary": "配合澳大利亚 MOU 签署，Anthropic 发布了《How Australia Uses Claude》研究报告，基于经济指数数据深度分析澳大利亚用户的 Claude 使用模式。这是 Anthropic 首次针对单一国家发布专题使用报告，标志着经济指数研究从全球概览向区域深度分析延伸。",
+      "detail_content": "【核心事件】2026 年 3 月 31 日，Anthropic 发布研究报告《How Australia Uses Claude: Findings from the Anthropic Economic Index》，这是配合澳大利亚政府 MOU 签署的配套研究。\n\n【关键细节与引用】报告原文表述：\"Anthropic is expanding to Australia. We're opening a new office in Sydney in the coming weeks, and we've signed a Memorandum of Understanding with the\" 澳大利亚政府。报告基于 Anthropic Economic Index 的数据，专门分析澳大利亚用户群体如何使用 Claude，覆盖行业分布、使用场景、任务类型等维度。\n\n【背景与上下文】Anthropic 此前已发布多份经济指数相关研究，包括全球 AI 用户学习曲线分析、劳动力市场影响评估。Jack Clark 此前在推文中表示 Anthropic Institute 计划大幅扩展这类社会科学研究。澳大利亚报告是这一战略的具体落地。\n\n【影响与前瞻】区域化经济指数报告对政策制定者具有直接参考价值，也为 Anthropic 的政府关系建设提供了学术支撑。预计后续会看到更多国家和地区的专题分析报告。",
+      "source": "Anthropic Research",
+      "source_type": "tavily",
+      "url": "https://www.anthropic.com/research/how-australia-uses-claude",
+      "timestamp": "2026-03-31T23:02:51Z",
+      "importance": 6,
+      "tags": [
+        "Anthropic",
+        "经济指数",
+        "澳大利亚",
+        "研究报告"
+      ],
+      "batch_time": "2026-04-01T09:00:00+08:00"
+    },
+    {
+      "title": "Thariq 展示 Claude Code 设计流程：Figma 到实现的 AI 协作工作流",
+      "summary": "Claude Code 产品负责人 Thariq 分享了他使用 Claude Code 从 Figma 设计稿到实际产品的工作流截图。他展示了 Claude Code 在实现过程中自主添加的 UI 组件，表示这些组件值得加回原始设计稿。这是 Claude Code 在前端开发场景中的真实工作流展示，暗示了与 Figma MCP 集成后的潜力。",
+      "detail_content": "【核心事件】2026 年 3 月 29 日，Thariq 在 Twitter 上发布了一组截图，展示了 Claude Code 从设计稿到实现的完整工作流。\n\n【关键细节与引用】Thariq 原文：\"these are the components it added that I might want to add to the mockup\"，配图展示了 Claude Code 在实现过程中超出原始设计稿自主建议的 UI 组件。这表明 Claude Code 不仅是忠实执行设计稿的工具，还能在开发过程中做出有建设性的设计建议。\n\n【背景与上下文】Thariq 近期密集展示 Claude Code 各种实际使用场景——Channels 远程控制、iMessage 集成、Skills 深度指南、Figma MCP 重大更新。这条推文聚焦于前端开发场景，补充了 Claude Code 在非纯后端编码任务中的能力展示。\n\n【影响与前瞻】对于前端开发者和设计师，这展示了 AI 辅助开发中一个有趣的模式：AI 不仅执行指令，还能基于设计上下文做出创造性补充。结合此前 Thariq 宣布的 Figma MCP 重大更新，Claude Code 正在成为设计到代码的完整桥梁。",
+      "source": "Thariq (@trq212)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/trq212/status/2038354323722351049",
+      "timestamp": "2026-03-29T20:35:16Z",
+      "importance": 6,
+      "tags": [
+        "Claude Code",
+        "Thariq",
+        "前端开发",
+        "Figma"
+      ],
+      "batch_time": "2026-04-01T09:00:00+08:00"
+    }
+  ]
+}
