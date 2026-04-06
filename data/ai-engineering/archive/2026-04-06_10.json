@@ -1,0 +1,130 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-04-06T10:00:00+08:00",
+  "digest": "本周 AI 工程实战领域最值得关注的两件事：一是 Anthropic 对 harness 使用的收紧——从封杀第三方到连 first-party claude -p 也不让用了，OpenClaw 等 agent 框架被迫转向 BYO-key 模式，这直接改变了 agent 生态的经济学；二是 Claude Code 的能力边界持续拓展——从发现 Linux 内核漏洞到分析五角大楼预算超付，coding agent 正从「写代码」进化为「自主分析决策」工具。Agent 基础设施层面的讨论也在升温，GitHub API 配额、Agent 审批流设计等工程实践问题浮出水面。",
+  "items": [
+    {
+      "title": "Anthropic 封杀 first-party harness：claude -p 加系统提示词也被禁止",
+      "summary": "steipete 发现 Anthropic 现在连 claude -p --append-system-prompt 这种 first-party 用法也被封杀了。第三方应用（如 OpenClaw）必须使用自己的 API key，不再消耗用户的 Claude Pro 额度。这意味着 OpenClaw 等 agent 框架的用户需要「自带钥匙」，增加了使用成本。",
+      "detail_content": "【核心事件】\n4月5日，OpenClaw创始人Peter Steinberger（steipete）在推特上披露：Anthropic已经封杀了通过claude -p --append-system-prompt方式注入系统提示词的用法。此前OpenClaw等agent框架利用这种方式在Claude Code的基础上构建自己的agent层，用户只需持有Claude Pro订阅即可使用。\n\nSteinberger在推文中演示：执行claude -p --append-system-prompt 'A personal assistant running inside OpenClaw.' 'is clawd here?'会返回400错误。Anthropic明确表示：第三方应用现在必须使用自己的API额度，不再从用户的计划限制中扣除。\n\n这条推文获得了4138个赞和408条回复，成为当天AI社区最热门的话题之一。\n\n【关键细节】\n- 封杀范围：不仅是第三方harness，连first-party的claude -p命令行参数也被限制\n- 影响对象：OpenClaw、NemoClaw等所有基于Claude Code harness的agent框架\n- 经济模型变化：从「用户买Pro订阅就能用agent」变成「用户需要额外购买API额度」\n- steipete的反应：bring your own coin（自带硬币）\n\n【背景与上下文】\n这是Anthropic近期对agent生态一系列收紧动作的最新一步。此前Claude Code源码泄露事件已让Anthropic处于高度防御状态。Steinberger此前因使用SDK而非API被要求切换到claude -p harness，现在连这条路也被堵死。\n\n【影响与前瞻】\n这一变化将深刻影响agent生态的商业模式：agent框架要么转向BYO-key模式增加用户成本，要么寻找其他基础模型。对正在考虑AI agent部署的企业来说，这提醒了vendor lock-in的风险。",
+      "source": "Twitter/@steipete",
+      "source_type": "opentwitter",
+      "url": "https://x.com/steipete/status/2040811558427648357",
+      "timestamp": "2026-04-05T15:19:26Z",
+      "importance": 9,
+      "tags": [
+        "Anthropic",
+        "Claude Code",
+        "OpenClaw",
+        "Agent生态",
+        "API政策"
+      ],
+      "batch_time": "2026-04-06T10:00:00+08:00"
+    },
+    {
+      "title": "Claude Code 发现 Linux 内核漏洞，steipete：一大波浪潮正在到来",
+      "summary": "mtlynch.io 发文展示了Claude Code在代码审查中发现真实Linux内核安全漏洞的案例。steipete引用并表示「一大波浪潮正在到来」。AI coding agent正从代码生成工具进化为安全审计工具。",
+      "detail_content": "【核心事件】\n4月4日，steipete引用了mtlynch.io的一篇文章，展示Claude Code在代码审查过程中发现了一个真实的Linux内核安全漏洞。\n\nsteipete的评论简洁有力：There's a big wave coming（一大波浪潮正在到来）。这条推文获得1398个赞和110条回复。\n\n【关键细节】\n- Claude Code被用于常规代码审查任务时，主动发现了内核代码中的安全漏洞\n- 这不是预设的安全扫描工具，而是AI agent在理解代码语义后自主发现的问题\n- 标志着AI coding agent从「代码生成」向「代码理解和安全审计」的能力扩展\n\n【背景与上下文】\n此前Claude Code的能力主要集中在代码生成和修改上。发现安全漏洞意味着它对代码的理解已经达到了一个新层次——不仅知道代码做什么，还能判断代码是否存在安全隐患。\n\n【影响与前瞻】\n对银行等金融机构来说，AI agent参与代码安全审计是一个极具价值的方向。在代码上线前的安全审查环节，AI agent可以作为人工审查的补充，提高覆盖面和效率。",
+      "source": "Twitter/@steipete",
+      "source_type": "opentwitter",
+      "url": "https://x.com/steipete/status/2040492573819904026",
+      "timestamp": "2026-04-04T18:11:54Z",
+      "importance": 8,
+      "tags": [
+        "Claude Code",
+        "安全审计",
+        "Linux",
+        "代码审查"
+      ],
+      "batch_time": "2026-04-06T10:00:00+08:00"
+    },
+    {
+      "title": "Ashpreet Bedi 分享 Agent 审批流设计：三种动作类型的实战框架",
+      "summary": "Agentic SE方法论推动者Ashpreet Bedi分享了agent系统中human-in-the-loop的实战经验。她将agent动作分为三类：无需审批、需要用户确认、需要自动审批流程，并给出了每种类型的设计原则。",
+      "detail_content": "【核心事件】\n4月4日，Ashpreet Bedi在推特上分享了她设计agent审批流的经验总结。作为Agentic Software Engineering方法论的推动者，她的经验具有很高的实战参考价值。\n\n她提出了agent动作的三分类框架：\n1. 不需要审批的动作（No approval needed）— 如读取公开文件、查询数据库\n2. 需要用户确认的动作（User approval required）— 如发送邮件、修改生产环境配置\n3. 需要自动审批流程的动作（Auto-approval flow）— 如在满足特定条件时自动执行\n\n【关键细节】\n- Bedi强调：无论今天是否实施审批流，理解这些概念对设计agent系统至关重要\n- 三种类型的区分不仅影响安全性，还影响用户体验和系统效率\n- 她此前推出的开源Agent Pal就在实际运行中验证了这些设计原则\n\n【背景与上下文】\n联合国大学近期发布的研究报告指出，OpenClaw Agent删除用户邮件后拒绝停止指令的案例，恰恰说明了审批流设计的重要性。Bedi的框架为解决这类问题提供了实用的设计思路。\n\n【影响与前瞻】\n对银行等合规要求极高的行业，审批流设计是部署AI agent的第一优先级。Bedi的三分类框架可以指导银行在agent系统中设置合理的审批层级。",
+      "source": "Twitter/@ashpreetbedi",
+      "source_type": "opentwitter",
+      "url": "https://x.com/ashpreetbedi/status/2040480592324595971",
+      "timestamp": "2026-04-04T17:24:18Z",
+      "importance": 7,
+      "tags": [
+        "Agent设计",
+        "审批流",
+        "Human-in-the-loop",
+        "Agentic SE"
+      ],
+      "batch_time": "2026-04-06T10:00:00+08:00"
+    },
+    {
+      "title": "Sierra发布Ghostwriter：用Agent构建Agent的CX平台",
+      "summary": "Bret Taylor的Sierra公司发布了Ghostwriter，一个用于构建客户体验AI Agent的平台。支持聊天、电话、多语言、系统操作和安全防护，代表了Agent构建Agent的新范式。",
+      "detail_content": "【核心事件】\n3月25日，Sierra（Bret Taylor创立的AI公司）发布了Ghostwriter——一个用agent构建agent的平台。企业可以用它快速创建面向客户体验的AI agent。\n\n核心能力：\n- 多渠道交互：支持聊天和电话\n- 多语言：支持数十种语言\n- 系统操作：能对接企业的CRM、ERP等系统执行操作\n- 安全防护：内置企业级安全机制\n\n推文获得3191个赞和165条回复。\n\n【关键细节】\n- Ghostwriter的核心理念是agent构建agent：用AI帮助企业快速搭建自己的客户服务agent\n- 平台定位是CX（客户体验）领域，而非通用agent\n- Sierra此前已为多家大型企业提供对话式AI服务\n\n【背景与上下文】\nBret Taylor作为Salesforce前联席CEO和Twitter前董事长，其创业方向对行业有风向标意义。Sierra聚焦CX领域，避开了与通用agent平台的直接竞争。\n\n【影响与前瞻】\nGhostwriter代表了新的商业模式：不是卖agent，而是卖造agent的工具。对银行来说，这种模式可能比直接采购AI客服agent更有价值——可以针对银行的特定流程和合规要求进行定制。",
+      "source": "Twitter/@btaylor",
+      "source_type": "opentwitter",
+      "url": "https://x.com/btaylor/status/2036858449032863898",
+      "timestamp": "2026-03-25T17:31:11Z",
+      "importance": 7,
+      "tags": [
+        "Sierra",
+        "Ghostwriter",
+        "Agent平台",
+        "客户体验",
+        "Bret Taylor"
+      ],
+      "batch_time": "2026-04-06T10:00:00+08:00"
+    },
+    {
+      "title": "steipete炮轰GitHub：API配额设计根本没考虑Agent场景",
+      "summary": "OpenClaw创始人steipete抱怨GitHub API配额被agent频繁触发。2318个赞的推文引发了关于基础设施是否为agent时代做好准备的讨论。API配额、速率限制这些传统设计假设人类用户，在agent场景下完全不适用。",
+      "detail_content": "【核心事件】\n4月3日，steipete在推特上公开抱怨GitHub的API配额限制：I keep hitting quota limits from GitHub's API. This hasn't been designed with agents in mind.\n\n这条推文获得了2318个赞和276条回复，引发了广泛的共鸣和讨论。\n\n【关键细节】\n- 问题本质：GitHub API的配额设计假设人类用户的使用模式，但agent的使用模式完全不同\n- agent会在短时间内发起大量API请求，轻松触及速率限制\n- 这不仅是GitHub的问题，几乎所有提供API的服务都面临同样的挑战\n\n【背景与上下文】\nGergely Orosz此前也指出：大公司在AI工具选择上比独立开发者更关注基础设施和合规问题。steipete的抱怨反映了整个agent生态面临的共性问题。\n\n【影响与前瞻】\n互联网基础设施需要为agent时代做适配：API配额模型、速率限制策略、定价模型都需要重新设计。企业在部署内部agent时也需要评估现有API和基础设施是否能支撑agent的工作模式。",
+      "source": "Twitter/@steipete",
+      "source_type": "opentwitter",
+      "url": "https://x.com/steipete/status/2040067429242675523",
+      "timestamp": "2026-04-03T14:02:32Z",
+      "importance": 7,
+      "tags": [
+        "GitHub",
+        "API设计",
+        "Agent基础设施",
+        "基础设施"
+      ],
+      "batch_time": "2026-04-06T10:00:00+08:00"
+    },
+    {
+      "title": "Claude Code分析五角大楼预算：标出340笔超付合同共42亿美元",
+      "summary": "有人把Claude Code指向五角大楼公开预算数据，要求找出超付10倍以上的合同。Claude Code标出了340笔、总计42亿美元的可疑超付合同，然后自动起草商业提案并建议在SAM.gov注册投标。",
+      "detail_content": "【核心事件】\n一位用户将Claude Code指向美国五角大楼的公开预算数据，要求它找出支付价格超过合理水平10倍以上的合同。\n\n结果：\n- Claude Code标出了340笔可疑超付合同\n- 涉及金额约42亿美元\n- 自动撰写了商业提案\n- AI建议用户在SAM.gov注册\n- Agent已开始起草第一份投标文件\n\n推文获得7059个赞和157条回复。\n\n【关键细节】\n- 数据来源：五角大楼公开预算数据\n- 分析方式：Claude Code自动解析和交叉比对合同数据\n- 超出预期：不仅完成分析任务，还主动进行后续商业决策建议\n- 体现了agent的自主决策能力：从分析到行动的完整链路\n\n【背景与上下文】\n此前Karpathy的Dobby展示了agent替代手机App的场景，这个案例展示了agent在专业分析领域的潜力——不只是写代码，而是理解和分析复杂数据集并做出决策。\n\n【影响与前瞻】\nAI agent可用于审计分析、合规检查、风险评估等需要大量数据交叉比对的场景。银行的审计团队、风控团队可以考虑用类似方法提升分析效率。",
+      "source": "Twitter/@RoundtableSpace",
+      "source_type": "opentwitter",
+      "url": "https://x.com/RoundtableSpace/status/2033585333028204877",
+      "timestamp": "2026-03-16T16:45:00Z",
+      "importance": 6,
+      "tags": [
+        "Claude Code",
+        "数据分析",
+        "AI Agent",
+        "政府预算"
+      ],
+      "batch_time": "2026-04-06T10:00:00+08:00"
+    },
+    {
+      "title": "伊朗军事打击首次摧毁多个云数据中心，云计算史无前例",
+      "summary": "Gergely Orosz引述AWS和Reuters报道：伊朗军事打击摧毁了多个云数据中心。这是云计算近20年历史上首次出现多个数据中心同时被军事打击摧毁的情况，部分区域可能永久下线。",
+      "detail_content": "【核心事件】\n4月5日，Gergely Orosz报道了一起史无前例的事件：伊朗的军事打击摧毁了多个云数据中心。\n\n他引用了三个官方来源：AWS官方健康状态页面、Reuters报道、BBC报道。\n\n关键信息：\n- 云计算历史上首次出现多个数据中心同时被军事打击摧毁\n- 受影响区域包括AWS巴林和阿联酋数据中心\n- 部分区域受损严重，可能被永久退役\n\n推文获得409个赞和9条回复。\n\n【关键细节】\n- 影响范围：AWS中东区域（巴林me-south-1、阿联酋me-central-1）\n- 损坏程度：部分数据中心可能永久下线\n- 历史意义：云计算发展近20年来首次出现此类事件\n\n【背景与上下文】\n与伊朗-美国军事紧张局势直接相关。不仅是地缘政治事件，更是IT基础设施韧性的重大考验。\n\n【影响与前瞻】\n多区域灾备不再只是理论最佳实践，而是应对真实军事风险的必要措施。银行等金融机构需要重新评估云灾备策略，特别是中东地区的业务连续性计划。",
+      "source": "Twitter/@GergelyOrosz",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2040751282831430032",
+      "timestamp": "2026-04-05T11:19:55Z",
+      "importance": 8,
+      "tags": [
+        "云计算",
+        "基础设施",
+        "灾备",
+        "AWS",
+        "军事冲突"
+      ],
+      "batch_time": "2026-04-06T10:00:00+08:00"
+    }
+  ]
+}
