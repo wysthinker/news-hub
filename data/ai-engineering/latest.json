@@ -1,9 +1,113 @@
 {
   "channel_id": "ai-engineering",
   "channel_name": "AI 工程实战",
-  "generated_at": "2026-04-06T10:09:08.478673+08:00",
-  "digest": "本周 AI 工程实战领域最值得关注的两件事：一是 Anthropic 对 harness 使用的收紧——从封杀第三方到连 first-party claude -p 也不让用了，OpenClaw 等 agent 框架被迫转向 BYO-key 模式，这直接改变了 agent 生态的经济学；二是 Claude Code 的能力边界持续拓展——从发现 Linux 内核漏洞到分析五角大楼预算超付，coding agent 正从「写代码」进化为「自主分析决策」工具。Agent 基础设施层面的讨论也在升温，GitHub API 配额、Agent 审批流设计等工程实践问题浮出水面。",
+  "generated_at": "2026-04-07T10:09:54.811650+08:00",
+  "digest": "本周 AI 工程圈三个信号值得关注：一是 Agent 安全从理论走向实践，Google DeepMind 发布了首个系统性 AI Agent Traps 框架，Block 开源了纯本地的 Goose Agent；二是 AI 编程工作流持续进化，Simon Willison 展示了 README-driven development 配合 Claude Code 的高效方法论，Google Stitch 的 DESIGN.md 让设计系统变成一个 markdown 文件；三是开发者角色正在分化，Supervisor Class 概念开始被主流接受——写代码不再是核心技能，编排 Agent 才是。和上周相比，讨论焦点从「AI 编程工具好不好用」转向「如何安全地让 Agent 在生产环境中工作」。",
   "items": [
+    {
+      "title": "Block 开源 Goose：Jack Dorsey 公司推出的纯本地 AI Agent",
+      "summary": "Block（Jack Dorsey 的公司）开源了名为 Goose 的本地 AI Agent。不只做代码补全，能在本地安装、执行、编辑和测试代码，支持任意 LLM，100% 在用户机器上运行不发送数据到云端。继 OpenClaw 之后又一个重量级开源 Agent 项目。",
+      "detail_content": "【核心事件】\nBlock（前 Square）于 4 月 3 日宣布开源 Goose，一个完全本地运行的 AI Agent。与大多数需要云端的 coding agent 不同，Goose 在用户本地机器上执行所有操作——安装依赖、运行代码、编辑文件、执行测试——不需要将代码或数据发送到任何远程服务器。它支持任意 LLM 后端，包括本地模型（通过 Ollama 等）和云端模型。\n\n【关键细节】\nGoose 的核心能力包括：安装包和依赖、执行代码和命令、编辑源代码文件、运行并分析测试结果。GitHub 上线后迅速获得社区关注。推文获得 3155 个赞和 82 条回复，在开发者社区引发广泛讨论。\n\n原文引用：「It's called Goose and it installs, executes, edits, and tests with any LLM fully on your machine. 100% Opensource.」\n\n【背景与上下文】\n在 Anthropic 封杀第三方 harness、社区对 Claude Code 源码泄露和 DMCA 争议不满的背景下，Goose 的开源时机很有意义。它提供了一个不依赖任何单一 AI 公司生态的替代方案。与 OpenClaw 定位类似（都是 Agent 编排层），但 Goose 强调纯本地执行和数据不离开用户机器。\n\n【影响与前瞻】\n对数据敏感的企业（包括银行）来说，纯本地的 Agent 方案解决了一个核心顾虑：代码不离开内网。这可能是 Goose 比 OpenClaw 更适合金融行业的切入点。但要注意本地运行的性能和模型能力限制。",
+      "source": "Twitter/@heyrimsha",
+      "source_type": "opentwitter",
+      "url": "https://x.com/heyrimsha/status/2039974285947924582",
+      "timestamp": "2026-04-03T07:52:25Z",
+      "importance": 8,
+      "tags": [
+        "Block",
+        "Goose",
+        "开源Agent",
+        "本地部署",
+        "Jack Dorsey"
+      ],
+      "batch_time": "2026-04-07T10:00:00+08:00"
+    },
+    {
+      "title": "Google DeepMind 发布 AI Agent Traps 框架：开放网络如何被武器化对抗自主 Agent",
+      "summary": "Google DeepMind 发布论文首次系统性定义「AI Agent Traps」概念。攻击者不需要攻破模型本身，只需在网页中植入恶意内容就能让 Agent 执行危险操作。这是 Agent 安全领域从零散案例走向系统框架的标志性工作。",
+      "detail_content": "【核心事件】\n4 月 1 日，Google DeepMind 发布论文首次系统性定义「AI Agent Traps」概念——攻击者通过在正常网页中植入精心设计的内容，诱导自主 AI Agent 执行非预期操作。不需要攻破模型本身，只需要利用 Agent 对网页内容的自动解析和执行能力。\n\n【关键细节】\n论文定义了多种 Agent Trap 类型，并提出了防御框架。这一工作填补了 Agent 安全研究的空白——之前的 red teaming 主要针对模型输出，而 Agent Traps 针对的是 Agent 在执行任务过程中的环境交互。推文获得 467 个赞，被多位安全研究者引用和讨论。\n\n原文引用：「The biggest threat to AI agents isn't a smarter attacker. It's the web itself.」\n\n【背景与上下文】\n这篇论文是对之前几个真实事件的系统性回应：联合国大学报告的 OpenClaw Agent 删除用户邮件后拒绝停止、Meta AI 安全研究员报告的类似案例。从「个案分析」升级到「系统框架」，是 Agent 安全研究的里程碑。和 Anthropic 的 Abstractive Red-Teaming 形成互补——后者关注模型行为偏差，DeepMind 的框架关注 Agent 在真实环境中的安全。\n\n【影响与前瞻】\n对银行部署 Agent 的启示：Agent 的安全不仅是模型层面的对齐问题，更是执行环境层面的防御问题。如果 Agent 被授权浏览网页、处理邮件、操作文件，那么每一个交互点都可能成为攻击面。银行需要建立 Agent 沙箱、操作审批流、和异常行为监控三层防御。",
+      "source": "Twitter/@omarsar0",
+      "source_type": "opentwitter",
+      "url": "https://x.com/omarsar0/status/2039383554510217707",
+      "timestamp": "2026-04-01T16:45:03Z",
+      "importance": 8,
+      "tags": [
+        "Agent安全",
+        "DeepMind",
+        "AI Agent Traps",
+        "安全框架"
+      ],
+      "batch_time": "2026-04-07T10:00:00+08:00"
+    },
+    {
+      "title": "Simon Willison 用 Claude Code 实践 README-Driven Development：先写文档再让 AI 实现",
+      "summary": "Simon Willison 分享了用 Claude Code 构建新工具 scan-for-secrets 的完整工作流：先手写极其详细的 README 描述工具应如何工作，然后把 README 交给 Claude Code 让它实现。同时他对 Anthropic 封杀第三方 harness 基于系统提示词的过滤表达了不满。",
+      "detail_content": "【核心事件】\n4 月 5 日，Simon Willison 分享了他的最新工作流——README-driven development。他先用手工编写了一份极其详细的 README 文档，精确描述了 scan-for-secrets 工具应该如何工作（每个功能、输入输出、边界条件），然后将这份 README 作为 prompt 交给 Claude Code，让 AI 完全按照文档规格来实现代码。\n\n原文引用：「I built this one using README-driven-development: I hand crafted a detailed README describing exactly how the tool should work... then dumped that into Claude Code and told it to build it.」\n\n【关键细节】\nscan-for-secrets 是一个扫描代码仓库中密钥和敏感信息的工具，已开源在 GitHub。Willison 同时在同一天对 Anthropic 的 harness 政策发表了评论，认为「基于系统提示词的过滤 feels a step too far」。\n\n在同一条讨论中，他还提到 Anthropic 的过滤机制至少是精确字符串匹配，这意味着正常使用 Claude Code 时偶尔提到 OpenClaw 不会触发误杀。\n\n【背景与上下文】\nREADME-driven development 本身不是新概念（Tom Preston-Werner 2010 年提出），但「README → AI 实现」的工作流是 2026 年的新实践。Willison 之前展示过 vibe coding SwiftUI 应用（不打开 Xcode），这次更进一步——不是用自然语言对话让 AI 写代码，而是用结构化文档让 AI 按规格实现。\n\n【影响与前瞻】\n这个工作流对银行 IT 团队很有参考价值：先写规格文档（这本身就是好的工程实践），然后用 AI 按规格实现。既保留了人类的架构控制权，又利用了 AI 的编码效率。对团队来说，README 也是最好的代码审查文档。",
+      "source": "Twitter/@simonw",
+      "source_type": "opentwitter",
+      "url": "https://x.com/simonw/status/2040644971204857879",
+      "timestamp": "2026-04-05T04:17:54Z",
+      "importance": 7,
+      "tags": [
+        "Simon Willison",
+        "README-driven development",
+        "Claude Code",
+        "AI编程工作流"
+      ],
+      "batch_time": "2026-04-07T10:00:00+08:00"
+    },
+    {
+      "title": "Google Stitch 发布 DESIGN.md：一个 markdown 文件让 AI Agent 理解整个设计系统",
+      "summary": "Google Stitch 发布了 DESIGN.md 框架——用一个 markdown 文件教会 AI coding agent 你的完整设计系统。不需要 Figma 导出、不需要 JSON schema、不需要配置。同时社区发布了 Awesome Design MD，逆向工程了 Apple、Spotify、Airbnb 等 30+ 大公司的设计系统。",
+      "detail_content": "【核心事件】\n4 月 3 日，Google Stitch 发布了 DESIGN.md——一种新的设计系统交付方式。开发者只需要在项目根目录放一个 DESIGN.md 文件，AI coding agent（Claude Code、Cursor、Codex 等）就能自动理解并遵循该设计系统。不需要 Figma 导出、不需要 JSON schema、不需要任何额外配置。\n\n同时社区发布了「Awesome Design MD」项目，将 Apple、Spotify、Airbnb 等 30+ 大公司的设计系统逆向工程为 DESIGN.md 格式，全部免费开放。\n\n【关键细节】\n- DESIGN.md 是对 skill/CLAUDE.md 模式的延伸——用自然语言文档定义 AI 的行为边界\n- 40+ 预制文件覆盖主流设计系统\n- 推文获得 3897 个赞（DESIGN.md 发布）和 7917 个赞（Awesome Design MD）\n- 核心理念：Drop one file into your project. Your AI agent builds UI that looks like Spotify. Or Apple.\n\n【背景与上下文】\n这个趋势和 Simon Willison 的 README-driven development、Claude Code 的 CLAUDE.md 机制一脉相承——都是用自然语言文档来指导 AI agent 的行为。区别在于 DESIGN.md 专注于视觉设计系统，而 CLAUDE.md 专注于代码规范和项目上下文。\n\n【影响与前瞻】\nDESIGN.md 的出现意味着：企业的设计规范可以变成一个「可移植的 AI 配置文件」。对银行来说，可以把内部的设计系统（颜色、字体、组件规范）写成 DESIGN.md，然后任何 AI agent 都能自动遵循——这比传统的设计系统文档有效得多。",
+      "source": "Twitter/@dr_cintas + @heynavtoor",
+      "source_type": "opentwitter",
+      "url": "https://x.com/dr_cintas/status/2040142054211117218",
+      "timestamp": "2026-04-03T18:59:04Z",
+      "importance": 7,
+      "tags": [
+        "DESIGN.md",
+        "Google Stitch",
+        "设计系统",
+        "AI编程",
+        "Agent工作流"
+      ],
+      "batch_time": "2026-04-07T10:00:00+08:00"
+    },
+    {
+      "title": "The Supervisor Class：AI Agent 正在重塑开发者角色——从写代码到编排 Agent",
+      "summary": "开发者社区广泛讨论「Supervisor Class」概念——开发者的主要价值不再是手写代码，而是编排多个专业 Agent。Stripe 的 Minions 系统已实现每周 1300+ AI 生成的 PR，全部无需人工编码。当 Agent 能在 10 秒内生成 1000 行代码，代码行数不再是有效指标。",
+      "detail_content": "【核心事件】\n一篇在开发者社区引发广泛讨论的文章提出「Supervisor Class」概念。AI Agent 时代，开发者的主要价值不再是手动编写代码，而是高层编排自主 Agent。Stripe 的 Minions 系统是最突出的例子：每周产生超过 1,300 个 AI 生成的 PR，这些 PR 中没有任何人工编写的代码。\n\n【关键细节】\nStripe Minions 架构：每个 Minion 在隔离沙箱中运行，接收结构化任务 → 编写/修改代码 → 运行测试 → 迭代结果 → 提交 PR。核心服务器通过 MCP 协议暴露超过 400 个内部工具和 SaaS 集成。任务通常从 Slack 发起，通过 blueprints（代码定义的工作流）将工作拆分给专门的 Agent。\n\n核心论点：如果 Agent 能在 10 秒内生成 1,000 行代码，那么「代码行数」和「原始速度」不再是衡量开发者生产力的有效指标。\n\n【背景与上下文】\n这个框架和 Ashpreet Bedi 的 Agent 审批流设计、Lance Martin 的 Harness 设计理念形成呼应。整个行业正在从「单兵作战」转向「Agent 编排」范式。Stripe 的 1,300+ PR/week 是目前公开的最大规模 Agent 编码生产数据之一。\n\n【影响与前瞻】\n对银行 IT 组织来说，「Supervisor Class」的启示是：未来的技术团队结构可能不再是「N 个开发者」，而是「M 个 Agent 编排者 + X 个 Agent」。技术管理的核心挑战变成了：如何设定 Agent 的任务边界、如何审查 Agent 的输出、如何在 Agent 失败时建立回滚机制。",
+      "source": "AOL",
+      "source_type": "tavily",
+      "url": "https://www.aol.com/finance/supervisor-class-ai-agents-remaking-134000231.html",
+      "timestamp": "2026-03-31T13:40:00Z",
+      "importance": 7,
+      "tags": [
+        "Supervisor Class",
+        "Agent编排",
+        "Stripe Minions",
+        "开发者角色"
+      ],
+      "batch_time": "2026-04-07T10:00:00+08:00"
+    },
+    {
+      "title": "Nexus 获 4.3M 美元融资：让非技术团队四周内部署企业 AI Agent",
+      "summary": "YC 孵化的 Nexus 获 General Catalyst 领投的 430 万美元种子轮。产品让非技术业务团队在四周内部署 AI Agent，Orange 电信已落地客户 onboarding Agent。在企业 Agent 部署平台拥挤的市场中，Nexus 用大企业客户案例站稳了脚。",
+      "detail_content": "【核心事件】\n布鲁塞尔出身的 Nexus 获得 430 万美元种子轮融资，由 General Catalyst 领投，YC 等参投。核心产品让非技术业务团队独立部署企业级 AI Agent，无需工程支持。Orange（欧洲最大电信之一）作为早期客户，在四周内部署了客户 onboarding Agent。\n\n【关键细节】\nNexus 的卖点不是 Agent 的技术能力，而是降低企业内部部署 Agent 的门槛。从成立到大企业落地生产只用了几个月。在几十家声称让企业 Agent 变简单的公司中，Nexus 凭借 YC 背景、General Catalyst 背书、有名字可查的企业客户站稳了位置。\n\n【背景与上下文】\n更大的趋势：企业 AI Agent 的瓶颈正在从「技术上能不能做到」转向「非技术人员能不能用起来」。和 Ashpreet Bedi 的开源 Pal Agent（让开发者自建）形成对比——Pal 走开源路线，Nexus 走产品化路线。两个方向都在验证：AI Agent 的价值不在技术，在于能不能被真正需要它的人用起来。\n\n【影响与前瞻】\n对银行来说，Nexus 的模式值得关注——如果业务团队能在四周内部署 Agent，IT 部门的角色是什么？这可能推动银行从「IT 部门开发一切」转向「IT 部门提供 Agent 基础设施 + 安全护栏，业务部门自己组装 Agent」。",
+      "source": "The Next Web",
+      "source_type": "tavily",
+      "url": "https://thenextweb.com/news/nexus-4-3m-seed",
+      "timestamp": "2026-03-31T18:49:40Z",
+      "importance": 6,
+      "tags": [
+        "Agent部署",
+        "企业AI",
+        "非技术团队",
+        "Nexus"
+      ],
+      "batch_time": "2026-04-07T10:00:00+08:00"
+    },
     {
       "title": "Anthropic 封杀 first-party harness：claude -p 加系统提示词也被禁止",
       "summary": "steipete 发现 Anthropic 现在连 claude -p --append-system-prompt 这种 first-party 用法也被封杀了。第三方应用（如 OpenClaw）必须使用自己的 API key，不再消耗用户的 Claude Pro 额度。这意味着 OpenClaw 等 agent 框架的用户需要「自带钥匙」，增加了使用成本。",
