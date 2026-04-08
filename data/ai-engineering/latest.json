@@ -1,9 +1,150 @@
 {
   "channel_id": "ai-engineering",
   "channel_name": "AI 工程实战",
-  "generated_at": "2026-04-07T10:09:54.811650+08:00",
-  "digest": "本周 AI 工程圈三个信号值得关注：一是 Agent 安全从理论走向实践，Google DeepMind 发布了首个系统性 AI Agent Traps 框架，Block 开源了纯本地的 Goose Agent；二是 AI 编程工作流持续进化，Simon Willison 展示了 README-driven development 配合 Claude Code 的高效方法论，Google Stitch 的 DESIGN.md 让设计系统变成一个 markdown 文件；三是开发者角色正在分化，Supervisor Class 概念开始被主流接受——写代码不再是核心技能，编排 Agent 才是。和上周相比，讨论焦点从「AI 编程工具好不好用」转向「如何安全地让 Agent 在生产环境中工作」。",
+  "generated_at": "2026-04-08T10:10:49.159279+08:00",
+  "digest": "本周 AI 工程圈最值得关注的不是某个新模型发布，而是 Meta 用 50+ AI Agent 群提取「部落知识」的真实生产案例——大规模代码库中 AI agent 失效的根本原因是缺乏上下文，解决方案不是更好的模型而是更好的知识管理。与此同时，Ashpreet Bedi 公开质疑「harness engineering」可能过度工程化，代表着 agentic SE 社区的一次重要反思。OpenClaw 生态持续扩展，steipete 宣布下版本将原生支持视频生成集成 9 家供应商。Gergely Orosz 提出 LLM 时代确定性被低估的观点也值得深思。",
   "items": [
+    {
+      "title": "Meta 用 50+ AI Agent 群提取大规模代码库中的「部落知识」",
+      "summary": "Meta 工程团队将 AI agent 指向横跨 4 个仓库、3 种语言、4100+ 文件的大型数据管道，发现 agent 无法高效编辑代码。解决方案是构建「预计算引擎」：部署 50+ 专业化 AI agent 群，系统性阅读每个文件，生成 59 个精炼的上下文文件来编码此前只存在于工程师头脑中的隐性知识。成果：AI agent 覆盖率从 5% 提升到 100%（覆盖全部 4100+ 文件），识别出 50+ 个非显而易见的设计模式，工具调用减少 40%。有趣的是，同期学术研究发现 AI 生成的上下文文件反而降低了 agent 在知名开源 Python 项目上的成功率——Meta 的案例表明，上下文工程的有效性高度依赖代码库的复杂度和领域特性。",
+      "detail_content": "【核心事件】\nMeta 工程团队在 2026 年 4 月 6 日发布工程博客，详细描述了他们如何解决 AI agent 在大规模代码库中表现不佳的问题。团队面对的是一个横跨 4 个代码仓库、使用 3 种编程语言、包含超过 4100 个文件的大规模数据处理管道。当直接将 AI agent 指向这个代码库时，agent 无法做出有用的编辑——根本原因不是模型能力不足，而是缺乏工程师头脑中的隐性知识（tribal knowledge）。\n\n团队构建了一个「预计算引擎」（pre-compute engine）：部署了 50+ 个专业化 AI agent，每个 agent 负责系统性阅读特定模块的文件，提取设计意图、依赖关系和非显而易见的模式。这些 agent 最终生成了 59 个精炼的上下文文件（context files），将此前只存在于工程师经验中的知识显性化。\n\n【关键数据与成果】\n- AI agent 对代码模块的结构化导航覆盖率从 5% 提升到 100%，覆盖全部 4100+ 文件和 3 个主要仓库\n- 识别并记录了 50+ 个「非显而易见模式」（non-obvious patterns）——即从代码本身无法直接看出的设计选择和关系\n- 初步测试显示每项任务的 AI agent 工具调用减少约 40%\n- 这意味着 agent 完成相同任务所需的迭代步骤大幅减少\n\n【背景与上下文】\n这项工作触及了 AI 工程中一个核心矛盾：最近有学术研究发现，AI 生成的上下文文件反而降低了 agent 在知名开源 Python 仓库上的成功率。Meta 的案例表明，上下文工程的有效性不是普适的——它高度依赖代码库的复杂度和领域特性。对于横跨多语言、多仓库、有大量隐性知识的企业级代码库，显性化这些知识可能是 AI agent 能否有效工作的前提条件。\n\n这个案例对正在推进 AI 转型的组织有直接启示：如果你的代码库足够复杂（银行核心系统、跨部门数据管道等），在让 AI agent 动手改代码之前，先投资做知识管理可能是 ROI 最高的选择。\n\n【影响与前瞻】\nMeta 表示正在将上下文覆盖扩展到数据基础设施的更多管道，并探索上下文文件与代码生成工作流的更紧密集成。这个方向如果被更多大厂验证，可能催生一个新的工程实践领域：AI-ready knowledge management——让代码库不仅对人可读，对 AI agent 也可导航。",
+      "source": "Meta Engineering Blog",
+      "source_type": "tavily",
+      "url": "https://engineering.fb.com/2026/04/06/developer-tools/how-meta-used-ai-to-map-tribal-knowledge-in-large-scale-data-pipelines/",
+      "timestamp": "2026-04-06T16:00:50Z",
+      "importance": 9,
+      "tags": [
+        "Meta",
+        "AI Agent",
+        "知识管理",
+        "上下文工程",
+        "大厂实战"
+      ],
+      "batch_time": "2026-04-08T10:00:00+08:00"
+    },
+    {
+      "title": "Ashpreet Bedi 质疑「harness engineering」：可能弊大于利",
+      "summary": "Agentic Software Engineering 方法论的领军人物 Ashpreet Bedi 公开发推表示，虽然 harness engineering、filesystem memory、subagent architecture 这些概念都是真实且重要的，但他越来越觉得「harness engineering 可能弊大于利」。推文引发 398 个点赞和 47 条回复的讨论。这是一个值得注意的信号：当 agentic SE 领域的核心实践者开始反思工具链本身的复杂度，说明行业可能正在从「堆工具」阶段进入「做减法」阶段。",
+      "detail_content": "【核心事件】\n2026 年 4 月 5 日，Ashpreet Bedi（Agentic Software Engineering 方法论的倡导者，Twitter @ashpreetbedi，18,900 粉丝）发推表达了对「harness engineering」的质疑。他表示：「也许我遗漏了什么，但 harness engineering 可能弊大于利。我读了几篇关于 harness engineering、filesystem memory、subagent architecture 的文章，都是真实的、重要的，我也从中学到了很多。但我一直回到这个想法……」\n\n这条推文获得了 398 个点赞、47 条回复和 13 条引用转推，在 agentic SE 社区引发了实质性讨论。\n\n【背景与上下文】\nAshpreet Bedi 一直是 agentic SE 方法论的积极推动者。他之前推出了开源 Agent「Pal」（个人学习型 Agent），提出了 Agent 审批流设计的三种动作类型实战框架。他的观点在 AI 工程社区有相当的影响力。\n\n「harness engineering」指的是为 AI coding agent 构建复杂的控制框架——包括系统提示词工程、工具配置、记忆管理、子 agent 编排等。这个概念在 Claude Code 泄露源码后获得了大量关注，因为 Claude Code 的架构本质上就是一个精心设计的 harness。\n\n【影响与前瞻】\n这个反思之所以重要，是因为它代表了 agentic SE 社区正在经历的一次认知转变：从「怎么把 harness 做得更复杂」到「harness 是否在增加不必要的复杂度」。当核心实践者开始质疑自己的方法论，通常意味着领域正在成熟。对于实际部署 AI agent 的团队，这个信号值得留意——也许简单的 agent + 好的上下文 > 复杂的 harness + 糟糕的上下文。",
+      "source": "Twitter @ashpreetbedi",
+      "source_type": "opentwitter",
+      "url": "https://x.com/ashpreetbedi/status/2040841492860735634",
+      "timestamp": "2026-04-05T17:18:23Z",
+      "importance": 8,
+      "tags": [
+        "Agentic SE",
+        "Harness Engineering",
+        "方法论反思",
+        "Ashpreet Bedi"
+      ],
+      "batch_time": "2026-04-08T10:00:00+08:00"
+    },
+    {
+      "title": "Microsoft Agent Framework 1.0 发布：开发者困惑，对手在简化",
+      "summary": "Forbes 报道，微软在 4 月 3 日发布了 Agent Framework 1.0，将两个此前不兼容的开源 SDK 统一为一个工具包。但问题是：开发者需要在 Copilot Studio（低代码）、Azure AI Foundry（Pro 代码）和 Microsoft 365 Copilot 之间做选择，连微软自己的决策框架都需要开发者先回答一系列问题才能开始写代码。对比 Stripe Minions（单一路径）、Cloudflare Agents SDK（一个 SDK 搞定推理+执行+记忆），微软的 Agent 技术栈给企业带来的组织成本可能超出预期。",
+      "detail_content": "【核心事件】\n2026 年 4 月 3 日，微软发布了 Agent Framework 1.0，将两个此前不兼容的开源 SDK 统一为一个 AI agent 开发工具包。Forbes 的 Janakiram MSV 在 4 月 7 日撰文分析了这个发布。\n\n在构建层，微软现在提供 Agent Framework（pro-code 开发）和 Copilot Studio（低代码，在 Microsoft 365 和 Power Platform 内构建 agent）。微软自己发布的决策框架要求开发者在写一行 agent 代码之前，先评估：需要 M365 扩展还是独立 agent？偏好低代码还是 pro-code？\n\n更讽刺的是，当微软自己的 IT 部门构建员工自助 agent 时，团队不得不评估 Copilot Studio、Azure AI Foundry 和 Microsoft 365 Copilot 三个选项。\n\n【对比分析】\n同期其他厂商走的是完全相反的路线：\n- Stripe：Minions agent 路径清晰——单次、端到端、自动提交 PR\n- Cloudflare：Agents SDK 一个工具包覆盖推理、执行、记忆，Durable Objects 提供持久化\n- OpenAI：Agents SDK 简洁的认知+编排层\n- Anthropic：Claude Code 单一二进制，开箱即用\n\nForbes 的结论是：评估 Azure 做 agentic AI 的 CXO 应该先明确团队在每个层级的标准化选择，并预算好跨开发、运维和安全团队做决策的组织成本。\n\n【影响与前瞻】\n这个案例对企业 AI 技术选型有直接启示。微软的 Agent 技术栈虽然功能完整，但复杂的选择矩阵本身就是部署阻力。相比之下，「一条路径打穿」的产品策略在 AI agent 领域更受欢迎。对于正在选型的团队，在评估微软之前先明确自己的 agent 将运行在哪些 surface 上至关重要。",
+      "source": "Forbes",
+      "source_type": "tavily",
+      "url": "https://www.forbes.com/sites/janakirammsv/2026/04/06/microsofts-agent-stack-confuses-developers-while-rivals-simplify/",
+      "timestamp": "2026-04-07T02:55:20Z",
+      "importance": 8,
+      "tags": [
+        "Microsoft",
+        "Agent Framework",
+        "技术选型",
+        "企业AI"
+      ],
+      "batch_time": "2026-04-08T10:00:00+08:00"
+    },
+    {
+      "title": "OpenClaw 下版本将原生支持视频生成，集成 9 家供应商",
+      "summary": "steipete 宣布 OpenClaw 下一版本将内置视频生成能力，首批支持阿里巴巴、BytePlus、fal、Google、MiniMax、OpenAI、Qwen、Together、xAI 共 9 家视频生成服务。这标志着 coding agent 从纯文本/代码工具向多模态创作平台的演进。推文获 3772 点赞。同时他还展示了用 Codex 花了 6 小时自动构建端到端测试的实战案例——'Not quite at dark factory levels, but that's a big step forward'。",
+      "detail_content": "【核心事件】\n2026 年 4 月 5 日，steipete（Peter Steinberger，OpenClaw 创建者，47.7 万粉丝）发推宣布 OpenClaw 下一版本将原生支持视频生成。首批集成了 9 家视频生成服务：阿里巴巴、BytePlus、fal、Google、MiniMax、OpenAI、Qwen、Together、xAI。\n\n这意味着 OpenClaw 不再只是 coding agent 的编排平台，而是向多模态创作平台演进。用户可以在 OpenClaw 中直接调用视频生成工具，无需单独切换到其他服务。\n\n同日，steipete 还分享了一个实战案例：用 Codex agent 花了 6 小时自动构建了端到端测试。他评论道：'Not quite at dark factory levels, but that's a big step forward.'（还没到黑灯工厂的水平，但已经是巨大进步。）他甚至提到自己只是和 Codex brainstorm 了一下，然后 'it just works'。\n\n【关键细节】\n- OpenClaw 下一版本还将成为 MCP server 本身，用户可以不再使用 Anthropic 的 message channel MCP，而是通过 OpenClaw 连接更广泛的消息提供商\n- steipete 还在回复中提到 Ollama 和 Hugging Face 的人在帮助改善本地模型体验\n- 他在另一条推文中分享了 agent prompt 技巧：'take your time, don't stop till X'（x=done or condition）\n\n【背景与上下文】\nOpenClaw 正在快速扩展其能力边界：从 coding agent 编排 → 多模态创作 → MCP server → 视频生成。这种扩展策略让它在 Claude Code 和 Codex 的竞争压力下保持差异化。对于用户来说，一个 agent 平台能同时处理代码、设计、视频，确实降低了工作流切换的成本。\n\nsteipete 提到 Anthropic 仍然没有回应 OpenClaw 邀请其加入非营利组织的请求，但 'pretty much everyone else' 都已加入。",
+      "source": "Twitter @steipete",
+      "source_type": "opentwitter",
+      "url": "https://x.com/steipete/status/2040928953653744003",
+      "timestamp": "2026-04-05T23:05:55Z",
+      "importance": 7,
+      "tags": [
+        "OpenClaw",
+        "视频生成",
+        "MCP",
+        "steipete",
+        "多模态"
+      ],
+      "batch_time": "2026-04-08T10:00:00+08:00"
+    },
+    {
+      "title": "Gergely Orosz：LLM 时代，我们可能低估了确定性的价值",
+      "summary": "Pragmatic Engineer 作者 Gergely Orosz 发推：「在一个建立在确定性之上的行业里，我觉得我们可能低估了与 LLM 打交道所需的工作量，恰恰因为它们是不确定的。但在大量自动化和工作流中，确定性（即'确保它不会犯错'）是基线期望。」这条推文获 511 点赞和 82 条回复，触及了 AI agent 进入生产环境的核心矛盾：软件工程的一切实践都基于可重复性，但 LLM 天然不是确定的。",
+      "detail_content": "【核心事件】\n2026 年 4 月 7 日，Gergely Orosz（Pragmatic Engineer 作者，32.4 万粉丝）发推提出了一个值得深思的观点：「In an industry built on determinism, I feel we might be underestimating the work we all will need to do with LLMs exactly because they are nondeterministic. But for so much of automation/workflows, determinism (aka 'make sure it doesn't make a mistake') is a baseline expectation.」\n\n推文获得 511 点赞、82 条回复和 11 条引用转推，说明这个观点触到了痛点。\n\n【背景与上下文】\n这个观点的背景是 AI agent 正在从代码辅助工具向自主执行系统演进。当 agent 可以自主提交代码、执行数据库操作、发送邮件时，「偶尔出错」不再是可以接受的代价——就像你不能容忍一个偶尔发错邮件的自动化系统。\n\n软件工程的全部基础设施（CI/CD、测试、代码审查、监控）都建立在「相同输入产生相同输出」的确定性假设上。LLM 的不确定性打破了这个假设，而现有的「解决方案」（更多的测试、更多的人工审查、更复杂的 harness）本质上都是在给不确定系统加确定性外壳。\n\n【与其他信号的关联】\n- Meta 的预计算引擎本质上是在给 agent 加确定性的上下文\n- Ashpreet Bedi 对 harness engineering 的质疑也与此相关——也许复杂的 harness 本身就在增加不确定性\n- Simon Willison 之前提出「agent 性能瓶颈在 harness 而非模型」也是同一脉络\n\n【影响与前瞻】\n这个观点对 AI 转型中的组织有直接启示：在将 AI agent 部署到生产环境时，应该假设它是不确定的，然后设计系统来管理和缓解这种不确定性，而不是期望 LLM 本身变得确定。这可能是 2026 年 AI 工程领域最重要的认知转变之一。",
+      "source": "Twitter @GergelyOrosz",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2041455600463159478",
+      "timestamp": "2026-04-07T09:58:38Z",
+      "importance": 7,
+      "tags": [
+        "确定性",
+        "LLM",
+        "软件工程",
+        "Gergely Orosz",
+        "AI生产部署"
+      ],
+      "batch_time": "2026-04-08T10:00:00+08:00"
+    },
+    {
+      "title": "swyx 用 Devin 实现「agentic self-improvement」：博客推文一键变代码",
+      "summary": "swyx（AI Engineer 创始人）分享了一个实战案例：将自己过去写的博客文章和推文粘贴到 Devin 中，Devin 能一次性完成完整的功能实现。他称之为「agentic self-improvement」——agent 可以消化你过去的思考产出，直接转化为可运行的代码。swyx 表示自己都没确定这能行，看到结果时 'jaw dropped'。这个案例展示了一个趋势：AI coding agent 的价值不仅在于写代码，还在于将人脑中的隐性知识（散落在博客、推文、文档中）直接变现为产品。",
+      "detail_content": "【核心事件】\n2026 年 4 月 3 日，swyx（AI Engineer 创始人，15.2 万粉丝）发推分享了一个让他自己都惊讶的案例。他将之前写的博客和推文内容粘贴到 Devin（Cognition Labs 的 AI 编程 agent）中，Devin 一次性完成了完整的功能实现。\n\nswyx 评论道：'We have achieved agentic self-improvement - i can just copy paste blogposts and tweets into @devinai and it oneshots the complete implementation. wasnt actually sure this was gonna work, jaw dropped when it did.'\n\n推文获得 196 点赞，附带了三张截图展示实现过程。\n\n【关键细节】\n- swyx 特别提到这个能力是 'very out of distribution of the underlying @GoogleDeepMind'——即底层 Gemini 模型并没有针对这种「从博客到代码」的任务做过专门训练\n- 他还在回复中补充说可以将录制的功能演示视频附上，agent 根据视频自动测试\n\n【背景与上下文】\nswyx 之前还发了一条有 2893 点赞的推文（配图），以及另一条关于 oh-my-codex 创建者的推文（228 点赞），讨论 agent 生态的快速演化。\n\n这个案例的核心洞察是：AI coding agent 的输入不一定是需求文档或代码注释——它可以是任何形式的人类思考产出。对于有大量写作产出的人（博客作者、技术管理者、研究员），这意味着他们的文章本身就是可执行的规格说明。\n\n【影响与前瞻】\n这个趋势对知识工作者有实际意义：你写的每一篇深度分析、每一条有技术细节的推文，未来都可能被 AI agent 直接转化为可运行的系统。这改变了「写作」和「编码」之间的关系——写清楚不再只是为了沟通，也是为了让 agent 执行。",
+      "source": "Twitter @swyx",
+      "source_type": "opentwitter",
+      "url": "https://x.com/swyx/status/2040181076237443299",
+      "timestamp": "2026-04-03T21:34:07Z",
+      "importance": 7,
+      "tags": [
+        "Devin",
+        "swyx",
+        "Vibe Coding",
+        "知识变现",
+        "agentic self-improvement"
+      ],
+      "batch_time": "2026-04-08T10:00:00+08:00"
+    },
+    {
+      "title": "Pragmatic Engineer: GitHub 还配当「AI 原生开发的首选平台」吗？",
+      "summary": "Pragmatic Engineer 最新一期深度分析 GitHub 的处境：可用性降至 ~90%（一个九），部分原因是无法处理 AI coding agent 带来的流量增长。同时 GitHub 目前没有 CEO，steipete 之前也炮轰过 GitHub API 配额设计根本没考虑 agent 场景。这篇文章的潜台词是：如果 GitHub 不能适应 agent-first 的开发范式，它的平台地位可能被动摇。",
+      "detail_content": "【核心事件】\nPragmatic Engineer（Gergely Orosz 的付费 newsletter，工程管理领域最具影响力的出版物之一）在 2026 年 4 月 4 日发布了一期深度分析，标题为「Does GitHub still merit 'top git platform for AI-native development' status?」。\n\n文章核心论点：\n- GitHub 的可用性降至约 90%（一个九），部分原因是无法处理 AI coding agent 带来的 API 流量增长\n- GitHub 目前没有 CEO（Nat Friedman 和 Jason Warner 离开后，微软尚未任命新负责人）\n- AI coding agent（Claude Code、Codex、Cursor）的兴起正在从根本上改变代码托管平台的使用模式\n\n【关键细节】\n这篇文章与 steipete 之前的批评形成了呼应。steipete（@steipete）曾在推文中炮轰 GitHub 的 API 配额设计完全没有考虑 agent 场景——当 agent 以程序化方式高频访问 API 时，GitHub 的限流机制会频繁阻断工作流。\n\n【背景与上下文】\nAI coding agent 正在创造一种新的平台使用模式：不再是人类偶尔 push 代码，而是多个 agent 并发、持续地读写仓库。这对代码托管平台的基础设施提出了全新要求：更高的 API 吞吐量、更智能的并发控制、agent 友好的配额设计。\n\n如果 GitHub 无法适应这种变化，替代方案（如 GitLab、自建 Git 基础设施）可能获得机会。特别是对于大规模使用 AI agent 的团队，平台稳定性已经从「锦上添花」变成「生产依赖」。\n\n【影响与前瞻】\n这篇文章对技术选型有实际参考价值。如果你正在大规模部署 AI coding agent，GitHub 的 API 限流和可用性问题可能会成为瓶颈。评估替代方案或设计 agent 级别的重试和降级策略正在变得必要。",
+      "source": "Pragmatic Engineer",
+      "source_type": "tavily",
+      "url": "https://newsletter.pragmaticengineer.com/p/does-github-still-merit-top-git-platform",
+      "timestamp": "2026-04-04T02:02:20Z",
+      "importance": 6,
+      "tags": [
+        "GitHub",
+        "AI原生开发",
+        "Pragmatic Engineer",
+        "平台稳定性"
+      ],
+      "batch_time": "2026-04-08T10:00:00+08:00"
+    },
+    {
+      "title": "Ashpreet Bedi 推出 Dash v2：自学习数据团队，6 层上下文的 Text-to-SQL",
+      "summary": "Ashpreet Bedi 发布 Dash v2——一个开源的自学习数据团队 agent。用自然语言提问，agent 在 6 层上下文中寻找答案。可以部署在 Slack、MCP 或自定义 UI 中。Bedi 直指 Text-to-SQL agent 失败的根本原因：schema 本身不够，你需要业务上下文、历史查询模式、数据血缘等更多层次的知识。这与 Meta 的预计算引擎思路一致——纯靠模型不够，需要结构化上下文。",
+      "detail_content": "【核心事件】\n2026 年 4 月 7 日，Ashpreet Bedi（@ashpreetbedi）发推宣布 Dash v2 即将发布。Dash 是一个开源的自学习数据团队 agent，核心理念是「Ask a question in plain english, get an answer grounded in 6 layers of context」。\n\nBedi 明确指出 Text-to-SQL agent 失败的根本原因：'Text-to-SQL agents fail because schemas aren't enough.'——光有数据库 schema 远远不够，你还需要业务语义、历史查询模式、数据血缘、常见错误、指标定义等多层次上下文。\n\nDash v2 的 6 层上下文架构包括：\n1. Schema 层：数据库结构\n2. 业务语义层：字段和表的业务含义\n3. 查询历史层：过去怎么问过类似问题\n4. 数据血缘层：数据从哪来、经过什么转换\n5. 质量检查层：数据可能有什么问题\n6. 学习层：从每次查询中持续学习\n\n【关键细节】\n- 支持多种部署方式：Slack 集成、MCP server、自定义 UI\n- 开源免费\n- Bedi 还在同日分享了另一条推文，链接到一篇关于他对某技术的深度分析文章（260 点赞）\n\n【背景与上下文】\nDash v2 的思路与 Meta 预计算引擎异曲同工——都是认识到纯靠 LLM 推理不够，需要将领域知识显性化为结构化上下文。区别在于 Meta 用 50+ agent 群做代码级知识提取，Dash 用 6 层架构做数据级知识管理。\n\n这两个案例共同指向一个趋势：2026 年 AI 工程的核心挑战正在从「如何让模型更强」转向「如何为模型提供更好的上下文」。",
+      "source": "Twitter @ashpreetbedi",
+      "source_type": "opentwitter",
+      "url": "https://x.com/ashpreetbedi/status/2041653884536357122",
+      "timestamp": "2026-04-07T23:06:32Z",
+      "importance": 6,
+      "tags": [
+        "Text-to-SQL",
+        "上下文工程",
+        "Ashpreet Bedi",
+        "开源",
+        "数据Agent"
+      ],
+      "batch_time": "2026-04-08T10:00:00+08:00"
+    },
     {
       "title": "Block 开源 Goose：Jack Dorsey 公司推出的纯本地 AI Agent",
       "summary": "Block（Jack Dorsey 的公司）开源了名为 Goose 的本地 AI Agent。不只做代码补全，能在本地安装、执行、编辑和测试代码，支持任意 LLM，100% 在用户机器上运行不发送数据到云端。继 OpenClaw 之后又一个重量级开源 Agent 项目。",
