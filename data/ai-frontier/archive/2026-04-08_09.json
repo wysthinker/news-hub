@@ -1,0 +1,60 @@
+{
+  "channel_id": "ai-frontier",
+  "channel_name": "AI 前沿",
+  "generated_at": "2026-04-08T09:00:00+08:00",
+  "digest": "本周 AI 前沿的核心主题是「安全与能力的平衡」。Anthropic 4 月 7 日连续放出两个重磅：Project Glasswing 联合全行业用未发布的 Mythos 模型查找软件漏洞，Claude Code 官方博客详解 Subagents 架构。前者展示了 Anthropic 对前沿模型安全部署的审慎态度——Mythos 能力足以自主发现零日漏洞，但选择只开放给安全防御者而非公开发布。后者则标志着 Claude Code 正式进入多 Agent 协作阶段。加上上周的 RSP 3.1 更新和 $3.5GW 算力协议，Anthropic 正在同时构筑「能力护城河」和「安全护城河」。",
+  "items": [
+    {
+      "title": "Anthropic 发布 Project Glasswing：联合 Apple/Microsoft/Google 等 12 家巨头，用未发布的 Mythos 模型守护关键软件安全",
+      "summary": "Anthropic 发起 Project Glasswing 安全联盟，成员包括 AWS、Apple、Broadcom、Cisco、CrowdStrike、Google、JPMorgan Chase、Microsoft、NVIDIA、Palo Alto Networks 等行业巨头。核心是提供受限访问的 Claude Mythos Preview——一个能力达到「阶跃式提升」的未发布前沿模型，专用于自主发现和修复关键软件中的零日漏洞。Anthropic 投入 $1 亿使用额度和 $400 万开源安全捐赠，首批成果 90 天内报告。",
+      "detail_content": "【核心事件】\n4 月 7 日，Anthropic 发布 Project Glasswing，这是一个跨行业安全联盟，旨在用最前沿的 AI 模型保护全球最关键的软件基础设施。联盟成员涵盖云计算（AWS）、消费电子（Apple）、芯片（Broadcom、NVIDIA）、网络安全（Cisco、CrowdStrike、Palo Alto Networks）、云 AI（Google）、金融服务（JPMorgan Chase）、操作系统（Microsoft）和开源（Linux Foundation）。\n\nClaude Mythos Preview 是这个项目的核心工具——一个通用的未发布前沿模型，其代码安全能力达到了「阶跃式提升」。它能自主发现和利用高严重性漏洞（包括零日漏洞），在操作系统和浏览器等核心软件中找到存活了数十年、经受过数百万人工审查和数百万次自动化安全测试仍未被发现的缺陷。\n\nAnthropic 为项目投入高达 1 亿美元的使用额度和 400 万美元的开源安全捐赠。首批成果将在 90 天内报告。\n\n【关键细节与引用】\nAnthropic 在公告中明确表示：Mythos 展示了编码能力的质变，它发现的漏洞有些已经存活了几十年、经受过数百万次安全测试。它开发的漏洞利用程序越来越复杂。\n\n正因如此，Anthropic 选择将 Mythos 仅提供给经过审查的安全合作伙伴，而非公开发布。这是 Anthropic 负责任扩展政策（RSP）的一次实际应用——当模型能力达到某个阈值，限制访问比开放访问更负责任。\n\nAlex Albert 在推特上表示：Mythos 非常强大，应该让人感到敬畏。我为我们在负责任地将其预览给网络防御者而非公开发布的做法感到自豪。\n\nBoris Cherny 透露：自 Anthropic 引入 Claude Code 以来，工程速度提升了数百个百分点，而且增速本身还在加速。\n\n【背景与上下文】\nProject Glasswing 与 Anthropic 4 月 2 日更新的 RSP 3.1 版本直接相关——RSP 更新中提到了 Moonshot 安全研究项目，Glasswing 正是其首个公开落地。这也解释了为什么 Anthropic 此前在网络安全领域相对低调——他们在等待一个足够强大但又能安全部署的模型。\n\n三巨头联合打击中国模型蒸馏的新闻（Bloomberg 4/6 报道）与 Glasswing 的同周发布，勾勒出 Anthropic 的双线战略：对外保护知识产权，对内提升安全能力。\n\n【影响与前瞻】\n这是 AI 安全领域的一个分水岭时刻。第一次有 AI 公司明确表示其模型能力太强、安全风险太大而选择不公开发布——而是以受控方式提供给安全防御方。如果 90 天的试点成果显著，可能催生一个全新的「AI 安全防御即服务」市场。\n\n对用户来说，这也意味着 Claude 背后的基础模型能力已经远超当前公开版本——Mythos 的能力可能指向 Claude 下一代模型的方向。",
+      "source": "Anthropic",
+      "source_type": "tavily",
+      "url": "https://www.anthropic.com/glasswing",
+      "timestamp": "2026-04-07T18:11:49Z",
+      "importance": 10,
+      "tags": [
+        "Anthropic",
+        "Project Glasswing",
+        "Mythos",
+        "网络安全",
+        "AI安全"
+      ],
+      "batch_time": "2026-04-08T09:00:00+08:00"
+    },
+    {
+      "title": "Anthropic 官方博客：Claude Code Subagents 架构详解——何时该委托、并行、交叉审查",
+      "summary": "Anthropic 发布 Claude Code Subagents 深度指南，正式阐述多 Agent 协作模式。三种核心场景：委托研究型任务给子 Agent（主会话继续工作）、并行分拆独立任务（多 Agent 同时执行）、用独立子 Agent 做代码审查（避免认知盲区）。同时划清了边界——需要主会话上下文的复杂推理任务不应拆成子 Agent。",
+      "detail_content": "【核心事件】\n4 月 7 日，Anthropic 在官方博客发布了 Claude Code Subagents 架构详解文章。这是 Claude Code 正式支持多 Agent 协作以来最全面的官方指南，标志着 Anthropic 对 Agent 架构的理解从「单线程对话」进化到「多 Agent 编排」。\n\n文章明确提出了三种核心使用模式：\n1. 委托研究型任务（Delegation）：将耗时的信息收集、代码调研等工作交给子 Agent，主会话可以继续处理其他事务。子 Agent 有独立的上下文窗口，不会污染主对话。\n2. 并行任务分拆（Parallelization）：将独立子任务同时派发给多个子 Agent，典型场景包括同时检查多个文件、并行运行测试、多方向探索方案。\n3. 交叉审查（Fresh Review）：用一个全新的子 Agent 审查主 Agent 的代码产出，避免「当局者迷」的认知盲区。子 Agent 不继承主 Agent 的决策偏见。\n\n【关键细节与引用】\n博客明确指出子 Agent 的边界——不适合需要主会话完整上下文的任务、不适合需要频繁共享中间状态的复杂推理。子 Agent 与主 Agent 之间通过结构化的结果摘要传递信息，而非共享完整上下文。\n\n这与 Anthropic 此前发布的 Skills 架构博客形成互补：Skills 解决的是「给 Agent 装备专业能力」，Subagents 解决的是「如何组织多个 Agent 协同工作」。\n\n【背景与上下文】\nClaude Code 从 2025 年底开始试验性支持 subagent，但一直缺乏官方最佳实践指南。社区中常见的错误用法包括：把所有任务都拆成子 Agent（反而增加协调开销）、让子 Agent 做需要完整项目上下文的重构（信息丢失导致质量下降）。\n\n这篇博客的发布时间值得注意——紧随 Project Glasswing 公告之后同一天发布，暗示 Anthropic 内部正在大规模使用多 Agent 架构来处理复杂安全分析任务。\n\n【影响与前瞻】\n对 Claude Code 用户来说，这篇博客是从「能用 subagent」到「用好 subagent」的关键指引。多 Agent 架构是 Agent 系统从玩具到生产力的分水岭——正确使用可以显著提升复杂任务的吞吐量，错误使用则会产生大量无意义的 Agent 间通信开销。",
+      "source": "Anthropic Blog",
+      "source_type": "tavily",
+      "url": "https://claude.com/blog/subagents-in-claude-code",
+      "timestamp": "2026-04-07T22:04:53Z",
+      "importance": 9,
+      "tags": [
+        "Anthropic",
+        "Claude Code",
+        "Subagents",
+        "多Agent架构"
+      ],
+      "batch_time": "2026-04-08T09:00:00+08:00"
+    },
+    {
+      "title": "Boris Cherny 透露 Claude Code 内部数据：工程速度提升数百%，且增速本身还在加速",
+      "summary": "Claude Code 团队核心成员 Boris Cherny 在推特回复中分享 Anthropic 内部数据：引入 Claude Code 后工程速度提升了数百个百分点，且增速本身还在持续加速。他还评价 Project Glasswing 中的 Mythos 模型「应该让人感到敬畏」，强调 Anthropic 选择只将预览开放给安全防御者而非公开发布。",
+      "detail_content": "【核心事件】\n4 月 7 日，Boris Cherny（Claude Code 团队核心成员）在推特上与 @deanwball 互动时透露了 Anthropic 内部 Claude Code 使用的关键数据。他的原话是：自 Anthropic 引入 Claude Code 以来，工程速度提升了数百个百分点，而且增速本身还在加速。\n\n同日，他还在 Alex Albert 关于 Mythos 的推文下评论：Mythos 非常强大，应该让人感到敬畏。他为团队选择只将预览提供给安全防御者而非公开发布的做法感到自豪。\n\n【关键细节与引用】\nBoris Cherny 原文：「Since we introduced Claude Code at Anthropic, engineering velocity has increased hundreds of %, and the rate at which it is increasing is itself accelerating.」\n\n这是一个非常大胆的声明——不只是「提升了很多」，而是「提升速度本身还在加速」。如果这个数据可信，意味着 AI 编码工具对工程生产力的影响可能呈现非线性增长。\n\n关于 Mythos，Cherny 的评价与官方公告一致：模型能力已经到了需要审慎对待的阶段。\n\n【背景与上下文】\nBoris Cherny 是 Anthropic Claude Code 团队的公开面孔之一，经常在推特上分享产品更新和工程洞察。他的推文通常被视为半官方信息源。\n\n这与 Axios 此前报道的「AI 编码 Agent 让开发者上瘾」形成有趣对照——Cherny 的数据暗示这种效率提升可能是真实的，而不仅仅是心理效应。但数百百分点的提升数字需要谨慎解读——内部使用场景（团队熟悉工具、代码库统一）与外部用户的使用效果可能存在显著差异。\n\n【影响与前瞻】\n如果 AI 编码工具对工程速度的提升确实是指数级的（而非线性的），那么整个软件行业的生产模式正在发生根本性变革。这也会直接影响企业的 AI 投资决策和开发团队的组织方式。",
+      "source": "Twitter/X",
+      "source_type": "opentwitter",
+      "url": "https://x.com/bcherny/status/2041592252661919939",
+      "timestamp": "2026-04-07T19:01:38Z",
+      "importance": 7,
+      "tags": [
+        "Anthropic",
+        "Claude Code",
+        "工程效率",
+        "Mythos"
+      ],
+      "batch_time": "2026-04-08T09:00:00+08:00"
+    }
+  ]
+}
