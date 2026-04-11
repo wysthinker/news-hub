@@ -1,9 +1,111 @@
 {
   "channel_id": "ai-engineering",
   "channel_name": "AI 工程实战",
-  "generated_at": "2026-04-10T10:11:49.212679+08:00",
-  "digest": "本周 AI 工程领域两个核心趋势值得关注：一是 Agent 基础设施正在快速标准化——Anthropic 发布 Managed Agents 让开发者不用自己搭建 harness，直接在 Claude API 上运行长时间任务；二是 AI 工具的定价和使用边界争议升温，Simon Willison 公开批评 Anthropic 按 system prompt 内容差异化计费，steipete 则因为 Anthropic 封杀第三方 harness 而被迫切换架构。与此同时，OpenAI 推出 $100/月 ChatGPT Pro 直接对标 Claude Code Max 套餐，AI 编码工具的订阅战正式打响。",
+  "generated_at": "2026-04-11T10:07:45.007048+08:00",
+  "digest": "本周 AI 工程领域最显著的趋势：AI 编码工具正在从「辅助」变成「默认」，Cursor 3 直接把 IDE 降级为后备选项。与此同时，非程序员用 AI 造产品的案例越来越多——电工做出 EV 充电计算 App，零编程的父亲上线了移动应用。但数据也在纠正叙事：软件工程师职位 listing 今年增长 30%，AI 替代论被现实证伪。Pearson CEO 的观点值得深思：AI 就业末日是硅谷叙事，全球劳动力市场讲的是另一个故事。",
   "items": [
+    {
+      "title": "Cursor 3 的 $2B 赌注：IDE 变成后备选项，Agent 管理台才是默认",
+      "summary": "Cursor 3 发布后直接把传统代码编辑器降级为 fallback，默认界面变成了 Agent 管理控制台。Cursor 自研了 Composer 2 编码模型（基于 Kimi K2.5），估值达 $2B。行业共识已形成：AI 编码 Agent 需要专用的编排层，这已经成为独立的产品品类。",
+      "detail_content": "【核心事件】\n\nCursor 在 3.0 版本中做了一个大胆决定：把传统代码编辑器从默认视图降级为「后备选项」（fallback），主界面变成了 AI Agent 管理控制台。这标志着 AI 编码工具从「辅助写代码」到「Agent 驱动开发」的范式转移。\n\n3 月 19 日，Cursor 发布了 Composer 2——它的第一个自研编码模型，基于 Moonshot AI 的开源 Kimi K2.5。Cursor 的估值已达 $2B，投资者押注的是「Agent 编排层」成为独立产品品类。\n\n【关键细节与引用】\n\n\"Cursor 3 replaces the traditional code editor with an agent management console, signaling a major shift in AI-assisted development tools and developer workflows.\"（New Stack 原文）\n\n\"Every major player in AI-assisted development now agrees that agents need a dedicated orchestration surface.\" 新架构中，Cursor 和 Google 的思路一致：编排层和编辑器并存，因为开发者仍然需要在 Agent 搞砸时手动改代码。\n\n【背景与上下文】\n\n之前 GitHub Copilot、Cursor、Windsurf 的竞争焦点是「谁补全代码更准」。Cursor 3 把竞争维度拉到了「谁是更好的 Agent 管理台」——这意味着产品从工具变成了平台。对银行技术团队来说，如果开发工具的默认使用方式变成「跟 Agent 对话而非写代码」，那培训体系、代码审查流程、质量保障机制都需要重新设计。\n\n【影响与前瞻】\n\n1. 开发者角色分化加速：会用 Agent 管理台的人 vs 还在手动写代码的人\n2. 企业需要评估：是否要统一 Agent 编排工具？Cursor vs GitHub Copilot Workspace vs Claude Code\n3. 安全和合规层面：Agent 管理台意味着更多自动化的代码变更，审计追踪变得更重要",
+      "source": "The New Stack",
+      "source_type": "tavily",
+      "url": "https://thenewstack.io/cursor-3-demotes-ide/",
+      "timestamp": "2026-04-05T17:29:19Z",
+      "importance": 9,
+      "tags": [
+        "Cursor",
+        "AI编码",
+        "IDE革命",
+        "Agent管理"
+      ],
+      "batch_time": "2026-04-11T10:00:00+08:00"
+    },
+    {
+      "title": "Vibe Coding 实战浪潮：非程序员用 Claude Code 造产品的真实案例集",
+      "summary": "多个非程序员用 AI 编码工具成功造出产品的真实案例：电工做出 EV 充电计算 App（860K+ 浏览）、零编程咨询顾问 5 天做出继任计划 App、零经验父亲上线移动 App 获得 300 用户和 30 个付费用户。这些不是概念验证，而是有真实用户的产品。",
+      "detail_content": "【核心事件】\n\n综合搜索汇总了 2025-2026 年非程序员用 AI 编码工具成功造出产品的大量真实案例。这些案例的共同特点：创建者完全没有编程背景，用 Claude Code 或 Cursor 通过自然语言描述需求，AI 完成代码生成、调试、测试和部署。\n\n【关键细节与引用】\n\n最引人注目的案例：\n\n1. 一位电工（master electrician）零编程背景，用 Claude Code 做出 EVChargeRight.com 消费者保护 App，获得 860K+ 浏览量\n2. 一位人力战略咨询顾问，零编程经验，5 天内用 Claude Code 做出完整的继任计划应用——不是 mockup 而是可用的产品\n3. 某人的父亲，零编程经验且不会用 Git，几天内做出并上线了移动 App，获得 300 用户和 30 个付费用户\n4. 一位学校技术总监用 Cursor 做出 Google Apps Script 数据自动化工具\n5. 有人用 Claude 作为主要指导做出了 iOS 游戏 EggZap，上了 Apple App Store\n\n\"I live in Claude Code every day building software at a rate that is just insane.\"（Evan G., Forbes 受访者）\n\n【背景与上下文】\n\n\"Vibe coding\" 的定义正在被重新书写——从「描述需求让 AI 生成」变成了「非技术人成为产品架构师」。工具链选择上：Claude Code 擅长自主推理和终端工作流，Cursor 更适合视觉迭代。很多人两者结合使用。部署方面，Vercel、Supabase、Netlify 是最常用的平台。\n\n【影响与前瞻】\n\n1. 银行内部工具开发可能不再需要排队等 IT 部门——业务人员可以自己用 AI 做\n2. 「谁有权写代码」的组织边界需要重新定义\n3. 代码质量和安全审查面临新挑战：非专业人员产出的代码谁来 review？",
+      "source": "Grok AI / Forbes",
+      "source_type": "grok",
+      "url": "https://www.forbes.com/sites/jodiecook/2026/04/05/how-to-vibe-code-a-new-revenue-stream-using-what-you-already-know/",
+      "timestamp": "2026-04-05T12:00:00Z",
+      "importance": 9,
+      "tags": [
+        "Vibe Coding",
+        "非程序员",
+        "Claude Code",
+        "产品实战"
+      ],
+      "batch_time": "2026-04-11T10:00:00+08:00"
+    },
+    {
+      "title": "软件工程师职位逆势增长 30%：AI 替代论被招聘数据证伪",
+      "summary": "TrueUp 招聘数据显示，2026 年初软件工程师职位 listing 增长了 30%。Salesforce 的「停止招聘工程师」声明和 67,000+ 开放职位的现实形成鲜明对比。Intuit 正在招聘更多使用 AI 长大的早期职业开发者。",
+      "detail_content": "【核心事件】\n\nTrueUp 的招聘数据分析显示，2026 年初以来软件工程师职位 listing 增长了 30%。这个数据直接反驳了「AI 替代程序员」的叙事。Gizmodo、CNN、Business Insider 均对此进行了独立报道。\n\n【关键细节与引用】\n\nCNN 报道中引用了多个关键信息：\n- Salesforce CEO Marc Benioff 去年说公司已停止招聘工程师\n- 约 50% 的美国公众认为 AI 会导致软件岗位减少\n- 但实际数据：TrueUp 统计显示职位 listing 30% 增长\n- IBM 自动化和 AI 总经理 Neel Sundaresan 表示：「Junior engineers 现在借助 AI 可以承担过去需要资深开发者才能做的任务」\n- Intuit（TurboTax/Credit Karma 母公司）正在招聘更多使用 AI 长大的早期职业开发者\n\nGizmodo 指出需要注意的 nuance：「即使职位 listing 大幅增长，近年求职者的体验在所有领域都变得更差，原因是 ghost jobs 和自动化 HR」。\n\n【背景与上下文】\n\n企业确实相信 AI 能让他们生产更多软件，但这反而增加了对资深工程师的需求——需要有人来 shape 这些 AI 辅助产出的产品。不是减少人头，而是同样的人头产出更多的软件。\n\n【影响与前瞻】\n\n1. 不用怕 AI 减少技术人手，反而要担心没有足够的人来消化 AI 产出的大量代码\n2. Junior 工程师 + AI 的组合正在重新定义「初级开发者的能力边界」\n3. 招聘策略可能需要从「找会写代码的人」转向「找会用 AI 写代码的人」",
+      "source": "Gizmodo / CNN",
+      "source_type": "tavily",
+      "url": "https://gizmodo.com/report-says-software-engineer-job-listings-are-up-30-this-year-2000742638",
+      "timestamp": "2026-04-06T09:30:43Z",
+      "importance": 8,
+      "tags": [
+        "软件工程",
+        "就业数据",
+        "AI替代论",
+        "招聘趋势"
+      ],
+      "batch_time": "2026-04-11T10:00:00+08:00"
+    },
+    {
+      "title": "Pearson CEO：AI 就业末日是硅谷叙事，实施学习最快的公司才是赢家",
+      "summary": "Pearson CEO 在 Fortune 撰文指出，AI 替代白领工作的恐慌主要来自硅谷，全球劳动力数据讲的是另一个故事。关键洞察：粗劣的 AI 部署只会增加工作强度——制造出大量仍需人工判断的产出。赢家不是部署 AI 最快的公司，而是实施学习最快的。",
+      "detail_content": "【核心事件】\n\nPearson CEO 在 Fortune 发表文章，挑战「AI 就业末日论」。核心论点：AI 替代白领工作的叙事主要是硅谷视角，全球劳动力数据并不支撑这个结论。更有价值的洞察是关于 AI 部署的质量——粗劣实施只会增加工作强度。\n\n【关键细节与引用】\n\n\"There is also growing empirical evidence that poorly implemented AI simply increases work intensity — flooding organizations with output that still requires human attention, judgment, and correction.\"\n\n\"The companies that grow, create new jobs, and win aren't the ones that implement AI the fastest — they are the ones that implement learning the fastest.\"\n\nPearson CEO 提出的框架：\n- AI 变革确实在发生，但影响方式和硅谷预测的不同\n- 关键未知数：当 AI 压缩专业知识成本时，需求如何响应\n- 正确路径：超越狭隘的任务自动化，走向有意识的岗位和工作流重新设计\n\n【背景与上下文】\n\n这篇文章来自全球最大的教育公司 Pearson，而非科技公司。视角天然关注「人」而非「技术」。对于正在推动 AI 转型的组织来说，这个框架比硅谷的技术乐观主义更实用。\n\n【影响与前瞻】\n\n1. AI 转型不应以「部署速度」为核心指标，而应以「组织学习能力」为核心\n2. 粗劣的 AI 部署（自动化现有流程而不重新设计）只会让员工更累\n3. 投资培训体系比投资工具本身可能回报更高",
+      "source": "Fortune",
+      "source_type": "tavily",
+      "url": "https://fortune.com/2026/04/06/ai-job-apocalypse-silicon-valley-wrong-labor-market/",
+      "timestamp": "2026-04-06T17:04:00Z",
+      "importance": 8,
+      "tags": [
+        "AI就业",
+        "Pearson",
+        "组织变革",
+        "学习优先"
+      ],
+      "batch_time": "2026-04-11T10:00:00+08:00"
+    },
+    {
+      "title": "工程师第一人称：AI 先让我觉得丢了手艺，后来改变了我的工作思维",
+      "summary": "一位工程师在 BI 分享真实转变过程。AI 接管编码任务时他感到失去掌控，但后来工作方式完全改变：先跟 AI 规划方案、迭代 prompt 到第 8-9 版、让 AI 生成最终代码。角色从「写代码的人」变成了「设计方案的人」。",
+      "detail_content": "【核心事件】\n\nBusiness Insider 刊发了一位工程师的第一人称叙事，详细描述了 AI 如何改变他的日常工作方式。这不是分析师的总结，而是从业者的真实体验。\n\n【关键细节与引用】\n\n过去（Junior Engineer）：接需求 → 写代码 → 构建功能 → 上线\n\n现在（AI 时代）：先跟 AI 一起制定方案 → 让 AI 提出澄清问题 → 梳理依赖关系和功能清单 → 反复迭代 prompt（通常到第 8-9 版）→ 考虑所有技术决策、优化和 tradeoff → 让 AI 生成最终代码\n\n\"When AI first started taking over my coding tasks in the last few months, it felt like a loss because I spent years trying to master this art — but I always had a feeling that the art would get redundant.\"\n\n他现在同时在参加多个课外课程以保持技能更新，因为「这个行业正在转型为 AI 工程行业」。\n\n【背景与上下文】\n\n这篇文章的特别之处在于它捕捉了情感转变——从「失去掌控感」到「重新定义角色」。很多工程师正在经历同样的过程，但很少有人写得这么坦诚。\n\n【影响与前瞻】\n\n1. 这是对「工程师会被 AI 替代吗」最直接的回答——不会被替代，但角色会从「执行者」变成「设计者」\n2. Prompt 迭代 8-9 次这个细节很真实——AI 编码不是一次出结果，而是协作过程\n3. 要给工程师留出适应期，而不是直接要求效率提升",
+      "source": "Business Insider",
+      "source_type": "tavily",
+      "url": "https://www.businessinsider.com/engineer-how-ai-changed-career-2026-4",
+      "timestamp": "2026-04-08T09:31:01Z",
+      "importance": 7,
+      "tags": [
+        "工程师体验",
+        "工作方式转变",
+        "AI协作",
+        "第一人称"
+      ],
+      "batch_time": "2026-04-11T10:00:00+08:00"
+    },
+    {
+      "title": "Claude Advisor 策略：像律所的 Junior/Senior Partner 模式——性价比最优的 Agent 架构",
+      "summary": "LangChain 核心贡献者 Lance Martin 分析 Claude 的 advisor 策略：类似律所模式，初级做 95% 的活，资深在关键决策点审查。比全程用强模型便宜，比全程用弱模型质量高。这是 Agent 架构设计中性价比最优的模式之一。",
+      "detail_content": "【核心事件】\n\nLangChain 核心贡献者 Lance Martin（@RLanceMartin）分享了 Claude 新的 advisor 策略分析。他用律所的 junior/senior partner 模式做类比，揭示了 Agent 架构的一个关键设计模式。\n\n【关键细节与引用】\n\n\"Claude's new 'advisor' strategy is familiar: a junior law partner does 95% of the work, senior partner reviews key decision points. cheaper / better than junior partner grinding through it solo (avoid key mistakes).\"\n\n核心思想：\n- 让能力较弱但成本低的 Agent 做大部分工作\n- 在关键决策点引入能力更强但成本更高的模型做审查\n- 比全程用强模型便宜，比全程用弱模型质量高\n\n【背景与上下文】\n\n这呼应了 Anthropic 工程博客最近发布的 multi-agent harness 架构。Lance Martin 还发表了一篇关于用 Claude 构建应用的短文，总结了他在 Anthropic 工作和与开发者交流中积累的经验。\n\n【影响与前瞻】\n\n1. 这是 Agent 架构设计中性价比最优的模式之一——企业 Agent 部署可以参考\n2. 关键挑战在于：哪些决策点需要「senior review」？这需要领域知识来定义\n3. 成本控制：企业用 Agent 不需要全程跑最强模型，分层架构可以大幅降低成本",
+      "source": "@RLanceMartin (Twitter)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/RLanceMartin/status/2042328271166325100",
+      "timestamp": "2026-04-10T00:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Agent架构",
+        "Advisor模式",
+        "性价比",
+        "Claude"
+      ],
+      "batch_time": "2026-04-11T10:00:00+08:00"
+    },
     {
       "title": "Anthropic 发布 Claude Managed Agents：不用自己搭 harness，API 直接跑长任务 Agent",
       "summary": "Anthropic 在 Claude API 中推出 Managed Agents 功能——开发者只需提供 Agent 配置和任务描述，Anthropic 负责运行 harness、沙箱、安全隔离和长时间任务管理。Lance Martin 发长文解读，强调 agent harness 中的假设会随模型能力提升而过时，Managed Agents 的设计理念是随 Claude 能力自动扩展。配套发布 Claude Code 内置 skill，一条命令即可开始 onboarding。这标志着 Agent 开发从「自建基础设施」转向「平台托管」，对银行 AI 部署有直接参考价值。",
