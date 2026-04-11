@@ -1,9 +1,115 @@
 {
   "channel_id": "ai-frontier",
   "channel_name": "AI 前沿",
-  "updated_at": "2026-04-10T09:00:00+08:00",
-  "digest": "本周 Anthropic 密集发布：Advisor Strategy（Opus 做顾问、Sonnet 做执行者）和 Trustworthy Agents 研究报告是两个亮点。OpenAI 官宣 Sora 正式停用时间线（4/26 下线 web/app，9/24 关闭 API），标志着 AI 视频生成竞争格局重新洗牌。Claude Code 持续迭代，Boris Cherny 详解了 @-mentions 性能优化，trq212 披露了新的 Vaults 凭证存储功能。Karpathy 提出 LLM=CPU/Agent=OS kernel 的类比引发广泛讨论。整体来看，行业正在从「谁的模型更强」转向「谁的产品更好用」。",
+  "generated_at": "2026-04-11T09:14:32.400173+08:00",
+  "digest": "Anthropic 今天连发三篇重磅博客——Claude Code 工具设计哲学、多 Agent 协作模式、AI 安全防御指南——产出密度极高。同时 Claude Code 悄悄上线了 Ultraplan 功能，把规划任务从终端搬到云端，支持浏览器内批注和跨端执行。Karpathy 则指出公众对 AI 能力的理解鸿沟正在扩大，值得从业者关注。",
   "items": [
+    {
+      "title": "Anthropic 官方博客：Seeing Like an Agent——Claude Code 工具设计哲学",
+      "summary": "Claude Code 团队成员 Thariq Shihipar 发文详解工具设计的演进历程：AskUserQuestion 从三次迭代中诞生（修改 ExitPlanTool → 改输出格式 → 独立 Tool）；TodoWrite 因模型能力提升被 Task tool 替代；RAG 被 Grep + Progressive Disclosure 取代。核心观点：工具要匹配模型能力，且要随模型进步而调整甚至移除。",
+      "detail_content": "【核心事件】\nAnthropic 官方博客发布《Seeing like an agent: how we design tools in Claude Code》，作者 Thariq Shihipar（Claude Code 团队 MTS）。文章系统梳理了 Claude Code 工具体系的设计哲学和演进历程。\n\n文章提出了一个核心框架：想象你拿到一道数学难题，你需要什么工具？纸笔、计算器还是电脑？这取决于你的能力。同理，Agent 的工具设计要匹配模型能力，而非追求\"工具越多越好\"。\n\n【AskUserQuestion 的三次迭代】\n第一次尝试：修改 ExitPlanTool 加参数同时输出计划和问题——失败，因为让 Claude 同时做两件事会互相干扰。\n第二次尝试：改用 markdown 格式输出结构化问题——失败，Claude 输出格式不稳定，会加多余句子或丢选项。\n第三次（最终版）：创建独立的 AskUserQuestion Tool，Claude 随时可调用，触发后显示 modal 让用户回答，同时阻塞 Agent 循环。关键发现：\"即使设计再好的工具，如果 Claude 不理解怎么调用，也没用\"。\n\n【TodoWrite → Task tool 的演进】\n最初 Claude Code 需要 TodoWrite 工具帮模型保持跟踪，甚至每 5 轮插入系统提醒。但随着模型能力提升（尤其是 Opus 4.5），todo list 反而成了限制——模型被提醒束缚住，不敢根据实际情况调整计划。而且 subagent 无法共享 todo list。\n\n解决方案：用 Task tool 替代 TodoWrite。Task 支持依赖关系、跨 subagent 状态更新，且模型可以自主修改和删除。\n\n【从 RAG 到 Progressive Disclosure】\nClaude Code 最初用 RAG（向量数据库索引代码库），但需要预索引、环境适配脆弱，且 Claude 是被动接收上下文。\n\n改为 Grep tool 后，Claude 主动搜索构建上下文。一年内，Claude 从\"不能自建上下文\"进化到\"能做多层嵌套搜索找到精确上下文\"。\n\nProgressive Disclosure 成为正式设计模式：Skill 文件引用其他文件，模型递归读取发现所需上下文。用 Claude Code Guide subagent 处理用户对 Claude Code 本身的问题——subagent 在独立上下文中搜索文档，返回精炼答案，保持主上下文干净。\n\n【影响与前瞻】\n文章给出三条实用建议：用小而精的 tool set（当前 Claude Code 约 20 个工具，新增门槛极高）；持续实验和读输出；最重要的是\"学会像 Agent 一样看世界\"。这对所有 Agent 开发者都有参考价值。",
+      "source": "claude.com/blog",
+      "source_type": "tavily",
+      "url": "https://claude.com/blog/seeing-like-an-agent",
+      "timestamp": "2026-04-10T19:01:27Z",
+      "importance": 9,
+      "tags": [
+        "Anthropic",
+        "Claude Code",
+        "Agent设计",
+        "工具工程",
+        "Progressive Disclosure"
+      ],
+      "batch_time": "2026-04-11T09:00:00+08:00"
+    },
+    {
+      "title": "Anthropic 官方博客：多 Agent 协作的五种模式与选型指南",
+      "summary": "Anthropic 发布多 Agent 协作模式系列第二篇，详解五种模式：Generator-Verifier（质量把关）、Orchestrator-Subagent（层级委派）、Agent Teams（持久并行）、Message Bus（事件驱动）、Shared State（共享状态去中心化）。核心建议：从最简模式开始，观察瓶颈再演进。",
+      "detail_content": "【核心事件】\nAnthropic 官方博客发布《Multi-agent coordination patterns: Five approaches and when to use them》，这是继此前\"何时使用多 Agent\"文章之后的系列第二篇，聚焦实际选型。\n\n文章批评了一个常见错误：团队选择模式是基于\"哪个听起来更高级\"而非\"哪个适合问题\"。建议从最简单的模式开始，观察瓶颈，再演进。\n\n【五种模式详解】\n\n1. Generator-Verifier：最简单也最广泛部署的模式。生成器产出内容，验证器按明确标准评估，不通过则反馈给生成器修改。适用于代码生成（一个写代码，一个写测试跑测试）、事实核查、合规验证。注意：验证器只有和标准一样好；生成和验证若不可分离则失效；需设最大迭代次数防死循环。\n\n2. Orchestrator-Subagent：Claude Code 使用的模式。主 Agent 像团队 lead，规划、委派、综合结果。Subagent 在独立上下文窗口中工作，返回提炼后的发现，保持主上下文聚焦。Claude Code 的实现中，主 Agent 自己写代码编辑文件，后台 dispatch subagent 搜索代码库。缺点：编排者成为信息瓶颈；依赖识别和路由可能丢关键细节。\n\n3. Agent Teams：与 Orchestrator-Subagent 的关键区别是 worker 持久性。Subagent 完成一个有界子任务就终止；Teammate 跨多个任务保持活跃，积累上下文和领域专精。适合大型代码库迁移：每个 teammate 独立迁移一个服务，自带依赖、测试、部署配置。缺点：worker 之间无法共享中间发现；完成检测更难（一个 2 分钟一个 20 分钟）；共享资源冲突。\n\n4. Message Bus：Agent 增多后，直接协调变复杂。引入 publish/subscribe 层，新 Agent 可订阅感兴趣的主题。典型场景：安全运营自动化——告警从多源涌入，分类 Agent 按严重性和类型路由到不同调查 Agent，发现流向响应协调 Agent。适合事件驱动流水线、Agent 生态持续增长的场景。缺点：追踪困难（5 个 Agent 的事件级联难以理解）；路由错误导致静默失败。\n\n5. Shared State：去掉中间协调者，所有 Agent 直接读写共享存储（数据库、文件系统、文档）。典型场景：研究综合系统——多 Agent 分别探索学术文献、行业报告、专利、新闻，发现直接写入共享存储，其他 Agent 立即可见。缺点：可能重复工作或追求矛盾方案；\"反应循环\"（A 写、B 读后写、A 再回应）消耗 token 不收敛。\n\n【选型决策树】\n- Orchestrator-Subagent vs Agent Teams：子任务短且有界选前者；需要持续多步工作选后者\n- Orchestrator-Subagent vs Message Bus：步骤序列已知选前者；工作流由事件驱动且多变选后者\n- Agent Teams vs Shared State：子任务真正独立选前者；Agent 间需互相发现和利用成果选后者",
+      "source": "claude.com/blog",
+      "source_type": "tavily",
+      "url": "https://claude.com/blog/multi-agent-coordination-patterns",
+      "timestamp": "2026-04-10T18:01:27Z",
+      "importance": 9,
+      "tags": [
+        "Anthropic",
+        "多Agent",
+        "Agent架构",
+        "协调模式",
+        "工程实践"
+      ],
+      "batch_time": "2026-04-11T09:00:00+08:00"
+    },
+    {
+      "title": "Anthropic 官方博客：AI 加速攻击时代的安全防御指南",
+      "summary": "Anthropic 发布 Glasswing 配套安全建议文章，提出 6 大防御措施：立即修补 KEV 目录漏洞、准备应对漏洞报告量级 10 倍增长、用 AI 辅助扫描自有代码、采用零信任架构、用硬件绑定凭证替代密码、清点并最小化暴露面。预计 24 个月内大量长期存在的漏洞将被 AI 发现。",
+      "detail_content": "【核心事件】\nAnthropic 在发布 Project Glasswing（利用 Mythos 模型守护关键软件安全）一周后，发布配套安全指南《Preparing your security program for AI-accelerated offense》。文章明确警告：当前公开的、能力低于 Mythos 的模型就已经能发现传统审查长期遗漏的严重漏洞。24 个月内，大量沉睡多年的 bug 将被 AI 发现并串联成可利用的攻击链。\n\n【6 大防御建议】\n\n1. 关闭补丁窗口：AI 模型非常擅长在未修补系统中识别已知漏洞的签名，\"逆向补丁\"正是模型擅长的机械分析。建议：立即修补 CISA KEV 目录中的所有漏洞；用 EPSS 系统优先级排序其余漏洞；互联网暴露系统 24 小时内修补；自动化补丁部署和重启。\n\n2. 应对漏洞报告量级 10 倍增长：未来的漏洞管理流程将承受远超当前的压力。建议：规划发现量增加一个数量级；检查开源依赖安全性（用 OpenSSF Scorecard）；同样要求供应商做准备；AI 可辅助加速分流（去重、暴露评估、修复工单）、依赖冗余检查（LLM 分析 lockfile 找出重复依赖）、补丁自动生成和验证、甚至用 LLM 重写不再维护的小型依赖。\n\n3. 在发布前发现 bug：预防胜于治疗。建议：在 CI 流水线中加入静态分析和 AI 辅助代码审查，高置信度发现阻断合并；在 CD 流水线中加入自动化渗透测试；保护构建流水线（SLSA 框架）；优先使用内存安全语言（Rust、Go）写新代码；AI 可辅助漏洞扫描和补丁生成。\n\n4. 发现已有代码中的漏洞：大多数长期运行的生产代码被人类审查过多次，但从未被前沿模型审查过。建议：按暴露面优先（解析不可信输入的代码、认证授权逻辑、互联网可达路径）；包括遗留代码（原始作者已离开的代码审查收益最高）；预算修复时间。\n\n5. 为被入侵做设计：攻击者会找到入口，要限制从入口能到达的范围。建议：采用零信任架构（CISA 模型）；用硬件绑定凭证而非密码（FIDO2/passkeys）；按身份隔离服务；用短期令牌替代长期密钥。\n\n6. 减少暴露面：维护所有互联网暴露资产的完整清单；退役无主系统；每个服务默认拒绝网络入口。\n\n【影响与前瞻】\n这篇文章实际上是一份面向 CISO 的实操手册，将 Glasswing 的技术发现转化为可执行的防御建议。Anthropic 在安全领域的姿态从\"发布安全研究\"转向\"主动指导行业防御\"，标志着其安全品牌的进一步确立。对于金融机构等安全敏感行业，这份指南具有直接参考价值。",
+      "source": "claude.com/blog",
+      "source_type": "tavily",
+      "url": "https://claude.com/blog/preparing-your-security-program-for-ai-accelerated-offense",
+      "timestamp": "2026-04-10T23:01:27Z",
+      "importance": 8,
+      "tags": [
+        "Anthropic",
+        "网络安全",
+        "Glasswing",
+        "AI安全",
+        "CISO指南"
+      ],
+      "batch_time": "2026-04-11T09:00:00+08:00"
+    },
+    {
+      "title": "Claude Code 上线 Ultraplan：规划任务从终端搬到云端",
+      "summary": "Claude Code 发布 Ultraplan 功能（research preview），把规划任务从本地 CLI 交到云端 Claude Code on the web 的 plan mode 中执行。用户可在浏览器中批注计划各部分、让 Claude 修改，最后选择在云端执行开 PR 或\"传送\"回终端执行。Token 消耗与普通 plan mode 相当。",
+      "detail_content": "【核心事件】\nClaude Code 发布 Ultraplan 功能（研究预览版，需 v2.1.91+）。这项功能将规划任务从本地终端转移到云端 Claude Code on the web 的 plan mode 中执行，让用户在规划阶段获得比终端更丰富的交互界面。\n\n【核心功能】\n\n启动方式有三种：命令 /ultraplan + prompt；在普通 prompt 中包含 ultraplan 关键词；或者在本地 plan 完成后的审批对话框中选择\"No, refine with Ultraplan on the web\"。\n\n执行过程：CLI 启动后显示状态指示器——◇ ultraplan（Claude 正在研究代码库和草拟计划）、◇ ultraplan needs your input（Claude 有澄清问题）、◆ ultraplan ready（计划已就绪）。\n\n浏览器端审查体验：内联批注——选中任意段落可留评论让 Claude 处理；Emoji 反应——对段落做表情反应表达认可或担忧；大纲侧栏——快速跳转计划各部分。\n\n执行方式二选一：1）Approve and start coding in browser——在云端继续执行，完成后审查 diff 并从 web 界面创建 PR；2）Approve and teleport back to terminal——把计划\"传送\"回终端本地执行，本地有三个选项（在当前会话继续、开新会话、取消保存到文件）。\n\n【关键细节】\n\ntrq212（Thariq）确认 Ultraplan 的 token 消耗和订阅速率限制与普通 plan mode 大致相同。需要 Claude Code on the web 账户和 GitHub 仓库。不支持 Amazon Bedrock、Google Cloud Vertex AI 或 Microsoft Foundry（因为运行在 Anthropic 云基础设施上）。如果 Remote Control 处于活跃状态，启动 Ultraplan 时会断开（两者都占用 claude.ai/code 界面）。\n\n【背景与上下文】\n\nUltraplan 是 Claude Code 向\"云原生开发工具\"演进的又一信号。此前发布的 Managed Agents 已将 Agent 执行搬到云端，Ultraplan 则把规划阶段也云端化。这解决了终端规划的两个痛点：缺乏富交互界面（无法对计划某一段落单独批注）和阻塞终端（云端规划时终端保持可用）。\n\n\"Teleport back to terminal\" 的设计很有意思——云端规划、本地执行，兼顾了云端的交互体验和本地的环境访问。命名也呼应了 Claude Code 团队内部对这种跨端协作方式的定位。\n\n【影响与前瞻】\n\n对 Claude Code 日常用户而言，Ultraplan 让大型重构/迁移的规划阶段更舒适——你可以在浏览器里悠闲地批注，而不是在终端里盯着滚动的文本。对团队协作场景，Web 端的计划审查界面可能成为 Code Review 前的预审环节。",
+      "source": "Claude Code Docs + trq212",
+      "source_type": "opentwitter",
+      "url": "https://docs.claude.com/en/docs/claude-code/ultraplan",
+      "timestamp": "2026-04-10T18:29:40Z",
+      "importance": 8,
+      "tags": [
+        "Claude Code",
+        "Ultraplan",
+        "云端规划",
+        "Anthropic",
+        "新功能"
+      ],
+      "batch_time": "2026-04-11T09:00:00+08:00"
+    },
+    {
+      "title": "Karpathy：公众对 AI 能力的理解鸿沟正在扩大",
+      "summary": "Karpathy 发推指出，他的时间线上\"越来越多人对 AI 能力的理解出现鸿沟\"。核心原因有两个：一是很多人停留在免费版 ChatGPT 的体验，对前沿付费模型的能力没有直观感受；二是 AI 发展速度太快，理解差距在不断拉大。这条推 1.7 万点赞引发广泛讨论。",
+      "detail_content": "【核心事件】\nKarpathy（前 Tesla AI 总监、OpenAI 联合创始人之一）发布一条引发广泛共鸣的推文：\"Judging by my tl there is a growing gap in understanding of AI capability.\"（从我的时间线来看，人们对 AI 能力的理解鸿沟正在扩大）。\n\n推文获得 17,633 点赞，说明这个观察击中了很多从业者的感受。\n\n【核心论点】\n\nKarpathy 指出鸿沟的两个主要来源：\n\n1. 使用层级和时效性问题：很多人在某个时间点试过免费版 ChatGPT，就形成了对 AI 能力的固定印象。但 AI 的进步速度极快，且免费版和付费版（Claude Opus、GPT-5.4）之间能力差距巨大。只有亲自使用最前沿的付费模型，才能准确感知当前 AI 的实际能力。\n\n2. 速度导致的认知落后：AI 能力在加速进步，但大多数人的认知更新速度跟不上。从业者每天在使用 Claude Code 写代码、用 Agent 做复杂任务，而普通用户可能还停留在\"AI 就是聊天机器人\"的阶段。这个差距每天都在变大。\n\n【背景与上下文】\n\nKarpathy 近期频繁讨论 AI 对软件工程的影响。他此前提出的\"Idea File\"概念（LLM Agent 时代分享想法比分享代码更有价值）获得 2.5 万点赞，以及对 AI 生成代码质量的具体批评（\"Agent 会臃肿抽象、代码美学差、容易复制粘贴代码块\"）也引发广泛讨论。\n\nKarpathy 同时指出所有 LLM 都存在\"上下文中信息被忽略\"的问题，这不是某个特定实现的问题，而是更深层的原因（可能与训练过程有关）。\n\n【影响与前瞻】\n\n这条推的价值不在于\"AI 很强\"的结论，而在于它精准描述了一个社会现象：AI 的实际能力和公众认知之间的差距正在加速扩大。这对从业者意味着：1）选择正确的 AI 工具和使用方式本身就是竞争优势；2）帮助团队/组织理解 AI 的真实能力是一项重要的领导力技能。",
+      "source": "Twitter/X @karpathy",
+      "source_type": "opentwitter",
+      "url": "https://x.com/karpathy/status/2042334451611693415",
+      "timestamp": "2026-04-09T20:10:52Z",
+      "importance": 7,
+      "tags": [
+        "Karpathy",
+        "AI认知鸿沟",
+        "行业洞察",
+        "AI能力"
+      ],
+      "batch_time": "2026-04-11T09:00:00+08:00"
+    },
+    {
+      "title": "Boris Cherny 坦诚回应 Claude Code \"mistakes happen\"，获 1500+ 点赞",
+      "summary": "Claude Code 核心工程师 Boris Cherny 在回复用户对 Claude Code 错误的批评时，简单回应了三个字 \"Yes, mistakes happen\"，获得 1522 点赞。这种不加修饰的坦诚态度在社交媒体上获得广泛好评——AI 产品负责人公开承认产品不完美是罕见且令人尊重的。",
+      "detail_content": "【核心事件】\nClaude Code 核心工程师 Boris Cherny（@bcherny）回复一条对 Claude Code 出错的批评推文，简单说了句 \"Yes, mistakes happen\"（是的，错误在所难免），获得 1522 点赞和广泛好评。\n\n【关键细节】\n\n这不是一次精心策划的公关回应。Boris 没有找借口、没有转推产品宣传、没有说\"我们正在改进\"。就是三个字：是的，错误会发生。\n\n这种不加修饰的坦诚在 AI 行业的社交媒体中是罕见的。大多数公司的标准做法是：承认问题 → 描述修复计划 → 转向正面叙事。Boris 跳过了所有这些，直接承认事实。\n\n社区反应热烈，1522 点赞说明用户群体对这种透明度的渴望。在 AI 产品快速迭代、\"魔法\"宣传泛滥的当下，一个核心工程师愿意不加包装地承认\"产品会犯错\"反而建立了信任。\n\n【背景与上下文】\n\nBoris Cherny 是 Claude Code 团队最活跃的工程师之一，频繁在 Twitter 上直接回复用户的 bug 报告和功能请求。近期他的其他互动包括：回复多处 \"Coming today\" 暗示新功能即将发布、用 Claude 自己修复 Claude Code 的 bug（\"I have a claude working on it!\"）、解释 Claude Code @-mentions 优化的技术细节。\n\nBoris 的沟通风格已经成为 Claude Code 品牌的一部分——技术深度 + 直来直去。他此前披露的 Claude Code 内部数据（\"工程速度提升数百%，且增速本身还在加速\"）也获得了广泛关注。\n\n【影响与前瞻】\n一条三个字的推文获得 1500+ 点赞，说明用户对 AI 产品沟通的期望已经变了——从\"告诉我这很完美\"到\"告诉我你在做什么\"。这种坦诚的沟通风格可能比产品本身更能建立用户忠诚度。",
+      "source": "Twitter/X @bcherny",
+      "source_type": "opentwitter",
+      "url": "https://x.com/bcherny/status/2039215070832660528",
+      "timestamp": "2026-04-01T05:35:34Z",
+      "importance": 6,
+      "tags": [
+        "Claude Code",
+        "Boris Cherny",
+        "社区互动",
+        "品牌信任"
+      ],
+      "batch_time": "2026-04-11T09:00:00+08:00"
+    },
     {
       "title": "Anthropic 官方博客：为什么我们放弃专用 Agent，转向 Skills 架构",
       "summary": "Anthropic 发布重磅技术博客「Building Agents with Skills」，系统阐述了从构建专用 Agent 转向通用 Agent + Skills 组合的架构决策。Skills 是一组打包了领域专业知识的文件集合（SKILL.md + 参考文件），采用三层渐进加载：元数据约 50 tokens、SKILL.md 约 500 tokens、参考文件 2000+ tokens，让 Agent 可以装备数百个技能而不撑爆上下文窗口。文章还首次披露了金融和医疗领域的 Skills 增强方案。",
