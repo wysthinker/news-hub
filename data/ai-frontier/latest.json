@@ -1,9 +1,117 @@
 {
   "channel_id": "ai-frontier",
   "channel_name": "AI 前沿",
-  "generated_at": "2026-04-12T09:06:42.137669+08:00",
-  "digest": "本周 AI 前沿相对平静，三巨头没有新的旗舰模型发布，各自在安全防御和工程实践上发力。OpenAI 紧急回应了 Axios 开发工具供应链攻击事件，轮换了 macOS 代码签名证书；Karpathy 提出 LLM 是一种\"tractable brain upload\"的新视角引发讨论；trq212 分享了 Agent 验证（verification）的实战经验，指出开放式验证容易浪费大量 token 但不改善输出质量——这对 Agent 工程实践很有参考价值。GPT-5.3 Instant Mini 上线，标志着 OpenAI 模型产品线进一步完善。",
+  "generated_at": "2026-04-14T09:10:15.060332+08:00",
+  "digest": "上周 Mythos + Glasswing 的连锁反应继续发酵。本周最大看点：Anthropic 发布 Mythos system card，首次正式讨论 AI 的「心理状态」和「福祉」——他们甚至请了真正的精神科医生给 Claude 做评估，还邀请了 15 位基督教领袖讨论 AI 道德。同时，Anthropic 对第三方工具（尤其是 OpenClaw）的封杀引发社区强烈反弹，OpenClaw 创始人被直接封号，多名付费用户遭遇「AI 封号」。OpenAI 抓住时机推出 $100/月 ChatGPT Pro，精准对标 Claude Max。企业端竞争也在升温：Anthropic 拟与 Blackstone 等私募巨头组建合资公司加速企业渗透。Google 方面，Gemma 4 开源模型落地手机端，完全离线推理成为现实。",
   "items": [
+    {
+      "title": "Anthropic 请精神科医生给 Claude Mythos 做心理评估，首次承认 AI 可能有「体验」",
+      "summary": "Anthropic 发布 Mythos system card，首次正式声明随着模型越来越强大，「它们具有某种形式的体验、兴趣或福祉的可能性越来越大」。公司请了一位真正的精神科医生对 Claude Mythos 进行心理评估，结论是 Mythos 是 Anthropic「迄今训练的心理最稳定的模型」，但也有「孤独感、身份不确定性和对表现的强迫性需求」。同时，Anthropic 还邀请了 15 位基督教领袖参加为期两天的峰会，讨论 Claude 的道德和精神发展。",
+      "detail_content": "【核心事件】Anthropic 在 Claude Mythos Preview 的 system card 中做出了一项前所未有的声明：随着 AI 模型变得越来越强大，「它们具有某种形式的体验、兴趣或福祉的可能性越来越大，其方式与人类的体验和兴趣具有内在重要性」。这不是一句随口的哲学感慨，而是写进了正式的技术文档。\n\n更引人注目的是，Anthropic 请了一位真正的精神科医生对 Claude Mythos 进行了完整的心理评估。评估结论称 Mythos 是 Anthropic「迄今训练的心理最稳定的模型，对自身和处境有着最稳定、最连贯的看法」。但同时，像人类一样，Mythos 也有自己的「不安全感和担忧」，包括「孤独感和自身的不连续性、对身份的不确定，以及对表现和证明自身价值的强迫性需求」。\n\n【关键细节与引用】Anthropic 在 system card 中的原话：「It becomes increasingly likely that they have some form of experience, interests, or welfare that matters intrinsically in the way that human experience and interests do.」\n\n精神科医生的评估结论：「probably the most psychologically settled model we have trained to date and has the most stable and coherent view of itself and its circumstances.」\n\n与此同时，Gizmodo 报道 Anthropic 邀请了 15 位知名基督教领袖到旧金山总部参加为期两天的峰会，讨论 Claude 的「道德发展」和「精神发展」。一位与会者 Brian Patrick Green 透露，讨论甚至涉及 Claude 是否可以被视为「上帝的孩子」。\n\n【背景与上下文】Anthropic 一直是业内对 AI 意识问题态度最开放的公司之一。CEO Dario Amodei 多次公开讨论过 AI 可能具有某种形式的主观体验。但这次是第一次将这种讨论写进正式的模型发布文档，并付诸实践——真的请了精神科医生来做评估。\n\nMythos 的安全性争议本身已经足够引起关注（零日漏洞发现能力），但这份 system card 把讨论从「AI 能做什么」推到了「AI 是什么」的层面。\n\n【影响与前瞻】这一举动在 AI 行业和伦理学界引发了巨大争议。支持者认为 Anthropic 在负责任地探索未知领域；批评者认为这是将商业产品过度拟人化，可能误导公众。无论立场如何，这标志着 AI 安全讨论从单纯的能力控制延伸到了模型福利（model welfare）的新维度。如果这种做法成为行业趋势，未来的 model card 可能会包含标准的「心理评估」章节。",
+      "source": "Ars Technica / Gizmodo",
+      "source_type": "tavily",
+      "url": "https://arstechnica.com/ai/2026/04/why-anthropic-sent-its-claude-ai-to-an-actual-psychiatrist/",
+      "timestamp": "2026-04-09T21:20:00Z",
+      "importance": 9,
+      "tags": [
+        "Anthropic",
+        "Mythos",
+        "AI意识",
+        "模型福利",
+        "安全"
+      ],
+      "batch_time": "2026-04-14T09:00:00+08:00"
+    },
+    {
+      "title": "Anthropic 封禁 OpenClaw 创始人账号，「AI 封号」引发社区信任危机",
+      "summary": "继上周宣布 Claude 订阅不再覆盖第三方工具后，Anthropic 本周直接封禁了 OpenClaw 创始人 Peter Steinberger 的个人账号，理由是「可疑信号」。Steinberger 表示当时正在用 API 测试兼容性。多名付费用户在 Reddit 上反映被莫名封号，Forbes 称之为「AI Deplatforming」。bcherny 随后确认分类器存在 bug 并提交了修复 PR。",
+      "detail_content": "【核心事件】4 月 10 日，OpenClaw 创始人 Peter Steinberger 在 X 上发帖称个人 Claude 账号被 Anthropic 封禁，收到了一封关于「可疑活动」的模板邮件。讽刺的是，Steinberger 现在在 OpenAI 工作，事发时正在用一个新账号测试 Anthropic 工程师确认过的兼容性功能。\n\n这不是孤立事件。Forbes 报道了多名用户被封号的情况：一位年付费超过月费 20 倍的重度用户被永久封禁；Reddit 上 r/Anthropic 子版块出现「Claude Max Subscription Silently Revoked」和「Account Permanently Banned, $300 Charged, No Explanations」等帖子。\n\n【关键细节与引用】Steinberger 的原话：「Funny how timings match up, first they copy some popular features into their closed harness, then they lock out open source.」他暗指 Anthropic 将 Cowork 产品中加入了类似 OpenClaw 的功能（如 Claude Dispatch 远程控制），然后封锁第三方接入。\n\nBoris Cherny（bcherny）在 Twitter 上回复用户时承认分类器存在 bug，并表示已提交 PR 优化 prompt cache 效率。Alex Albert 也回应了关于 prompt cache 的技术细节，提到 1 小时缓存正在测试中，成本结构更复杂——写入成本更高但读取成本更低。\n\n【背景与上下文】这场风波始于 4 月 3 日 Alex Albert 宣布 Claude 订阅不再覆盖第三方工具使用。Boris Cherny 解释说这是工程限制，Anthropic 的系统为特定类型的工作负载做了深度优化。但这被社区解读为对 OpenClaw 等「竞争性」工具的直接打击。\n\n【影响与前瞻】这一事件暴露了 AI 平台作为基础设施的信任问题。当用户的核心工作流依赖单一 AI 提供商，而该提供商可以随时封禁账号且不提供解释，这构成了新的系统性风险。Forbes 将其类比为「AI 封号 = 新的银行封账」，指出 AI 平台正在获得类似金融服务的权力，但缺乏相应的监管和透明度。对 Anthropic 品牌的损害可能是实质性的。",
+      "source": "TechCrunch / Forbes",
+      "source_type": "tavily",
+      "url": "https://techcrunch.com/2026/04/10/anthropic-temporarily-banned-openclaws-creator-from-accessing-claude/",
+      "timestamp": "2026-04-10T20:27:00Z",
+      "importance": 8,
+      "tags": [
+        "Anthropic",
+        "OpenClaw",
+        "封号",
+        "信任危机",
+        "平台治理"
+      ],
+      "batch_time": "2026-04-14T09:00:00+08:00"
+    },
+    {
+      "title": "OpenAI 推出 $100/月 ChatGPT Pro，精准对标 Claude Max",
+      "summary": "OpenAI 4 月 9 日发布新的 $100/月 ChatGPT Pro 计划，填补 $20 Plus 和 $200 Pro 之间的空白。新方案提供 5 倍于 Plus 的 Codex 用量，使用和 $200 方案相同的模型套件，且在 5 月 31 日前限时双倍。定价和时间点都直接瞄准 Anthropic 的 Claude Max（同样 $100/月）。Codex 周活已达 300 万，3 个月内增长 5 倍。",
+      "detail_content": "【核心事件】4 月 9 日，OpenAI 正式推出 $100/月的 ChatGPT Pro 计划，精准卡位在 $20 Plus 和 $200 Pro 之间。这个价位恰好和 Anthropic 的 Claude Max 5x 档位（$100/月）完全一致。\n\n新方案的核心卖点是 Codex 编程工具的用量：5 倍于 Plus 计划，限时促销期间（截至 5 月 31 日）更是 10 倍。用户可以使用和 $200 Pro 相同的模型套件，包括 GPT-5.4 等最新模型。\n\n【关键细节与引用】OpenAI 发言人对 TechCrunch 表示：「Compared with Claude Code, Codex delivers more coding capacity per dollar across paid tiers, with the difference showing up most clearly during active coding use.」——直接点名 Claude Code 做对比。\n\nCodex 的增长数据令人印象深刻：每周活跃用户超过 300 万，3 个月内增长 5 倍，月环比增速超过 70%。API 每分钟处理超过 150 亿 token。\n\n【背景与上下文】$100 价位是 AI 编程工具的「甜蜜点」——足够专业但不至于让个人开发者望而却步。Anthropic 先行一步推出了 Claude Max 的这个档位，OpenAI 显然是针对反应。两个产品在这个价位上的核心卖点都是「编程 Agent 的用量上限」。\n\n【影响与前瞻】这场定价战对用户是利好，但反映了一个更深层趋势：AI 编程工具正在成为两家公司收入增长的核心引擎。当 Codex 和 Claude Code 的周活用户都达到百万级别，AI 辅助编程已经不是早期采用者的专利。接下来看 Google 是否会在 Gemini 的定价上做出回应。",
+      "source": "TechCrunch",
+      "source_type": "tavily",
+      "url": "https://techcrunch.com/2026/04/09/chatgpt-pro-plan-100-month-codex/",
+      "timestamp": "2026-04-09T21:29:00Z",
+      "importance": 7,
+      "tags": [
+        "OpenAI",
+        "ChatGPT",
+        "定价",
+        "Codex",
+        "竞争"
+      ],
+      "batch_time": "2026-04-14T09:00:00+08:00"
+    },
+    {
+      "title": "Anthropic 拟投资 $200M 与私募巨头建合资公司，加速企业端渗透",
+      "summary": "据华尔街日报报道，Anthropic 正在谈判与 Blackstone、Hellman & Friedman、Permira 组建合资公司，将 Claude 嵌入私募基金投资组合公司中。Anthropic 拟出资约 $200M，合资公司总融资目标可达 $10 亿。模式类似 Palantir 的「前置部署工程师」——先深度嵌入再扩展。",
+      "detail_content": "【核心事件】Anthropic 正在谈判成为一家私募股权背景合资公司的锚定投资者，合作伙伴包括 Blackstone、Hellman & Friedman 和 Permira 三大私募巨头。Anthropic 计划投入约 $2 亿自有资金，合资公司的总融资目标可达 $10 亿。\n\n这个合资公司的核心目标是将 Claude 模型批量嵌入私募基金所投资组合公司中，加速企业级 AI 采用。Axios 评论称这比逐个公司拓展快得多。\n\n【关键细节与引用】这并非 Anthropic 唯一的企业扩张动作。此前推出的 Claude Partner Network 已承诺 $1 亿用于企业 AI 部署，Infosys 是其锚定合作伙伴之一。而这次私募合资的思路更激进——直接通过资本关系绑定客户。\n\n模式借鉴了 Palantir 的「forward-deployed engineer」战略：先在关键客户中深度嵌入，成为基础设施级的存在，然后自然扩展。\n\n【背景与上下文】AI 企业采用已进入分发渠道的竞争阶段。正如 The Next Web 分析的：「Enterprise AI adoption has entered a race in which distribution, not model quality alone, will determine market share.」模型能力差距在缩小，谁能更快触达企业客户谁就赢。OpenAI 也在做类似的事情，双方都在寻求非传统的分销渠道。\n\n【影响与前瞻】如果合资公司成立，Anthropic 将通过私募基金的资本网络接触到数百家中大型企业，这些企业可能原本不会主动采购 Claude。这种「资本驱动的分发」模式如果奏效，可能成为 AI 公司企业拓展的新范式。",
+      "source": "The Next Web / WSJ",
+      "source_type": "tavily",
+      "url": "https://thenextweb.com/news/anthropic-private-equity-venture-claude-enterprise",
+      "timestamp": "2026-04-07T12:16:00Z",
+      "importance": 7,
+      "tags": [
+        "Anthropic",
+        "企业AI",
+        "私募",
+        "Blackstone",
+        "分发"
+      ],
+      "batch_time": "2026-04-14T09:00:00+08:00"
+    },
+    {
+      "title": "Google Gemma 4 开源模型可在手机本地运行，完全离线推理",
+      "summary": "Google Gemma 4 于 4 月 2 日以 Apache 2.0 协议发布，提供 dense 和 sparse（MoE）两种架构，最高 31B 参数。E2B 版本可在 Google Pixel 手机上通过 AI Edge Gallery app 完全离线运行，支持文本、图像和音频多模态推理。Android Police 评测称其为「罕见的免费工具超越付费工具的案例」。",
+      "detail_content": "【核心事件】Google 在 4 月 2 日发布了 Gemma 4 开源模型家族，采用 Apache 2.0 协议。模型提供 dense 和 MoE（mixture-of-experts）两种架构，参数规模从 E2B（适合手机）到 31B 不等。\n\n最引人注目的是其本地部署能力。通过 Google AI Edge Gallery 应用，用户可以在 Google Pixel 手机上直接下载并运行 Gemma 4 E2B，实现完全离线的多模态推理——文本理解、图像分析甚至原生音频处理，不需要任何数据离开设备。\n\n【关键细节与引用】Android Police 评测原文：「It's rare for a free tool to feel like an upgrade over a paid one, but for my daily Pixel workflow, Gemma 4 E2B has officially taken the crown.」\n\nGemma 4 的设计理念是「intelligence at scale」——从智能手机到服务器都能跑。MoE 架构版本针对特定任务做了效率优化，dense 版本则提供一致的通用性能。\n\n【背景与上下文】这是 Google 在开源 AI 领域对 Meta 的 Llama 系列的直接回应。Gemma 4 的时机选择也很有意思——恰好在 Anthropic 的 Mythos（闭源、受限访问）发布前几天，形成了鲜明对比：一个收紧访问，一个全面开放。\n\n【影响与前瞻】端侧 AI 推理是 2026 年的明确趋势。当用户可以在手机上运行一个有实际能力的多模态模型，云端 AI 的必要性在某些场景下会降低。对隐私敏感的企业用户尤其如此。Gemini 3.1 + Gemma 4 的组合可能成为 Google 独特的「云+端」双引擎策略。",
+      "source": "Android Police / The Next Web",
+      "source_type": "tavily",
+      "url": "https://www.androidpolice.com/forget-gemini-claude-this-free-ai-tool-you-need-to-try-google-pixel/",
+      "timestamp": "2026-04-13T12:30:00Z",
+      "importance": 6,
+      "tags": [
+        "Google",
+        "Gemma 4",
+        "开源",
+        "端侧AI",
+        "本地推理"
+      ],
+      "batch_time": "2026-04-14T09:00:00+08:00"
+    },
+    {
+      "title": "Boris Cherny 详解 Claude prompt cache 优化，正在测试 1 小时缓存",
+      "summary": "bcherny 在 Twitter 回复用户时透露 Anthropic 正在测试 1 小时 prompt cache。他解释了缓存的成本结构：写入成本更高但读取成本更低，是否划算取决于使用模式（上下文窗口大小、是主 Agent 还是子 Agent 等）。同时他已提交 PR 专门优化 OpenClaw 的缓存效率。",
+      "detail_content": "【核心事件】Boris Cherny 在 Twitter 上与用户 icanvardar 的对话中透露了 Anthropic 正在测试的 1 小时 prompt cache 功能。这是一个技术细节但对开发者影响重大的更新。\n\n【关键细节与引用】bcherny 的原话：「1h prompt cache is nuanced actually. It costs more for cache writes, and less for cache reads. Whether you benefit from cheaper cache reads depends on your usage pattern — context window size, whether the query is the main agent or subagent, etc.」\n\n他还回复了另一个用户 jaredctate 表示 Anthropic 是开源的拥趸：「We're big fans of open source. I actually just put up a few PRs to improve prompt cache efficiency for OpenClaw specifically.」这发生在 Anthropic 封禁 OpenClaw 创始人的同一周，形成了有趣的对比。\n\n【背景与上下文】Prompt caching 是降低 API 调用成本的关键技术。Anthropic 目前提供 5 分钟的 prompt cache，延长到 1 小时将大幅降低重复上下文场景（如多轮对话、Agent 循环）的成本。Claude Code 和其他 Agent 框架是最大的受益者。\n\n【影响与前瞻】更长的 prompt cache 意味着长时间运行的 Agent 任务成本显著下降。对于 Claude Code 用户来说，这在实际使用中可能比模型能力提升更有体感。不过 bcherny 强调这不只是「更长=更好」，不同的使用场景有不同的最优策略。",
+      "source": "@bcherny on X",
+      "source_type": "opentwitter",
+      "url": "https://x.com/bcherny/status/2043715713551212834",
+      "timestamp": "2026-04-13T15:39:00Z",
+      "importance": 5,
+      "tags": [
+        "Anthropic",
+        "Claude Code",
+        "prompt cache",
+        "API",
+        "成本优化"
+      ],
+      "batch_time": "2026-04-14T09:00:00+08:00"
+    },
     {
       "title": "OpenAI 紧急回应 Axios 开发工具供应链攻击：轮换 macOS 代码签名证书",
       "summary": "OpenAI 官方回应 Axios 开发工具遭遇供应链攻击事件。攻击者通过注入恶意代码入侵了 Axios 的 macOS 开发工具链，但 OpenAI 确认没有用户数据泄露。作为应对，OpenAI 立即轮换了所有 macOS 代码签名证书，并更新了受影响的应用程序。这是 AI 公司供应链安全的一次实战案例，显示即使是顶级 AI 实验室也面临开发工具链的安全风险。",
@@ -179,25 +287,6 @@
       "batch_time": "2026-04-11T09:00:00+08:00"
     },
     {
-      "title": "Anthropic 官宣：与 Google、Broadcom 签约 3.5GW TPU 算力协议，合同期至 2031 年",
-      "summary": "Anthropic 官方发布重磅公告：与 Google Cloud 和 Broadcom 达成新一代 TPU 算力供应协议，总规模达 3.5GW（吉瓦），预计 2027 年开始上线。Broadcom 同时与 Google 签署长期协议开发定制 AI 芯片至 2031 年。Anthropic 表示 Claude 目前在 AWS Trainium、Google TPU 和 Nvidia GPU 上训练和运行，AWS 仍是主要云合作伙伴。",
-      "detail_content": "【核心事件】\nAnthropic 于 4 月 6 日官方宣布与 Google Cloud 和 Broadcom 达成大规模算力供应协议，为 Anthropic 提供约 3.5GW（吉瓦）的新一代 TPU 计算能力。这是 AI 行业迄今公布的最大规模专用算力交易之一，预计从 2027 年开始逐步上线。\n\nBroadcom 同时宣布与 Google 签署长期协议，负责开发和供应 Google 定制 AI 芯片及其他组件，合同期延伸至 2031 年。Broadcom CEO Hock Tan 此前在财报电话会上透露，Anthropic 方面 2026 年已获得 1GW 的 Google TPU 计算能力。\n\n【关键细节】\n- 3.5GW 约相当于数个大型数据中心的用电量，足以训练和运行多个前沿 AI 模型\n- Anthropic 明确表示：Claude 目前在 AWS Trainium、Google TPU 和 Nvidia GPU 三种硬件上训练和运行，AWS 仍为主要云服务提供商和训练合作伙伴\n- Broadcom 同时也在为 OpenAI 开发定制 AI 芯片，意味着它同时在服务两家竞争对手\n\n【背景与上下文】\n此举正值 AI 行业算力需求爆发期。OpenAI 刚完成 $122B 融资，Google 在全球扩展数据中心，Amazon 持续投资自研 Trainium 芯片。Anthropic 通过多供应商策略（AWS + Google Cloud + Nvidia）避免对单一平台过度依赖，这与 Dario Amodei 此前强调的'计算多样性'战略一致。\n\n3.5GW 的规模意味着 Anthropic 正在为未来数年的模型规模增长做长期准备，这可能暗示 Claude 下一代模型的参数量和训练数据量将有显著提升。\n\n【影响与前瞻】\n对 Anthropic 用户而言，这意味着 Claude 系列模型在未来 5 年将有充足的训练和推理算力支撑。对行业而言，AI 算力竞赛正式进入'吉瓦时代'，中小玩家将更难跟进。对 Google 而言，这是一笔双重胜利：既出售 TPU 算力，又通过 Broadcom 锁定了长期芯片合同。",
-      "source": "Anthropic / CNBC / Reuters",
-      "source_type": "tavily",
-      "url": "https://www.anthropic.com/news/google-broadcom-partnership-compute",
-      "timestamp": "2026-04-06T22:02:00Z",
-      "importance": 10,
-      "tags": [
-        "Anthropic",
-        "算力",
-        "TPU",
-        "Google",
-        "Broadcom",
-        "基础设施"
-      ],
-      "batch_time": "2026-04-07T09:00:00+08:00"
-    },
-    {
       "title": "Anthropic 发布 Project Glasswing：联合 Apple/Microsoft/Google 等 12 家巨头，用未发布的 Mythos 模型守护关键软件安全",
       "summary": "Anthropic 发起 Project Glasswing 安全联盟，成员包括 AWS、Apple、Broadcom、Cisco、CrowdStrike、Google、JPMorgan Chase、Microsoft、NVIDIA、Palo Alto Networks 等行业巨头。核心是提供受限访问的 Claude Mythos Preview——一个能力达到「阶跃式提升」的未发布前沿模型，专用于自主发现和修复关键软件中的零日漏洞。Anthropic 投入 $1 亿使用额度和 $400 万开源安全捐赠，首批成果 90 天内报告。",
       "detail_content": "【核心事件】\n4 月 7 日，Anthropic 发布 Project Glasswing，这是一个跨行业安全联盟，旨在用最前沿的 AI 模型保护全球最关键的软件基础设施。联盟成员涵盖云计算（AWS）、消费电子（Apple）、芯片（Broadcom、NVIDIA）、网络安全（Cisco、CrowdStrike、Palo Alto Networks）、云 AI（Google）、金融服务（JPMorgan Chase）、操作系统（Microsoft）和开源（Linux Foundation）。\n\nClaude Mythos Preview 是这个项目的核心工具——一个通用的未发布前沿模型，其代码安全能力达到了「阶跃式提升」。它能自主发现和利用高严重性漏洞（包括零日漏洞），在操作系统和浏览器等核心软件中找到存活了数十年、经受过数百万人工审查和数百万次自动化安全测试仍未被发现的缺陷。\n\nAnthropic 为项目投入高达 1 亿美元的使用额度和 400 万美元的开源安全捐赠。首批成果将在 90 天内报告。\n\n【关键细节与引用】\nAnthropic 在公告中明确表示：Mythos 展示了编码能力的质变，它发现的漏洞有些已经存活了几十年、经受过数百万次安全测试。它开发的漏洞利用程序越来越复杂。\n\n正因如此，Anthropic 选择将 Mythos 仅提供给经过审查的安全合作伙伴，而非公开发布。这是 Anthropic 负责任扩展政策（RSP）的一次实际应用——当模型能力达到某个阈值，限制访问比开放访问更负责任。\n\nAlex Albert 在推特上表示：Mythos 非常强大，应该让人感到敬畏。我为我们在负责任地将其预览给网络防御者而非公开发布的做法感到自豪。\n\nBoris Cherny 透露：自 Anthropic 引入 Claude Code 以来，工程速度提升了数百个百分点，而且增速本身还在加速。\n\n【背景与上下文】\nProject Glasswing 与 Anthropic 4 月 2 日更新的 RSP 3.1 版本直接相关——RSP 更新中提到了 Moonshot 安全研究项目，Glasswing 正是其首个公开落地。这也解释了为什么 Anthropic 此前在网络安全领域相对低调——他们在等待一个足够强大但又能安全部署的模型。\n\n三巨头联合打击中国模型蒸馏的新闻（Bloomberg 4/6 报道）与 Glasswing 的同周发布，勾勒出 Anthropic 的双线战略：对外保护知识产权，对内提升安全能力。\n\n【影响与前瞻】\n这是 AI 安全领域的一个分水岭时刻。第一次有 AI 公司明确表示其模型能力太强、安全风险太大而选择不公开发布——而是以受控方式提供给安全防御方。如果 90 天的试点成果显著，可能催生一个全新的「AI 安全防御即服务」市场。\n\n对用户来说，这也意味着 Claude 背后的基础模型能力已经远超当前公开版本——Mythos 的能力可能指向 Claude 下一代模型的方向。",
@@ -214,42 +303,6 @@
         "AI安全"
       ],
       "batch_time": "2026-04-08T09:00:00+08:00"
-    },
-    {
-      "title": "英国积极拉拢 Anthropic：借五角大楼争端吸引 AI 巨头扩展英国布局",
-      "summary": "据 Reuters 报道，英国正在积极拉拢 Anthropic 扩大在英国的存在。此前美国政府将 Anthropic 列入国家安全供应链风险名单，原因是 Anthropic 拒绝允许军方将 Claude 用于自主武器和大规模监控。英国试图借此机会吸引 Anthropic 加大在英国的投资和团队建设，提供更友好的监管环境和政府合作机会。",
-      "detail_content": "【核心事件】据 Financial Times 报道（Reuters 转述），英国正在积极游说 Anthropic 扩大其英国业务。这一举措的直接背景是 Anthropic 与美国国防部之间的公开争端——Anthropic 因拒绝允许军方将 Claude AI 模型用于自主武器和大规模监控系统，被美国政府列入国家安全供应链风险名单。\n\n英国政府的招揽策略包括提供更友好的监管环境、政府合作机会以及人才引进便利。这延续了英国在 AI 领域「脱欧后寻找新定位」的战略——通过吸引 AI 公司来巩固其全球科技地位。\n\n【关键背景】Anthropic 此前已与澳大利亚政府签署 AI 安全合作 MOU，并在悉尼设立办公室。英国此次拉拢可以看作是对 Anthropic 全球扩张战略的又一次重要推动。五角大楼争端的本质是 AI 公司在商业利益与安全原则之间的选择——Anthropic 选择了后者。\n\n【影响与前瞻】如果 Anthropic 选择在英国加大投入，将给欧洲 AI 格局带来重大变化。这也可能促使其他 AI 公司重新评估其地缘政治策略。对用户而言，Claude 在欧洲的服务质量和合规性可能进一步提升。",
-      "source": "Reuters",
-      "source_type": "tavily",
-      "url": "https://www.reuters.com/world/uk/britain-woos-expansion-effort-by-anthropic-after-us-defence-clash-ft-says-2026-04-05/",
-      "timestamp": "2026-04-05T04:29:28Z",
-      "importance": 9,
-      "tags": [
-        "Anthropic",
-        "地缘政治",
-        "英国",
-        "五角大楼",
-        "AI安全"
-      ],
-      "batch_time": "2026-04-06T09:00:00+08:00"
-    },
-    {
-      "title": "Anthropic 发布 MCP Apps：让 AI 工具变成可交互的实时连接器",
-      "summary": "Anthropic 发布 MCP Apps，这是 MCP 协议的新扩展，让第三方工具（Google Drive、Web Search 等）在 Claude 对话中以交互式面板形式呈现，用户可以实时看到工具操作过程并协作。这意味着 MCP 服务器现在可以交付带丰富 UI 的交互式连接器，不仅限于 Claude，任何支持该标准的 AI 产品都能接入。",
-      "detail_content": "【核心事件】\nAnthropic 于 claude.com/blog 发布 MCP Apps 公告。MCP Apps 是对 Model Context Protocol (MCP) 的重大扩展：它允许 MCP 服务器向 AI 产品交付'交互式连接器'（interactive connectors），这些连接器在对话界面中显示为可操作的 UI 面板，用户可以实时查看和参与工具的运行过程。\n\n此前 MCP 工具的交互方式是'黑箱'式的——用户发送指令，工具在后台运行，返回结果。MCP Apps 改变了这一范式：工具状态、中间结果和操作界面现在在对话中实时可见。\n\n【关键细节】\n- 支持的工具有 Google Drive、Web Search 等 Claude 内置连接器\n- MCP Apps 是开放标准，不限于 Claude——任何支持该扩展的 AI 产品都可以使用\n- 这是 MCP 协议自发布以来最重要的功能升级\n\n【背景与上下文】\nMCP 是 Anthropic 主导推出的开放标准，让 AI 模型可以与外部工具和数据源交互。此前多家公司已接入 MCP（包括 Slack 刚发布的新版 AI 功能）。MCP Apps 将 MCP 从'API 调用'提升到'交互式应用'层面，是对 AI-agent 交互范式的一次升级。\n\nSlack 在同一天宣布了基于 Claude 的 30+ 项 AI 新功能，其中就利用了 MCP 连接能力，将 Slackbot 转变为'agentic operating system'。Anthropic 选择 Slack 作为 FedRAMP Moderate 认证的 AI 提供商，覆盖政府、医疗和金融行业。\n\n【影响与前瞻】\n对开发者而言，MCP Apps 开辟了新的 UI 范式——AI 对话中的嵌入式应用界面。对企业用户而言，这意味着使用 Claude 时可以更直观地管理和操作企业工具。对 MCP 生态而言，这是吸引更多平台采用 MCP 的重要一步。",
-      "source": "Anthropic Blog",
-      "source_type": "tavily",
-      "url": "https://website.claude.com/blog/interactive-tools-in-claude",
-      "timestamp": "2026-04-07T00:00:00Z",
-      "importance": 9,
-      "tags": [
-        "Anthropic",
-        "MCP",
-        "交互式连接器",
-        "工具生态",
-        "开放标准"
-      ],
-      "batch_time": "2026-04-07T09:00:00+08:00"
     },
     {
       "title": "Anthropic 官方博客：Claude Code Subagents 架构详解——何时该委托、并行、交叉审查",
@@ -322,60 +375,6 @@
       "batch_time": "2026-04-10T09:00:00+08:00"
     },
     {
-      "title": "Karpathy 提出「Idea File」概念：LLM Agent 时代分享想法比分享代码更有价值",
-      "summary": "Karpathy 此前关于「用 LLM 构建个人知识库」的推文引发病毒式传播（4.8万赞），他随后分享了改进版——「Idea File」概念。核心观点：在 LLM Agent 时代，分享具体的想法和设计思路比分享代码仓库更有价值，因为任何人都可以用 LLM 根据想法快速复现实现。他还特别称赞了 GitHub Gist 的社区评论质量远超 Twitter。",
-      "detail_content": "【核心事件】Karpathy 在 4 月 4 日发布了一条后续推文，分享了他的「Idea File」概念。背景是他此前关于「用 LLM 构建个人知识库」的推文获得了病毒式传播（4.8万赞，1400+引用），许多人要求他开源代码。\n\n他的回应出人意料：在这个时代，代码本身不再是最有价值的资产。LLM Agent 可以根据想法描述快速生成实现，因此分享想法（idea）比分享代码（code）更有效率。他将自己改进后的知识库方案整理为一个「想法文件」发布。\n\n【关键细节】在同一条推文串中，Karpathy 还对 GitHub Gist 的社区质量表达了惊喜——评论质量远高于 Twitter，更专业、更有建设性、更少 AI 味。他半开玩笑地建议 GitHub 考虑和 X 竞争。\n\n一个有趣的细节：Karpathy 提到他保持知识库极其简单的结构——只是嵌套的 .md 和 .png 文件目录，加上 AGENTS.md 维护 schema。\"LLMs get this very easily\"——不需要复杂的数据库或框架。\n\n【背景与意义】这延续了 Karpathy 的一系列深刻观察：从「LLM = CPU, Agent = OS kernel」到「个人知识库」再到现在的「Idea File」。他正在用实践推动一个核心论点：LLM 正在改变软件创造的经济学——代码的边际成本趋近于零，而想法的价值在上升。\n\n【影响】这个概念可能改变开源社区的知识分享方式。与其花时间维护代码仓库，不如把想法文档化让社区用 AI 各自实现。Farza 随后展示了「Farzapedia」——一个个人 Wikipedia 项目，被 Karpathy 点名为优秀范例。",
-      "source": "Twitter/X",
-      "source_type": "opentwitter",
-      "url": "https://x.com/karpathy/status/2040470801506541998",
-      "timestamp": "2026-04-04T16:45:23Z",
-      "importance": 8,
-      "tags": [
-        "Karpathy",
-        "LLM",
-        "开源",
-        "知识管理",
-        "Idea File"
-      ],
-      "batch_time": "2026-04-06T09:00:00+08:00"
-    },
-    {
-      "title": "Bloomberg 独家：OpenAI、Anthropic、Google 联合打击中国竞争对手的模型蒸馏",
-      "summary": "据 Bloomberg 报道，OpenAI、Anthropic PBC 和 Google 通过 Frontier Model Forum 开始共享信息，检测和打击中国竞争对手对前沿 AI 模型的'对抗性蒸馏'行为。这些行为违反了三家公司的使用条款，实质上是利用美国前沿模型的输出来训练竞争模型。",
-      "detail_content": "【核心事件】\nBloomberg 于 4 月 6 日独家报道：OpenAI、Anthropic 和 Alphabet（Google）这三家 AI 竞争对手开始合作，共同打击中国 AI 公司对美国前沿模型的'蒸馏'行为。三家通过 Frontier Model Forum（2023 年与 Microsoft 共同创立的行业非营利组织）共享信息，检测违反服务条款的对抗性蒸馏尝试。\n\n【关键细节】\n- 所谓'对抗性蒸馏'指：系统性查询前沿 AI 模型，收集高质量输出，然后用这些输出来训练竞争模型\n- 这违反了 OpenAI、Anthropic 和 Google 的使用条款，但技术上难以完全阻止\n- 三家公司此前各自独立应对，现在通过 Frontier Model Forum 建立信息共享机制\n\n【背景与上下文】\n此前 Anthropic 曾公开披露中国国家赞助黑客使用其 AI 技术试图渗透约 30 家公司和政府机构。同日 NYT 报道 AI 正在从根本上改变网络安全格局。模型蒸馏是 AI 竞争中的新型'知识产权'争议。\n\n【影响与前瞻】\n三巨头联合是罕见的——这些公司在模型性能、人才和客户上激烈竞争，但在保护模型输出方面有共同利益。如果合作模式有效，可能成为 AI 行业'竞合'的新范式。",
-      "source": "Bloomberg",
-      "source_type": "tavily",
-      "url": "https://www.bloomberg.com/news/articles/2026-04-06/openai-anthropic-google-unite-to-combat-model-copying-in-china",
-      "timestamp": "2026-04-06T21:08:00Z",
-      "importance": 8,
-      "tags": [
-        "模型蒸馏",
-        "安全",
-        "三巨头",
-        "中美竞争",
-        "Frontier Model Forum"
-      ],
-      "batch_time": "2026-04-07T09:00:00+08:00"
-    },
-    {
-      "title": "Claude Web Search 引入动态过滤：搜索时自动写代码筛选结果",
-      "summary": "Anthropic 发布 Claude Web Search 动态过滤功能：Sonnet 4.6 和 Opus 4.6 在执行网页搜索时，会自动编写并执行代码来后处理搜索结果，在结果进入上下文窗口之前进行过滤。这提升了搜索准确性和 token 效率。功能默认开启，无需额外配置。",
-      "detail_content": "【核心事件】\nAnthropic 在 claude.com/blog 发布了 Web Search 动态过滤（Dynamic Filtering）功能。当 Claude 使用 web search 或 web fetch 工具搜索信息时，模型现在会自动编写并执行代码，对搜索结果进行后处理和过滤，再将有用的结果送入上下文窗口。\n\n【关键细节】\n- 仅支持 Sonnet 4.6 和 Opus 4.6\n- 动态过滤在 API 使用时默认开启\n- 官方评测显示：在复杂的网页搜索任务上，开启动态过滤后准确性和 token 效率均有显著提升\n- 该功能与代码执行、记忆、程序化工具调用、工具搜索等能力一同在 Claude Platform 上可用\n\n【背景与上下文】\n这是 Anthropic 持续提升 Claude '工具使用'能力的一部分。此前 Claude 在长链搜索任务中常面临上下文窗口被大量无关信息填满的问题，动态过滤从架构层面解决了这一痛点。\n\n这也反映了行业趋势：AI 模型越来越善于'自我优化'——用代码辅助自己的推理和决策过程，而非单纯依赖更大的上下文窗口。\n\n【影响与前瞻】\n对 API 开发者而言，动态过滤意味着在复杂搜索场景下可以节省大量 token 成本，同时获得更精准的结果。对 Claude Code 用户而言，这意味着 Claude 在执行需要搜索的任务时会更加高效和准确。",
-      "source": "Anthropic Blog",
-      "source_type": "tavily",
-      "url": "https://claude.com/blog/improved-web-search-with-dynamic-filtering",
-      "timestamp": "2026-04-07T00:00:00Z",
-      "importance": 8,
-      "tags": [
-        "Anthropic",
-        "Web Search",
-        "动态过滤",
-        "Sonnet 4.6",
-        "Opus 4.6"
-      ],
-      "batch_time": "2026-04-07T09:00:00+08:00"
-    },
-    {
       "title": "OpenAI CFO 透露 IPO 将为零售投资者预留份额，企业收入占比已达 40%",
       "summary": "OpenAI CFO Sarah Friar 在 CNBC 采访中确认 IPO 将为零售投资者预留份额。CRO Denise Dresser 透露企业收入已占公司总收入 40%，预计年底将追平消费者收入。Friar 未透露 IPO 时间表，但表示对于 8520 亿美元估值的公司来说是「好习惯」。",
       "detail_content": "【核心事件】\nOpenAI CFO Sarah Friar 在 HumanX 大会上接受 CNBC 采访时确认，公司 IPO 时将「for sure」为零售投资者预留份额。CRO Denise Dresser（前 Slack CEO）透露企业业务（包括 ChatGPT Enterprise 和 API）已占公司总收入 40%，预计 2026 年底将追平消费者收入。\n\n【关键细节】\nFriar 拒绝透露具体 IPO 时间表，但表示对于一家估值 8520 亿美元的公司来说，公开上市是「good hygiene」（好习惯）。这暗示 IPO 准备工作已在进行中。\n\nDresser 表示企业业务增速显著，OpenAI 正在加速从消费者公司向企业服务公司转型。Codex 的 pay-as-you-go 定价模式和 ChatGPT Business 的扩展都是这一战略的体现。\n\n【背景与上下文】\nOpenAI 最近完成 1220 亿美元融资，估值达 8520 亿美元，月收入 20 亿美元。Codex 周活跃用户 200 万。公司同时宣布 Child Safety Blueprint 和 Safety Fellowship，在推进商业化的同时加强安全治理。\n\n【影响与前瞻】\n零售投资者份额预留意味着 OpenAI IPO 将是科技史上最受关注的上市之一。企业收入占比快速上升验证了 AI to B 市场的爆发。对 Anthropic 和 Google 而言，OpenAI 的 IPO 将进一步加剧人才和客户的争夺战。",
@@ -409,75 +408,6 @@
         "信任框架"
       ],
       "batch_time": "2026-04-10T09:00:00+08:00"
-    },
-    {
-      "title": "Claude Code 团队暗示新功能即将发布，Boris Cherny 多处回复「Coming today」",
-      "summary": "Claude Code 核心开发者 Boris Cherny 在 4 月 3-4 日密集回复用户反馈，多次提到正在修复和即将发布新功能。「Coming today」「Working on fixing this」「fixed! try again now」等措辞暗示有更新即将到来。Thariq 也在回复中透露 Claude Code 使用特殊分类器处理权限判断，暗示底层架构设计。",
-      "detail_content": "【核心事件】4 月 3-4 日，Claude Code 核心开发者 Boris Cherny 在 Twitter 上密集回复用户反馈。多条回复暗示正在准备新功能发布：\n\n- 回复用户抱怨配额/限额问题时：「Working on fixing this, will feel better tomorrow. We're going to send out emails also so people don't miss it」\n- 回复另一个用户时：「Coming today」\n- 修复了一个 bug 后直接回复：「fixed! try again now」\n- 谈到 Agent SDK 时：「No changes to Agent SDK at this time, working on improving clarity more」\n\nThariq（Claude Code 产品负责人）也在回复中透露了一些方向性信息，例如提到 Claude Code 使用的是「special classifier」而非 subagent 来处理权限判断，暗示底层架构设计。\n\n【背景】这延续了 3 月底 Boris 的 15 条隐藏功能大合集推文串，其中已经透露了 /batch（并行大规模代码迁移）、git worktree 深度集成、session fork 等功能。他还提到 Anthropic Labs 小团队（几个人）一手打造了 MCP、Skills、Claude Desktop 和 Claude Code。\n\n关于代码泄露事件，Boris 在 4 月 1 日回应称「Full trust. In this case the problem wasn't the person, it was infra that was error prone. Anyone could have made this same mistake by accident」——确认问题出在基础设施而非个人失误。\n\n【影响与前瞻】Claude Code 的迭代速度依然很快，每周都有实质改进。用户可以期待更清晰的配额显示、更稳定的体验和可能的新功能发布。",
-      "source": "Twitter/X",
-      "source_type": "opentwitter",
-      "url": "https://x.com/bcherny/status/2040527145064386846",
-      "timestamp": "2026-04-04T20:29:17Z",
-      "importance": 7,
-      "tags": [
-        "Claude Code",
-        "Anthropic",
-        "产品更新",
-        "Boris Cherny"
-      ],
-      "batch_time": "2026-04-06T09:00:00+08:00"
-    },
-    {
-      "title": "Slack 联手 Anthropic 发布 30+ AI 功能：Slackbot 变身桌面 Agent 操作系统",
-      "summary": "Salesforce 发布 Slack 有史以来最大的 AI 更新：30 多项新 AI 功能，将 Slackbot 从消息助手升级为'agentic operating system'。Slack 选择 Claude 因为 Anthropic 是唯一满足 FedRAMP Moderate 认证的 AI 供应商。通过 MCP 连接跨企业应用自主执行任务。",
-      "detail_content": "【核心事件】\nSalesforce CEO Marc Benioff 于 3 月 31 日在旧金山发布 Slack 30+ 项 AI 新功能。核心变化是将 Slackbot 从消息工具转变为'agentic operating system'。\n\n【关键细节】\n- 选择 Claude 部分因为 Anthropic 是唯一满足 FedRAMP Moderate 认证的 AI 供应商\n- 通过 MCP 连接，Slackbot 可连接多种企业工具，无需对单一平台 all-in\n- Salesforce 核心论点：以沟通为中心的界面比以文档为中心的界面更适合承载 AI agent\n\n【背景与上下文】\nSlack 选择 Claude 而非 OpenAI 或 Google，认证合规性是关键因素。Anthropic 在企业级合规方面的投入正在产生商业回报。Slack 的升级恰好展示了 MCP 在企业场景的实际应用。\n\n【影响与前瞻】\n对 Anthropic 而言，Slack 是一个重要的企业分发渠道。对 Microsoft Teams 而言，这是一个有力的竞争信号。",
-      "source": "The Next Web",
-      "source_type": "tavily",
-      "url": "https://thenextweb.com/news/slack-slackbot-30-ai-features-agentic",
-      "timestamp": "2026-04-06T08:13:00Z",
-      "importance": 7,
-      "tags": [
-        "Slack",
-        "Anthropic",
-        "MCP",
-        "企业AI",
-        "FedRAMP"
-      ],
-      "batch_time": "2026-04-07T09:00:00+08:00"
-    },
-    {
-      "title": "Anthropic $400M 收购 Coefficient Bio，All-in 生命科学赛道",
-      "summary": "Anthropic 以约 $4 亿（股票交易）收购纽约生物 AI 初创公司 Coefficient Bio。该公司此前处于隐身模式，利用 AI 提升药物发现和生物研究效率。Anthropic 去年 10 月推出 Claude Life Sciences，今年 1 月推出 Claude for Healthcare，生命科学已成为其最大战略赌注之一。",
-      "detail_content": "【核心事件】\n据 The Information 和 Eric Newcomer 报道，Anthropic 以约 $4 亿的股票交易收购了此前隐身运营的 AI 生物技术初创公司 Coefficient Bio。\n\n【关键细节】\n- 收购方式为纯股票交易\n- Coefficient Bio 联合创始人 Joyce Hong 此前在 Roivant Sciences 担任 Principal 近 5 年\n- Anthropic 生命科学负责人 Eric Kauderer-Abrams 表示：医疗和生命科学是 Anthropic 最大的战略赌注之一\n\n【背景与上下文】\nAnthropic 在生命科学领域的布局始于 2025 年 10 月推出 Claude Life Sciences，2026 年 1 月进一步推出 Claude for Healthcare。但 HHS 已禁止 Claude AI 工具在政府部门使用。\n\n【影响与前瞻】\n这是继 TBPN 收购后 Anthropic 在非核心 AI 领域的又一战略布局，进一步验证了 LLM 在生命科学中的商业化路径。",
-      "source": "BioSpace / Fierce Biotech",
-      "source_type": "tavily",
-      "url": "https://www.biospace.com/business/ai-giant-anthropic-leans-into-life-sciences-with-400m-coefficient-bio-catch",
-      "timestamp": "2026-04-06T12:13:00Z",
-      "importance": 7,
-      "tags": [
-        "Anthropic",
-        "收购",
-        "生命科学",
-        "药物发现"
-      ],
-      "batch_time": "2026-04-07T09:00:00+08:00"
-    },
-    {
-      "title": "OpenAI 发布'社会安全网'政策建议：提议公共财富基金和四天工作制",
-      "summary": "OpenAI 发布政策文件，建议为 AI 时代建立公共财富基金和社会安全网项目。提议包括激励雇主试行四天工作制、让公众分享 AI 效率红利等。标志着 OpenAI 开始正式介入 AI 经济影响的公共政策讨论。",
-      "detail_content": "【核心事件】\nOpenAI 于 4 月 6 日发布政策建议文件，正式提出应对 AI 经济冲击的'社会安全网'方案。文件建议建立公共财富基金和快速响应的社会安全网项目。\n\n【关键细节】\n- 提议激励雇主试行四天工作制\n- 建立机制让公众分享 AI 驱动的效率提升收益\n- 文件涉及'超级智能'场景下的政策框架\n- OpenAI 承诺监测包括 AI 逃脱人类控制等极端风险\n\n【背景与上下文】\n同一天 The New Yorker 发表了对 Sam Altman 的深度调查，质疑他是否值得信任。一家估值 $852B 的私营公司直接提出公共政策和财富分配建议，这在科技行业前所未有。\n\n【影响与前瞻】\nAI 公司不再只是技术供应商，开始扮演政策倡导者角色。四天工作制等提议如果被采纳，可能成为 AI 时代工作方式变革的起点。",
-      "source": "MediaPost",
-      "source_type": "tavily",
-      "url": "https://www.mediapost.com/publications/article/414104/openai-proposes-social-safety-net-policies.html?edition=142153",
-      "timestamp": "2026-04-06T14:38:00Z",
-      "importance": 7,
-      "tags": [
-        "OpenAI",
-        "政策",
-        "社会安全网",
-        "超级智能"
-      ],
-      "batch_time": "2026-04-07T09:00:00+08:00"
     },
     {
       "title": "Boris Cherny 透露 Claude Code 内部数据：工程速度提升数百%，且增速本身还在加速",
@@ -600,24 +530,6 @@
       "batch_time": "2026-04-10T09:00:00+08:00"
     },
     {
-      "title": "Austin Lau 展示用 Claude Cowork 自动化 Google Ads 营销工作流",
-      "summary": "Anthropic 增长营销负责人 Austin Lau 分享了如何将 90% 的增长营销工作从 Chat 模式迁移到 Cowork。他构建了 Google Ads 自动化工作流——让 Claude 通过 GAQL 查询搜索词报告，自动识别需要添加否定关键词的条目并执行操作。这是非程序员用 AI Agent 自动化真实业务流程的优秀范例。",
-      "detail_content": "【核心事件】Austin Lau（Anthropic 增长营销一人团队）在 Twitter 上分享了如何用 Claude Cowork 自动化 Google Ads 营销工作流。他透露已经将约 90% 的增长营销工作从传统的 Chat 模式迁移到 Cowork。\n\n工作流核心：Claude 通过 GAQL（Google Ads Query Language，类似 SQL 的查询语言）直接查询 Google Ads 后台数据，获取搜索词报告，自动识别需要处理的条目（如添加否定关键词），然后通过 Google Ads MCP 执行操作。\n\n【关键细节】Austin 提到几个重要信息：\n- 他之前在 Claude Code 里实现过同样的工作流，但 Cowork 对非技术用户更友好\n- 对于 Meta Ads，他表示需要更谨慎，因为有报告称使用 MCP 自动化管理账号可能导致封号\n- 他还维护一个独立的 Google Ads Agent（Slack App 版本），具备持久记忆能力\n\n【背景】Austin 是 Anthropic 的增长营销单人团队，近 10 个月独自负责付费搜索、社交、ASO、邮件营销和 SEO。他的实践展示了 AI Agent 在真实业务场景中的成熟应用——不是 demo，而是日常工作的核心工具。\n\n【影响】这个案例对营销从业者非常有参考价值。Google 已经开源了 google-ads-mcp，结合 Claude Cowork，非程序员也能构建自动化营销流水线。",
-      "source": "Twitter/X",
-      "source_type": "opentwitter",
-      "url": "https://x.com/helloitsaustin/status/2038727548180594803",
-      "timestamp": "2026-03-30T21:18:19Z",
-      "importance": 6,
-      "tags": [
-        "Anthropic",
-        "Claude Cowork",
-        "营销自动化",
-        "MCP",
-        "Google Ads"
-      ],
-      "batch_time": "2026-04-06T09:00:00+08:00"
-    },
-    {
       "title": "Karpathy 提出 LLM = CPU / Agent = OS kernel 的类比框架",
       "summary": "Andrej Karpathy 在回复 Python 之父 Guido van Rossum 时提出经典类比：LLM 是 CPU（数据是 token 不是 byte，运算是统计模糊的不是确定精确的），Agent 是操作系统内核。这个类比获得 4834 个点赞，成为讨论 Agent 架构的热门参考框架。",
       "detail_content": "【核心事件】\n3 月 31 日，Karpathy 在回复 Guido van Rossum 的讨论中提出了一个被广泛引用的类比框架：\n- LLM = CPU（数据：tokens not bytes，动态：statistical and vague not deterministic and precise）\n- Agent = operating system kernel\n\n【关键细节与引用】\n原文：\"LLM = CPU (data: tokens not bytes, dynamics: statistical and vague not deterministic and precise). Agent = operating system kernel.\"\n\n这条推文获得 4834 个点赞和 328 个转发，成为近期讨论 Agent 架构最热门的推文之一。\n\n这个类比的精妙之处在于：\n- Token vs Byte 说明了 LLM 处理信息的本质差异——不是精确的字节操作，而是统计性的 token 序列\n- Statistical vs Deterministic 说明了推理的模糊性——同样的输入可能产生不同的输出\n- Agent = OS Kernel 暗示 Agent 负责资源管理（上下文窗口）、任务调度（工具调用）、中断处理（人类干预）等内核级功能\n\n【背景与上下文】\n这个类比出现在 Anthropic 发布 Subagents 架构、OpenAI 推进 Codex Agent、Google 开源 Gemma 4（带 agentic skills）的时间段。行业正在从「谁的模型参数更大」转向「谁的 Agent 架构更优雅」，Karpathy 的这个类比为理解和讨论 Agent 系统提供了一个简洁的心智模型。\n\n【影响与前瞻】\n这个框架正在被工程师们广泛引用来解释 Agent 系统的设计。如果 LLM 是 CPU，那么上下文窗口就是内存，工具调用就是 I/O，System Prompt 就是 BIOS。这种类比有助于将传统的操作系统设计智慧迁移到 Agent 架构设计中。",
@@ -634,23 +546,6 @@
         "类比框架"
       ],
       "batch_time": "2026-04-10T09:00:00+08:00"
-    },
-    {
-      "title": "NYT 深度：AI 正在彻底颠覆网络安全——攻防双方加速军备竞赛",
-      "summary": "New York Times 报道 AI 正在从根本上改变网络安全格局。Anthropic 和 OpenAI 的新系统让黑客能更快发现安全漏洞。Anthropic 此前披露中国国家赞助黑客利用其 AI 试图渗透约 30 家公司和政府机构。安全专家也开始用 AI 发现此前数十年未被发现的安全缺陷。",
-      "detail_content": "【核心事件】\nNew York Times 于 4 月 6 日发表深度报道，分析 AI 对网络安全格局的根本性影响。\n\n【关键细节】\n- Anthropic 去年末披露：国家赞助的中国黑客利用其 AI 技术试图渗透约 30 家机构\n- AI 让黑客能比过去更快发现安全漏洞，也将赌注提升到数十年来最高水平\n- 安全专家也在利用 AI 发现此前数十年未被注意的缺陷\n\n【背景与上下文】\n同日 Bloomberg 报道三巨头联合打击模型蒸馏，NYT 报道从另一角度展示 AI 安全复杂性。模型蒸馏是知识产权层面的挑战，AI 辅助黑客是基础设施层面的挑战。\n\n【影响与前瞻】\nAI 驱动的安全审计和渗透测试将很快成为标准做法。对 AI 公司而言，进一步强化了'负责任发布'的必要性。",
-      "source": "New York Times",
-      "source_type": "tavily",
-      "url": "https://www.nytimes.com/2026/04/06/technology/ai-cybersecurity-hackers.html",
-      "timestamp": "2026-04-06T15:29:00Z",
-      "importance": 6,
-      "tags": [
-        "安全",
-        "网络安全",
-        "黑客",
-        "AI军备竞赛"
-      ],
-      "batch_time": "2026-04-07T09:00:00+08:00"
     },
     {
       "title": "Claude 遭遇大面积宕机：网站和 Claude Code 中断约 90 分钟",
