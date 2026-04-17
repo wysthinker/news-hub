@@ -1,9 +1,99 @@
 {
   "channel_id": "ai-frontier",
   "channel_name": "AI 前沿",
-  "generated_at": "2026-04-16T09:10:25.673009+08:00",
-  "digest": "Anthropic 估值狂飙至 $800B 投资意向，收入增速史无前例，但 Enterprise 端悄然调整定价模式引发争议。Google 一天内连放大招：Gemini 3.1 Flash TTS、Agent Mode、原生 Mac App 三连发，在多模态和 Agent 赛道全面提速。三巨头竞争进入新阶段——不再只是模型参数之争，而是 Agent 生态、企业定价策略和资本角力的综合博弈。",
+  "generated_at": "2026-04-17T09:06:59.114927+08:00",
+  "digest": "本周 AI 三巨头同时发力。Anthropic 发布 Claude Opus 4.7，在 SWE-bench Pro 上以 64.3% 大幅领先 GPT-5.4 的 57.7%，但同时罕见地公开承认「不如未发布的 Mythos」——用新模型为 Mythos 的安全叙事背书。OpenAI 同一天双发：GPT-Rosalind 瞄准生命科学垂直市场，Codex 大更新加入 computer use 和 111 个插件，直指 Claude Code。Google DeepMind 相对安静，继续 Gemma 4 开源路线。值得关注的是 ECB（欧洲央行）已就 Mythos 网络安全风险开始质询银行，监管层面对 AI 安全的关注正在升级。",
   "items": [
+    {
+      "title": "Anthropic 发布 Claude Opus 4.7：SWE-bench Pro 刷新纪录，但「不如 Mythos」",
+      "summary": "Anthropic 发布最新旗舰模型 Claude Opus 4.7，在 SWE-bench Pro 上取得 64.3%（vs GPT-5.4 的 57.7%），多步 agentic reasoning 提升 14%，工具错误减少 2/3。新增 xhigh effort level，图像分辨率提升 3 倍。但 Anthropic 在 system card 中明确写道 Opus 4.7 不如未发布的 Mythos Preview，并将用此模型测试 Mythos 级别的网络安全护栏。定价不变：$5/$25 per million tokens。",
+      "detail_content": "【核心事件】\n4月16日，Anthropic 发布 Claude Opus 4.7，这是其最强公开发布模型。SWE-bench Pro 得分 64.3%，显著领先 GPT-5.4（57.7%）和 Gemini 3.1 Pro。多步 agentic reasoning 提升 14%，工具调用错误减少约 2/3，图像分辨率提升 3 倍。\n\nAnthropic 引入新的 effort level 体系：在 high 和 max 之间新增 xhigh（extra high），让用户更精细地控制推理深度和延迟的平衡。推荐编码和 agentic 场景从 high 或 xhigh 起步。\n\n定价与 Opus 4.6 完全一致：输入 $5/百万 tokens，输出 $25/百万 tokens。已在 Claude 全产品线、API、Amazon Bedrock、Google Vertex AI、Microsoft Foundry 上线。\n\n【关键细节】\nAnthropic 在 system card 中明确表示 Opus 4.7「没有推进公司的能力前沿」，因为 Mythos Preview 在所有评估中都获得了更高分。Gizmodo 分析认为这次发布本质上也是为 Mythos 做宣传——通过展示「公开发布的最强模型仍然不如受限模型」来强调 Mythos 的安全必要性。\n\nHex、CodeRabbit、Quantium、Bolt 等企业用户反馈积极。Bolt 报告长任务性能提升最高 10%，CodeRabbit 称其为代码审查工作中最敏锐的模型。\n\nAnthropic 将用 Opus 4.7 部署测试为 Mythos 设计的网络安全护栏，通过 Cyber Verification Program 允许安全专业人员在受控环境下使用更少限制的版本进行漏洞研究。\n\n【背景与上下文】\nOpus 4.7 发布恰逢 Project Glasswing（4月7日启动）持续发酵——Mythos Preview 已在 40 多家合作组织中发现了大量零日漏洞，包括一个 27 年未被发现的 OpenBSD 漏洞。Anthropic 选择用 Opus 4.7 作为 Mythos 护栏的测试平台，是在「公开发布」和「安全可控」之间找平衡。\n\n【影响与前瞻】\n对开发者而言，Opus 4.7 是当前编码和 agentic 任务的最优选择，xhigh effort level 填补了 high 和 max 之间的空白。对企业而言，定价不变 + 性能提升 + 多平台可用降低了迁移门槛。但更深层的信号是：Anthropic 正在建立「模型层级叙事」——公开发布的最强模型永远不如受限模型，这既是安全声明，也是商业策略。",
+      "source": "Anthropic",
+      "source_type": "tavily",
+      "url": "https://www.anthropic.com/news/claude-opus-4-7",
+      "timestamp": "2026-04-16T14:26:32Z",
+      "importance": 10,
+      "tags": [
+        "Anthropic",
+        "Claude Opus 4.7",
+        "SWE-bench",
+        "编码模型",
+        "Mythos"
+      ],
+      "batch_time": "2026-04-17T09:00:00+08:00"
+    },
+    {
+      "title": "OpenAI 发布 GPT-Rosalind：专为生命科学设计的前沿推理模型",
+      "summary": "OpenAI 推出 GPT-Rosalind，一款针对药物发现、基因组分析、蛋白质推理和转化医学优化的前沿推理模型。由生命科学研究负责人 Joy Jiao 主导，模型在生物化学和基因组学基础推理上有显著提升。但研究人员警告，基于生物数据训练的模型可能被滥用于设计危险病原体。",
+      "detail_content": "【核心事件】\n4月16日，OpenAI 发布 GPT-Rosalind，这是公司首个专门面向生命科学研究的 AI 模型。该模型被设计为在生物化学、基因组学等基础推理领域表现更优，旨在加速药物发现、基因组分析、蛋白质推理和转化医学工作流。\n\n【关键细节】\nOpenAI 生命科学研究负责人 Joy Jiao 向媒体介绍，GPT-Rosalind 不是替代专家判断，而是帮助研究人员更快地综合证据、生成假说和辅助分析。OpenAI 强调模型设计用于综合证据、生成假说和辅助分析而非取代实验验证。\n\n【背景与上下文】\n这是 OpenAI 从通用模型向垂直领域扩展的重要一步。生命科学是 AI 落地的高价值场景——蛋白质结构预测（AlphaFold）、药物分子设计等已有成功先例。但这一领域也面临独特的安全风险：研究人员警告基于生物数据训练的模型可能被滥用于设计危险病原体。Endpoints News 指出 OpenAI 正在进入一个已有 Google、Microsoft 等巨头的拥挤市场。\n\n【影响与前瞻】\nGPT-Rosalind 标志着 OpenAI 开始认真布局垂直领域专用模型。如果成功，可能在药物研发领域形成 Anthropic（安全/编码）vs OpenAI（生命科学/企业）的差异化竞争格局。但对制药行业来说，多一个竞争者意味着更多选择，也可能加速 AI 在新药研发中的实际落地。",
+      "source": "Axios",
+      "source_type": "tavily",
+      "url": "https://www.axios.com/2026/04/16/openai-models-life-sciences-drugs",
+      "timestamp": "2026-04-16T19:00:04Z",
+      "importance": 8,
+      "tags": [
+        "OpenAI",
+        "GPT-Rosalind",
+        "生命科学",
+        "药物发现",
+        "垂直模型"
+      ],
+      "batch_time": "2026-04-17T09:00:00+08:00"
+    },
+    {
+      "title": "OpenAI Codex 大更新：Computer Use + 111 插件 + 自动调度，全面对标 Claude Code",
+      "summary": "OpenAI 对 Codex 进行重大更新：新增 computer use 能力（可在后台操作桌面应用不占用系统资源）、111 个新插件（含 GitLab、Atlassian、Microsoft Suite）、原生浏览器集成、gpt-image-1.5 图片生成，以及任务自动调度功能。周活用户已达 300 万+，API 处理量超过 150 亿 tokens/分钟。被外界视为 OpenAI「超级应用」的前身。",
+      "detail_content": "【核心事件】\n4月16日，OpenAI 发布 Codex 桌面应用重大更新，加入 computer use（计算机操作）、应用内浏览器、图片生成、记忆功能和 111 个新插件。这是 Codex 自推出以来最大规模的功能扩展。\n\n【关键细节】\nComputer Use 是最大亮点：Codex 可以在后台操作桌面应用，而且 OpenAI 声称其「secret sauce」技术可以让 agent 运行应用时不拖慢整个系统，用户和 agent 可以并行工作。这与 Claude Cowork 的 computer use 形成直接竞争。\n\n111 个新插件覆盖 GitLab、Atlassian Rovo、Microsoft Suite 等开发工具链，以及 MCP server 连接。Codex 还获得了 gpt-image-1.5 图片生成能力和原生浏览器（可在页面上直接标注指令）。\n\n任务自动调度功能允许 Codex 安排未来的工作并自动唤醒执行，复用已有对话线程。Engadget 和 Ars Technica 均认为这些功能是为 OpenAI 计划中的「超级应用」（整合 ChatGPT + Codex + Atlas 浏览器）铺路。\n\nCodex 周活跃用户超 300 万，API 处理量超过 150 亿 tokens/分钟，企业营收占比超 40%。\n\n【背景与上下文】\nThe Verge 标题直呼 Codex 更新是「direct shot at Anthropic's Claude Code」。Codex 和 Claude Code 的竞争已从编码扩展到全栈开发助手——computer use、插件生态、自动调度，每个维度都在正面交锋。\n\n【影响与前瞻】\nCodex 的 111 插件 + MCP 连接策略值得关注——这是通过生态锁定开发者的经典打法。对企业用户而言，Codex 和 Claude Code 的功能差距正在缩小，选择将更多取决于定价、集成度和团队习惯。超级应用如果成真，将改变 AI 助手的入口格局。",
+      "source": "The Verge",
+      "source_type": "tavily",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/913034/openai-codex-updates-use-macos",
+      "timestamp": "2026-04-16T17:00:00Z",
+      "importance": 8,
+      "tags": [
+        "OpenAI",
+        "Codex",
+        "computer use",
+        "插件生态",
+        "Claude Code竞争"
+      ],
+      "batch_time": "2026-04-17T09:00:00+08:00"
+    },
+    {
+      "title": "ECB 就 Mythos 网络安全风险质询银行，监管层面对 AI 安全关注升级",
+      "summary": "欧洲央行（ECB）正在向银行收集关于 Anthropic Mythos 模型网络安全风险的信息。此前 Mythos 已展示出发现 27 年未被发现的 OpenBSD 零日漏洞的能力。美国财政部和美联储也已召集银行高管讨论 AI 相关网络风险。Anthropic 通过 Project Glasswing 邀请制测试的方式试图平衡安全与创新。",
+      "detail_content": "【核心事件】\n欧洲央行（ECB）正在主动向银行机构收集关于 Anthropic Claude Mythos Preview 模型所带来网络安全风险的信息，并将对银行进行质询。这是全球主要央行首次针对单一 AI 模型发起系统性风险评估。\n\n【关键细节】\nMythos Preview 在测试中展示了强大的漏洞发现能力，包括发现了一个在 OpenBSD（公认最安全的操作系统之一）中存在 27 年的零日漏洞。这种能力如果落入攻击者手中，将严重威胁金融机构的网络安全。\n\nAnthropic 的应对方案是 Project Glasswing——仅邀请 12 家核心合作伙伴（包括 Microsoft、Apple、Google、Cisco、JPMorgan Chase 等）在受控环境中使用 Mythos 进行防御性安全工作。\n\n【背景与上下文】\nECB 的行动并非孤例。美国财政部和美联储最近也召集了银行高管讨论 AI 相关网络风险，英国国家科技部门也发布了警告。AISLE（AI 网络安全创业公司）的研究人员已证明，甚至小型廉价模型也能复现 Mythos 展示的部分漏洞发现——这意味着 Mythos 展示的能力可能并非不可复制，安全隐患比想象中更紧迫。\n\nFortune 报道指出，业界真正的挑战不是发现漏洞，而是修复漏洞——企业补丁部署周期通常需要数周到数月。\n\n【影响与前瞻】\nECB 的质询标志着 AI 安全从「公司自律」进入「监管干预」阶段。对 Anthropic 而言，Glasswing 的邀请制模式正在受到监管审视——「自我监管」是否能满足金融监管机构的标准？对银行业而言，这预示着未来 AI 模型的部署可能需要额外的合规审查。对 AI 行业整体而言，Mythos 事件可能催生新的 AI 安全监管框架。",
+      "source": "Let's Data Science",
+      "source_type": "tavily",
+      "url": "https://letsdatascience.com/news/ecb-questions-banks-on-risks-from-anthropics-mythos-78bf80c1",
+      "timestamp": "2026-04-16T07:28:33Z",
+      "importance": 7,
+      "tags": [
+        "Anthropic",
+        "Mythos",
+        "ECB",
+        "网络安全",
+        "监管"
+      ],
+      "batch_time": "2026-04-17T09:00:00+08:00"
+    },
+    {
+      "title": "Mythos 引发的网络安全恐慌：IBM 称「规则已被改写」",
+      "summary": "Mythos Preview 发布后，IBM 安全部门副总裁 Dave McGinnis 表示「Claude Mythos 的网络安全影响与此前所有 AI 进步都不同」。Mythos 发现的 OpenBSD 27 年零日漏洞震惊业界。Fortune 报道认为真正的问题不是发现漏洞而是修复漏洞，而 AISLE 研究人员已证明小型模型也能复现部分发现。WIRED 分析认为 Mythos 将迫使整个软件行业重新思考开发、更新和补丁采用流程。",
+      "detail_content": "【核心事件】\nMythos Preview 的发布在网络安全行业引发广泛讨论。IBM 全球托管安全服务副总裁 Dave McGinnis 公开表示，Claude Mythos 的网络安全影响代表了「与此前所有 AI 进步完全不同」的变革。他认为遗留系统、开源暴露和仅依赖人工的安全运营的算计已经「实质性且立即地」改变了。\n\n【关键细节与引用】\nCisco 总裁兼首席产品官 Jeetu Patel 在 HumanX AI 会议上称 Mythos Preview 是一件大事。最令人震惊的是 Mythos 发现了一个在 OpenBSD（公认最安全的操作系统之一）中存在 27 年的零日漏洞。\n\n但 AISLE（AI 网络安全创业公司）的研究人员随后证明，他们用 Mythos 公开展示的具体漏洞案例、隔离相关代码后，用小型廉价模型也能复现这些发现。这意味着 Mythos 展示的漏洞发现能力可能并非独一无二。\n\nFortune 报道引用行业资深人士指出，真正的问题不是发现漏洞，而是修复漏洞——企业的补丁部署周期通常需要数周到数月。\n\n【背景与上下文】\nMythos 的发布时机恰逢全球网络安全威胁升级。AI 辅助的 exploit chain（漏洞利用链）发现能力正在让攻击和防御的不对称性进一步扩大。Anthropic 选择邀请制发布 Glasswing，是在试图建立「负责任发布」的行业标准。\n\n【影响与前瞻】\nMythos 事件可能成为网络安全行业的分水岭——不是因为它发现了什么具体漏洞，而是因为它证明了 AI 在系统性漏洞发现上的能力已经达到了新的水平。整个软件行业可能需要重新思考开发流程、更新周期和补丁采用策略。对企业安全团队而言，这意味着安全评估的频率和深度都需要提升。",
+      "source": "WIRED",
+      "source_type": "tavily",
+      "url": "https://www.wired.com/story/anthropics-mythos-will-force-a-cybersecurity-reckoning-just-not-the-one-you-think/",
+      "timestamp": "2026-04-10T18:08:37Z",
+      "importance": 7,
+      "tags": [
+        "Anthropic",
+        "Mythos",
+        "网络安全",
+        "零日漏洞",
+        "IBM"
+      ],
+      "batch_time": "2026-04-17T09:00:00+08:00"
+    },
     {
       "title": "Anthropic 收到 $8000 亿估值投资意向，两个月估值翻倍",
       "summary": "Bloomberg 报道，多家 VC 向 Anthropic 提出以约 $8000 亿估值进行 preemptive 融资，比两个月前 $300 亿融资轮的 $3800 亿估值翻了一倍多。部分 OpenAI 投资者开始重新评估持仓——Anthropic 当前 $3800 亿估值相比之下显得「便宜」。Anthropic 暂未接受新一轮要约，但二级市场需求已近乎疯狂。收入从 2024 年底的 $10 亿飙升至 2026 年 3 月底的 $300 亿。",
@@ -537,115 +627,6 @@
         "品牌信任"
       ],
       "batch_time": "2026-04-11T09:00:00+08:00"
-    },
-    {
-      "title": "Anthropic 发布 Advisor Strategy：让 Sonnet 随时「求助」Opus，性能提升成本反降",
-      "summary": "Anthropic 官方博客发布 Advisor Strategy 模式：在 Agent 工作流中，让 Sonnet 作为执行者遇到困难时调用 Opus 作为顾问。实测显示这种方式在多项基准测试中性能接近纯 Opus，但总成本大幅降低。Alex Albert 发推证实，允许 Sonnet \"phone a friend\" 不但提升性能，还减少了在复杂任务上浪费的 token 数量。",
-      "detail_content": "【核心事件】\n4 月 9 日，Anthropic 在官方博客发布 The Advisor Strategy。这是一种新的 Agent 架构模式：在 Claude Agent 工作流中，以 Sonnet 作为主要执行模型处理大部分任务，当遇到复杂决策时自动调用 Opus 作为「顾问」提供高智力输入。\n\n实测数据显示，这种混合架构在编码、推理、多步任务等场景下性能接近纯 Opus 水平，但总 token 消耗和成本显著降低。原因在于：大部分简单任务由 Sonnet 高效完成，只有关键决策节点才触发 Opus 调用。\n\n【关键细节与引用】\nAlex Albert 在推特上总结：\"Allowing Sonnet to phone a friend (i.e. call Opus) increases performance while also reducing total cost since it reduces tokens spent trying to solve more complex tasks.\" 这条推文获得 1681 个点赞，显示出社区对成本优化方案的高度关注。\n\n核心架构思想：将「智能」和「执行」解耦——Opus 负责思考和决策，Sonnet 负责执行和迭代。这种模式特别适合需要长时间运行的 Agent 场景。\n\n【背景与上下文】\n这一策略是对之前 Subagents 架构的补充。之前 Anthropic 发布了 Subagents 模式（主 Agent 委托子 Agent），而 Advisor Strategy 更像是「按需升级」——不需要拆分任务，而是在执行过程中动态请求更高智能的支持。两者可以组合使用。\n\n【影响与前瞻】\n这对 Claude Code 用户和 API 开发者都有直接价值。在 Claude Code 中，这意味着日常编码用 Sonnet 速度更快，遇到架构决策或复杂 bug 时自动借助 Opus 的判断力。对 API 用户来说，这是控制成本同时不牺牲质量的实际方案。预计其他 AI 公司会跟进类似的「动态模型切换」策略。",
-      "source": "claude.com/blog",
-      "source_type": "tavily",
-      "url": "https://claude.com/blog/the-advisor-strategy",
-      "timestamp": "2026-04-09T18:01:53Z",
-      "importance": 9,
-      "tags": [
-        "Anthropic",
-        "Claude",
-        "Agent架构",
-        "成本优化",
-        "Opus",
-        "Sonnet"
-      ],
-      "batch_time": "2026-04-10T09:00:00+08:00"
-    },
-    {
-      "title": "Anthropic 研究报告：Trustworthy Agents in Practice — 如何让 AI Agent 值得信赖",
-      "summary": "Anthropic 发布研究论文 Trustworthy Agents in Practice，系统梳理了 Agent 系统的信任框架：从工具使用安全、权限控制、行为审计到失败模式分析。这是 Anthropic 在 Glasswing/Mythos 之后对 Agent 安全的又一深度思考。",
-      "detail_content": "【核心事件】\n4 月 9 日，Anthropic 在官方网站发布研究报告 Trustworthy Agents in Practice。论文指出，Agent 代表了 AI 使用方式的最新重大转变——从简单的问答对话走向自主规划、执行多步任务、使用外部工具的复杂工作流，但这种能力提升也带来了全新的信任和安全挑战。\n\n【关键细节与引用】\n报告从多个维度分析了 Agent 的可信度问题：\n- 工具使用的安全边界：Agent 在调用外部工具（API、文件系统、浏览器）时的权限控制和沙箱机制\n- 行为审计：如何追踪和回溯 Agent 的决策链条，确保其行为可解释\n- 失败模式：Agent 系统的典型失败场景，包括工具调用错误、目标漂移、过度自主\n- 人机协作：在哪些环节需要保留人类监督\n\n【背景与上下文】\n这份报告发布的时间节点很有意义——就在 Project Glasswing 和 Mythos Preview 发布两天后。Mythos 在网络安全领域的超强能力让「如何让 Agent 可信赖」变得更加紧迫。Anthropic 正在同时推进能力边界和安全边界，这是其 RSP（负责任扩展政策）3.1 的具体落地。\n\n【影响与前瞻】\n对开发者而言，这份报告提供了构建可信 Agent 的实用框架。对企业而言，这是评估 Agent 产品安全性的参考标准。随着 Managed Agents、Claude Cowork 等产品逐步进入企业生产环境，信任框架将成为采购决策的关键因素。",
-      "source": "anthropic.com/research",
-      "source_type": "tavily",
-      "url": "https://www.anthropic.com/research/trustworthy-agents",
-      "timestamp": "2026-04-09T17:01:57Z",
-      "importance": 8,
-      "tags": [
-        "Anthropic",
-        "Agent安全",
-        "可解释性",
-        "研究报告",
-        "信任框架"
-      ],
-      "batch_time": "2026-04-10T09:00:00+08:00"
-    },
-    {
-      "title": "Boris Cherny 详解 Claude Code @-mentions 优化：Rust 索引器 + 预计算，性能提升 3 倍",
-      "summary": "Claude Code 团队的 Boris Cherny 发布技术细节：在超大型代码库中，文件 @-mentions 的性能优化了 3 倍。关键改动包括用预计算避免主线程阻塞、消除 NAPI 调用开销、更智能的索引策略。已随 v2.1.85 发布。",
-      "detail_content": "【核心事件】\n4 月 9 日，Boris Cherny 在推特上详细分享了 Claude Code 文件 @-mentions 的性能优化过程。背景是 Anthropic 的一位大型企业客户在「世界上最大的代码库之一」中使用 Claude Code 时反馈 @-mentions 速度不够快。\n\n【关键细节与引用】\n优化策略拆解：\n1. 预计算前置：通过巧妙的前置预计算方式，不阻塞主线程就能完成索引\n2. 消除 NAPI 开销：之前使用自定义 Rust 文件索引器通过 NAPI 从 Claude Code 调用，对于小结果集来说开销不小。优化后减少了 NAPI 调用\n3. 更智能的索引策略：针对大代码库的文件索引方式进行了重新设计\n\nBoris 原文：\"To power file @-mentions in Claude Code, we used to use a custom Rust-based file indexer that we invoked from Claude Code via NAPI. It was pretty fast...\" 优化后的版本已经随 Claude Code v2.1.85 发布。\n\n这组推文总共获得约 1200+ 点赞，在 Claude Code 用户社区引起广泛关注。\n\n【背景与上下文】\nBoris Cherny 是 Claude Code 核心工程师，经常在推特分享 Claude Code 内部实现细节。此前他曾透露 Claude Code 让 Anthropic 内部工程速度提升了数百个百分点，且增速本身还在加速。这些细节对理解 Claude Code 的技术架构和迭代节奏非常有价值。\n\n【影响与前瞻】\n@-mentions 是 Claude Code 最常用的功能之一（在对话中引用文件），3 倍性能提升直接影响日常使用体验。更重要的是，这表明 Anthropic 在积极优化超大型代码库场景——这是企业客户的关键需求，也是与 Cursor、Copilot 竞争的差异化方向。",
-      "source": "x.com/bcherny",
-      "source_type": "opentwitter",
-      "url": "https://x.com/bcherny/status/2042352720489955539",
-      "timestamp": "2026-04-09T21:23:28Z",
-      "importance": 7,
-      "tags": [
-        "Claude Code",
-        "性能优化",
-        "Anthropic",
-        "Boris Cherny",
-        "开发者工具"
-      ],
-      "batch_time": "2026-04-10T09:00:00+08:00"
-    },
-    {
-      "title": "OpenAI 官宣 Sora 停用时间线：4 月 26 日关闭 web/app，9 月 24 日关停 API",
-      "summary": "OpenAI 正式发布 Sora 停用通知：视频生成 web 和 app 体验将于 4 月 26 日停止，Sora API 将于 9 月 24 日正式下线。这是继 WSJ 揭秘 Sora 用户从百万跌至 50 万、收入仅 140 万美元之后的正式收场。",
-      "detail_content": "【核心事件】\n4 月 9 日，OpenAI 在帮助中心发布 Sora 停用通知。Sora 的 web 和移动端体验将于 2026 年 4 月 26 日停止服务，Sora API 将于 2026 年 9 月 24 日正式下线。这是 OpenAI 首个被正式关停的重大 AI 产品。\n\n【关键细节与引用】\n停用时间线：\n- 2026 年 4 月 26 日：Sora web 和 app 体验停止\n- 2026 年 9 月 24 日：Sora API 停止服务\n\n这给了开发者约 5 个月的迁移窗口期。此前 WSJ 调查显示，Sora 的用户从发布时的百万级跌至约 50 万，收入仅 140 万美元——对于一个估值 8520 亿美元的公司来说，这个数字几乎可以忽略不计。\n\n【背景与上下文】\nSora 的关闭反映了 AI 视频生成赛道的激烈竞争。Google 的 Veo、Runway 的 Gen-4、Pika 等竞品在质量和功能上快速追赶，而 OpenAI 选择将资源集中在更有商业回报的 Codex（300 万周活用户）和企业 Agent 工具上。\n\nOpenAI 近期的战略重心明显转向：收购 TBPN 媒体、发布 Child Safety Blueprint、推出 ChatGPT Pro 计划（$100/月），都在强化企业变现能力。\n\n【影响与前瞻】\n对使用 Sora API 的开发者来说，有 5 个月迁移到其他视频生成服务。对行业来说，这标志着 AI 产品不是发布就万事大吉——用户留存和商业模式同样重要。OpenAI 的下一个「关停候选」可能是其他表现不佳的消费者功能。",
-      "source": "help.openai.com",
-      "source_type": "tavily",
-      "url": "https://help.openai.com/en/articles/20001152-what-to-know-about-the-sora-discontinuation",
-      "timestamp": "2026-04-09T22:01:59Z",
-      "importance": 7,
-      "tags": [
-        "OpenAI",
-        "Sora",
-        "产品关停",
-        "视频生成",
-        "API"
-      ],
-      "batch_time": "2026-04-10T09:00:00+08:00"
-    },
-    {
-      "title": "Karpathy 提出 LLM = CPU / Agent = OS kernel 的类比框架",
-      "summary": "Andrej Karpathy 在回复 Python 之父 Guido van Rossum 时提出经典类比：LLM 是 CPU（数据是 token 不是 byte，运算是统计模糊的不是确定精确的），Agent 是操作系统内核。这个类比获得 4834 个点赞，成为讨论 Agent 架构的热门参考框架。",
-      "detail_content": "【核心事件】\n3 月 31 日，Karpathy 在回复 Guido van Rossum 的讨论中提出了一个被广泛引用的类比框架：\n- LLM = CPU（数据：tokens not bytes，动态：statistical and vague not deterministic and precise）\n- Agent = operating system kernel\n\n【关键细节与引用】\n原文：\"LLM = CPU (data: tokens not bytes, dynamics: statistical and vague not deterministic and precise). Agent = operating system kernel.\"\n\n这条推文获得 4834 个点赞和 328 个转发，成为近期讨论 Agent 架构最热门的推文之一。\n\n这个类比的精妙之处在于：\n- Token vs Byte 说明了 LLM 处理信息的本质差异——不是精确的字节操作，而是统计性的 token 序列\n- Statistical vs Deterministic 说明了推理的模糊性——同样的输入可能产生不同的输出\n- Agent = OS Kernel 暗示 Agent 负责资源管理（上下文窗口）、任务调度（工具调用）、中断处理（人类干预）等内核级功能\n\n【背景与上下文】\n这个类比出现在 Anthropic 发布 Subagents 架构、OpenAI 推进 Codex Agent、Google 开源 Gemma 4（带 agentic skills）的时间段。行业正在从「谁的模型参数更大」转向「谁的 Agent 架构更优雅」，Karpathy 的这个类比为理解和讨论 Agent 系统提供了一个简洁的心智模型。\n\n【影响与前瞻】\n这个框架正在被工程师们广泛引用来解释 Agent 系统的设计。如果 LLM 是 CPU，那么上下文窗口就是内存，工具调用就是 I/O，System Prompt 就是 BIOS。这种类比有助于将传统的操作系统设计智慧迁移到 Agent 架构设计中。",
-      "source": "x.com/karpathy",
-      "source_type": "opentwitter",
-      "url": "https://x.com/karpathy/status/2039054981719089202",
-      "timestamp": "2026-03-31T18:59:26Z",
-      "importance": 6,
-      "tags": [
-        "Karpathy",
-        "Agent架构",
-        "LLM",
-        "操作系统",
-        "类比框架"
-      ],
-      "batch_time": "2026-04-10T09:00:00+08:00"
-    },
-    {
-      "title": "trq212 披露 Claude Code Vaults 功能：安全存储用户凭证的新机制",
-      "summary": "Claude Code 活跃用户 trq212 披露了 Vaults 功能——一种在 Claude Code 中安全存储用户凭证（API key、密码等）的机制。这解决了 Agent 系统需要访问外部服务但不应明文存储敏感信息的痛点。",
-      "detail_content": "【核心事件】\n4 月 8 日，trq212 在推特上分享了 Claude Code 的 Vaults 功能，配图展示了功能界面。Vaults 允许用户在 Claude Code 中安全存储各种凭证信息，供 Agent 在需要时访问，而不需要在对话中明文传递或写入配置文件。\n\n【关键细节与引用】\ntrq212 原文简短：\"Vaults let you store user credentials safely.\" 配图展示了 Vault 的界面和用法。\n\n这条推文获得 64 个点赞。虽然信息量有限，但结合 trq212 过去准确披露 Claude Code 新功能的记录（他是 Claude Code 的重度用户和测试者），这个功能的可信度很高。\n\n此外，trq212 在另一条推文中分享了 Claude Code 的使用建议：\"verification without a clear criteria for Claude\" 是常见错误——应该给 Claude 明确的验证标准和衡量方式，而不是模糊地说「verify it works」。这条获得 65 个点赞。\n\n【背景与上下文】\n凭证管理是 Agent 系统的关键安全需求。当 Claude Code 作为 Agent 需要访问外部 API、数据库、云服务时，需要安全地存储和使用凭证。之前这通常通过环境变量或 .env 文件实现，但 Vault 提供了更规范、更安全的方案。\n\n【影响与前瞻】\n这对企业用户尤其重要——凭证泄露是企业采用 AI Agent 工具的主要顾虑之一。Vaults 功能配合 Claude Code 的沙箱安全增强（v2.1.85），表明 Anthropic 在系统性地解决 Agent 安全问题。预计未来会有更多细粒度的权限控制和审计功能。",
-      "source": "x.com/trq212",
-      "source_type": "opentwitter",
-      "url": "https://x.com/trq212/status/2041935796639559870",
-      "timestamp": "2026-04-08T17:46:45Z",
-      "importance": 6,
-      "tags": [
-        "Claude Code",
-        "安全",
-        "凭证管理",
-        "Vaults",
-        "Anthropic"
-      ],
-      "batch_time": "2026-04-10T09:00:00+08:00"
     }
   ]
 }
