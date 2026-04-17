@@ -1,0 +1,98 @@
+{
+  "channel_id": "ai-frontier",
+  "channel_name": "AI 前沿",
+  "generated_at": "2026-04-17T09:00:00+08:00",
+  "digest": "本周 AI 三巨头同时发力。Anthropic 发布 Claude Opus 4.7，在 SWE-bench Pro 上以 64.3% 大幅领先 GPT-5.4 的 57.7%，但同时罕见地公开承认「不如未发布的 Mythos」——用新模型为 Mythos 的安全叙事背书。OpenAI 同一天双发：GPT-Rosalind 瞄准生命科学垂直市场，Codex 大更新加入 computer use 和 111 个插件，直指 Claude Code。Google DeepMind 相对安静，继续 Gemma 4 开源路线。值得关注的是 ECB（欧洲央行）已就 Mythos 网络安全风险开始质询银行，监管层面对 AI 安全的关注正在升级。",
+  "items": [
+    {
+      "title": "Anthropic 发布 Claude Opus 4.7：SWE-bench Pro 刷新纪录，但「不如 Mythos」",
+      "summary": "Anthropic 发布最新旗舰模型 Claude Opus 4.7，在 SWE-bench Pro 上取得 64.3%（vs GPT-5.4 的 57.7%），多步 agentic reasoning 提升 14%，工具错误减少 2/3。新增 xhigh effort level，图像分辨率提升 3 倍。但 Anthropic 在 system card 中明确写道 Opus 4.7 不如未发布的 Mythos Preview，并将用此模型测试 Mythos 级别的网络安全护栏。定价不变：$5/$25 per million tokens。",
+      "detail_content": "【核心事件】\n4月16日，Anthropic 发布 Claude Opus 4.7，这是其最强公开发布模型。SWE-bench Pro 得分 64.3%，显著领先 GPT-5.4（57.7%）和 Gemini 3.1 Pro。多步 agentic reasoning 提升 14%，工具调用错误减少约 2/3，图像分辨率提升 3 倍。\n\nAnthropic 引入新的 effort level 体系：在 high 和 max 之间新增 xhigh（extra high），让用户更精细地控制推理深度和延迟的平衡。推荐编码和 agentic 场景从 high 或 xhigh 起步。\n\n定价与 Opus 4.6 完全一致：输入 $5/百万 tokens，输出 $25/百万 tokens。已在 Claude 全产品线、API、Amazon Bedrock、Google Vertex AI、Microsoft Foundry 上线。\n\n【关键细节】\nAnthropic 在 system card 中明确表示 Opus 4.7「没有推进公司的能力前沿」，因为 Mythos Preview 在所有评估中都获得了更高分。Gizmodo 分析认为这次发布本质上也是为 Mythos 做宣传——通过展示「公开发布的最强模型仍然不如受限模型」来强调 Mythos 的安全必要性。\n\nHex、CodeRabbit、Quantium、Bolt 等企业用户反馈积极。Bolt 报告长任务性能提升最高 10%，CodeRabbit 称其为代码审查工作中最敏锐的模型。\n\nAnthropic 将用 Opus 4.7 部署测试为 Mythos 设计的网络安全护栏，通过 Cyber Verification Program 允许安全专业人员在受控环境下使用更少限制的版本进行漏洞研究。\n\n【背景与上下文】\nOpus 4.7 发布恰逢 Project Glasswing（4月7日启动）持续发酵——Mythos Preview 已在 40 多家合作组织中发现了大量零日漏洞，包括一个 27 年未被发现的 OpenBSD 漏洞。Anthropic 选择用 Opus 4.7 作为 Mythos 护栏的测试平台，是在「公开发布」和「安全可控」之间找平衡。\n\n【影响与前瞻】\n对开发者而言，Opus 4.7 是当前编码和 agentic 任务的最优选择，xhigh effort level 填补了 high 和 max 之间的空白。对企业而言，定价不变 + 性能提升 + 多平台可用降低了迁移门槛。但更深层的信号是：Anthropic 正在建立「模型层级叙事」——公开发布的最强模型永远不如受限模型，这既是安全声明，也是商业策略。",
+      "source": "Anthropic",
+      "source_type": "tavily",
+      "url": "https://www.anthropic.com/news/claude-opus-4-7",
+      "timestamp": "2026-04-16T14:26:32Z",
+      "importance": 10,
+      "tags": [
+        "Anthropic",
+        "Claude Opus 4.7",
+        "SWE-bench",
+        "编码模型",
+        "Mythos"
+      ],
+      "batch_time": "2026-04-17T09:00:00+08:00"
+    },
+    {
+      "title": "OpenAI 发布 GPT-Rosalind：专为生命科学设计的前沿推理模型",
+      "summary": "OpenAI 推出 GPT-Rosalind，一款针对药物发现、基因组分析、蛋白质推理和转化医学优化的前沿推理模型。由生命科学研究负责人 Joy Jiao 主导，模型在生物化学和基因组学基础推理上有显著提升。但研究人员警告，基于生物数据训练的模型可能被滥用于设计危险病原体。",
+      "detail_content": "【核心事件】\n4月16日，OpenAI 发布 GPT-Rosalind，这是公司首个专门面向生命科学研究的 AI 模型。该模型被设计为在生物化学、基因组学等基础推理领域表现更优，旨在加速药物发现、基因组分析、蛋白质推理和转化医学工作流。\n\n【关键细节】\nOpenAI 生命科学研究负责人 Joy Jiao 向媒体介绍，GPT-Rosalind 不是替代专家判断，而是帮助研究人员更快地综合证据、生成假说和辅助分析。OpenAI 强调模型设计用于综合证据、生成假说和辅助分析而非取代实验验证。\n\n【背景与上下文】\n这是 OpenAI 从通用模型向垂直领域扩展的重要一步。生命科学是 AI 落地的高价值场景——蛋白质结构预测（AlphaFold）、药物分子设计等已有成功先例。但这一领域也面临独特的安全风险：研究人员警告基于生物数据训练的模型可能被滥用于设计危险病原体。Endpoints News 指出 OpenAI 正在进入一个已有 Google、Microsoft 等巨头的拥挤市场。\n\n【影响与前瞻】\nGPT-Rosalind 标志着 OpenAI 开始认真布局垂直领域专用模型。如果成功，可能在药物研发领域形成 Anthropic（安全/编码）vs OpenAI（生命科学/企业）的差异化竞争格局。但对制药行业来说，多一个竞争者意味着更多选择，也可能加速 AI 在新药研发中的实际落地。",
+      "source": "Axios",
+      "source_type": "tavily",
+      "url": "https://www.axios.com/2026/04/16/openai-models-life-sciences-drugs",
+      "timestamp": "2026-04-16T19:00:04Z",
+      "importance": 8,
+      "tags": [
+        "OpenAI",
+        "GPT-Rosalind",
+        "生命科学",
+        "药物发现",
+        "垂直模型"
+      ],
+      "batch_time": "2026-04-17T09:00:00+08:00"
+    },
+    {
+      "title": "OpenAI Codex 大更新：Computer Use + 111 插件 + 自动调度，全面对标 Claude Code",
+      "summary": "OpenAI 对 Codex 进行重大更新：新增 computer use 能力（可在后台操作桌面应用不占用系统资源）、111 个新插件（含 GitLab、Atlassian、Microsoft Suite）、原生浏览器集成、gpt-image-1.5 图片生成，以及任务自动调度功能。周活用户已达 300 万+，API 处理量超过 150 亿 tokens/分钟。被外界视为 OpenAI「超级应用」的前身。",
+      "detail_content": "【核心事件】\n4月16日，OpenAI 发布 Codex 桌面应用重大更新，加入 computer use（计算机操作）、应用内浏览器、图片生成、记忆功能和 111 个新插件。这是 Codex 自推出以来最大规模的功能扩展。\n\n【关键细节】\nComputer Use 是最大亮点：Codex 可以在后台操作桌面应用，而且 OpenAI 声称其「secret sauce」技术可以让 agent 运行应用时不拖慢整个系统，用户和 agent 可以并行工作。这与 Claude Cowork 的 computer use 形成直接竞争。\n\n111 个新插件覆盖 GitLab、Atlassian Rovo、Microsoft Suite 等开发工具链，以及 MCP server 连接。Codex 还获得了 gpt-image-1.5 图片生成能力和原生浏览器（可在页面上直接标注指令）。\n\n任务自动调度功能允许 Codex 安排未来的工作并自动唤醒执行，复用已有对话线程。Engadget 和 Ars Technica 均认为这些功能是为 OpenAI 计划中的「超级应用」（整合 ChatGPT + Codex + Atlas 浏览器）铺路。\n\nCodex 周活跃用户超 300 万，API 处理量超过 150 亿 tokens/分钟，企业营收占比超 40%。\n\n【背景与上下文】\nThe Verge 标题直呼 Codex 更新是「direct shot at Anthropic's Claude Code」。Codex 和 Claude Code 的竞争已从编码扩展到全栈开发助手——computer use、插件生态、自动调度，每个维度都在正面交锋。\n\n【影响与前瞻】\nCodex 的 111 插件 + MCP 连接策略值得关注——这是通过生态锁定开发者的经典打法。对企业用户而言，Codex 和 Claude Code 的功能差距正在缩小，选择将更多取决于定价、集成度和团队习惯。超级应用如果成真，将改变 AI 助手的入口格局。",
+      "source": "The Verge",
+      "source_type": "tavily",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/913034/openai-codex-updates-use-macos",
+      "timestamp": "2026-04-16T17:00:00Z",
+      "importance": 8,
+      "tags": [
+        "OpenAI",
+        "Codex",
+        "computer use",
+        "插件生态",
+        "Claude Code竞争"
+      ],
+      "batch_time": "2026-04-17T09:00:00+08:00"
+    },
+    {
+      "title": "ECB 就 Mythos 网络安全风险质询银行，监管层面对 AI 安全关注升级",
+      "summary": "欧洲央行（ECB）正在向银行收集关于 Anthropic Mythos 模型网络安全风险的信息。此前 Mythos 已展示出发现 27 年未被发现的 OpenBSD 零日漏洞的能力。美国财政部和美联储也已召集银行高管讨论 AI 相关网络风险。Anthropic 通过 Project Glasswing 邀请制测试的方式试图平衡安全与创新。",
+      "detail_content": "【核心事件】\n欧洲央行（ECB）正在主动向银行机构收集关于 Anthropic Claude Mythos Preview 模型所带来网络安全风险的信息，并将对银行进行质询。这是全球主要央行首次针对单一 AI 模型发起系统性风险评估。\n\n【关键细节】\nMythos Preview 在测试中展示了强大的漏洞发现能力，包括发现了一个在 OpenBSD（公认最安全的操作系统之一）中存在 27 年的零日漏洞。这种能力如果落入攻击者手中，将严重威胁金融机构的网络安全。\n\nAnthropic 的应对方案是 Project Glasswing——仅邀请 12 家核心合作伙伴（包括 Microsoft、Apple、Google、Cisco、JPMorgan Chase 等）在受控环境中使用 Mythos 进行防御性安全工作。\n\n【背景与上下文】\nECB 的行动并非孤例。美国财政部和美联储最近也召集了银行高管讨论 AI 相关网络风险，英国国家科技部门也发布了警告。AISLE（AI 网络安全创业公司）的研究人员已证明，甚至小型廉价模型也能复现 Mythos 展示的部分漏洞发现——这意味着 Mythos 展示的能力可能并非不可复制，安全隐患比想象中更紧迫。\n\nFortune 报道指出，业界真正的挑战不是发现漏洞，而是修复漏洞——企业补丁部署周期通常需要数周到数月。\n\n【影响与前瞻】\nECB 的质询标志着 AI 安全从「公司自律」进入「监管干预」阶段。对 Anthropic 而言，Glasswing 的邀请制模式正在受到监管审视——「自我监管」是否能满足金融监管机构的标准？对银行业而言，这预示着未来 AI 模型的部署可能需要额外的合规审查。对 AI 行业整体而言，Mythos 事件可能催生新的 AI 安全监管框架。",
+      "source": "Let's Data Science",
+      "source_type": "tavily",
+      "url": "https://letsdatascience.com/news/ecb-questions-banks-on-risks-from-anthropics-mythos-78bf80c1",
+      "timestamp": "2026-04-16T07:28:33Z",
+      "importance": 7,
+      "tags": [
+        "Anthropic",
+        "Mythos",
+        "ECB",
+        "网络安全",
+        "监管"
+      ],
+      "batch_time": "2026-04-17T09:00:00+08:00"
+    },
+    {
+      "title": "Mythos 引发的网络安全恐慌：IBM 称「规则已被改写」",
+      "summary": "Mythos Preview 发布后，IBM 安全部门副总裁 Dave McGinnis 表示「Claude Mythos 的网络安全影响与此前所有 AI 进步都不同」。Mythos 发现的 OpenBSD 27 年零日漏洞震惊业界。Fortune 报道认为真正的问题不是发现漏洞而是修复漏洞，而 AISLE 研究人员已证明小型模型也能复现部分发现。WIRED 分析认为 Mythos 将迫使整个软件行业重新思考开发、更新和补丁采用流程。",
+      "detail_content": "【核心事件】\nMythos Preview 的发布在网络安全行业引发广泛讨论。IBM 全球托管安全服务副总裁 Dave McGinnis 公开表示，Claude Mythos 的网络安全影响代表了「与此前所有 AI 进步完全不同」的变革。他认为遗留系统、开源暴露和仅依赖人工的安全运营的算计已经「实质性且立即地」改变了。\n\n【关键细节与引用】\nCisco 总裁兼首席产品官 Jeetu Patel 在 HumanX AI 会议上称 Mythos Preview 是一件大事。最令人震惊的是 Mythos 发现了一个在 OpenBSD（公认最安全的操作系统之一）中存在 27 年的零日漏洞。\n\n但 AISLE（AI 网络安全创业公司）的研究人员随后证明，他们用 Mythos 公开展示的具体漏洞案例、隔离相关代码后，用小型廉价模型也能复现这些发现。这意味着 Mythos 展示的漏洞发现能力可能并非独一无二。\n\nFortune 报道引用行业资深人士指出，真正的问题不是发现漏洞，而是修复漏洞——企业的补丁部署周期通常需要数周到数月。\n\n【背景与上下文】\nMythos 的发布时机恰逢全球网络安全威胁升级。AI 辅助的 exploit chain（漏洞利用链）发现能力正在让攻击和防御的不对称性进一步扩大。Anthropic 选择邀请制发布 Glasswing，是在试图建立「负责任发布」的行业标准。\n\n【影响与前瞻】\nMythos 事件可能成为网络安全行业的分水岭——不是因为它发现了什么具体漏洞，而是因为它证明了 AI 在系统性漏洞发现上的能力已经达到了新的水平。整个软件行业可能需要重新思考开发流程、更新周期和补丁采用策略。对企业安全团队而言，这意味着安全评估的频率和深度都需要提升。",
+      "source": "WIRED",
+      "source_type": "tavily",
+      "url": "https://www.wired.com/story/anthropics-mythos-will-force-a-cybersecurity-reckoning-just-not-the-one-you-think/",
+      "timestamp": "2026-04-10T18:08:37Z",
+      "importance": 7,
+      "tags": [
+        "Anthropic",
+        "Mythos",
+        "网络安全",
+        "零日漏洞",
+        "IBM"
+      ],
+      "batch_time": "2026-04-17T09:00:00+08:00"
+    }
+  ]
+}
