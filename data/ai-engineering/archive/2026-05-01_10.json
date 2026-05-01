@@ -1,0 +1,144 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-05-01T10:00:00+08:00",
+  "digest": "本周 AI 工程领域最值得关注的是两个趋势的交汇：一是 Agent 基础设施的成熟化（Cursor 公开 Agent Harness 工程细节、Monte Carlo 报告揭示 64% 企业未准备好就部署），二是 AI 工具定价模式的转折点（GitHub Copilot 按量计费、Anthropic 被批评涨价反竞争、Claude Code 暗中限制新用户）。与此同时 Shopify 的 token 使用量暴增图揭示了企业 AI 采纳的真实速度——2025 年 12 月之后出现了拐点。工程实践层面，'Agent 就是服务'的理念正在取代'Agent 是玩具'的叙事。",
+  "items": [
+    {
+      "title": "Cursor 发布 Agent Harness 工程博客：如何持续改进 Agent 并监控退化",
+      "summary": "Cursor 公开了其 Agent Harness 的工程实践——这是让模型在 Cursor 中更快、更省 token、更智能的核心层。文章详细介绍了如何测试 harness 改进、监控退化并自动修复、针对不同模型定制策略。这是少见的 Agent 工程实战公开分享，展示了 IDE 级 Agent 产品背后的工程深度。",
+      "detail_content": "【核心事件】\nCursor 在官方博客发布文章\"Continually Improving Our Agent Harness\"，首次系统性地公开了其 Agent 基础设施的核心工程实践。Agent Harness 是介于底层模型（Claude、GPT 等）和用户交互之间的\"编排层\"，负责 prompt 构建、工具调用管理、上下文压缩、错误恢复等关键任务。\n\n【关键细节】\nCursor 团队展示了三个核心工程实践：\n1. **测试框架** — 每次对 harness 的改动都会在一个大规模测试集上跑回归测试，包括真实的 coding 任务和边界情况\n2. **退化监控** — 通过生产环境的遥测数据，实时追踪 agent 的成功率和 token 效率，一旦发现退化立即告警\n3. **模型定制** — 不同模型（Claude vs GPT vs Gemini）有不同的最优 harness 配置，Cursor 为每个模型维护独立的策略文件\n\n这个发布引发了 884 个点赞和大量讨论，开发者们特别关注 token 效率优化的细节。\n\n【背景与上下文】\nCursor 近期在 AI 编程工具市场的份额持续增长。根据 GergelyOrosz 分享的数据，GitHub Copilot 虽然仍然是最广泛使用的工具，但 Claude Code 在深度编码场景领先，Cursor 正在快速追赶。Cursor 选择在这个时间点公开 harness 工程细节，一定程度上是对自身技术深度的信心展示。\n\n【影响与前瞻】\n这对 AI 编程工具行业有两个影响：1）证明了 Agent 产品竞争的核心不在模型本身，而在 harness 层的工程质量；2）为其他 Agent 产品团队提供了可参考的工程框架。预计更多 Agent 产品会开始公开类似的技术细节，工程透明度成为竞争维度。",
+      "source": "Cursor Blog / @cursor_ai",
+      "source_type": "opentwitter",
+      "url": "https://x.com/cursor_ai/status/2049901436918436249",
+      "timestamp": "2026-04-30T17:19:22Z",
+      "importance": 9,
+      "tags": [
+        "Cursor",
+        "Agent Harness",
+        "工程实践",
+        "AI编程工具"
+      ],
+      "batch_time": "2026-05-01T10:00:00+08:00"
+    },
+    {
+      "title": "Gergely Orosz 痛批 Anthropic：\"表现得像被私募收购了\"",
+      "summary": "Pragmatic Engineer 作者 GergelyOrosz 发文批评 Anthropic 近期行为：无实质回报地涨价（Opus 4.7 tokenization）、对付费客户服务极差（暗中封禁 50+ 人企业账号无解释）、反竞争行为。这条推文获得 1485 个赞，引发了大量讨论。",
+      "detail_content": "【核心事件】\nGergely Orosz 在 4 月 30 日发布推文，直言\"Anthropic 最近一个月的表现就像被私募基金收购了一样\"，并列出三大问题：\n1. **涨价无回报** — Opus 4.7 的 tokenization 变更本质上是变相涨价，没有提供任何实质性新功能\n2. **客户服务恶化** — 悄悄封禁 50+ 席位的企业付费账号，没有人工审核，没有解释，被封客户超级愤怒\n3. **反竞争行为** — 暗中限制 Claude Code 的可用性，被发现后也没有正式公告\n\n这条推文获得 1485 个赞和 82 条回复，是近期 AI 行业最受关注的批评之一。\n\n【关键细节】\n这不是 Gergely 第一次批评 Anthropic。早在 4 月 18 日他就指出 Anthropic 封禁 60 人付费组织的行为\"完全不可接受\"——\"只有自动系统、没有人工审核、做错了还不道歉\"。4 月 30 日他又转发批评 Anthropic 的反竞争条款，称\"这不是一个做'safety'的公司，这是公然反客户、反竞争的行为\"。\n\n【背景与上下文】\nAnthropic 的 Claude 系列目前在 AI 编程市场占据领先地位（SWE-bench 最高分），市场份额快速扩大。但随着增长，其商业化策略正在引发开发者社区的不满。从 Simon Willison 到 Gergely Orosz，多位有影响力的技术评论者都公开表达了担忧。\n\n【影响与前瞻】\n这种社区情绪可能成为 OpenAI Codex 和其他竞争产品的机会。Gergely 此前分析过，\"如果 Anthropic 继续这些做法，OpenAI Codex 会很快追上 Claude Code\"。对于企业用户而言，供应商锁定风险正在成为一个真实的考量因素。",
+      "source": "@GergelyOrosz",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2049690661201252630",
+      "timestamp": "2026-04-30T03:21:49Z",
+      "importance": 8,
+      "tags": [
+        "Anthropic",
+        "定价策略",
+        "社区批评",
+        "Claude Code"
+      ],
+      "batch_time": "2026-05-01T10:00:00+08:00"
+    },
+    {
+      "title": "GitHub 两年负载暴增图曝光：AI 工具正在压垮基础设施",
+      "summary": "GergelyOrosz 根据 GitHub 官方数据分析，GitHub 过去两年负载急剧增长——这正是导致近期频繁宕机的根本原因。他绘制了带 Y 轴起点数据的图表，并在 Pragmatic Engineer 发表深度分析文章。负载增长的主要驱动力是 AI 工具的自动化调用。",
+      "detail_content": "【核心事件】\nGergely Orosz 在 4 月 30 日发布了一张图表，展示了 GitHub 过去两年的负载增长曲线。图表使用 GitHub 自己提供的数据，但 Gergely 添加了 Y 轴起点的具体数字，揭示了增长的惊人幅度。\n\n【关键细节】\n- GitHub 近期经历了一次严重的宕机，导致 PR 数据丢失（\"数据完整性问题\"）\n- GitHub 官方回应称只影响了 0.07% 的用户，但 Gergely 指出这个说法\"令人尴尬\"——\"这是最令人尴尬的宕机之一，数据完整性问题，回应居然是'其实只影响了 0.07%'\"\n- 宕机的根本原因是 AI 工具（Copilot、自动化 CI/CD、Agent 大规模并行调用）带来的负载暴增\n- Gergely 此前还指出 PR 消失问题，获得 2290 个赞和 43.5 万次浏览\n- Gergely 在 Pragmatic Engineer 发表了完整分析文章\n\n【背景与上下文】\nGitHub 近几个月频繁宕机，引发了开发社区的广泛不满。steipete 的 Clawsweeper 用 50 个并行 Codex Agent 一天关闭 4000 个 Issue，这种规模的使用量正在成为常态。传统的基础设施架构可能无法应对 AI Agent 带来的新型工作负载。\n\n【影响与前瞻】\n这对整个开发者工具链有深远影响：1）AI 编程工具的爆炸式增长正在给基础设施带来前所未有的压力；2）代码托管平台可能需要重新设计架构以适应 AI Agent 的工作模式（高频次、自动化的 API 调用）；3）这可能是替代方案崛起的机会窗口。",
+      "source": "@GergelyOrosz / Pragmatic Engineer",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2049896782595846318",
+      "timestamp": "2026-04-30T17:00:52Z",
+      "importance": 8,
+      "tags": [
+        "GitHub",
+        "基础设施",
+        "AI负载",
+        "宕机"
+      ],
+      "batch_time": "2026-05-01T10:00:00+08:00"
+    },
+    {
+      "title": "swyx 揭示 Shopify Token 使用暴增：\"2025年12月发生了什么？\"",
+      "summary": "swyx 分享了 Shopify 技术团队全员 token 使用量图表，显示 2025 年 12 月之后使用量出现拐点式暴增。Shopify 为技术人员提供了无限 token 预算，但增长斜率的陡峭程度仍然令人震惊。多家企业数据呈现相同的拐点模式。",
+      "detail_content": "【核心事件】\nswyx 在 4 月 22 日转发了 Shopify 技术团队的 token 使用量图表，并将其归类为\"2025 年 12 月到底发生了什么\"系列的最新数据点。图表显示 Shopify 全体技术人员的 token 使用量在 2025 年 12 月之后出现了显著拐点。\n\n【关键细节】\n- Shopify 一直为技术团队提供无限 token 预算\n- 尽管没有预算限制，token 使用量在 2025 年 12 月之前增长相对平稳\n- 12 月之后出现了陡峭的增长曲线\n- swyx 评论说\"把这个加到'WTF happened in Dec 2025'图表集里\"\n- swyx 特别指出 Shopify 团队在这个数据上\"带来了一些猛料\"\n\n【背景与上下文】\n\"2025 年 12 月到底发生了什么\"已经成为 AI 行业的一个梗——多个独立数据源（Disney 内部数据显示 4800 名技术员工使用 Cursor/Claude、Pragmatic Engineer 调查显示 15 家科技公司 AI Token 支出失控）都显示 AI 工具使用量在那个时间点出现了拐点。普遍认为这与 Claude Code、Cursor 等 Agentic Coding 工具的成熟和普及有关。\n\n【影响与前瞻】\n这个数据的启示是：1）企业 AI 采纳存在\"临界点\"现象——一旦跨过就快速增长；2）Token 成本正在成为企业 IT 预算的重要变量；3）对于 AI 工具厂商，使用量暴增既意味着收入增长，也意味着基础设施压力。GitHub 的频繁宕机可能就是这种暴增的副作用。",
+      "source": "@swyx / Shopify",
+      "source_type": "opentwitter",
+      "url": "https://x.com/swyx/status/2047077765581816105",
+      "timestamp": "2026-04-22T22:19:06Z",
+      "importance": 7,
+      "tags": [
+        "Shopify",
+        "Token使用量",
+        "企业AI采纳",
+        "趋势拐点"
+      ],
+      "batch_time": "2026-05-01T10:00:00+08:00"
+    },
+    {
+      "title": "Anthropic 暗中 A/B 测试限制 Claude Code：2% 新 Pro 用户被禁用",
+      "summary": "据 @wquguru 报道，Anthropic 正在对新注册 Pro 账户进行 A/B 测试，约 2% 的新用户已无法使用 Claude Code。定价页面被悄悄修改，没有任何官方公告。Simon Willison 也发现并评论了这个测试。",
+      "detail_content": "【核心事件】\n@wquguru 在 4 月 22 日披露，Anthropic 内部正在对新注册的 Pro 账户进行 A/B 测试，大约 2% 的新用户在注册后发现自己无法使用 Claude Code。同时，Claude 的定价页面被悄悄修改，但没有任何官方公告或说明。\n\n【关键细节】\n- 这是继 KYC 验证之后，Anthropic 进一步收紧 Claude Code 的又一举措\n- A/B 测试意味着这是有意为之的实验，不是 bug\n- 受影响的是新注册用户，老用户暂未受影响\n- Simon Willison 此前也发现并评论了 Anthropic 的定价测试，表示\"如果他们真的这么做，OpenAI Codex 会很快追上\"\n- Simon 还发现关于定价不变更的唯一官方确认\"埋在一条推文回复里\"\n\n【背景与上下文】\nClaude Code 是目前 AI 编程市场的领导者，但高使用量给 Anthropic 带来了巨大的推理成本压力。GitHub Copilot 已经转向按量计费，Anthropic 也在探索各种方式控制成本。从 KYC 到 A/B 测试限制，一系列举措显示 Anthropic 正试图在增长和盈利之间找到平衡。\n\nGergelyOrosz 在 4 月 30 日的批评中也将此列为 Anthropic \"反竞争\"行为的一部分。\n\n【影响与前瞻】\n这个趋势值得密切关注：1）如果 Claude Code 的可用性持续收紧，用户可能转向 Cursor + 其他模型的组合；2）定价模式的变化将直接影响企业用户的采购决策；3）对于依赖 Claude Code 构建工作流的开发者，供应商风险正在增加。",
+      "source": "@wquguru",
+      "source_type": "opentwitter",
+      "url": "https://x.com/wquguru/status/2046743579763343575",
+      "timestamp": "2026-04-22T00:11:10Z",
+      "importance": 7,
+      "tags": [
+        "Anthropic",
+        "Claude Code",
+        "定价策略",
+        "A/B测试"
+      ],
+      "batch_time": "2026-05-01T10:00:00+08:00"
+    },
+    {
+      "title": "Monte Carlo 报告：64% 企业未准备好就部署了 AI Agent",
+      "summary": "Monte Carlo 发布报告，揭示 64% 的企业在未完全准备好的情况下就部署了 AI Agent。其中 46% 已经将 Agent 运行在生产环境中处理面向客户的业务。只有 10-15% 的试点项目能成功扩展到全面生产。",
+      "detail_content": "【核心事件】\n数据可观测性公司 Monte Carlo 发布了一份关于企业 AI Agent 部署状态的报告。报告发现，64% 的企业在感觉\"没有完全准备好\"的情况下就已经部署了 AI Agent，其中 46% 的 Agent 运行在完整的生产环境中，处理面向客户或业务关键型工作。\n\n【关键细节】\n- 报告指出企业在 Agent 部署中面临\"运营危机\"——缺乏监控、治理和评估框架\n- LangChain 的 State of Agent Engineering 调查显示 57% 的组织已有 Agent 在生产环境中运行，大型企业比例更高（约 67%）\n- 只有 10-15% 的试点项目能成功扩展到全面生产\n- 企业最关心的三个问题是：可观测性、评估和成本优化\n- 行业正在从\"纯自主 Agent\"转向\"确定性工作流 + 定向 LLM 调用\"的混合模式\n\n【背景与上下文】\n这个报告与近期行业的整体趋势一致——Agent 从\"实验阶段\"快速进入\"生产阶段\"，但基础设施和治理能力跟不上。Cisco 披露的 Claude Code 安全漏洞、AI Agent 误删生产数据库等事件，都是这种\"准备不足\"的具体表现。\n\nGoogle Developers Blog 也发布了 5 个 Agent 开发最佳实践，强调多 Agent 工作流、状态管理和确定性防护栏。\n\n【影响与前瞻】\n对于正在规划 Agent 部署的企业，这个报告提供了重要的参考：1）不要追求从试点直接跳到全面生产，10-15% 的成功率说明需要更渐进的路径；2）可观测性和评估框架应该先于 Agent 本身建设；3）成本控制需要从第一天就纳入考量。",
+      "source": "Monte Carlo Report",
+      "source_type": "grok",
+      "url": "https://www.montecarlodata.com",
+      "timestamp": "2026-04-28T00:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Agent部署",
+        "企业AI",
+        "生产就绪",
+        "运营危机"
+      ],
+      "batch_time": "2026-05-01T10:00:00+08:00"
+    },
+    {
+      "title": "ashpreetbedi 开源 Dash v2：自学习数据 Agent 团队",
+      "summary": "ashpreetbedi 开源了 Dash v2——一个自学习数据团队 Agent。用户用自然语言提问，Agent 通过 6 层上下文给出基于数据的回答。支持 Slack 集成、MCP 和自定义 UI。OpenAI、Uber、LinkedIn 等大厂都在自建类似的数据 Agent。",
+      "detail_content": "【核心事件】\nashpreetbedi（Agentic Software Engineering 方法论的倡导者）发布了 Dash v2，一个开源的自学习数据团队 Agent。这个工具让任何工程团队都能拥有类似大厂数据团队的能力。\n\n【关键细节】\n- 核心能力：用自然语言提问，通过 6 层上下文（schema、历史查询、业务逻辑等）给出数据驱动的回答\n- 之前 Text-to-SQL Agent 失败的主要原因是缺乏足够的上下文理解\n- 支持三种使用方式：Slack 集成、MCP 协议、自定义 UI\n- ashpreetbedi 指出 OpenAI、Vercel、Uber、LinkedIn、Salesforce、DoorDash 都在内部构建类似系统\n- 获得了 192 个赞和较高互动\n\n【背景与上下文】\nashpreetbedi 是 Agentic Software Engineering 方法论的核心推动者，他的文章\"Systems Engineering\"（723 个赞）和\"Agents are Services\"在 AI 工程社区有广泛影响。Dash v2 是他将这些理论付诸实践的又一个案例。\n\n他在另一条推文中分享了系统工程师的洞察：\"Coding agents have lowered the barrier to writing code, but they haven't lowered the requirements of production software. Agentic software is just software. The agent replaces business logic. Everything else is the same.\"（编程 Agent 降低了写代码的门槛，但没有降低生产软件的要求。Agentic 软件就是软件。Agent 替代的是业务逻辑，其他一切都一样。）\n\n【影响与前瞻】\n数据 Agent 是企业 AI 落地最成熟的场景之一。Dash v2 的开源意味着中小团队也能拥有大厂级别的数据查询能力。对于银行等金融机构，这类工具可以直接用于风险报表、客户分析等高频数据需求场景。",
+      "source": "@ashpreetbedi",
+      "source_type": "opentwitter",
+      "url": "https://x.com/ashpreetbedi/status/2041653884536357122",
+      "timestamp": "2026-04-07T23:06:32Z",
+      "importance": 6,
+      "tags": [
+        "数据Agent",
+        "开源",
+        "ashpreetbedi",
+        "Text-to-SQL"
+      ],
+      "batch_time": "2026-05-01T10:00:00+08:00"
+    },
+    {
+      "title": "Notion 4月大更新：Agent 2.0 + Custom Agents + 多参与者协作",
+      "summary": "Notion 在 4 月底集中发布了一系列 AI 功能更新：AI Autofill、移动端 Custom Agents、Agent 2.0、独立移动端 AI、Calendar/Mail 工具、侧边栏 Notion Agent、多参与者协作。swyx 评论 Notion 的 Custom Agents \"太好了以至于 OpenAI 不得不克隆\"。",
+      "detail_content": "【核心事件】\nNotion 在 4 月 30 日发布了 4 月产品更新汇总，包含大量 AI 相关功能。这是 Notion 从\"笔记工具\"向\"AI 工作平台\"转型的关键一步。\n\n【关键细节】\n主要更新包括：\n- **AI Autofill** — 自动填充数据库字段\n- **移动端 Custom Agents** — 在手机上使用自定义 AI Agent\n- **Agent 2.0** — Agent 能力的大版本升级\n- **独立移动端 AI** — TestFlight 版本，AI 功能脱离主应用\n- **Calendar 和 Mail 工具** — Agent 可以访问日历和邮件\n- **侧边栏 Notion Agent** — 随时调用的 AI 助手\n- **多参与者协作** — 多人同时与 Agent 交互\n\nswyx 此前评论说\"Notion 的 Custom Agents 太好了以至于 OpenAI 不得不克隆，而且 OpenAI 还没有 Notion 编辑器来实现它\"。\n\n【背景与上下文】\nNotion 是最早将 AI Agent 深度集成到生产力工具中的公司之一。其 Custom Agents 功能允许用户创建特定工作流的 AI 助手，这比通用 AI 助手在企业场景中更有实用价值。Calendar 和 Mail 集成意味着 Agent 开始跨应用边界工作。\n\n【影响与前瞻】\nNotion 的路径展示了\"AI 原生生产力工具\"的一种可能形态：不是用 AI 替代工具，而是在现有工具中嵌入场景化的 Agent。多参与者协作功能意味着 Agent 开始支持团队级工作流——这是从个人 AI 助手到团队 AI 协作的关键进化。",
+      "source": "@NotionHQ",
+      "source_type": "opentwitter",
+      "url": "https://x.com/NotionHQ/status/2049924580484235461",
+      "timestamp": "2026-04-30T18:51:20Z",
+      "importance": 6,
+      "tags": [
+        "Notion",
+        "Agent 2.0",
+        "生产力工具",
+        "AI集成"
+      ],
+      "batch_time": "2026-05-01T10:00:00+08:00"
+    }
+  ]
+}
