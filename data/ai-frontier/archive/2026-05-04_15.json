@@ -1,0 +1,80 @@
+{
+  "channel_id": "ai-frontier",
+  "channel_name": "AI 前沿",
+  "generated_at": "2026-05-04T15:54:47+08:00",
+  "digest": "本周 Anthropic 官方博客密集更新——连发 4 篇重磅内容：Opus 4.7 在 Claude Code 中的最佳实践指南、Web Search 动态过滤新能力、Research + Google Workspace 深度集成、以及 Claude Code 产品负责人 Cat Wu 的 AI 指数级增长下的产品管理思考。OpenAI 和 Google DeepMind 本周无新的官方博客/研究发布，OpenAI 持续推进 GPT-5.5 系列企业落地（AWS Bedrock、新安全功能），Google 备战 I/O 2026（5月19日）。",
+  "items": [
+    {
+      "title": "Anthropic 官方博客：Opus 4.7 + Claude Code 最佳实践指南 — 默认 effort 提至 xhigh，像委派高级工程师一样使用",
+      "summary": "Anthropic 发布 Opus 4.7 在 Claude Code 中的最佳实践指南。核心变化：默认 effort level 升至 xhigh；Opus 4.7 处理模糊性更强、找 bug 和 code review 能力大幅提升、跨 session 上下文保持更可靠。建议把 Claude 当作「你委派任务的高级工程师」而非「逐行指导的结对编程伙伴」。详细说明了 recalibrated effort levels、adaptive thinking 和新默认值的使用方法。",
+      "detail_content": "【核心事件】\nAnthropic 于 2026 年 5 月初在 claude.com/blog 发布了 Opus 4.7 + Claude Code 最佳实践指南。这是继 Opus 4.7 发布后最重要的配套文档，直接影响每个 Claude Code 用户的日常使用体验。\n\n【关键细节与引用】\n- 默认 effort level 从之前的设置升至 `xhigh`——\"We've set the default effort level for Opus 4.7 to xhigh because we believe it's the best setting for most coding tasks.\"\n- 比喻升级：从「pair programmer」到「capable engineer you're delegating to」——不再是逐行指导，而是委派整个任务\n- Opus 4.7 相比 4.6 的具体提升：\"handles ambiguity better, is much more capable at finding bugs and reviewing code, carries context across sessions more reliably, can reason through ambiguous tasks with less direction\"\n- 从 Opus 4.6 迁移到 4.7 需要「some tuning」，因为模型行为有显著变化\n\n【背景与上下文】\nOpus 4.7 于 4 月中下旬发布，是目前 Anthropic 的旗舰公开模型。这篇最佳实践指南是对模型发布后用户反馈的正式回应，特别是关于 effort level 调优和任务委派模式。Claude Code 是 Anthropic 目前最重要的开发者工具，刚获得 2026 Webby 最佳 AI 产品奖。\n\n【影响与前瞻】\n对 Claude Code 用户来说，这篇指南是必读——直接影响日常 prompt 策略和 effort 设置。xhigh 默认值意味着更多 token 消耗但更高质量输出，用户需要根据成本/质量权衡自行调整。委派模式的变化也预示着 Claude Code 未来产品方向：从辅助工具向自主 Agent 演进。",
+      "source": "claude.com/blog",
+      "source_type": "tavily",
+      "url": "https://claude.com/blog/best-practices-for-using-claude-opus-4-7-with-claude-code",
+      "timestamp": "2026-05-04T00:00:00Z",
+      "importance": 9,
+      "tags": [
+        "Anthropic",
+        "Claude Code",
+        "Opus 4.7",
+        "最佳实践",
+        "开发者工具"
+      ],
+      "batch_time": "2026-05-04T15:54:47+08:00"
+    },
+    {
+      "title": "Anthropic 官方博客：Web Search 引入动态过滤 — Claude 自动写代码过滤搜索结果，提升准确性和 token 效率",
+      "summary": "Anthropic 为 Claude 的 Web Search 和 Web Fetch 工具引入「动态过滤」（Dynamic Filtering）功能。Claude 现在会在搜索过程中自动编写并执行代码来后处理搜索结果，在结果进入上下文窗口之前进行过滤。这意味着搜索更精准、更省 token。已在 Sonnet 4.6 和 Opus 4.6 上完成评测，默认开启。",
+      "detail_content": "【核心事件】\nAnthropic 在 claude.com/blog 发布了 Web Search 动态过滤功能的介绍。这是 Claude 搜索能力的重大升级——从被动接收搜索结果变为主动用代码过滤。\n\n【关键细节与引用】\n- 核心机制：\"Claude can now natively write and execute code during web searches to filter results before they reach the context window\"\n- 效果：提升准确性和 token 效率——搜索结果先经过代码过滤，只保留相关内容进入上下文\n- 评测：在 Sonnet 4.6 和 Opus 4.6 上进行了有无动态过滤的对比评测\n- 可用性：使用新版 web search 和 web fetch 工具时默认开启，支持 Sonnet 4.6 和 Opus 4.6\n- 配套能力：code execution、memory、programmatic tool calling、tool search、tool use examples 同步可用\n\n【背景与上下文】\nWeb Search 是 Claude 的核心差异化能力之一。此前搜索结果直接灌入上下文窗口，既浪费 token 又容易引入噪音。动态过滤本质上让 Claude 在搜索环节就具备了「自己写脚本筛选数据」的能力，是 Agent 化的又一步。\n\n【影响与前瞻】\n对 API 开发者来说，这意味着每次搜索的 token 消耗会下降，准确率会提升。对竞品格局来说，OpenAI 和 Google 也在加强搜索能力（OpenAI 的 ChatGPT Search、Google 的 Gemini 原生搜索），Anthropic 通过代码过滤这个差异化路径切入。",
+      "source": "claude.com/blog",
+      "source_type": "tavily",
+      "url": "https://www.claude.com/blog/improved-web-search-with-dynamic-filtering",
+      "timestamp": "2026-05-04T00:00:00Z",
+      "importance": 8,
+      "tags": [
+        "Anthropic",
+        "Web Search",
+        "动态过滤",
+        "API",
+        "Claude"
+      ],
+      "batch_time": "2026-05-04T15:54:47+08:00"
+    },
+    {
+      "title": "Anthropic 官方博客：Claude Research + Google Workspace 深度集成 — 搜索网页+邮件+日历+文档，一站式深度研究",
+      "summary": "Anthropic 发布 Claude Research 功能和 Google Workspace 集成。Research 让 Claude 能同时搜索网页和用户的工作上下文，几分钟内交付综合答案。Google Workspace 集成则让 Claude 安全访问用户邮件、日历和文档。Enterprise 版管理员可启用 cataloging 功能提升检索质量。这是 Claude 从聊天助手向「协作伙伴」转型的关键一步。",
+      "detail_content": "【核心事件】\nAnthropic 在 claude.com/blog 发布了两个重大功能：Research 和 Google Workspace 集成。这两个功能协同工作，让 Claude 能同时访问公开网页信息和用户的私人工作上下文。\n\n【关键细节与引用】\n- Research：\"Claude can now conduct in-depth Research by searching across the web and your Google Workspace to deliver comprehensive answers in minutes\"\n- Google Workspace 集成：\"securely search emails, review documents, and see your calendar commitments – eliminating the need to manually upload files\"\n- 两个功能都属于 Anthropic 更大的愿景——\"Claude as your collaborative partner that delivers hours of work in minutes\"\n- Enterprise 版新增 cataloging 功能，提升检索质量和准确度\n\n【背景与上下文】\n这是 Anthropic 在「AI 助手 vs AI 协作者」定位上的又一个关键动作。此前 Cowork 定位知识工作，现在 Research + Workspace 让 Claude 真正能理解用户的工作上下文。与 OpenAI 的 ChatGPT 在 Google Workspace 生态中的渗透直接竞争。\n\n【影响与前瞻】\n对 Enterprise 用户来说，这是强力的生产力提升工具。对 Anthropic 来说，这是在 AI 竞赛中从「模型能力」转向「产品深度集成」的战略举措——模型能力差距缩小后，谁能更好地接入用户工作流谁就能赢。",
+      "source": "claude.com/blog",
+      "source_type": "tavily",
+      "url": "https://claude.com/blog/research",
+      "timestamp": "2026-05-04T00:00:00Z",
+      "importance": 8,
+      "tags": [
+        "Anthropic",
+        "Research",
+        "Google Workspace",
+        "企业",
+        "Claude"
+      ],
+      "batch_time": "2026-05-04T15:54:47+08:00"
+    },
+    {
+      "title": "Anthropic 官方博客：AI 指数增长下的产品管理 — Claude Code 产品负责人 Cat Wu 分享从 Sonnet 3.5 到 Opus 4.7 的 PM 演变",
+      "summary": "Claude Code 产品负责人 Cat Wu 撰写长文，分享在模型能力指数级增长的环境下，产品管理团队如何适应。核心观点：随着模型从 Sonnet 3.5（METR 测量约 21 分钟人类任务）演进到 Opus 4.7，Claude Code 团队的角色正在融合——设计师写代码、工程师做产品决策、PM 搭原型跑评测。她把自己使用的三个产品定位为：聊天协作者（Claude.ai）、Agent 编码工具（Claude Code）、知识工作工具（Cowork）。",
+      "detail_content": "【核心事件】\nAnthropic 在 claude.com/blog 发布了 Cat Wu（Claude Code Head of Product）的文章《Product management on the AI exponential》。这是罕见的 Anthropic 内部视角——PM 如何在模型能力每月都在跃升的环境中做产品决策。\n\n【关键细节与引用】\n- 她的测试习惯：\"Since Claude Sonnet 3.5 (new) in October 2024, I made a habit of testing every new model by asking Claude Code to add a table tool to Excalidraw\"——每个新模型都用同一个 benchmark task\n- 三个产品分工：\"a chat collaborator (Claude.ai), agentic coding tool (Claude Code), and a knowledge work tool (Cowork)\"\n- 团队变化：\"Our roles are blending together: designers ship code, engineers make product decisions, product managers build prototypes and evals\"\n- METR 基准参考：Sonnet 3.5 (new) 可完成约 21 分钟人类任务 → 现在的模型能力已远超\n\n【背景与上下文】\nCat Wu 是 Claude Code 的产品负责人，这个角色在 AI 公司中极其重要——她需要在模型能力快速迭代和用户体验稳定之间找平衡。这篇文章提供了 Anthropic 内部如何看待「AI-native 产品管理」的窗口。\n\n【影响与前瞻】\n对 AI 从业者来说，这篇文章是理解 AI 产品管理方法论的重要参考。团队角色融合的趋势在 AI 公司中越来越普遍，Cat Wu 的经验对其他 AI 产品团队有借鉴意义。",
+      "source": "claude.com/blog",
+      "source_type": "tavily",
+      "url": "https://claude.com/blog/product-management-on-the-ai-exponential",
+      "timestamp": "2026-05-04T00:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Anthropic",
+        "Claude Code",
+        "产品管理",
+        "Cat Wu",
+        "AI产品"
+      ],
+      "batch_time": "2026-05-04T15:54:47+08:00"
+    }
+  ]
+}
