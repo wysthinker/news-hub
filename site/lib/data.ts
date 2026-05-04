@@ -58,6 +58,11 @@ export interface DateGroup {
   isRecent: boolean;   // first 2 groups expanded
 }
 
+export interface LatestBatch {
+  batch_time: string;
+  items: NewsItem[];
+}
+
 export interface ChannelData {
   channel_id: string;
   channel_name: string;
@@ -128,7 +133,30 @@ export function groupByBatch(data: ChannelData): BatchGroup[] {
   }));
 }
 
-export function groupByDate(data: ChannelData): DateGroup[] {
+/** Returns items from the most recent batch, sorted by importance desc.
+ * Used to pin "what changed in this fetch" at the top of the channel page,
+ * so the user does not have to expand multiple date groups to find them.
+ * Once a newer batch arrives, these items drop out of the pinned section
+ * and appear only in their natural date group below. */
+export function getLatestBatch(data: ChannelData): LatestBatch | null {
+  if (!data.items.length) return null;
+  const batchTimes = data.items
+    .map((it) => it.batch_time || data.generated_at)
+    .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
+  const latestBatch = batchTimes[0] || data.generated_at;
+
+  const items = data.items
+    .filter((it) => (it.batch_time || data.generated_at) === latestBatch)
+    .sort((a, b) => b.importance - a.importance);
+
+  if (!items.length) return null;
+  return { batch_time: latestBatch, items };
+}
+
+export function groupByDate(
+  data: ChannelData,
+  excludeUrls?: Set<string>,
+): DateGroup[] {
   // Find the latest batch_time to mark NEW items
   const batchTimes = data.items
     .map((it) => it.batch_time || data.generated_at)
@@ -138,6 +166,7 @@ export function groupByDate(data: ChannelData): DateGroup[] {
   // Group items by news date (timestamp)
   const groups = new Map<string, (NewsItem & { isNew?: boolean })[]>();
   for (const item of data.items) {
+    if (excludeUrls && item.url && excludeUrls.has(item.url)) continue;
     const d = new Date(item.timestamp);
     const dateKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
     if (!groups.has(dateKey)) groups.set(dateKey, []);

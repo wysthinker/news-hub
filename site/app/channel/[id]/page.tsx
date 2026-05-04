@@ -3,6 +3,7 @@ import {
   getChannels,
   getChannelData,
   getArchiveList,
+  getLatestBatch,
   groupByDate,
   itemId,
   formatTime,
@@ -49,7 +50,11 @@ export default async function ChannelPage({
     );
   }
 
-  const dateGroups = groupByDate(data);
+  const latestBatch = getLatestBatch(data);
+  const pinnedUrls = new Set(
+    (latestBatch?.items ?? []).map((it) => it.url).filter(Boolean),
+  );
+  const dateGroups = groupByDate(data, pinnedUrls);
 
   return (
     <main className="mx-auto max-w-2xl px-5 py-12">
@@ -99,7 +104,35 @@ export default async function ChannelPage({
         </section>
       )}
 
-      {/* 按新闻日期分组 */}
+      {/* 本次更新（pinned 至顶部，下次抓取后这些条目会回到各自的发布日期分组） */}
+      {latestBatch && (
+        <section className="mb-8">
+          <h2
+            className="mb-3 flex items-center gap-2 text-xs font-medium uppercase tracking-wider"
+            style={{ color: "var(--accent)" }}
+          >
+            <span
+              className="inline-block h-2 w-2 rounded-full"
+              style={{ background: "var(--accent)" }}
+            />
+            本次更新
+            <span style={{ color: "var(--text-tertiary)" }}>
+              · {latestBatch.items.length} 条 · {formatTime(latestBatch.batch_time)}抓取
+            </span>
+          </h2>
+          <div className="space-y-3">
+            {latestBatch.items.map((item, i) => (
+              <NewsCard
+                key={i}
+                item={{ ...item, isNew: true }}
+                channelId={id}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* 按新闻日期分组（已剔除上方 pinned 条目，避免重复） */}
       {dateGroups.map((group) => (
         <DateSection key={group.date} group={group} channelId={id} />
       ))}
