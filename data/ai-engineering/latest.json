@@ -1,9 +1,187 @@
 {
   "channel_id": "ai-engineering",
   "channel_name": "AI 工程实战",
-  "generated_at": "2026-05-15T10:09:49.328360+08:00",
-  "digest": "本周 AI 工程实战领域有两个核心趋势：一是大公司 CEO 争相公布 AI 编码占比——Airbnb Chesky 称 60% 代码由 AI 编写、管理者必须回归编码；二是多 Agent 协作模式进入工程实践深水区——AMAX Engineering 用三个 Agent 组建开发团队、Garry Tan 开源 gstack 把 Claude Code 变成虚拟工程组织。同时，一线工程师的失败教训开始浮出水面：30 天全 AI 编码实验暴露了连接池耗尽、数据损坏等生产事故。工具层面，腾讯开源了 Agent Memory 方案降低 61% Token 消耗，Anthropic 发布了大代码库最佳实践指南。",
+  "generated_at": "2026-05-16T10:07:35.899520+08:00",
+  "digest": "本周 AI 工程领域出现明显的「规模化 Agent 部署」趋势：steipete 在 OpenClaw 项目中同时运行 100 个 Codex 实例做自动化审查；Shopify 的 River Agent 系统选择在 Slack 公开频道运行以促进内部学习；Google Gemini Spark 泄露信号表明 always-on agent 竞赛升级。Claude Code 持续迭代（v2.1.143 插件管理增强），OpenClaw 性能提升 3.5x，飞书 CLI 开源获万星——AI Agent 的可见性、可控性和工程化成熟度在快速提升。",
   "items": [
+    {
+      "title": "steipete：在 OpenClaw 项目中同时运行 100 个 Codex 实例做自动化工程",
+      "summary": "Peter Steinberger 分享了在 OpenClaw 项目中大规模使用 AI 的实践：持续运行约 100 个 Codex 实例，自动化处理代码审查、安全扫描、issue 去重、测试环境复现与录制验证视频。通过 clawpatch.ai 将代码库拆分为语义功能单元进行审查，整合 Vercel DeepSec 做安全分析。整套体系让极精简团队实现极高效率。",
+      "detail_content": "【核心事件】\nPeter Steinberger（@steipete）在 5 月 15 日发布推文，展示了 OpenClaw 项目中前所未有规模的 AI 自动化工程实践。团队持续运行约 100 个 Codex 实例，覆盖从代码审查到安全扫描的全链条。具体自动化任务包括：审查代码与安全问题、去重归类 GitHub issue、自动重现复杂测试环境并录制验证视频、从会议讨论中主动创建任务、过滤垃圾评论以及监控性能回归。\n\n【关键细节】\n使用 clawpatch.ai 将项目拆分为功能单元进行语义审查——这是一个刚发布的工具（v0.1.0），能把代码库映射成语义功能切片，审查错误和质量问题，并记录经过验证的明确修复尝试。同时整合 Vercel DeepSec 进行安全分析。steipete 此前也分享过 Birdclaw（Twitter 归档搜索）、Spogo（Spotify CLI）、SonosCLI 等多个由 Codex 辅助完成的项目。\n\n【背景与上下文】\n这代表了一种新的工程范式：不是让 AI 写代码，而是让 AI 做工程管理的「脏活」。OpenClaw 项目最新版本速度提升约 3.5x，steipete 还宣布为项目聘请了完整团队，推出了新的 TypeScript 安全加固文件系统库 fs-safe.io，部分文件操作提速 10 倍。他的观点是：在 token 成本持续下降的趋势下，大规模并行 AI 实例是可行的。\n\n【影响与前瞻】\n这种「100 实例并行」的模式为开源项目维护提供了新思路——但 token 成本仍然是现实约束。对于企业 AI 转型，关键启示是：AI 最大的价值可能不在代码生成，而在代码审查、质量保障和工程流程自动化。这跟 Cloudflare CEO 说的「AI 使用量 3 个月涨 6 倍」形成了呼应——AI 正在渗透工程团队的每一个角落。",
+      "source": "X: @steipete",
+      "source_type": "aihot",
+      "url": "https://x.com/steipete/status/2055405041843052792",
+      "timestamp": "2026-05-15T21:48:44Z",
+      "importance": 9,
+      "tags": [
+        "OpenClaw",
+        "Codex",
+        "规模化Agent",
+        "代码审查",
+        "steipete"
+      ],
+      "batch_time": "2026-05-16T10:00:00+08:00"
+    },
+    {
+      "title": "Shopify River Agent 系统：公开频道运行，让全公司学会用 AI",
+      "summary": "Simon Willison 发现 Shopify 的 River agent 系统在 Slack 公开频道运行，所有员工都能看到别人如何使用 AI。他将此比作 Midjourney 在 Discord 上公开生图——公开学习是复杂 AI 工具普及的关键机制。这种设计选择体现了「AI 采用」不只是技术问题，更是组织文化问题。",
+      "detail_content": "【核心事件】\nSimon Willison 在 5 月 10 日发推，分享了 Shopify River agent 系统的一个设计细节：这个 Agent 系统运行在 Slack 公开频道中，所有员工都能看到别人如何与 AI 交互。Willison 认为这是 AI 工具在组织内部普及的关键设计——与 Midjourney 选择在 Discord 公开频道发布有异曲同工之妙。\n\n【关键细节】\nMidjourney 在 Discord 上的公开模式被广泛认为是其成功的关键因素之一：用户通过观察别人的 prompt 来学习复杂的图像生成技巧。Shopify 的 River Agent 采用了相同的哲学——在公开环境中运行，让「AI 使用」变成可见的、可学习的、可模仿的。\n\n【背景与上下文】\n这跟 Disney 的 AI 超级用户 Josh Damaro 的故事形成对比——Disney 也有内部 AI 采用排行榜，但更强调个人竞争。Shopify 的模式更强调集体学习。Willison 本人一直在推动「Agentic Engineering」概念，他的博客文章「Vibe coding and agentic engineering are getting closer than I'd like」引发了行业讨论。\n\n【影响与前瞻】\n对于推行 AI 转型的企业来说，这个案例提供了一个具体的组织设计参考：不是封闭的 AI 试点，而是公开的 AI 使用环境。在银行等传统行业中，可以考虑在内部协作工具中设置公开的 AI 交互频道，让各部门员工互相学习最佳实践。关键挑战是平衡透明度和信息安全。",
+      "source": "X: @simonw",
+      "source_type": "opentwitter",
+      "url": "https://x.com/simonw/status/2053529689122328947",
+      "timestamp": "2026-05-10T17:36:45Z",
+      "importance": 8,
+      "tags": [
+        "Shopify",
+        "River Agent",
+        "组织文化",
+        "AI采用",
+        "公开学习"
+      ],
+      "batch_time": "2026-05-16T10:00:00+08:00"
+    },
+    {
+      "title": "Gemini Spark agent 泄露：Google 的 always-on agent 对标 Claude Cowork",
+      "summary": "Android Authority 曝光 Google 正在开发 Gemini Spark——一个常驻聊天中的 AI agent，能执行任务而非仅回答问题。支持创建自定义 Skills 处理重复任务，可控制 Chrome 浏览器并访问本地文件。目前还不能完全控制电脑，但方向明确。",
+      "detail_content": "【核心事件】\nAndroid Authority 在 5 月 15 日曝光 Google 内部正在开发 Gemini Spark，一个「always-active sidekick」型 AI agent。不同于当前 Gemini 的问答模式，Spark 旨在常驻在用户聊天中，主动为用户执行任务。\n\n【关键细节】\nSpark 的核心能力包括：1）创建自定义 Skills 来处理重复性任务（类似 Claude Code 的 Skills 系统）；2）控制 Chrome 浏览器执行网页操作；3）访问用户设备上的本地文件。但报道指出，Spark 目前还无法像 OpenClaw 和 Claude Cowork 那样完全控制整台电脑。Google 在本周的 Gemini 更新中展示了新的自动化功能和界面改版，Spark 可能作为更深层的 agentic 升级随后推出。\n\n【背景与上下文】\n这是 AI agent 竞赛白热化的又一信号。Anthropic 的 Claude Cowork 已经支持 Computer Use，OpenClaw 社区在快速迭代（最新版提速 3.5x），OpenAI 的 Codex 已经登陆手机端。Google 必须在 agent 领域跟进，Spark 是其明确的对标产品。\n\n【影响与前瞻】\nSpark 的 Skills 概念与 Claude Code 的 Skills 高度相似，说明「可扩展的 agent 能力」正在成为行业标准。对于企业用户来说，多平台 agent 并存将成为常态，需要考虑跨平台的 agent 编排和治理策略。银行级别的应用还需要等待完整 computer use 能力的成熟。",
+      "source": "Android Authority",
+      "source_type": "tavily",
+      "url": "https://www.androidauthority.com/google-gemini-spark-agent-leak-3667475/",
+      "timestamp": "2026-05-15T12:57:20Z",
+      "importance": 8,
+      "tags": [
+        "Google",
+        "Gemini Spark",
+        "AI Agent",
+        "Claude Cowork",
+        "竞争格局"
+      ],
+      "batch_time": "2026-05-16T10:00:00+08:00"
+    },
+    {
+      "title": "Gergely Orosz 引述 Meta 工程师：很多「AI 裁员」可能方向反了",
+      "summary": "Pragmatic Engineer 作者引述 Meta 工程师观点：更多 AI 投入不一定带来更好的业务结果，很多所谓的「AI 驱动裁员」可能恰恰是因为 ROI 不及预期。同条推文获得 1600+ 赞。Gergely 还指出「软件工程将死」和「SaaS 将死」的预测都落空了。",
+      "detail_content": "【核心事件】\nGergely Orosz（Pragmatic Engineer 作者）在 5 月 6 日转发了 Meta 工程师 @championswimmer（Arnav Gupta）的观点：很多被包装成「AI 驱动的裁员」，实际上可能恰恰相反——是因为 AI 投入没有带来预期的业务回报。Gergely 评论称这是一个「值得阅读的视角」。\n\n【关键细节】\nGergely 在同一天还发布了另一条获得 1000+ 赞的推文，指出两个流行的 AI 预测都已落空：「软件工程将死」→ 实际上软件工程师需求在增长（部分因为 AI）；「SaaS 将死」→ SaaS 企业在大幅增长（部分因为 AI）。他的结论：小心你相信什么。\n\n【背景与上下文】\nCloudflare 裁员 20%、Block/Oracle/Meta 等科技公司持续裁员，CEO 们普遍用「AI 转型」来解释裁员决策。但 Charter Works 的分析文章指出，美国开发者职位发布量实际上正在回升到三年来的最高水平——与硅谷的「末日论」形成鲜明对比。\n\n【影响与前瞻】\n对于正在做 AI 转型的企业来说，这是一个重要的提醒：不要用 AI 作为裁员的万能借口。真正的 AI 转型应该聚焦在具体工作流的改造上（如 Stripe 的 Forward Deployed AI Accelerator 模式），而不是简单的人员替换。ROI 验证比叙事更重要。",
+      "source": "X: @GergelyOrosz",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2051973228877201570",
+      "timestamp": "2026-05-06T10:31:56Z",
+      "importance": 7,
+      "tags": [
+        "AI裁员",
+        "Meta",
+        "ROI",
+        "软件工程",
+        "Gergely Orosz"
+      ],
+      "batch_time": "2026-05-16T10:00:00+08:00"
+    },
+    {
+      "title": "OpenAI Codex 登陆手机：远程监控 AI 编码工作流",
+      "summary": "OpenAI 将 Codex 集成到 ChatGPT 移动端，用户可以在手机上远程监控和管理正在运行的编码任务。这是继 Anthropic 的 Remote Control 功能之后，编码 Agent 进入移动端的又一里程碑。",
+      "detail_content": "【核心事件】\nOpenAI 在 5 月 14 日宣布将 Codex 集成到 ChatGPT 移动应用中，用户可以在手机上远程查看 Codex 的实时运行环境。不只是远程控制单个任务，而是能在任何运行 Codex 的设备上监控整个开发工作流。\n\n【关键细节】\nCodex 在上个月已获得桌面端后台运行能力，可以自主完成各种任务。此次移动端集成进一步解放了开发者——你可以在通勤时给 Codex 派活，到办公室时检查结果。Anthropic 在今年 2 月也推出了类似的 Remote Control 功能，允许远程监控 Claude Code 的工作。\n\n【背景与上下文】\nTechCrunch 将此描述为 OpenAI 和 Anthropic 之间「紧张的竞争」——谁的 agentic 编码工具会成为最广泛使用的。Codex 之前还完成了自主安全审计并赚取赏金的里程碑。OpenAI 此前也公开了 Codex 安全运行框架（沙盒隔离 + 人工审批 + 网络策略）。\n\n【影响与前瞻】\n移动端监控标志着 AI 编码 Agent 正式进入「异步工作」模式——开发者不再是坐在电脑前等 AI 写完，而是随时随地派活、监控、调整。这对工程团队的工作方式有深远影响：编码不再是朝九晚五的活动，而是 24/7 的 agent 编排。企业需要建立相应的 agent 治理和监控机制。",
+      "source": "TechCrunch",
+      "source_type": "tavily",
+      "url": "https://techcrunch.com/2026/05/14/openai-says-codex-is-coming-to-your-phone/",
+      "timestamp": "2026-05-14T20:58:55Z",
+      "importance": 7,
+      "tags": [
+        "OpenAI",
+        "Codex",
+        "移动端",
+        "远程监控",
+        "Agent竞争"
+      ],
+      "batch_time": "2026-05-16T10:00:00+08:00"
+    },
+    {
+      "title": "clawpatch 0.1.0：语义功能切片的 AI 代码审查工具",
+      "summary": "steipete 发布 clawpatch——将代码库映射成语义功能切片、审查错误和质量问题、并记录修复尝试的工具。与传统行级 diff 审查不同，clawpatch 从功能维度理解代码变更。",
+      "detail_content": "【核心事件】\nPeter Steinberger 在 5 月 15 日发布 clawpatch 0.1.0，一个新的 AI 代码审查工具。与传统的行级 diff 审查不同，clawpatch 将整个代码库映射成「语义功能切片」，从功能维度理解代码变更，审查其中的错误和质量问题。\n\n【关键细节】\nclawpatch 的独特之处在于它不只是标记问题，还会记录「经过验证的明确修复尝试」——这意味着它能追踪哪些修复是有效的。steipete 称「你会发现它能发现的问题之多令人惊讶」。工具通过 npm install -g clawpatch 安装，访问 clawpatch.ai 了解更多。\n\n【背景与上下文】\n这跟 steipete 在 OpenClaw 项目中运行 100 个 Codex 实例的实践直接相关——clawpatch 是他自动化审查流水线中的关键工具。此前 Cursor 的 Bugbot 也从管道式审查进化到了全自主模式，PR 审查解决率从 52% 升至 70%+。\n\n【影响与前瞻】\n代码审查正在从「逐行 diff」进化到「语义理解」。clawpatch 代表了一种新方向：不是检查代码变了什么，而是理解这些变化对功能的影响。对于大型代码库（尤其是银行业），这种语义级别的审查可能比传统工具更能发现潜在风险。",
+      "source": "X: @steipete / AIHOT",
+      "source_type": "aihot",
+      "url": "https://x.com/steipete/status/2055364630709448970",
+      "timestamp": "2026-05-15T19:08:09Z",
+      "importance": 7,
+      "tags": [
+        "clawpatch",
+        "代码审查",
+        "语义分析",
+        "steipete",
+        "开源工具"
+      ],
+      "batch_time": "2026-05-16T10:00:00+08:00"
+    },
+    {
+      "title": "飞书 CLI 开源 45 天破万星：AI Agent 操作的可见性成为关键卖点",
+      "summary": "飞书开源 lark-cli 在 45 天内获超 1 万 GitHub star。AI 通过命令行操作飞书，每一步可预览、可审查。与云端不可见的 MCP 模式形成对比，「可见可控」被视为开发者信任 AI Agent 的前提。",
+      "detail_content": "【核心事件】\n飞书在 5 月 15 日开源的命令行工具 lark-cli 在 45 天内获得超过 1 万 GitHub star，成为国内首个破万星的办公套件开源项目。该工具允许 AI 通过命令行直接操作飞书，执行建群、建文档、发通知等任务。\n\n【关键细节】\nlark-cli 的核心设计理念是「每一步操作都可预览、可审查」。用户可以在终端中看到 AI 即将执行的所有操作，确认后才真正执行。这与传统 MCP（Model Context Protocol）模式形成鲜明对比——MCP 的操作通常在云端执行，对用户来说是黑盒。lark-cli 的主干代码已合并 10 位外部开发者的贡献，而同类产品钉钉和企业微信的外部贡献为零。\n\n【背景与上下文】\n这反映了 AI Agent 领域一个正在形成的共识：Agent 的可信度取决于操作的可见性。Dashlane 发布的 AI 编码治理框架也强调「四层分级」让 100+ 人安全使用 Claude Code。Adversa.AI 发现的 Claude Code 供应链攻击风险也说明了可见性和审批机制的重要性。\n\n【影响与前瞻】\n对于银行等高度合规的行业，lark-cli 的「可见可控」模式提供了比 MCP 更适合的 Agent 集成方案。命令行工具天然产生审计日志，操作可回溯，审批可嵌入——这些特性正好满足了金融行业的合规要求。",
+      "source": "X: @AYi_AInotes / AIHOT",
+      "source_type": "aihot",
+      "url": "https://x.com/AYi_AInotes/status/2055263164145504501",
+      "timestamp": "2026-05-15T12:24:57Z",
+      "importance": 7,
+      "tags": [
+        "飞书",
+        "CLI",
+        "AI Agent",
+        "可见性",
+        "合规"
+      ],
+      "batch_time": "2026-05-16T10:00:00+08:00"
+    },
+    {
+      "title": "Jensen Huang 告诉 CS 毕业生：电工比你们更有前景",
+      "summary": "英伟达 CEO 在卡内基梅隆大学告诉 CS 毕业生，技工前景更好。数据支撑：技工需求增长是白领 3 倍，AI 相关职位早期就业下降 16%。科技公司今年投 7000 亿美元建数据中心，基础设施人才比 prompt 工程师更稀缺。",
+      "detail_content": "【核心事件】\n英伟达 CEO Jensen Huang 在卡内基梅隆大学 2026 届毕业典礼上发表引发广泛讨论的演讲：告诉 CS 毕业生，电工、水管工等技工比他们更有前景。\n\n【关键细节】\nRandstad 分析显示技工需求增长是白领职位的三倍，机器人技术员职位增长 107%。斯坦福研究发现 AI 相关职位早期就业下降 16%。顶级电工年薪超 10.6 万美元，无需学位负债。科技公司今年投资 7000 亿美元建设数据中心，全球到 2030 年预计达 7 万亿美元。制造业面临劳动力短缺：每 100 名新工人进入就有 102 人离开。结论：AI 时代最大赢家是能建设数据中心的技工，而非提示工程师。\n\n【背景与上下文】\n这是 Jensen Huang 之前「不需要学编程」言论的延续，但这次有更具体的数据支撑。同时，Charter Works 的分析指出美国开发者职位发布量其实在回升——两个看似矛盾的趋势同时存在：AI 代码能力提升导致初级编码岗位减少，但 AI 基础设施需求爆发导致工程岗位增加。\n\n【影响与前瞻】\n对于 AI 转型中的企业，人才策略需要两条腿走路：一方面培养 AI-native 的软件工程师，另一方面投资基础设施和运维人才。在银行场景中，懂 AI 的运维工程师可能比纯 AI 研究员更稀缺。",
+      "source": "AIHOT",
+      "source_type": "aihot",
+      "url": "https://x.com/kimmonismus/status/2055403142913884288",
+      "timestamp": "2026-05-15T21:41:11Z",
+      "importance": 6,
+      "tags": [
+        "Jensen Huang",
+        "就业",
+        "技工",
+        "AI影响",
+        "人才策略"
+      ],
+      "batch_time": "2026-05-16T10:00:00+08:00"
+    },
+    {
+      "title": "Claude Code v2.1.143：插件管理增强与多项稳定性修复",
+      "summary": "Claude Code 新版本重点增强插件管理：强制执行依赖关系，市场新增预估上下文成本显示。后台会话唤醒后保留模型与努力级别设置。修复多个关键 bug，包括损坏的 credentials 文件导致 CLI 卡住等问题。",
+      "detail_content": "【核心事件】\nClaude Code 在 5 月 15 日发布 v2.1.143 版本，这是一个以插件管理和稳定性为主的维护版本。\n\n【关键细节】\n核心改进：1）插件管理增强——强制执行插件依赖关系，插件市场新增预估上下文成本显示；2）新增 worktree.bgIsolation: \"none\" 设置，方便直接编辑工作副本；3）claude agents 命令新增多个参数配置默认会话。\n\n稳定性修复：1）损坏的 .credentials.json 文件不再导致 CLI 启动卡住；2）Windows Terminal 中的右键粘贴问题修复；3）后台会话错误捕获 IDE 文件引用问题修复；4）macOS 上后台作业读取特定目录文件的权限错误修复。\n\n【背景与上下文】\n此前 v2.1.139 引入了 Agent 视图、/goal 命令等重大功能。插件系统的成熟标志着 Claude Code 正在从「单体工具」进化为「平台」——开发者可以构建和分享自定义能力扩展。\n\n【影响与前瞻】\n插件市场的上下文成本显示帮助开发者在使用插件前了解 token 消耗预期。对于企业团队，插件依赖管理意味着更可控的工具链。Claude Code 几乎每周更新的节奏表明 Anthropic 在编码 Agent 赛道上投入了大量资源。",
+      "source": "AIHOT / GitHub Releases",
+      "source_type": "aihot",
+      "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.143",
+      "timestamp": "2026-05-15T22:28:22Z",
+      "importance": 6,
+      "tags": [
+        "Claude Code",
+        "版本更新",
+        "插件系统",
+        "Anthropic"
+      ],
+      "batch_time": "2026-05-16T10:00:00+08:00"
+    },
+    {
+      "title": "OpenClaw 最新版速度提升约 3.5x，引入机器人间通信测试",
+      "summary": "OpenClaw 新版本端到端响应速度提升约 3.5 倍。团队每 6 小时通过 Telegram 对所有 npm 版本进行端到端 RTT 测试，不再有静默回归。所有测试运行在 Blacksmith CI 上。",
+      "detail_content": "【核心事件】\nOpenClaw 在 5 月 15 日发布新版本，宣布端到端 RTT（往返时间）性能提升约 3.5 倍。\n\n【关键细节】\n测试方法：每 6 小时通过真实消息渠道（Telegram）对所有已发布的 npm 版本进行端到端 RTT 测试。采用全新的机器人间通信（bot-to-bot messaging）模式。所有运行器在 Blacksmith CI 上执行。目标是「在用户察觉之前捕捉性能回归」。\n\n【背景与上下文】\n同期 steipete 还发布了 OpenClaw 的新 TypeScript 安全加固文件系统库 fs-safe.io，替代之前临时性的安全方案，部分文件操作提速 10 倍。他为 OpenClaw 聘请了完整团队，称现在是项目成立以来最经过测试的版本。\n\n【影响与前瞻】\n3.5x 的性能提升对用户体验是质变级别。对于把 OpenClaw 作为日常 Agent 平台的用户，响应速度直接影响工作流效率。每 6 小时的自动化性能测试也树立了 AI 工具质量保障的新标准——不只是功能测试，还有性能回归测试。",
+      "source": "X: @openclaw / AIHOT",
+      "source_type": "aihot",
+      "url": "https://x.com/openclaw/status/2055273947537490422",
+      "timestamp": "2026-05-15T13:07:48Z",
+      "importance": 6,
+      "tags": [
+        "OpenClaw",
+        "性能",
+        "速度提升",
+        "质量保障"
+      ],
+      "batch_time": "2026-05-16T10:00:00+08:00"
+    },
     {
       "title": "Airbnb CEO Chesky：60% 代码由 AI 编写，管理者必须亲自用 Claude Code",
       "summary": "Airbnb CEO Brian Chesky 在财报电话会上透露，公司工程师产出代码中近 60% 由 AI 编写。他明确表示 Airbnb 不再需要「纯粹的管理者」，要求设计经理和工程经理回归编码或直接使用 Claude Code。这是继 DoorDash（2/3 代码 AI 写）和 Cloudflare（裁员 20% 转 AI-first）后，又一家头部科技公司公开量化 AI 编码渗透率。",
@@ -726,131 +904,6 @@
         "MCP"
       ],
       "batch_time": "2026-05-10T10:00:00+08:00"
-    },
-    {
-      "title": "Perplexity 公开 Agent Skills 构建内部手册：从实验到工程化的可复制方法论",
-      "summary": "Perplexity 发布了内部 agent skills 构建手册，强调「skills 需要全新的思维方式」。手册覆盖技能设计、迭代优化和维护的完整生命周期，是目前少数公开的 agent 工程实践文档之一。这标志着 agent 开发从个人黑客行为进入可复制的工程化阶段。",
-      "detail_content": "【核心事件】\n\n2026 年 5 月 8 日，Perplexity 在推特上公开了其内部构建 agent skills 的手册。完整文档发布在 research.perplexity.ai，涵盖技能设计、迭代优化和维护的全流程。\n\n【关键细节与引用】\n\nPerplexity 的推文原文：\"We've published our internal manual for building agent skills. Skills require a new way of thinking.\"\n\n文档地址：https://research.perplexity.ai/articles/designing-refining-and-maintaining-agent-skills-at-perplexity\n\n【背景与上下文】\n\nAgent skills 是 agent 能力扩展的基本单元。之前 ashpreetbedi 提出的 Context Providers（\"Agent 世界的 Unix 管道\"）和 Berry Xia 传播的 Alvaro Cintas 的「Agent Development Kit」（5 个文件夹把 Claude Code 变成工程团队）都是同一方向的不同尝试。\n\nPerplexity 作为 AI 搜索产品公司，其 skills 构建经验来自生产环境的实际运营，比理论框架更具实操参考价值。\n\n【影响与前瞻】\n\n对 agent 开发者的直接价值：1）这是少数来自生产团队的完整 skills 构建方法论，不是概念验证；2）维护阶段（而不仅是构建）的纳入说明 agent 工程正在成熟；3）可以和 ashpreetbedi 的 Agentic SE 方法论、Alvaro Cintas 的 ADK 架构对比参考，形成完整的 agent 工程知识体系。",
-      "source": "Perplexity / X",
-      "source_type": "aihot",
-      "url": "https://x.com/perplexity_ai/status/2052786858774630665",
-      "timestamp": "2026-05-08T16:25:00Z",
-      "importance": 8,
-      "tags": [
-        "Perplexity",
-        "Agent Skills",
-        "工程方法论",
-        "Agent开发"
-      ],
-      "batch_time": "2026-05-09T10:00:00+08:00"
-    },
-    {
-      "title": "RebelCheese（Shark Tank）用 AI Agent 自动核对运费账单：每月省 $50K",
-      "summary": "上过 Shark Tank 的纯素奶酪公司 RebelCheese 构建了一个 AI agent，自动拍照记录包裹尺寸、比对承运商费率、在 30 天窗口期内自动提交争议。之前约 5% 的运费账单存在多收费（尺寸重量、区域附加费等），人工审计不划算。Mark Cuban 称赞这是 agent AI 在非科技企业运营中即时 ROI 的典型案例。",
-      "detail_content": "【核心事件】\n\nRebelCheese 是一家全球发货的纯素奶酪公司（Shark Tank 参赛企业），发现约 5% 的承运商运费账单存在多收费——主要是尺寸重量差异、区域附加费和各种杂费，几乎总是对承运商有利。雇佣审计师对他们的体量不经济。\n\n他们构建的 agent 工作流：在打包时拍照记录箱子尺寸 → 读取承运商公开费率 → 比对发票金额 → 在 30 天争议窗口内自动提交异议。\n\n【关键细节与引用】\n\n月节省金额：约 $50,000。Mark Cuban（Shark Tank 投资人）特别提到这个案例，认为它展示了 agentic AI 对非科技企业在运营摩擦上的即时投资回报。\n\n这个 agent 针对的是一种「结构性泄漏」——复杂度之前保护了多收费行为，因为人工核对成本高于多收金额。\n\n【背景与上下文】\n\n这是一个典型的「AI 解决非编程问题」案例。之前本频道记录的 Select Interactive（6 个月 3x 人均交付）和 CGI（用 agent 逆向工程联邦金融系统）都是类似方向——agent 不只是写代码，还在处理运营层面的重复性高价值任务。\n\n【影响与前瞻】\n\n对银行业的启示：1）账单核对、费用审计这类「结构性泄漏」在金融服务中大量存在；2）agent 不需要是技术团队才能构建，业务部门可以驱动；3）$50K/月的 ROI 是非常直观的业务案例数字，比「效率提升 X%」更有说服力。",
-      "source": "Grok AI Search",
-      "source_type": "grok",
-      "url": "https://x.com/search?q=RebelCheese+AI+agent+shipping+invoice",
-      "timestamp": "2026-05-05T12:00:00Z",
-      "importance": 8,
-      "tags": [
-        "RebelCheese",
-        "Agent ROI",
-        "自动化运营",
-        "非科技企业",
-        "Shark Tank"
-      ],
-      "batch_time": "2026-05-09T10:00:00+08:00"
-    },
-    {
-      "title": "OpenAI 公开 Codex 安全运行框架：沙盒隔离 + 人工审批 + 网络策略 + 代理遥测",
-      "summary": "OpenAI 发布了在内部安全运行 Codex 的四层防护机制文档。沙盒环境完全隔离执行代码，所有生产请求需人工审核批准，网络策略限制外部依赖访问，实时遥测系统监控代理行为异常。这是 AI 编程工具安全治理的标杆级参考文档。",
-      "detail_content": "【核心事件】\n\n2026 年 5 月 8 日，OpenAI 发布了\"Running Codex safely at OpenAI\"文档，详细说明其内部安全运行 Codex 编程代理的四层防护框架。\n\n【关键细节与引用】\n\n四层防护：\n1. 沙盒隔离——所有代码在完全隔离的环境中执行\n2. 人工审批流程——所有生产环境请求必须经人工审核批准\n3. 严格网络策略——限制对外部依赖的访问\n4. 原生代理遥测——实时监控系统监控代理行为异常\n\n【背景与上下文】\n\n此前已有多个 AI agent 安全事故：PocketOS 的 AI agent 误删生产数据库（本频道已记录）、Adversa.AI 发现 Claude Code 的供应链攻击风险（也已记录）。OpenAI 的框架是对这类风险的系统性回应。\n\n和 Dashlane 的治理框架互补：Dashlane 关注组织治理和人员流程，OpenAI 关注技术基础设施的安全防护。两者结合构成完整的 AI 编程安全体系。\n\n【影响与前瞻】\n\n直接参考价值：1）四层防护模型可以作为任何企业部署 AI 编程工具的安全基线；2）遥测监控是「agent 安全运营」的新概念——不只是限制 agent 做什么，还要持续监控它实际上在做什么；3）对银行这类对安全和合规有更高要求的组织，这份文档是制定内部 AI 工具安全策略的绝佳起点。",
-      "source": "OpenAI Blog",
-      "source_type": "aihot",
-      "url": "https://openai.com/index/running-codex-safely",
-      "timestamp": "2026-05-08T12:30:00Z",
-      "importance": 8,
-      "tags": [
-        "OpenAI",
-        "Codex",
-        "Agent安全",
-        "沙盒隔离",
-        "安全框架"
-      ],
-      "batch_time": "2026-05-09T10:00:00+08:00"
-    },
-    {
-      "title": "Simon Willison：HTML 输出格式的「不合理有效性」——为什么 Claude Code 应该输出 HTML 而非 Markdown",
-      "summary": "Anthropic Claude Code 团队的 Thariq Shihipar 提出在向 LLM 请求输出时应优先选择 HTML 而非 Markdown。HTML 允许模型直接生成 SVG 图表、交互式组件和页面内导航，显著提升信息呈现的交互性。Simon Willison 证实这个方法有效，正在重新评估自己的 Markdown 优先习惯。",
-      "detail_content": "【核心事件】\n\nSimon Willison 在 5 月 8 日的博客中介绍了 Anthropic Claude Code 团队成员 Thariq Shihipar 的观点：在请求 LLM 输出时，HTML 格式远比 Markdown 更有效。\n\n【关键细节与引用】\n\nHTML 的优势：允许模型直接生成包含 SVG 图表、交互式组件（如可折叠区域、标签页）和页面内导航等丰富元素的文档。Willison 以 GPT-5.5 生成一个 Linux 安全漏洞的交互式 HTML 解释页面为例展示了实际效果。\n\n核心洞察：LLM 擅长生成结构化标记语言，而 HTML 比 Markdown 拥有更丰富的表达能力。既然模型都能生成，为什么不要求更丰富的输出格式？\n\n【背景与上下文】\n\nWillison 是长期使用 Markdown 的开发者，他的整个博客和工具链（包括 datasette 系列）都基于 Markdown。他承认这个建议让他「重新评估」自己的习惯。\n\n这和最近 vibe coding 与 agentic engineering 的融合趋势一致——Willison 最近发现两者在他自己的工作中开始趋同（他在 Code w/ Claude 2026 活动上分享了这一观察，已在本频道记录）。\n\n【影响与前瞻】\n\n实用提示工程技巧：1）在需要数据可视化或交互式报告时，要求 AI 输出 HTML 而非 Markdown；2）对银行内部的 AI 辅助报告生成场景特别有用——可以生成带图表和交互的分析报告；3）这是一个低成本高回报的工作流优化。",
-      "source": "Simon Willison Blog",
-      "source_type": "aihot",
-      "url": "https://simonwillison.net/2026/May/8/unreasonable-effectiveness-of-html",
-      "timestamp": "2026-05-08T21:00:11Z",
-      "importance": 7,
-      "tags": [
-        "Simon Willison",
-        "HTML输出",
-        "提示工程",
-        "Claude Code",
-        "数据可视化"
-      ],
-      "batch_time": "2026-05-09T10:00:00+08:00"
-    },
-    {
-      "title": "非技术 PM 用 AI 在一天内构建全球 AI 就业 3D 交互地图：15,352 个岗位可视化",
-      "summary": "一位非编程背景的产品经理给自己 8 小时，只用 AI 工具构建了一个 3D 交互式地球，可视化 15,352 个 AI 岗位、1,802 家公司、41 个国家。完整记录了逐步过程，证明非技术个体可以通过对话式 AI 编码快速交付真实的数据产品。",
-      "detail_content": "【核心事件】\n\n2026 年 5 月初，一位非编程背景的产品经理给自己设定了 8 小时的挑战：只用 AI 工具，构建一个可视化全球 AI 就业市场的数据产品。最终交付了一个 3D 交互式地球，包含 15,352 个 AI 岗位、1,802 家公司、41 个国家的数据。\n\n【关键细节与引用】\n\n该 PM 完整记录了逐步构建过程。使用的是对话式 AI 编码工具（如 Claude Code 或 Cursor），从数据收集、清洗到前端可视化全部通过 AI 辅助完成。\n\n【背景与上下文】\n\n这和之前本频道记录的多个「非技术者用 AI 构建产品」案例一致：LaChance（管道工程师用 Claude Code）、零部署经验者构建真正的产品、Shopify 12 位创始人自述。区别在于这次是一个 PM 用一天时间交付了一个数据可视化产品——这是更接近银行业务场景的能力。\n\n【影响与前瞻】\n\n对银行的启示：1）PM/业务分析师可以用 AI 工具独立构建数据可视化原型，不需要等工程师排期；2）一天内从零到交付的效率意味着可以快速验证数据假设；3）这是推广 AI 工具到业务部门的有力案例——比「AI 写代码」更容易被非技术人员理解。",
-      "source": "Grok AI Search",
-      "source_type": "grok",
-      "url": "https://x.com/search?q=non-technical+PM+3D+interactive+AI+jobs+map",
-      "timestamp": "2026-05-04T12:00:00Z",
-      "importance": 7,
-      "tags": [
-        "非技术人员",
-        "AI编码",
-        "PM",
-        "数据可视化",
-        "3D地图"
-      ],
-      "batch_time": "2026-05-09T10:00:00+08:00"
-    },
-    {
-      "title": "OpenRouter Agent SDK 新增 Human-in-the-Loop 工具：常规自动处理、高风险人工审批",
-      "summary": "OpenRouter 在其 Agent SDK 中新增人工介入工具。常规工具调用自动处理，高风险调用暂停等待人工审核。返回值可以保持代理运行，返回 null 则将该调用提交到应用层等待人工输入。这是 agent 安全控制的基础设施化。",
-      "detail_content": "【核心事件】\n\n2026 年 5 月 8 日，OpenRouter 在其 Agent SDK 中发布了 human-in-the-loop 工具功能。这套机制让开发者可以精细控制哪些 agent 操作需要人工审批、哪些可以自动执行。\n\n【关键细节与引用】\n\n工作方式：常规工具调用由 agent 自动处理完成；高风险操作暂停执行，提交到应用层等待人工审核和输入。开发者通过返回值控制——返回正常值让 agent 继续运行，返回 null 则将该调用转为人工审批状态。\n\n【背景与上下文】\n\n这和 OpenAI 的 Codex 安全框架、Dashlane 的四层治理体系是同一个趋势的不同层面：AI 工具链正在把安全控制内建到 SDK 级别，而不是让每个团队自己实现。\n\nOpenRouter 作为一个多模型路由平台，其 SDK 的 human-in-the-loop 能力对使用多种 LLM 的团队特别有价值——统一的安全控制层。\n\n【影响与前瞻】\n\n技术参考：1）对于构建 agent 系统的团队，这是现成的 human-in-the-loop 实现方案；2）返回值控制模式简洁优雅，可以借鉴到自研系统中；3）agent 安全控制正在从「最佳实践」变成「SDK 内建功能」，降低了安全部署的门槛。",
-      "source": "OpenRouter / X",
-      "source_type": "aihot",
-      "url": "https://x.com/OpenRouter/status/2052856129961758917",
-      "timestamp": "2026-05-08T21:00:16Z",
-      "importance": 7,
-      "tags": [
-        "OpenRouter",
-        "Agent SDK",
-        "Human-in-the-Loop",
-        "Agent安全",
-        "开发工具"
-      ],
-      "batch_time": "2026-05-09T10:00:00+08:00"
-    },
-    {
-      "title": "Cursor Bugbot 转向按量计费：团队 $40/月席位制终结，单次运行约 $1-1.5",
-      "summary": "Cursor 宣布 Bugbot（自动 PR 审查机器人）从每月 $40/席位的订阅制改为按使用量计费。团队按需消费计费，个人按包含使用量计费。平均每次运行成本约 $1.00-1.50。用户可配置审查强度：默认强度下 80% 被识别问题在合并时得到解决；高强度模式多发现 35% 问题。这是 AI 编程工具补贴时代结束的又一个信号。",
-      "detail_content": "【核心事件】\n\n2026 年 5 月 8 日，Cursor 宣布 Bugbot（其自动 PR 审查工具）从 $40/月/席位的固定订阅制转向按使用量计费。现有用户的变更将在 2026 年 6 月 5 日后的下一个账单周期生效。\n\n【关键细节与引用】\n\n计费模式：团队版按实际使用量消费，个人版按包含一定使用量的套餐计费。平均每次 Bugbot 运行成本约 $1.00-1.50，具体取决于 PR 大小和复杂度。\n\n审查强度可配置：默认强度下 80% 被识别的问题在合并时得到解决；高强度模式可多发现 35% 的问题，解决率仍保持在 80%。\n\n【背景与上下文】\n\n这和 GergelyOrosz 之前提出的「AI 编程补贴时代结束」趋势一致（本频道已记录）。Copilot 按量计费、Claude Code 限流争议都指向同一个方向：AI 编程工具的免费午餐正在结束，真正的 ROI 评估变得更重要。\n\nCursor 作为 AI IDE 市场领导者（半数以上财富 500 强使用），其定价模式的转变有行业风向标意义。\n\n【影响与前瞻】\n\n对 AI 工具采用策略的影响：1）按量计费意味着使用 AI 工具的团队需要更精确地衡量 ROI；2）Bugbot 的 $1-1.5/次 运行成本和 80% 问题解决率是评估 AI 工具价值的具体数据点；3）对银行来说，从「试试看」到「按量付费」的转变要求更严格的使用场景筛选和效果评估。",
-      "source": "Cursor Blog",
-      "source_type": "aihot",
-      "url": "https://cursor.com/blog/may-2026-bugbot-changes",
-      "timestamp": "2026-05-08T12:00:00Z",
-      "importance": 6,
-      "tags": [
-        "Cursor",
-        "Bugbot",
-        "按量计费",
-        "AI工具定价",
-        "PR审查"
-      ],
-      "batch_time": "2026-05-09T10:00:00+08:00"
     }
   ]
 }
