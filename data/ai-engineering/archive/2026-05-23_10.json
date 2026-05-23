@@ -1,0 +1,187 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-05-23T10:00:00+08:00",
+  "digest": "本周 AI 工程圈有几个值得关注的信号：一是 Agent 推理经济学的真实数据终于浮出水面——SemiAnalysis 分析了 43.2 万条真实编码 Agent 请求，发现中位数输入 token 高达 9.6 万，这对成本建模和架构选择有直接影响；二是 Karpathy 的 65 行 CLAUDE.md 跑到 22 万星标，说明「怎么写好 prompt 规则」正在从黑艺术变成工程方法论；三是 Cursor 以 Composer 2.5 的性价比（Opus 4.7 的 1/20 价格）开始回抢市场份额，工具竞争格局在快速变化。",
+  "items": [
+    {
+      "title": "SemiAnalysis 深度数据：43.2 万条真实 Agent 请求揭示推理经济学真相",
+      "summary": "SemiAnalysis 从 43.2 万条真实编码 Agent 请求中提取数据，发现输入 token 中位数高达 9.6 万——意味着模型在回答问题前已处理了超过《了不起的盖茨比》全文长度的上下文。这对 Agent 部署的成本模型、上下文窗口规划和缓存策略有直接且重大的影响。",
+      "detail_content": "【核心数据】\nSemiAnalysis 发布了一项基于 43.2 万条真实编码 Agent 请求数据的分析。核心发现：输入 token 中位数不是此前业界猜测的 3.2 万或 6.4 万，而是 9.6 万。这意味着在你输入问题之前，模型已经处理了超过《了不起的盖茨比》全文长度的上下文。\n\n【关键细节】\n这一数据对 Agent 部署的经济学有直接冲击：更高的输入 token 意味着更高的推理成本，同时也对上下文窗口管理（prompt caching、context compression）提出了更高要求。Agent 工作负载正在「悄然重塑推理经济学」。\n\n【背景与上下文】\n此前业界对 Agent 实际 token 消耗缺乏大规模实证数据，多数讨论基于推测。SemiAnalysis 的数据填补了这一空白，也为企业评估 Agent 部署 ROI 提供了更可靠的基础。\n\n【影响与前瞻】\n对正在评估 Claude Code、Cursor、Codex 等 Agent 工具成本的企业团队而言，这个数据意味着：1）token-based 定价模型的成本远比表面看起来高；2）上下文压缩和缓存策略（如 Claude 的 Prompt Cache）成为降低成本的关键杠杆；3）与 Uber 烧完年度预算的案例形成呼应——企业需要更精细的 Agent 成本建模。",
+      "source": "X：SemiAnalysis (@SemiAnalysis_)",
+      "source_type": "aihot",
+      "url": "https://x.com/SemiAnalysis_/status/2057869518295249373",
+      "timestamp": "2026-05-22T17:01:41Z",
+      "importance": 9,
+      "tags": [
+        "Agent",
+        "推理成本",
+        "Token经济学",
+        "数据分析",
+        "成本建模"
+      ],
+      "batch_time": "2026-05-23T10:00:00+08:00"
+    },
+    {
+      "title": "Karpathy 的 65 行 CLAUDE.md 四条规则：AI 编程准确率从 65% 飙至 94%",
+      "summary": "Karpathy 发布的 CLAUDE.md 仅 65 行、4 条核心规则，却将 AI 编程准确率从 65% 提升至 94%。项目以 22 万星标登顶 GitHub 趋势榜。核心思路是强制开发者「慢下来」——深度思考、追求简洁、精准修改、目标驱动，对抗「先写再说」的本能。",
+      "detail_content": "【核心事件】\nAndrej Karpathy 发布了一份仅 65 行的 CLAUDE.md 配置文件，包含 4 条核心规则，在 GitHub 上获得超过 22 万星标并登顶趋势榜。据报告，这份规则将 AI 编程的准确率从 65% 显著提升至 94%。\n\n【关键细节与规则】\n四条核心原则的精髓在于「强制开发者慢下来」：1）深度思考（Think deeply before coding）；2）追求简洁（Simplicity over complexity）；3）精准修改（Make targeted, precise changes）；4）目标驱动（Be goal-oriented）。这套规则对抗的是开发者面对 AI 工具时「先写再说」的本能反应。\n\n【背景与上下文】\nCLAUDE.md 是 Claude Code 的项目配置文件，相当于给 AI 助手的项目级「行为准则」。此前多数团队的 CLAUDE.md 要么过于笼统，要么过于冗长。Karpathy 的版本以极简著称，却证明了「好的规则不在多而在精」。\n\n【影响与前瞻】\n这份文件的走红标志着「Prompt Engineering for Code」正在从黑艺术演变为可复制的工程方法论。对于企业 AI 转型团队，这意味着：1）项目级配置文件的编写应该成为标准实践；2）规则设计应聚焦行为约束而非功能描述；3）这一方法论可推广到其他 Agent 工具（Cursor、Codex 等）。",
+      "source": "X：阿易 AI Notes (@AYi_AInotes)",
+      "source_type": "aihot",
+      "url": "https://x.com/AYi_AInotes/status/2057791192738283669",
+      "timestamp": "2026-05-22T11:50:26Z",
+      "importance": 9,
+      "tags": [
+        "Claude Code",
+        "Prompt Engineering",
+        "Karpathy",
+        "编程方法论",
+        "CLAUDE.md"
+      ],
+      "batch_time": "2026-05-23T10:00:00+08:00"
+    },
+    {
+      "title": "Cursor 以 Composer 2.5 性价比反击：Opus 4.7 的 1/20 价格，相似编码表现",
+      "summary": "Gergely Orosz 分析指出，Cursor 的 Composer 2.5 模型以 Opus 4.7 约 1/20 的价格提供相似的编码特性，预计将帮助 Cursor 赢回大量市场份额。这标志着 AI 编码工具竞争从「谁的模型最强」转向「谁的性价比最优」。",
+      "detail_content": "【核心事件】\nGergely Orosz 在 Twitter 分析了 Cursor 最新发布的 Composer 2.5 模型，指出其以 Anthropic Opus 4.7 约 1/20 的价格提供相似编码特性，预测 Cursor 将因此「赢回大量市场份额」。该推文获得近千次点赞。\n\n【关键细节】\n价格差距的核心在于：Opus 4.7 是最高端模型，token 成本极高；而 Composer 2.5（很可能是优化后的中型模型）在编码场景下的实际表现差距远小于价格差距。这对预算敏感的团队（尤其是 Uber 那种「四个月烧完年度预算」的情况）有直接吸引力。\n\n【背景与上下文】\n近期 AI 编码工具竞争激烈：Claude Code 凭借 Opus 4.7 性能领先但成本高昂，OpenAI Codex 推出 /goal 长时任务模式，Cursor 则走差异化路线。此前不少人认为 Cursor 在「模型军备竞赛」中处于劣势，这次定价策略改变了叙事。\n\n【影响与前瞻】\n市场正在分化为两条路线：1）追求极致性能的高成本路线（Opus 4.7 + Claude Code）；2）追求性价比的实用路线（Composer 2.5 + Cursor）。企业团队应根据任务复杂度做分层选型：核心架构用高端模型，日常编码用性价比模型。",
+      "source": "X：Gergely Orosz (@GergelyOrosz)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2057140853156581815",
+      "timestamp": "2026-05-20T16:46:13Z",
+      "importance": 8,
+      "tags": [
+        "Cursor",
+        "性价比",
+        "AI编码工具",
+        "市场竞争",
+        "Composer 2.5"
+      ],
+      "batch_time": "2026-05-23T10:00:00+08:00"
+    },
+    {
+      "title": "Kakuna：swyx 推荐的自动化代码库加固 Agent，16 小时把 MVP 变成生产级",
+      "summary": "swyx 推荐的 Kakuna 是一个专注「代码库加固」的 AI Agent 工具，通过内置检查清单和子代理并行，自动执行代码审查、测试补充、重构等「无聊工作」。实测中一次 16 小时运行能生成上百次提交，将脆弱的 MVP 转变为结构清晰的可维护项目。",
+      "detail_content": "【核心事件】\nswyx 在 Twitter 推荐了 Kakuna——一个专为「将早期原型自动转化为可维护生产级代码库」设计的 AI Agent 工具。它通过 skills with checklists（带检查清单的技能）和 plan-to-goal 工作流，模拟人类开发与运维流程。\n\n【关键细节】\nKakuna 的核心设计理念是「反熵增」和「反代码腐化」：1）使用内置检查清单确保每个加固步骤都被执行；2）支持子代理并行工作以提升效率；3）强调在保持功能不变的前提下执行代码审查、测试补充、重构等工程化操作。实测中，一次约 16 小时的运行能生成上百次提交，将一个脆弱的 MVP 转变为结构清晰、可长期构建的稳定项目。\n\n【背景与上下文】\n这正好解决了当前「vibe coding」浪潮的核心痛点：快速原型很容易写，但把原型变成生产级代码才是真正的工程挑战。此前很多团队的做法是手动重构或依赖 code review，效率低下。\n\n【影响与前瞻】\nKakuna 代表了一种新的 Agent 设计模式：不是帮你写新代码，而是帮你维护和改善已有代码。对银行等需要严格代码质量和审计合规的组织来说，这类「加固 Agent」的价值可能比「写码 Agent」更高。",
+      "source": "X：swyx (@swyx)",
+      "source_type": "aihot",
+      "url": "https://x.com/swyx/status/2057876022553690327",
+      "timestamp": "2026-05-22T17:27:31Z",
+      "importance": 8,
+      "tags": [
+        "代码加固",
+        "AI Agent",
+        "swyx",
+        "生产级代码",
+        "自动化"
+      ],
+      "batch_time": "2026-05-23T10:00:00+08:00"
+    },
+    {
+      "title": "Google 将 CodeMender 安全 Agent 整合进 Agent Platform：从独立工具到生态组件",
+      "summary": "Google 将去年发布的自主漏洞修复 Agent CodeMender 整合进更大范围的 Agent Platform 策略。分析认为 Google 判断企业不会信任独立的安全修复工具，而是需要将其嵌入到包含身份、网关、可观测性的完整治理基础设施中。",
+      "detail_content": "【核心事件】\nGoogle 正在将 CodeMender——一个能自主识别和修复软件漏洞的 AI 安全 Agent——从独立工具转型为更大范围的 Agent Platform 的一部分。该平台在 Google I/O 2026 上公布，包含了身份管理、API 网关、可观测性等企业治理组件。\n\n【关键细节】\nCodeMender 于 2025 年 10 月首次发布，定位是自主安全修复系统，能调试和修复大规模开源代码库中的漏洞。此次整合意味着 Google 认为企业更倾向于在统一的 Agent 平台中管理安全修复，而非依赖独立的安全工具。Enterprise Management Associates 副总裁 Chris Steffen 分析称：「将 CodeMender 嵌入包含身份、网关和可观测性的 Agent Platform，说明 Google 认为企业不会信任独立的自主修复方案。」\n\n【背景与上下文】\n这与 Dark Reading 此前报道的「安全工程跟不上 AI 编码速度」趋势形成呼应——开发团队用 Cursor/Claude Code 大幅提升编码速度，但安全审查流程没有同步进化。Agentic Security Harness（安全治理框架）成为新的解决方案方向。\n\n【影响与前瞻】\n这预示着 Agent 工具的发展方向：从独立的点解决方案（point solution）向集成的平台化方案演进。对银行等高度合规行业，这意味着未来的 Agent 部署需要从一开始就考虑安全、审计、可观测性等治理需求，而不是事后补加。",
+      "source": "CSO Online",
+      "source_type": "tavily",
+      "url": "https://www.csoonline.com/article/4176164/google-folds-codemender-into-agent-ecosystem-amid-push-for-ai-led-appsec.html",
+      "timestamp": "2026-05-22T00:00:00Z",
+      "importance": 8,
+      "tags": [
+        "安全Agent",
+        "Google",
+        "Agent Platform",
+        "CodeMender",
+        "企业安全"
+      ],
+      "batch_time": "2026-05-23T10:00:00+08:00"
+    },
+    {
+      "title": "Perplexity 开源 Bumblebee：面向开发者的供应链安全扫描工具",
+      "summary": "Perplexity 开源了 Bumblebee，一个适用于 macOS 和 Linux 的只读扫描器，专门检查开发者机器上的高风险软件包、扩展和 AI 工具配置。连接到 Computer Use 后，可在检测到新的供应链风险时自动触发深度扫描。",
+      "detail_content": "【核心事件】\nPerplexity 开源了 Bumblebee——一个面向开发者的供应链安全只读扫描器，支持 macOS 和 Linux。它检查开发者机器上的高风险软件包、浏览器扩展和 AI 工具配置。\n\n【关键细节】\nBumblebee 的定位是「开发者本机的安全卫生检查」：1）作为只读扫描器，不会修改任何文件，安全可靠；2）覆盖软件包、浏览器扩展、AI 工具配置等多种风险面；3）连接到 Computer Use（Anthropic 的计算机控制能力）后，可在出现新的供应链风险时自动触发更深度的扫描。项目已在 GitHub 开源。\n\n【背景与上下文】\n供应链攻击在 npm、PyPI 等生态中持续增加，GergelyOrosz 本周也专门发文讨论应对方案。同时，AI 工具本身（如 MCP 服务器、Claude Code 技能）也引入了新的信任链风险，开发者机器的安全审计需求日益增长。\n\n【影响与前瞻】\nBumblebee 的开源意味着供应链安全扫描的门槛大幅降低。对使用 AI 编码工具的团队来说，定期扫描开发环境应成为标准安全实践。这也反映了行业趋势：AI 安全防护正在从「模型安全」扩展到「AI 工具链安全」。",
+      "source": "X：Perplexity (@perplexity_ai)",
+      "source_type": "aihot",
+      "url": "https://x.com/perplexity_ai/status/2057869990536360334",
+      "timestamp": "2026-05-22T17:03:33Z",
+      "importance": 7,
+      "tags": [
+        "供应链安全",
+        "开源",
+        "Perplexity",
+        "安全扫描",
+        "开发者工具"
+      ],
+      "batch_time": "2026-05-23T10:00:00+08:00"
+    },
+    {
+      "title": "Lance Martin 对比四大 Managed Agents 沙箱方案：Daytona / Modal / Cloudflare / Vercel",
+      "summary": "Anthropic 的 Lance Martin 系统对比了 Claude Managed Agents 的四种沙箱方案——Daytona（可定制快照）、Modal（10 万并发）、Cloudflare（完整 Linux 环境）、Vercel（网络精细化控制），并同步更新了 claude-api skill 帮助开发者上手自托管沙箱。",
+      "detail_content": "【核心事件】\nAnthropic 开发者关系工程师 Lance Martin 发布了一系列推文，系统对比了 Claude Managed Agents 可用的四种沙箱环境方案，并提供了各自的适用场景和配置方法。\n\n【关键细节】\n四种方案的差异化定位：1）Daytona：提供可定制的沙箱快照，支持挂载 GitHub repo 等资源，适合需要预配置环境的场景；2）Modal：支持自定义镜像配置 CPU/GPU/内存资源，可扩展到单客户 10 万并发沙箱，适合大规模并行 Agent 场景；3）Cloudflare：提供完整 Linux 容器或轻量级隔离环境，可配置网络代理、无头浏览器甚至专用邮箱，适合需要复杂网络能力的 Agent；4）Vercel：支持精细化的网络和凭证控制，Agent 运行在自有网络内，可访问内部数据库和私有 API，适合企业内部部署。\n\n【背景与上下文】\nManaged Agents 是 Anthropic 最近主推的 Agent 部署方式，核心是让 Claude 在安全的沙箱环境中自主执行任务。沙箱选型直接决定了 Agent 能做什么、多安全、成本多少。\n\n【影响与前瞻】\n这是目前最实用的 Managed Agents 部署选型指南。对企业团队来说，选择哪条路线取决于具体需求：内部系统集成选 Vercel、大规模并行选 Modal、复杂网络任务选 Cloudflare、灵活环境配置选 Daytona。同时 Lance 更新了 claude-api skill 和 self-hosted sandboxes cookbook，降低了上手门槛。",
+      "source": "X：Lance Martin (@RLanceMartin)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/RLanceMartin/status/2056790618026967150",
+      "timestamp": "2026-05-19T17:34:31Z",
+      "importance": 7,
+      "tags": [
+        "Managed Agents",
+        "沙箱",
+        "Anthropic",
+        "部署架构",
+        "Lance Martin"
+      ],
+      "batch_time": "2026-05-23T10:00:00+08:00"
+    },
+    {
+      "title": "Gergely Orosz 真实测试：用 AI 审计年度财报，有用但幻觉不少",
+      "summary": "Gergely Orosz 用 AI 并行核查公司年度报表，与会计师同时进行。AI 发现了一些真实问题，但也「幻觉」出不存在的错误。他的结论越来越清晰：AI 是有用的辅助工具，但还不能独立信任——需要人类交叉验证。",
+      "detail_content": "【核心事件】\nPragmatic Engineer 作者 Gergely Orosz 分享了用 AI 检查公司年度报表的真实经历。他将银行对账单、会计报表等输入 AI，与会计师并行审计。\n\n【关键细节】\n结果喜忧参半：1）AI 确实发现了一些有价值的、会计师可能遗漏的问题；2）但同时「幻觉」出一些根本不存在的错误，如果完全信任会导致误判。Orosz 的核心观点是：「我感觉越来越清晰的是，AI 作为辅助工具很有用，但你必须有独立的验证机制。」\n\n【背景与上下文】\n这与他此前关于「亲自做难的事比外包给 AI 更有成效」的观点一致。作为技术领域最有影响力的工程管理观察者之一，Orosz 一直在平衡「AI 有用论」和「AI 风险论」。\n\n【影响与前瞻】\n这是一个高信噪比的一手使用案例，对银行 AI 转型有直接参考价值：在财务审计等高风险场景，AI 应该定位为「第二双眼睛」而非「替代者」。需要在工作流中设计交叉验证环节，避免 AI 幻觉导致的误判。",
+      "source": "X：Gergely Orosz (@GergelyOrosz)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2057773000536002897",
+      "timestamp": "2026-05-22T10:38:09Z",
+      "importance": 7,
+      "tags": [
+        "AI审计",
+        "幻觉",
+        "真实案例",
+        "GergelyOrosz",
+        "财务核查"
+      ],
+      "batch_time": "2026-05-23T10:00:00+08:00"
+    },
+    {
+      "title": "OpenAI Codex /goal 正式发布：设定里程碑让 AI 持续工作数小时甚至数天",
+      "summary": "OpenAI 宣布 Codex 的 /goal 模式结束实验期成为稳定功能。用户可设定具体里程碑，让 AI 持续工作直至完成——任务可运行数小时甚至数天。过程中支持随时检查、调整方向和暂停。",
+      "detail_content": "【核心事件】\nOpenAI 宣布 Codex 的 /goal 模式已结束实验期，正式成为稳定功能。用户可在 Codex 应用、IDE 扩展或 CLI 中使用。\n\n【关键功能】\n/goal 模式的核心是让 AI 围绕一个明确的目标持续工作：1）用户设定具体的里程碑（milestones）；2）AI 持续执行，任务可运行数小时甚至数天；3）过程中用户可随时检查进度、调整方向或暂停；4）侧边对话可用于查看进度而不中断主任务。\n\n【使用方式】\n需先升级 Codex App 到最新版本，然后通过命令行启用功能（codex features enable goal）或手动修改配置文件。启用后可在输入框管理任务，利用侧边对话查看进度。\n\n【背景与上下文】\n/goal 模式是对 Claude Code 长时任务的直接竞争回应。此前 Claude Code 支持数小时的 Agent 任务，而 Codex 的 /goal 把这个能力进一步延伸到「天」级别。同时这也标志着 AI 编码工具从「即时补全」向「长期自主执行」的转变。\n\n【影响与前瞻】\n/goal 模式的发布意味着企业可以开始考虑将更复杂的工程任务（如大型重构、跨模块迁移）交给 AI 自主完成。但需要注意成本控制——长时间任务的 token 消耗可能非常高，需要结合 SemiAnalysis 数据做预算规划。",
+      "source": "X：宝玉 (@dotey)",
+      "source_type": "aihot",
+      "url": "https://x.com/dotey/status/2057672416071987378",
+      "timestamp": "2026-05-22T03:58:28Z",
+      "importance": 7,
+      "tags": [
+        "OpenAI",
+        "Codex",
+        "/goal",
+        "长时任务",
+        "Agent"
+      ],
+      "batch_time": "2026-05-23T10:00:00+08:00"
+    },
+    {
+      "title": "Claude Code v2.1.149：新增 /usage 分类统计 + 多项安全修复",
+      "summary": "Claude Code 最新版本新增 /usage 命令的用量分类显示（技能/子代理/插件/各 MCP 服务器），/diff 视图支持键盘滚动。修复了 PowerShell 权限绕过、Git 工作树沙盒写入越界等安全问题。企业版新增 allowAllClaudeAiMcps 设置。",
+      "detail_content": "【核心更新】\nClaude Code v2.1.149 发布，包含功能增强、企业设置和多项安全修复。\n\n【关键功能变更】\n1）新增 /usage 命令的使用量分类显示：可区分技能（skills）、子代理（subagents）、插件（plugins）及每个 MCP 服务器的 token 消耗，让成本归因更透明；2）/diff 详情视图支持键盘滚动，改善代码审查体验；3）Markdown 输出兼容 GFM 任务列表。\n\n【安全修复】\n修复了多个安全问题：PowerShell 权限绕过漏洞、Git 工作树沙盒写入白名单越界问题、脚本路径含空格时 otelHeadersHelper 静默失败等。改进了 /feedback 报告，包含上下文压缩前的对话内容，便于排查长会话中的早期问题。\n\n【企业版更新】\n新增 allowAllClaudeAiMcps 设置，允许企业加载云端 MCP 连接器。\n\n【影响与前瞻】\n/usage 的分类统计对团队管理 AI 编码成本非常实用——管理者可以看到 token 到底花在了哪里（是 Agent 自身、MCP 调用、还是技能执行），从而做更精准的成本优化。",
+      "source": "Claude Code：GitHub Releases",
+      "source_type": "aihot",
+      "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.149",
+      "timestamp": "2026-05-22T22:09:29Z",
+      "importance": 6,
+      "tags": [
+        "Claude Code",
+        "版本更新",
+        "安全修复",
+        "成本管理"
+      ],
+      "batch_time": "2026-05-23T10:00:00+08:00"
+    }
+  ]
+}
