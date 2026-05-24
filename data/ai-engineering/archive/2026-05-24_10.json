@@ -1,0 +1,188 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-05-24T10:00:00+08:00",
+  "digest": "本周 AI 工程圈的最大信号：Claude Code 在创业公司中已成默认选择，Cursor 面临退潮。与此同时，AI 的真实成本问题浮出水面——Microsoft 和 Uber 的案例显示，AI 编程工具的 token 成本可能超过人力成本，迫使企业重新评估投入策略。在方法论层面，Steipete 的 autotriage + autoreview 工作流代表了「AI 作为自主队友」的新范式，而 Shopify 的「公开 Slack Agent」模式则为组织级 AI 学习提供了可复制的模板。",
+  "items": [
+    {
+      "title": "Business Insider 深度调查：Claude Code 已赢下 AI 编程战争，Cursor 正在衰退",
+      "summary": "Business Insider 采访了 20 多位创业公司创始人和 VC，发现 Claude Code 已成为创业公司的默认 AI 编程工具。Chainguard CEO 直言：「明年我会减少使用一切不是 Claude Code 的工具。」Cursor 在创始人中的提及率明显下降，AI 编程市场正在快速收敛。",
+      "detail_content": "【核心事件】\nBusiness Insider 于 5 月 23 日发布了一篇针对 AI 编程工具市场格局的深度调查报告。报告基于对超过 20 位创业公司创始人和风险投资人的访谈，得出一个明确结论：在创业公司生态中，Anthropic 的 Claude Code 已经成为 AI 编程的默认选择，而此前备受追捧的 Cursor 正在失去创始人们的青睐。\n\nChainguard CEO 兼联合创始人 Dan Lorenc 在被问到明年会减少使用哪些 AI 编程工具时回答得毫不客气：「Everything that's not Claude Code（一切不是 Claude Code 的东西）。」\n\n报告指出，AI 编程已成为生成式 AI 最清晰的商业化用例之一。创业公司不再仅仅用这些工具来加速代码编写，而是用它们自动化曾经需要整个团队完成的工程工作。Lorenc 用了一个生动的比喻：「代码开发方式的转变，就像木工从手工工具进化到电动工具，很快就会是全自动流水线。」\n\n【关键细节】\n多位创始人反映 Claude Code 在复杂的多文件重构、长时间自主任务执行、以及对大型代码库的理解方面表现突出。Cursor 的优势更多集中在 IDE 内的快速迭代体验，但在自主性和任务复杂度上已被拉开差距。\n\n报告还揭示了一个有趣的分化：大公司（如 Uber、Microsoft）正在因为 AI 编程工具的高昂 token 成本而收缩使用，而创业公司由于团队小、决策快，反而能更快地从 AI 编程中获得 ROI。\n\n【背景与上下文】\nClaude Code 在 2026 年初通过 Auto Mode、Agent Teams、Workflow 工具等功能的持续迭代，逐步建立了在复杂工程任务上的口碑优势。Cursor 在 Composer 2.5 的性价比反击战中虽然取得了一定效果，但未能阻止用户迁移的趋势。\n\n【影响与前瞻】\n如果 Claude Code 的优势持续扩大，可能重塑整个 AI 编程工具生态。对创业公司而言，这意味着更少的人可以做更多的事。对竞品而言，如何在自主性和成本之间找到平衡将是关键挑战。大企业的 AI 编程采用可能因成本控制而走不同的路径。",
+      "source": "Business Insider",
+      "source_type": "tavily",
+      "url": "https://www.businessinsider.com/inside-startups-claude-has-already-won-the-ai-coding-wars-2026-5",
+      "timestamp": "2026-05-23T09:00:01Z",
+      "importance": 9,
+      "tags": [
+        "Claude Code",
+        "Cursor",
+        "AI编程",
+        "创业公司",
+        "市场格局"
+      ],
+      "batch_time": "2026-05-24T10:00:00+08:00"
+    },
+    {
+      "title": "Steipete 发布 autotriage skill：让 Codex 自主处理 GitHub Issues 和 PRs",
+      "summary": "Steipete 开源 autotriage skill，通过读取项目 VISION.md 和预设指南，让 Codex 自主判断哪些 Issues/PRs 值得处理并自动开始工作。条件包括符合项目愿景、可从代码推断、修复方案明确、可在线测试。524 likes，代表了「AI 作为自主队友」的工程实践新范式。",
+      "detail_content": "【核心事件】\n5 月 23 日，知名 iOS 开发者、OpenClaw 生态重度用户 Steipete（Peter Steinberger）发布了一个 autotriage skill，让 OpenAI Codex 能够自主处理 GitHub Issues 和 Pull Requests。该工具获得了 524 个点赞和近 3.5 万次浏览。\n\n【关键细节】\nautotriage 的工作原理：读取项目的 VISION.md 文件和一套预设指南，然后对每个 Issue/PR 进行评估。只有满足以下条件时 AI 才会自主处理：\n1. 符合项目愿景（fit vision of the project）\n2. 可从代码中推断解决方案（being inferrable in code with high confidence）\n3. 修复方案明确（clear fix）\n4. 可在线测试（can be live tested）\n\n精妙之处在于 AI 不是无差别处理所有 Issues，而是基于项目上下文做出工程判断，把人类维护者的隐性知识显性化到 VISION.md 中。\n\n同一时间，Steipete 还展示了 autoreview skill 在持续 5 小时的代码重构中的表现，以及一个实用方法论：让 Codex 在大型重构时维护 scratch-log，记录决策、权衡和 review 修复。这条建议获得 107 个点赞。\n\n【背景与上下文】\nSteipete 是 OpenClaw 生态最活跃的贡献者之一。autotriage 将 AI 与人类的关系推进到了「AI 自主判断工作优先级」的新阶段。\n\n【影响与前瞻】\nautotriage 代表了一种新工程范式：维护者写好项目愿景和指南，AI 做初筛和执行。这对开源项目维护者和工程团队都有直接的可复制性。scratch-log 解决了 AI Agent 决策黑盒的问题，让人类可以事后审计 AI 的推理路径。",
+      "source": "X: @steipete",
+      "source_type": "opentwitter",
+      "url": "https://x.com/steipete/status/2058240758801420530",
+      "timestamp": "2026-05-23T17:36:51Z",
+      "importance": 9,
+      "tags": [
+        "OpenClaw",
+        "Codex",
+        "autotriage",
+        "GitHub",
+        "工程自动化"
+      ],
+      "batch_time": "2026-05-24T10:00:00+08:00"
+    },
+    {
+      "title": "Fortune 报道：Microsoft 内部报告暴露 AI 真实成本——使用 AI 比雇人更贵",
+      "summary": "Fortune 援引 Microsoft 内部报告指出，AI 编程工具的 token 成本已超过人力成本。Microsoft 正撤销部分 Claude Code 许可证，同时维持与 Anthropic 的 50 亿美元 Foundry 合作。Uber 此前也因 4 个月烧完全年 AI 预算而引发关注。Amazon 则反其道推动员工「toxenmaxx」。",
+      "detail_content": "【核心事件】\nFortune 于 5 月 22 日报道，Microsoft 的内部报告暴露了一个令人意外的现实：在许多场景下，使用 AI 工具的成本已超过雇佣人类员工的成本。一位团队负责人直述：「For my team, the cost of compute is far beyond the costs of the employees.」\n\n【关键细节】\nMicrosoft 此前鼓励数千名开发者、PM、设计师等员工实验 Claude Code，但大规模采用后的 token 成本令公司措手不及。目前正撤销部分 Claude Code 许可证，但这不影响与 Anthropic 的 Foundry 合作——包括最多 50 亿美元投资和 Anthropic 300 亿美元 Azure 采购承诺。\n\n不同公司的应对策略分化明显：\n- Microsoft：收缩个人许可证，维持基础设施层合作\n- Uber：5000 工程师 4 个月烧完全年 AI 预算\n- Amazon：推动员工「toxenmaxx」（尽可能多消耗 AI tokens），押注规模效应降成本\n\n【背景与上下文】\n这暴露了 AI 编程工具商业模型的根本矛盾：工具越强大、使用越频繁，成本越高。5000 名工程师每天使用时，token 成本可达天文数字。创业公司因团队小反而更容易消化。\n\n【影响与前瞻】\n可能是 AI 编程工具普及的最大障碍。如成本问题不解决，可能出现分层：创业公司充分采用，大企业因成本控制限制使用。长期解决只能靠模型效率提升和价格下降，但时间线不确定。",
+      "source": "Fortune",
+      "source_type": "tavily",
+      "url": "https://fortune.com/2026/05/22/microsoft-ai-cost-problem-tokens-agents/",
+      "timestamp": "2026-05-22T16:56:00Z",
+      "importance": 8,
+      "tags": [
+        "AI成本",
+        "Microsoft",
+        "token经济",
+        "Claude Code",
+        "企业采用"
+      ],
+      "batch_time": "2026-05-24T10:00:00+08:00"
+    },
+    {
+      "title": "DoorAsh 设计团队全面转向 AI 原型优先：设计师每月提交生产 PR，hackathon 产出 200 PRs",
+      "summary": "DoorDash 设计团队将每月提交生产 PR 作为公司 BHAG。两周准备加两天 hackathon产出 200 个 PR。调查显示 65% 设计师已采用 Claude Code。Watershed 等公司通过「工程伙伴」配对制度复制这一模式，帮助非工程师解决开发环境问题。",
+      "detail_content": "【核心事件】\nDoorDash 的设计团队正在进行激进的组织实验：设计师被期望每月提交生产级 Pull Request，作为公司 BHAG（Big Hairy Audacious Goal）的一部分。团队先进行两周结构化准备，然后举办两天 hackathon，最终交付了 200 个生产 PR。\n\n【关键细节】\nDoorDash 并非孤立案例。Watershed（气候科技公司）实施了公司级 AI 赋能计划，包括资源中心、Office Hours 和「工程伙伴」配对制度——为设计师匹配工程师，帮助解决开发环境配置、代码审查和 PR 提交等非本职工作。\n\n调查显示 65% 的设计师已在使用 Claude Code。ANML 数字产品代理公司也采用了类似工作流，在 Yummly 项目中实现了 AI 驱动的食材识别到自适应食谱规划的端到端流程。\n\nNubank（fintech）工程师用 AI Agent 进行大规模数据迁移，实现了 12x 效率提升。一份 Fortune 100 公司的工程师报告显示，PR 周期从 9 天缩短到 2.4 天。\n\n【背景与上下文】\n核心驱动力是 AI 编程工具的能力飞跃——非工程师也能编写可用的生产代码。但 DoorDash 和 Watershed 表明，单纯提供工具不够，需要配套的培训体系和伙伴制度。\n\n【影响与前瞻】\n对银行业 AI 转型有直接参考价值：非技术人员通过 AI 工具直接参与代码编写，可大幅缩短需求到交付的周期。关键成功因素是组织投入——不是简单买工具，而是建立配套赋能体系。",
+      "source": "Grok AI Search",
+      "source_type": "grok",
+      "url": "https://medium.com/doordash-engineering",
+      "timestamp": "2026-05-22T00:00:00Z",
+      "importance": 8,
+      "tags": [
+        "DoorDash",
+        "设计师",
+        "Claude Code",
+        "组织变革",
+        "AI赋能"
+      ],
+      "batch_time": "2026-05-24T10:00:00+08:00"
+    },
+    {
+      "title": "飞书-Claude Code 桥接开源项目：在飞书里直接指挥 Claude Code",
+      "summary": "feishu-claude-code-bridge 开源项目实现飞书消息与本地 Claude Code CLI 双向连接。用户可从飞书触发任务，Claude 也能读取飞书上下文并编辑文档。可扩展连接 Codex 等其他 CLI 工具。注意 6 月 15 日起 Claude 订阅对 claude -p 模式将独立计费。",
+      "detail_content": "【核心事件】\n5 月 23 日，开发者 Zara Zhang 通过宝玉（@dotey）推荐发布了 feishu-claude-code-bridge 开源项目，实现飞书与本地 Claude Code CLI 的双向桥接。\n\n【关键细节】\n工作原理：将飞书消息转为 Prompt，通过 claude -p 模式调用 Claude CLI，并将流式输出实时同步回飞书。能力包括：\n- 从飞书消息触发 Claude Code 执行任务\n- Claude 读取飞书工作上下文\n- Claude 创建和编辑飞书文档\n- 流式输出实时回传\n\n可扩展连接 Codex 等其他本地 CLI 工具。注意 2026 年 6 月 15 日起 Claude 订阅对 claude -p 将独立计费。\n\n【背景与上下文】\n飞书在中国企业市场渗透率极高，尤其是科技公司和金融机构。此前 Claude Code 使用场景主要限于终端环境，这个桥接将能力延伸到中国职场最常用的通讯工具。类似模式在海外有先例（OpenClaw 连接 Slack/Telegram），飞书生态尚属首次。\n\n【影响与前瞻】\n对中国企业用户（包括银行业），降低了 Claude Code 使用门槛——员工不需离开飞书就能触发 AI 编程任务。独立计费变化需关注成本影响。如果组织能接受按量付费，这种桥接模式可能成为 AI 工具在中国企业落地的实用路径。",
+      "source": "AIHOT / X: @dotey",
+      "source_type": "aihot",
+      "url": "https://x.com/dotey/status/2058084478459826432",
+      "timestamp": "2026-05-23T07:15:51Z",
+      "importance": 7,
+      "tags": [
+        "飞书",
+        "Claude Code",
+        "开源",
+        "企业工具",
+        "中国生态"
+      ],
+      "batch_time": "2026-05-24T10:00:00+08:00"
+    },
+    {
+      "title": "Gergely Orosz 爆料：Google Antigravity 2.0 发布视频里员工在用 Codex",
+      "summary": "Google AI IDE Antigravity 2.0 发布视频第 2 分钟出现团队成员使用 OpenAI Codex 的画面。Gergely Orosz 截图获 2546 likes 和 57 万次浏览。暴露了自家团队都不愿 dogfood 的问题。Pragmatic Engineer 后续报道显示用户反馈以负面为主。",
+      "detail_content": "【核心事件】\n5 月 20 日，Gergely Orosz 在 X 上发布了一条引发广泛关注的帖子：在 Google 新发布的 AI IDE Antigravity 2.0 官方宣传视频中，第 2 分钟的画面清晰显示 Antigravity 团队成员正在使用 OpenAI Codex。\n\n【关键细节】\nOrosz 的推文：「I had to do a double-take: in the second minute of the launch video for Antigravity 2.0 you can see people use Codex, on the Antigravity team. Did no one double check the launch video?」\n\n获得 2546 个点赞、131 次转发和 57.3 万次浏览。Orosz 进一步评论：「暗示工具本身不够好（开发者不愿 dogfood Antigravity），以及制作流程混乱。」\n\nPragmatic Engineer 后续报道显示 Antigravity 2.0 用户反馈「压倒性地负面」，主要问题包括 bug、糟糕的 UX、多模型支持不足。Google 产品生态内部有多个重叠产品并行开发。\n\n【背景与上下文】\nGoogle 在 AI 编程工具领域布局包括 Antigravity、Gemini in Android Studio、Android CLI 和 Project Marlowe 等多个项目，定位和协调存在明显问题。相比之下 Anthropic 专注 Claude Code 单一产品线在市场反馈上更有效。\n\n【影响与前瞻】\n对大型科技公司的 AI 产品战略是警示：内部工具不成熟时强推市场会损害品牌。对 AI 工具选型团队，实用判断标准是「看团队用什么，而不是看宣传说什么」。",
+      "source": "X: @GergelyOrosz",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2057054276266885590",
+      "timestamp": "2026-05-20T11:02:12Z",
+      "importance": 7,
+      "tags": [
+        "Google",
+        "Antigravity",
+        "AI IDE",
+        "dogfooding",
+        "产品策略"
+      ],
+      "batch_time": "2026-05-24T10:00:00+08:00"
+    },
+    {
+      "title": "Simon Willison 分享 Shopify 公开 Agent 学习模式：River 只在 Slack 公开频道运行",
+      "summary": "Shopify 的 River Agent 系统只允许在 Slack 公开频道使用，其他员工可以观察学习如何与 AI 互动。Willison 类比 Midjourney Discord-only 发布时的社区学习效应。1041 likes，为组织级 AI 采用提供了可复制的模板。",
+      "detail_content": "【核心事件】\n5 月 10 日，Simon Willison 分享了 Shopify 的一个工程决策：River Agent 系统运行在 Slack 中，但只允许在公开频道使用，不允许在私信或私密频道中使用。Willison 评价：「这样其他员工可以从你与 AI 的互动中学习。」\n\n【关键细节】\nWillison 的推文：「Shopify's River agent system lives in Slack and can only be used in public so that other employees can learn from what you do with it. Reminds me of how Midjourney's Discord-only launch helped people figure out the weird & complex craft of image prompting by watching each other.」\n\n获得 1041 个点赞和 15.3 万次浏览。Willison 精准指出这与 Midjourney Discord-only 策略的相似之处——通过公开可见的互动创造「无意间的集体学习」效应。\n\n【背景与上下文】\nAI Agent 使用是新兴技能——如何写 prompt、审查 AI 输出、在人机协作中保持控制，都需要实践和观察。很多公司提供 AI 工具但缺乏培训，导致买了但用不好。Shopify 通过「公开化」自动解决了培训问题。\n\n【影响与前瞻】\n对大组织（尤其银行等传统企业）的 AI 转型有高度参考价值：与其花大量资源做正式培训，不如通过公开可见的 AI 使用场景让员工观摩学习。实施要点：选择团队已有的通讯工具，强制公开使用，鼓励分享好的 prompt 和工作流。",
+      "source": "X: @simonw",
+      "source_type": "opentwitter",
+      "url": "https://x.com/simonw/status/2053529689122328947",
+      "timestamp": "2026-05-10T17:36:45Z",
+      "importance": 7,
+      "tags": [
+        "Shopify",
+        "组织学习",
+        "Agent",
+        "AI采用",
+        "最佳实践"
+      ],
+      "batch_time": "2026-05-24T10:00:00+08:00"
+    },
+    {
+      "title": "Hosanagar 反驳 Citrini Ghost GDP：AI 替代劳动力的非技术约束被严重低估",
+      "summary": "UPenn 教授 Kartik Hosanagar 在 Substack 系统性质疑 Citrini「全球智能危机」报告。核心论点：「大多数时候能工作的 AI 系统可以做出好的 demo，但仍无法部署于大量实际工作。」非技术约束（合规、责任归属、组织惯性）才是 AI 替代劳动力的真正瓶颈。",
+      "detail_content": "【核心事件】\nUPenn Wharton 学院教授 Kartik Hosanagar 在 Substack 发布了一篇重要的反驳文章，针对年初爆火的 Citrini Research「全球智能危机」报告提出系统性质疑。\n\n【关键细节】\nHosanagar 的核心观点：「An AI system that works most of the time makes for a good demo but can still not be deployed for a lot of work.」\n\n他列举了被 Citrini 低估的非技术约束：\n1. 合规与监管：金融、医疗等受监管行业，AI 决策需可解释和可追责\n2. 责任归属：AI 犯错时谁来承担责任？这不是技术问题而是法律问题\n3. 组织惯性：企业改变工作流程需要时间\n4. 客户信任：很多服务行业的客户仍偏好人类交互\n\nCitrini 的 2028 末日场景预设了所有约束都会被快速解决，但历史表明这些约束往往比技术本身更难突破。\n\n【背景与上下文】\n这个辩论代表了 AI 就业影响讨论中的两个阵营：技术决定论者（AI 能力到了就会替代）vs 约束论者（非技术因素会显著延缓替代进程）。LinkedIn 上 Hosanagar 的帖子也获得了大量互动。\n\n【影响与前瞻】\n对银行业 AI 转型尤其相关。银行正好处在 Hosanagar 所描述的「高约束环境」中——合规要求严、责任归属清晰、组织惯性大。理解这些约束不是否定 AI 价值，而是帮助制定更现实的转型节奏。",
+      "source": "Hosanagar Substack",
+      "source_type": "tavily",
+      "url": "https://hosanagar.substack.com/p/the-ai-labor-debate-is-asking-the",
+      "timestamp": "2026-05-20T00:00:00Z",
+      "importance": 6,
+      "tags": [
+        "Ghost GDP",
+        "AI替代",
+        "劳动力",
+        "非技术约束",
+        "银行业"
+      ],
+      "batch_time": "2026-05-24T10:00:00+08:00"
+    },
+    {
+      "title": "Replit Agent + Squidler 集成：构建-测试-修复的全自动化 AI 质量闭环",
+      "summary": "Replit Agent 与 Squidler 完成集成，实现自然语言描述功能 → Agent 构建 → Squidler 像真实用户一样自动测试 → 问题自动反馈修复。无需编写测试脚本，已通过 MCP 库正式上线。代表 AI 编程工具从「生成代码」走向「确保质量」的成熟阶段。",
+      "detail_content": "【核心事件】\n5 月 23 日，Replit 宣布其 Agent 产品与 AI 质量保障平台 Squidler 完成集成，形成从构建、测试到修复的全自动化闭环。集成已通过 Squidler 加入 Replit 的 MCP 库正式上线。\n\n【关键细节】\n工作流程三阶段：\n1. 构建：用户用自然语言描述功能，Replit Agent 负责构建\n2. 测试：构建完成后，Squidler 像真实用户一样对线上应用进行自动化测试，无需编写测试脚本\n3. 修复：测试中发现的问题自动反馈给 Replit Agent 进行修复\n\n整个过程中用户不需要编写测试代码或手动触发测试——Squidler 作为「AI QA 工程师」自动完成质量保障。\n\n【背景与上下文】\nAI 编程工具快速发展带来了新问题：AI 生成代码质量参差不齐，测试覆盖率往往不足。传统测试自动化需要编写脚本，对非技术用户形成门槛。Squidler 的「无需脚本」测试方法解决了这个痛点。\n\n集成也体现了 MCP 生态的价值——Squidler 作为第三方工具通过标准协议接入 Replit，不需要深度定制。\n\n【影响与前瞻】\n「构建-测试-修复」闭环是 AI 编程工具走向成熟的必经之路。目前大多数工具仍停留在「生成代码」阶段。如果这个模式被验证有效，可能成为 AI 编程工具的标配。对企业用户降低了 AI 生成代码上线的风险。",
+      "source": "AIHOT / X: @Replit",
+      "source_type": "aihot",
+      "url": "https://x.com/Replit/status/2058261705998602548",
+      "timestamp": "2026-05-23T19:00:06Z",
+      "importance": 6,
+      "tags": [
+        "Replit",
+        "Squidler",
+        "AI测试",
+        "质量保障",
+        "自动化"
+      ],
+      "batch_time": "2026-05-24T10:00:00+08:00"
+    },
+    {
+      "title": "Pragmatic Engineer：Forward-Deployed Engineer 岗位在 AI 公司重新流行",
+      "summary": "Google Cloud、OpenAI、Anthropic 同时大规模招聘 FDE，但新版 FDE 角色正变得与解决方案架构师/顾问难以区分。Google Cloud CEO Thomas Kurian 宣布新 AI 专注组织并大量招 FDE。这个在 Palantir 时代流行过的角色正在 AI 商业化浪潮中找到新定位。",
+      "detail_content": "【核心事件】\nPragmatic Engineer Newsletter 报道了值得关注的招聘趋势：Forward-Deployed Engineer（FDE）岗位在 AI 公司中重新兴起。Google Cloud CEO Thomas Kurian 宣布在 Go-To-Market 团队中成立新的 AI 专注组织，大量招聘 FDE。OpenAI 和 Anthropic 也同样在招聘这一角色。\n\n【关键细节】\nGergely Orosz 分析指出新时代 FDE 正在经历身份演变：\n- Palantir 时代：深度嵌入客户现场，同时负责产品改进和交付\n- AI 时代：更接近解决方案架构师或顾问，被分配到独立公司（OpenAI 和 Anthropic 各自成立了独立公司雇佣 FDE），股权可能不是母公司股票\n\n这意味着 FDE 离产品核心团队更远，对产品的影响力可能不如 Palantir 时代。\n\n【背景与上下文】\nFDE 最早由 Palantir 在 2010 年代发扬光大，核心价值是将一线客户需求快速反馈给产品团队。AI 公司重用这个角色反映了商业化共同挑战：如何确保复杂 AI 系统在客户环境中真正交付价值。\n\n【影响与前瞻】\nFDE 是连接 AI 技术和企业需求的桥梁角色，值得关注。但从分析来看可能正从「深度技术+客户理解」演变为偏销售支持角色，如果持续可能无法发挥 Palantir 时代的核心价值。",
+      "source": "Pragmatic Engineer",
+      "source_type": "tavily",
+      "url": "https://newsletter.pragmaticengineer.com/p/the-pulse-forward-deployed-engineering-887",
+      "timestamp": "2026-05-22T00:00:00Z",
+      "importance": 6,
+      "tags": [
+        "FDE",
+        "AI招聘",
+        "Forward-Deployed",
+        "OpenAI",
+        "Anthropic"
+      ],
+      "batch_time": "2026-05-24T10:00:00+08:00"
+    }
+  ]
+}
