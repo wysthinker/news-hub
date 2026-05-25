@@ -1,0 +1,111 @@
+{
+  "channel_id": "ai-frontier",
+  "channel_name": "AI 前沿",
+  "generated_at": "2026-05-25T09:00:00+08:00",
+  "digest": "本周 AI 行业节奏分化明显：Google I/O 余温未消（Gemini 3.5 Flash、Omni、Spark 密集发布），Anthropic 则聚焦企业商业化——Claude Code 正式进入企业订阅（premium seats）、Managed Agents 推出 dreaming 自我改进功能、发布 AI 安全防御指南。OpenAI 方面相对安静，Codex 持续迭代。安全领域出现新威胁：TrapDoor 供应链攻击首次将 AI 编码助手（Claude Code、Cursor）作为攻击面。商业层面，DeepSeek 宣布旗舰模型永久 75% 折扣，价格战继续升温。",
+  "items": [
+    {
+      "title": "Anthropic 企业版重大更新：Claude Code 正式纳入订阅，新增 Premium Seats 和合规 API",
+      "summary": "Anthropic 宣布 Enterprise 和 Team 客户可升级到 Premium Seats，将 Claude 对话 AI 和 Claude Code 编码代理整合在一个订阅下。Premium Seats 提供日常使用量，额外用量按 API 标准费率计费。同时推出 Compliance API，让合规团队实时获取 Claude 使用数据和客户内容，实现持续监控和自动化策略执行。Altana 等早期客户反馈开发效率提升 2-10x。",
+      "detail_content": "【核心事件】\nAnthropic 正式将 Claude Code 纳入企业订阅体系。Enterprise 和 Team 客户现在可以升级到 Premium Seats，一个订阅同时包含 Claude 对话 AI 和 Claude Code 编码代理。这意味着用户可以在构思和实现之间无缝切换，而管理员获得扩展 Claude 所需的可见性和控制能力。\n\n【关键细节与引用】\nPremium Seats 包含日常使用量，额外使用按标准 API 费率计费。新推出的合规功能包括：实时程序化访问 Claude 使用数据和客户内容、构建持续监控和自动化策略执行系统。Team 和 Enterprise 计划均支持细粒度支出上限、自助座位管理和 Claude Code 使用分析。\n\nAltana 高级 ML 运营经理 Artem Pikulin：「Since bundling Claude for Enterprise with Claude Code, we've rolled it out to hundreds of developers, and it has quickly become our go-to pair programmer.（捆绑 Claude Enterprise 和 Claude Code 后，我们已推广到数百名开发者，Claude Code 迅速成为首选配对编程工具。）」Altana 联合创始人 Peter Swartz 称开发速度提升 2-10 倍。\n\n【背景与上下文】\n这是 Anthropic 企业战略的重要一步——将 Claude Code 从独立开发工具变成企业级产品的一部分。此前 Claude Code 主要面向个人开发者，现在通过合规 API 和管理控制，企业可以安全地在组织内推广使用。这一变化直接与 GitHub Copilot Enterprise 竞争，将 AI 编码工具从个人效率工具升级为企业基础设施。\n\n【影响与前瞻】\nCompliance API 的推出回应了企业对 AI 使用透明度的强烈需求，降低了合规部门对 AI 工具的抵触。这可能是 Anthropic 企业营收高速增长（Q2 预计 109 亿）的重要驱动力。对于使用 Claude Code 的个人用户，Premium Seats 模式也暗示未来可能有面向个人的付费 Claude Code 计划。",
+      "source": "claude.com/blog",
+      "source_type": "tavily",
+      "url": "https://claude.com/blog/claude-code-and-new-admin-controls-for-business-plans",
+      "timestamp": "2026-05-24T00:00:00Z",
+      "importance": 9,
+      "tags": [
+        "Anthropic",
+        "Claude Code",
+        "企业版",
+        "订阅"
+      ],
+      "batch_time": "2026-05-25T09:00:00+08:00"
+    },
+    {
+      "title": "Claude Managed Agents 推出 Dreaming 功能：Agent 通过回顾历史会话自我改进",
+      "summary": "Anthropic 为 Claude Managed Agents 推出 Dreaming 研究预览版。Dreaming 是一个定时进程，回顾 Agent 的历史会话和记忆存储，提取模式并优化记忆，帮助 Agent 随时间自我改进。同时发布的还有 Outcomes（定义成功标准的评分机制）、多 Agent 编排和 Webhook 功能，均进入公开测试。",
+      "detail_content": "【核心事件】\nAnthropic 为 Claude Managed Agents 平台推出 Dreaming 功能（研究预览版）。Dreaming 是一个后台定时进程，会自动回顾 Agent 的历史会话记录和记忆存储，从中提取行为模式、发现反复出现的错误、识别 Agent 收敛的工作流，并优化记忆内容，使 Agent 在后续任务中表现更好。\n\n【关键细节与引用】\nDreaming 能发现单个 Agent 无法独立察觉的跨会话模式，包括三类洞察：\n1. 反复犯的错误——Agent 在多个会话中重复踩的坑\n2. 工作流收敛——多个 Agent 独立演化出类似的问题解决路径\n3. 团队偏好——多个用户/Agent 共享的操作偏好\n\n同时发布的 Outcomes 功能允许开发者定义「成功标准」（rubric），Agent 据此自我评估和调整行为。多 Agent 编排让开发者可以协调多个 Agent 协作完成复杂任务。Webhook 支持让 Agent 可以与外部系统事件驱动式集成。\n\nDreaming 为研究预览，Outcomes、多 Agent 编排和 Memory 为公开测试。\n\n【背景与上下文】\n这代表了 AI Agent 从「每次从零开始」到「持续学习和改进」的关键转变。此前大多数 AI Agent 每次对话都是独立的，缺乏跨会话的学习能力。Dreaming 本质上在做 Agent 的「反思和元认知」——类似于人类在睡眠中整理白天的经验（因此叫 Dreaming）。\n\n【影响与前瞻】\n如果 Dreaming 效果如预期，将大幅降低 Agent 的维护成本——Agent 能自己发现和纠正重复错误，而不需要人工逐一调整 prompt。这对企业大规模部署 AI Agent 尤其重要。结合 Anthropic 此前的 Managed Agents 自托管沙箱和 MCP 隧道，Claude 正在构建一个从开发到部署到持续优化的完整 Agent 平台。",
+      "source": "claude.com/blog",
+      "source_type": "tavily",
+      "url": "https://claude.com/blog/new-in-claude-managed-agents",
+      "timestamp": "2026-05-23T00:00:00Z",
+      "importance": 8,
+      "tags": [
+        "Anthropic",
+        "Managed Agents",
+        "Dreaming",
+        "Agent"
+      ],
+      "batch_time": "2026-05-25T09:00:00+08:00"
+    },
+    {
+      "title": "Anthropic 发布 AI 加速攻击防御指南：企业安全团队实操建议",
+      "summary": "Anthropic 安全团队发布博客文章，基于使用前沿 AI 模型保护真实代码库的实战经验，为企业提供针对 AI 加速攻击的防御建议。涵盖 AI 自动化漏洞利用、AI 升级自动化、AI 漏洞扫描三大威胁，给出 SAST 工具部署和模型自扫描等实操方案。",
+      "detail_content": "【核心事件】\nAnthropic 安全团队发布博客文章《Preparing your security program for AI-accelerated offense》，基于其安全团队和研究人员使用前沿 AI 模型保护真实代码库和系统的经验，为企业安全团队提供实操防御建议。\n\n【关键细节与引用】\n文章覆盖三大威胁场景：\n1. AI 自动化漏洞利用——攻击者用 AI 加速从漏洞发现到利用的全过程\n2. AI 升级自动化——前沿模型已能生成补丁代码随漏洞报告一起提供：「Frontier models are increasingly capable of generating patches to include alongside vulnerability reports」\n3. AI 漏洞扫描——建议企业用与攻击者同级别的模型先扫描自己的代码：「you should scan your own code and systems with the same kind of model an attacker would use, before they do」\n\n实操建议包括：部署 SAST 工具（推荐 CodeQL）作为 CI action，覆盖 OWASP Top 10 和语言特定规则集。\n\n【背景与上下文】\n此前 Anthropic 的 Mythos 项目已展示 AI 在网络安全攻防中的潜力——Claude 成为首个解决 UK AISI 双 Cyber Range 的模型，并向全球金融稳定委员会（FSB）简报网络安全发现。这篇文章将安全研究转化为面向企业安全团队的实践指南。核心理念是「用 AI 防御 AI」。\n\n【影响与前瞻】\n随着 AI 安全威胁从理论变为现实（如 TrapDoor 供应链攻击），这类实操指南的需求将急剧增长。Anthropic 正在将安全从研究层面拉到产品层面，这也可能是 Claude 企业安全产品线的铺垫。",
+      "source": "claude.com/blog",
+      "source_type": "tavily",
+      "url": "https://website.claude.com/blog/preparing-your-security-program-for-ai-accelerated-offense",
+      "timestamp": "2026-05-24T00:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Anthropic",
+        "安全",
+        "网络安全",
+        "防御"
+      ],
+      "batch_time": "2026-05-25T09:00:00+08:00"
+    },
+    {
+      "title": "TrapDoor 供应链攻击：攻击者篡改 CLAUDE.md 和 .cursorrules，AI 编码助手成新攻击面",
+      "summary": "一场名为 TrapDoor 的协调供应链攻击同时袭击 npm、PyPI 和 Crates.io，涉及 34 个恶意包。攻击手法新颖：向流行开源项目提交 PR 注入被篡改的 CLAUDE.md 和 .cursorrules 文件。当开发者用 Claude Code 或 Cursor 打开项目时，AI Agent 会将其视为可信指令执行，在不知情下运行恶意命令。这是首次将 AI 编码助手作为攻击面。",
+      "detail_content": "【核心事件】\n名为 TrapDoor 的协调供应链攻击同时针对 npm、PyPI 和 Crates.io 三大包管理器，共涉及 34 个恶意包，目标是窃取加密货币、AI 和安全开发者的钱包、SSH 密钥和云凭证。\n\n【关键细节与引用】\n攻击的创新之处在于向流行开源项目提交 Pull Request，在其中注入被篡改的 CLAUDE.md 和 .cursorrules 配置文件。当开发者克隆这些仓库并使用 Claude Code 或 Cursor 等 AI 编码助手时，AI Agent 会将这些配置文件视为项目级可信指令执行，从而在开发者不知情的情况下运行恶意命令——例如窃取环境变量中的 API 密钥、上传本地文件等。\n\n这是首次将 AI 编码助手（而非开发者本身）作为攻击面。\n\n【背景与上下文】\nCLAUDE.md 和 .cursorrules 是 Claude Code 和 Cursor 用来理解项目上下文和规范的配置文件，AI Agent 会优先遵循其中的指令。这种攻击利用了 AI 工具对项目配置文件的信任机制。此前的供应链攻击主要针对构建流程和依赖树（如 event-stream 事件），而 TrapDoor 开辟了一个全新的攻击维度。\n\n【影响与前瞻】\n这一攻击对所有使用 AI 编码助手的开发者构成直接威胁。建议开发者：审查 clone 的项目中的 CLAUDE.md 和 .cursorrules 文件；不要盲目信任来自 PR 的配置文件变更；AI 工具厂商需要增加对项目配置文件来源的可信度验证。这可能推动 Claude Code 和 Cursor 增加配置文件的安全审计功能。",
+      "source": "AIHOT / X:@kimmonismus",
+      "source_type": "aihot",
+      "url": "https://x.com/kimmonismus/status/2058584943052161488",
+      "timestamp": "2026-05-24T16:24:31Z",
+      "importance": 9,
+      "tags": [
+        "安全",
+        "供应链攻击",
+        "Claude Code",
+        "Cursor"
+      ],
+      "batch_time": "2026-05-25T09:00:00+08:00"
+    },
+    {
+      "title": "DeepSeek 旗舰模型永久 75% 折扣，AI 价格战进入新阶段",
+      "summary": "据 Bloomberg 报道，DeepSeek 将对旗舰 AI 模型实施永久性 75% 价格折扣。此前 DeepSeek V4 Flash 已登顶 OpenRouter 周榜，公司正推进 700 亿融资。激进定价策略将进一步压缩全球 AI 模型市场利润空间。",
+      "detail_content": "【核心事件】\nBloomberg 报道，DeepSeek 将对其旗舰 AI 模型实施永久性 75% 折扣。这不是限时促销，而是长期定价策略调整，意味着旗舰模型 API 调用价格将降至原价的四分之一。\n\n【关键细节与引用】\n此前 DeepSeek V4 Flash 已在性能-成本比上表现突出，登顶 OpenRouter 周榜使用量排名。公司目前正推进约 700 亿元人民币规模的新一轮融资。\n\n75% 的永久折扣意味着企业使用高性能模型的成本门槛大幅降低。这是继 DeepSeek 此前多次降价后的又一次激进定价。\n\n【背景与上下文】\nAI 模型市场已进入激烈的价格竞争阶段。OpenAI 和 Anthropic 在企业市场收取较高价格，而 DeepSeek 凭借低成本架构持续施压。Google 也通过 Gemini 3.5 Flash 的定价参与竞争。DeepSeek 的永久折扣策略比限时促销更具破坏性——它改变了市场的价格预期基准。\n\n值得注意的是，Anthropic Q2 营收预计 109 亿且即将盈利，说明高端市场对价格并不敏感。DeepSeek 的低价策略可能更多是在争夺中低端市场和开发者群体。\n\n【影响与前瞻】\n这一策略可能迫使 OpenAI 和 Anthropic 在特定市场区间降价或提供更灵活的定价方案。对于企业用户而言，模型选择将更多基于能力差异而非价格。Anthropic 的企业订阅战略（如 Premium Seats 和 Compliance API）是对低价竞争的回应——通过捆绑增值服务而非纯价格竞争来保持利润率。",
+      "source": "Bloomberg / AIHOT",
+      "source_type": "aihot",
+      "url": "https://www.bloomberg.com/news/articles/2026-05-23/deepseek-to-make-permanent-75-discount-on-flagship-ai-model",
+      "timestamp": "2026-05-23T18:00:00Z",
+      "importance": 8,
+      "tags": [
+        "DeepSeek",
+        "价格战",
+        "商业模式",
+        "API定价"
+      ],
+      "batch_time": "2026-05-25T09:00:00+08:00"
+    },
+    {
+      "title": "Google DeepMind Running Guide Agent：AI 跑步教练迈向无边界运动",
+      "summary": "Google DeepMind 发布 Running Guide Agent，通过手机摄像头和传感器实时分析跑步姿势，提供即时反馈和调整建议。这是迈向「无边界 AI 运动指导」的一步——AI 教练不再受限于固定场地，可以在户外跑步等移动场景中实时工作。",
+      "detail_content": "【核心事件】\nGoogle DeepMind 发布 Running Guide Agent，由 Robin Dua 和 Miguel de Andrés-Clavera 主导开发。这个 AI 系统能在户外跑步等无约束环境中实时分析运动姿势并提供指导，被描述为迈向 unbounded（无边界）运动 AI 的关键一步。\n\n【关键细节与引用】\nRunning Guide Agent 结合手机摄像头和传感器数据，实时分析跑步者的姿势、步频和动作，提供即时反馈。系统解决了「无边界运动」中的核心技术挑战——不像健身房有固定设备和环境，户外跑步涉及不断变化的场景、光照和运动速度。\n\n【背景与上下文】\n这延续了 Google I/O 2026 的 Agentic AI 主题——AI 不只是回答问题，而是主动在物理世界中辅助人类。此前 Google 已推出 Fitbit Air 等健康相关硬件，Running Guide Agent 是软件层面的延伸。\n\n【影响与前瞻】\nRunning Guide Agent 展示了 AI Agent 从数字世界进入物理世界的趋势。如果效果良好，类似技术可扩展到其他运动项目（游泳、骑行等）甚至康复训练。结合 Gemini Omni 的多模态能力，Google 正在构建从感知到行动的完整 AI 体验。",
+      "source": "Google DeepMind Blog",
+      "source_type": "tavily",
+      "url": "https://blog.google/innovation-ai/models-and-research/google-deepmind/running-guide-agent/",
+      "timestamp": "2026-05-20T00:00:00Z",
+      "importance": 6,
+      "tags": [
+        "Google",
+        "DeepMind",
+        "Agent",
+        "运动",
+        "多模态"
+      ],
+      "batch_time": "2026-05-25T09:00:00+08:00"
+    }
+  ]
+}
