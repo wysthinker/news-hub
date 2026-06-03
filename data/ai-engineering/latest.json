@@ -1,9 +1,188 @@
 {
   "channel_id": "ai-engineering",
   "channel_name": "AI 工程实战",
-  "generated_at": "2026-06-02T10:08:25.400581+08:00",
-  "digest": "本周 AI 工程圈的主旋律是「从工具到方法论」的升级。Anthropic 被曝光用约 1000 名人类工程师反馈训练 Claude Code，每个任务支付 280 美元来优化代码质量和可维护性——这揭示了 AI 编码工具进化背后的人力成本。Perplexity 的 Search as Code 架构让 Agent 不再逐个调用搜索函数，而是直接写 Python 代码调用搜索栈，代表了 Agent 工具调用范式的演进。腾讯混元发布的 Hy-Memory 插件为 OpenClaw 引入了 6 层记忆框架，解决了 Agent 长期协作中记忆碎片化的痛点。整体来看，行业正从「AI 能写代码」转向「AI 如何可靠地、可持续地写好代码」。",
+  "generated_at": "2026-06-03T10:07:42.841094+08:00",
+  "digest": "微软 Build 2026 成为本周最大工程事件：发布 Scout（OpenClaw 框架的企业级 AI 助手）和多个 AI 开发者工具。Anthropic 同步发力，Glasswing/Mythos 项目扩展到 150 个组织并发现超 1 万个高危漏洞，Claude Code 团队分享 AI-native 工程组织的流程变革。值得关注的是 Uber 公开对 AI token 开支设限（每员工每月 $1500），标志着企业 AI 使用从狂热期进入成本管控期。",
   "items": [
+    {
+      "title": "微软发布 Scout：基于 OpenClaw 框架的企业级 AI 助手",
+      "summary": "微软在 Build 2026 大会发布 Scout，一个基于 OpenClaw 框架构建的常驻式 AI 助手，直接集成到 Microsoft 365 中。Scout 拥有持久身份和学习用户风格的能力，内置日历管理、会议议程等预打包技能，但核心价值在于用户可自定义技能。这是 OpenClaw 生态首次被大厂完整产品化。",
+      "detail_content": "【核心事件】\n微软在 Build 2026 大会上正式发布 Scout，一个基于 OpenClaw 框架的企业级 AI 助手。Scout 不是简单的聊天机器人，而是一个「always-on」的常驻式智能体，具备持久的用户身份和风格学习能力。Scout VP Omar Shahine 表示，目标是打造一个主动适应用户需求的助手。\n\n【关键细节】\nScout 预打包了日历管理、会议议程起草等技能，但 Shahine 认为真正的价值在用户自创的技能生态。它和 OpenClaw 的关系是：OpenClaw 提供底层框架（工具调用、沙箱执行、MCP 集成），Scout 在此基础上构建了企业级的身份认证、数据隔离和合规管控。这意味着企业可以用 OpenClaw 的开放生态 + 微软的企业基础设施。\n\n【背景与上下文】\n这是 OpenClaw 生态的一个里程碑——首次有大厂将 OpenClaw 框架作为企业产品的基础。同时也发布了硬件导向的 Project Solara、Copilot 更新和新推理模型。对于关注 Agent 架构的工程团队来说，Scout 的设计思路（持久身份 + 技能插件 + 用户自定义）值得深入研究。\n\n【影响与前瞻】\nScout 的发布意味着 OpenClaw 从开发者工具向企业平台的跃迁。对银行等大型组织来说，这种「OpenClaw 框架 + 企业治理层」的模式可能是未来内部 AI 助手的标准架构。",
+      "source": "TechCrunch",
+      "source_type": "tavily",
+      "url": "https://techcrunch.com/2026/06/02/microsoft-launches-scout-an-openclaw-inspired-personal-assistant/",
+      "timestamp": "2026-06-02T18:02:44Z",
+      "importance": 9,
+      "tags": [
+        "微软",
+        "OpenClaw",
+        "企业AI",
+        "Agent",
+        "Build2026"
+      ],
+      "batch_time": "2026-06-03T10:00:00+08:00"
+    },
+    {
+      "title": "OpenAI Codex 扩展白领工作工具：从编码 Agent 到知识工作平台",
+      "summary": "OpenAI 为 Codex 发布一组面向白领工作的新工具插件，涵盖数据分析、创意制作和产品设计。Codex 周活用户已超 500 万（较 2 月桌面版发布时增长 6 倍）。同时发布 Python SDK（pip install openai-codex），可将 Codex 直接嵌入应用。另有 Codex Sites 功能可一键将工作成果变为交互式网站。",
+      "detail_content": "【核心事件】\nOpenAI 在 6 月 2 日发布 Codex 的重大更新，从纯编码 Agent 扩展为知识工作平台。新推出的角色专属插件（数据分析、创意制作、产品设计）让非工程师也能使用 Codex 完成报告生成、创意方向和原型设计。Codex 周活用户已达 500 万，较 2 月桌面版发布时增长 6 倍。\n\n【关键细节】\n三个新变化值得注意：(1) 角色插件——每个插件捆绑了特定领域所需的集成、指令和上下文，Codex 能「近似」完成特定工作；(2) Python SDK——pip install openai-codex 即可嵌入自有应用，复用 Codex 登录态；(3) Codex Sites——一键将工作成果转化为可分享的交互式网站。\n\n【背景与上下文】\n这延续了 Anthropic 2 月推出 Enterprise Agents 的思路，但 OpenAI 的路径是从消费者切入企业。Codex 3 月才引入插件支持，比 Anthropic 晚了一个月。但 500 万周活用户的基数意味着覆盖速度可能更快。\n\n【影响与前瞻】\nCodex 从「编程工具」到「工作平台」的转型，和 Scout 的发布一起，标志着 AI Agent 正从开发者的专属工具变成所有知识工作者的基础设施。对工程团队来说，这意味着需要重新思考「谁来使用 AI」的问题——不再只是工程师。",
+      "source": "TechCrunch",
+      "source_type": "tavily",
+      "url": "https://techcrunch.com/2026/06/02/openai-launches-new-codex-tools-for-white-collar-work/",
+      "timestamp": "2026-06-02T16:00:00Z",
+      "importance": 8,
+      "tags": [
+        "OpenAI",
+        "Codex",
+        "知识工作",
+        "Agent插件",
+        "企业AI"
+      ],
+      "batch_time": "2026-06-03T10:00:00+08:00"
+    },
+    {
+      "title": "Uber 对员工 AI 支出设限：每工具每月 $1500，年度预算 4 个月花光",
+      "summary": "Uber 内部出台新规，对 Claude Code、Cursor 等 AI 编码工具设置每员工每月 $1500 上限。CTO 此前透露全年 AI 预算在 4 个月内耗尽。COO Andrew Macdonald 公开质疑 AI 的生产力影响，表示「很难划出一条线」连接 AI 使用和新消费者功能。这是企业 AI 支出管控的标志性事件。",
+      "detail_content": "【核心事件】\n据 Bloomberg 报道，Uber 近期对员工使用 AI 编码工具设置了月度支出上限：每人每月、每种 AI 编码工具（包括 Claude Code、Cursor 等）不超过 $1500。员工可通过内部仪表盘追踪使用量，特殊情况下可申请超额。\n\n【关键细节】\n这一决定背后是惊人的数字：Uber CTO 在 4 月公开透露，公司全年的 AI 预算在短短 4 个月内就被花光了。COO Andrew Macdonald 在播客节目中表示「很难划出一条线」来证明 AI 使用和实际新产品功能之间的因果关系。这代表了企业高层对 AI ROI 的真实怀疑。\n\n【背景与上下文】\nUber 不是孤例。Pragmatic Engineer 近期报道了工程部门开始自上而下和自下而上削减 AI token 支出的趋势。The Information 也报道多家大型科技公司开始限制 AI 工具的使用。Gizmodo 报道了「Corporate America 开始对 AI 实施配给」的现象。\n\n【影响与前瞻】\n这对所有推行 AI 转型的组织都是一个警示：工具采购只是第一步，成本治理和 ROI 衡量才是持久战。$1500/月/工具 对个人开发者来说很高，但对每天高频使用的工程团队来说可能不够。银行在规划 AI 编码工具推广时，需要提前设计好成本管控和效果度量机制。",
+      "source": "TechCrunch",
+      "source_type": "tavily",
+      "url": "https://techcrunch.com/2026/06/02/uber-caps-employee-ai-spending-after-blowing-through-budget-in-four-months/",
+      "timestamp": "2026-06-02T19:11:48Z",
+      "importance": 9,
+      "tags": [
+        "Uber",
+        "AI成本管控",
+        "ROI",
+        "Claude Code",
+        "Cursor"
+      ],
+      "batch_time": "2026-06-03T10:00:00+08:00"
+    },
+    {
+      "title": "Anthropic 扩展 Project Glasswing：150 组织接入，Mythos 已发现超 1 万个高危漏洞",
+      "summary": "Anthropic 将 Project Glasswing 扩展到 15 个国家的约 150 个关键基础设施组织。Claude Mythos 模型在不到两个月内已发现超 10,000 个高危或严重级别的软件漏洞。Cloudflare 单家扫出 2000 个 Bug（其中 400 个高危），误报率低于人类测试员。",
+      "detail_content": "【核心事件】\nAnthropic 宣布将 Project Glasswing 项目扩展到约 150 个新组织，覆盖 15 个国家的关键基础设施领域。自 4 月初启动以来，受限的 Claude Mythos Preview 模型已经发现了超过 10,000 个高危或严重级别的软件漏洞。\n\n【关键细节】\nCloudflare 是最早的测试组织之一，在其关键路径系统中识别了 2,000 个 Bug，其中 400 个被评级为高危或严重，且误报率低于人类测试员。Anthropic 表示「修复这些 Bug 的瓶颈不是 AI 的发现能力，而是人类进行分类、报告、设计和部署补丁的处理能力」。Cloud Security Alliance、SANS Institute 和 OWASP 联合报告警告，组织可能很快就会被威胁行为者使用 AI 发现和利用漏洞的速度所压倒。\n\n【背景与上下文】\n这是 Anthropic 之前 Mythos 项目的自然扩展。Cloudflare 的案例特别有价值：误报率低于人类测试员，意味着 AI 安全审计已经进入生产可用阶段。\n\n【影响与前瞻】\n对银行来说，AI 安全审计可能是 ROI 最明确的 AI 应用场景之一。Cloudflare 的经验（2000 Bug / 400 高危 / 低误报率）提供了一个可直接参考的案例。Anthropic 将其定位为「受限模型」也意味着可以满足金融监管的安全合规要求。",
+      "source": "CyberScoop",
+      "source_type": "tavily",
+      "url": "https://cyberscoop.com/anthropic-project-glasswing-expansion-critical-infrastructure-claude-mythos/",
+      "timestamp": "2026-06-02T14:14:00Z",
+      "importance": 8,
+      "tags": [
+        "Anthropic",
+        "安全审计",
+        "Mythos",
+        "Cloudflare",
+        "漏洞发现"
+      ],
+      "batch_time": "2026-06-03T10:00:00+08:00"
+    },
+    {
+      "title": "Claude Code 工程团队分享：智能体编程如何重塑工程组织与流程",
+      "summary": "Claude Code 工程团队在 Code w/ Claude SF 2026 上分享了将智能体编程设为默认工作方式后的流程变革：规划转向即时（JIT）模式，上下文收集变为「先问 Claude」，代码审查中 Claude 处理风格与测试而人工专注法律安全判断。工程瓶颈从编写代码转向验证、审查与安全维护。",
+      "detail_content": "【核心事件】\n在 Code w/ Claude SF 2026 活动上，Claude Code 工程团队详细分享了内部实践：将智能体编程设为默认工作方式后，整个工程组织的流程和结构发生了什么变化。\n\n【关键细节】\n三个核心变化：(1) 规划转向 JIT 模式——不再写长篇设计文档再开发，而是快速原型 + 即时反馈；(2) 上下文收集反转——以前是人去翻文档，现在是「先问 Claude」，让 Agent 先收集和整理上下文；(3) 代码审查分工——Claude 处理代码风格、测试覆盖等标准化部分，人类审查者专注于法律合规、安全边界、产品方向等专业判断。\n\n团队总结出的新认知是：工程瓶颈已经从「写代码」转移到「验证、审查和安全维护」。这意味着工程管理者需要重新设计 review 流程、QA 标准和安全检查清单。\n\n【背景与上下文】\n这和 Steve Yegge 的「Agentic Engineer」概念、Cursor 开发者报告中的 46 倍产出鸿沟相互印证。但 Claude Code 团队的分享更有实操价值——他们不仅描述了变化，还给出了具体的流程调整方案。\n\n【影响与前瞻】\n对正在推行 AI 编码的团队来说，这篇博客最值得关注的点不是「用了多少 AI」，而是「流程怎么改」。特别是代码审查分工（AI 做标准化、人做专业判断）的思路，可以直接落地。",
+      "source": "Claude Blog",
+      "source_type": "aihot",
+      "url": "https://claude.com/blog/running-an-ai-native-engineering-org",
+      "timestamp": "2026-06-02T16:45:23Z",
+      "importance": 8,
+      "tags": [
+        "Claude Code",
+        "工程组织",
+        "代码审查",
+        "智能体编程",
+        "流程变革"
+      ],
+      "batch_time": "2026-06-03T10:00:00+08:00"
+    },
+    {
+      "title": "Hipcamp 工程实战：构建 Scout——团队级 Claude Code 编排系统",
+      "summary": "Hipcamp 工程团队构建了名为 Scout 的内部编排层，将 Claude Code 从个人工具升级为团队级工程系统。核心理念是让工程师专注架构设计，Claude 处理 80-90% 的日常编码。通过子 Agent 分发任务，每个子 Agent 拥有独立的 200K 上下文窗口，只输出主 Agent 需要的内容。",
+      "detail_content": "【核心事件】\nHipcamp 的工程团队发现，直接给工程师 Claude Code 访问权限后，工程师花在修复低质量 AI 代码上的时间反而更多。为此他们构建了 Scout——一个在 Claude Code 之上的编排层，将其变为团队感知的 AI 工程系统。\n\n【关键细节】\nScout 的架构设计：(1) 利用 Claude Code 的 subagent 功能，将大任务拆分为更小的 prompt 发送给独立 Agent；(2) 每个子 Agent 拥有完整的 200K 上下文窗口用于研究，只输出主 Agent 所需的精确内容；(3) 目标是让工程师做架构设计，Claude 完成基础代码，工程师只处理最后 10% 的收尾工作。\n\n团队坦承，之前「给工程师 Claude 然后放手」的方式失败了——低质量 AI 代码的修复成本超过了 AI 带来的效率提升。Scout 的核心价值在于「opinionated」——它有明确的编码标准和团队规范，不是让 AI 自由发挥。\n\n【背景与上下文】\n这是「纯工具采购 vs 工程系统设计」的经典案例。很多团队以为买了 Claude Code / Cursor 就够了，但 Hipcamp 的经验表明，需要一层编排来确保 AI 产出的质量和一致性。这和 Uber 的成本管控案例形成互补：Uber 管的是「花多少钱」，Hipcamp 管的是「产出多好」。\n\n【影响与前瞻】\n对任何规模化推广 AI 编码的团队，Hipcamp 的 Scout 架构（subagent 分发 + 200K 独立上下文 + 团队规范约束）提供了一个可直接参考的技术方案。关键洞察：「不加以编排的 AI 编码 = 技术债加速器」。",
+      "source": "Hipcamp Engineering Blog",
+      "source_type": "tavily",
+      "url": "https://www.hipcamp.com/journal/engineering/scout-our-in-house-ai-agent",
+      "timestamp": "2026-06-02T12:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Hipcamp",
+        "Claude Code",
+        "编排系统",
+        "subagent",
+        "工程架构"
+      ],
+      "batch_time": "2026-06-03T10:00:00+08:00"
+    },
+    {
+      "title": "智能体工程实战窍门全录：22 条从规划到执行的方法论",
+      "summary": "来自 @mvanhorn 的分享，总结「智能体工程」的核心方法论：从人主导编码转向人主导方向、Agent 执行。工作中心从 IDE 转向终端和计划文件，遵循 Research → Plan → Work 循环。22 条实战技巧涵盖规划、并行执行、输入方式、远程控制等，并给出完整工具栈。",
+      "detail_content": "【核心事件】\n@mvanhorn 分享了一套完整的「智能体工程」实战方法论，被 @shao__meng 总结为 22 条技巧。核心理念是：人类从「写代码的人」转变为「定方向的人」，Agent 负责执行。\n\n【关键细节】\n方法论核心：(1) 工作中心从 IDE 转向终端和计划文件（plan.md），plan.md 成为约束 Agent 行为的核心工具；(2) 标准循环为 Research → Plan → Work，每个阶段有明确的 Agent 使用策略；(3) 22 条技巧涵盖规划（先让 Agent 做研究再给方案）、并行执行（多 Agent 同时处理独立任务）、输入方式（语音 vs 文本的选择）、远程控制（如何中途修正 Agent 方向）等。\n\n工具栈包括 Claude Code、Cursor、OpenClaw 等主流工具的组合使用建议。\n\n【背景与上下文】\n这和 Claude Code 团队分享的 JIT 规划模式高度一致，但更偏个人实践层面。和之前宝玉总结的「Coding Agent 最佳实践」形成互补——宝玉强调开头规划的重要性，mvanhorn 给出了更系统的执行框架。\n\n【影响与前瞻】\n对想要建立团队级 AI 编码规范的工程管理者来说，这套方法论可以直接用作内部培训材料。特别是 plan.md 约束 Agent 行为的思路，和 Hipcamp Scout 的「opinionated」理念异曲同工。",
+      "source": "X：邵猛 (@shao__meng)",
+      "source_type": "aihot",
+      "url": "https://x.com/shao__meng/status/2061974983094755575",
+      "timestamp": "2026-06-03T00:55:20Z",
+      "importance": 7,
+      "tags": [
+        "智能体工程",
+        "方法论",
+        "Claude Code",
+        "实战技巧",
+        "plan.md"
+      ],
+      "batch_time": "2026-06-03T10:00:00+08:00"
+    },
+    {
+      "title": "NVIDIA NemoClaw：工业软件厂商构建自主 AI 工程师，数周任务压缩至数小时",
+      "summary": "NVIDIA 在 COMPUTEX 发布 NemoClaw 平台，提供构建专用、长期运行 AI Agent 的开源蓝图。Cadence、Siemens、达索系统、Synopsys 等十余家工业软件厂商正基于此开发自主 AI 工程师，将 CAE/EDA 仿真设计工作流从数周压缩至数小时。核心开源运行时 OpenShell 提供基于策略的安全管控。",
+      "detail_content": "【核心事件】\nNVIDIA 在 COMPUTEX 上发布 NemoClaw，一个用于构建专用、长期运行 AI Agent 的开源蓝图。这不是通用编码助手，而是面向工业软件的垂直 AI 工程师。\n\n【关键细节】\nNemoClaw 的架构包含三层：(1) 工具架（Tool Rack）——Agent 可调用的工具集合；(2) 模型路由器——根据任务选择最合适的前沿模型；(3) NeMo 库——提供预训练和微调能力。核心开源运行时 OpenShell 负责管理 Agent 对文件、网络和工具的访问，实施基于策略的安全控制。\n\n部署方式灵活：可通过 DGX Spark 本地部署、数据中心或云端。Cadence、Siemens、达索系统、Synopsys 等 10+ 工业软件巨头已开始基于 NemoClaw 构建 CAE 和 EDA 工作流的自主 AI 工程师。\n\n【背景与上下文】\n这是 Agent 从「编码助手」向「垂直领域专家」演进的典型案例。和微软 Scout（通用办公助手）形成对比——NemoClaw 走的是「窄而深」路线，在特定工业场景做端到端自动化。\n\n【影响与前瞻】\n对银行来说，NemoClaw 的模式值得借鉴：不是给所有人一个通用 AI 助手，而是为特定业务流程（如信贷审批、反洗钱调查）构建专用的、有安全管控的 AI Agent。OpenShell 的策略式安全管控框架可能是金融行业最需要的。",
+      "source": "NVIDIA AI Blog",
+      "source_type": "aihot",
+      "url": "https://blogs.nvidia.com/blog/industrial-software-leaders-secure-autonomous-ai-engineers-nemoclaw",
+      "timestamp": "2026-06-02T22:00:58Z",
+      "importance": 7,
+      "tags": [
+        "NVIDIA",
+        "NemoClaw",
+        "工业软件",
+        "Agent",
+        "安全管控"
+      ],
+      "batch_time": "2026-06-03T10:00:00+08:00"
+    },
+    {
+      "title": "商汤开源 SenseNova-Skills：OpenClaw 兼容的 AI 办公技能套件",
+      "summary": "商汤开源 SenseNova-Skills，为 OpenClaw/HermesAgent 等技能兼容智能体提供四大核心功能：信息图表生成、数据分析（多表解析+可视化）、PPT 创建（智能排版+可编辑输出）、深度研究（跨学术/技术/社交多源搜索+报告生成）。已完全开源。",
+      "detail_content": "【核心事件】\n商汤科技开源了 SenseNova-Skills，一个面向 OpenClaw 和 HermesAgent 等智能体的 AI 办公技能套件。这意味着任何使用这些框架的开发者可以直接获得企业级的办公自动化能力。\n\n【关键细节】\n四大核心功能：(1) 图像信息图表生成——支持镜像参考风格，可按指定风格生成可视化内容；(2) 数据分析——支持多表解析、数据清洗和可视化图表生成；(3) PPT 创建——生成大纲内容并智能排版，输出可编辑的 PPT 文件；(4) 深度研究——跨学术论文、技术文档、社交媒体等多源搜索，生成综合报告。\n\n特别值得注意的是 PPT 功能的「可编辑输出」——不是生成图片，而是真正的 PPT 文件，可以二次编辑。这对企业场景非常实用。\n\n【背景与上下文】\nOpenClaw 生态正在快速扩展技能市场。微软 Scout、商汤 SenseNova-Skills、OpenAI Codex 插件都在同一天发布，标志着 Agent 技能生态的爆发期到来。\n\n【影响与前瞻】\n对银行内部 AI 助手的规划来说，SenseNova-Skills 的 PPT 和数据分析能力可能是最直接可用的。开源意味着可以在内部部署和定制，不受 SaaS 供应商限制。",
+      "source": "X：商汤 SenseTime (@SenseTime_AI)",
+      "source_type": "aihot",
+      "url": "https://x.com/SenseTime_AI/status/2061822148076093625",
+      "timestamp": "2026-06-02T14:48:08Z",
+      "importance": 6,
+      "tags": [
+        "商汤",
+        "OpenClaw",
+        "开源",
+        "PPT生成",
+        "数据分析"
+      ],
+      "batch_time": "2026-06-03T10:00:00+08:00"
+    },
+    {
+      "title": "Pragmatic Engineer：和 AI Agent 工作时要「慢下来才能快起来」",
+      "summary": "Gergely Orosz 在 Craft Conference 演讲中提出「慢下来才能快起来」的 AI 工程理念。核心观点是 AI 编码工具已经覆盖几乎所有软件工程师，但直接让 Agent 冲锋反而产出低质量代码。需要在规划阶段投入更多时间，让 Agent 在充分理解上下文后再执行。",
+      "detail_content": "【核心事件】\nGergely Orosz（Pragmatic Engineer）在布达佩斯 Craft Conference 上发表主题演讲，标题就是「慢下来才能快起来」。他和 Kent Beck、Hillel Wayne、Titus Winters 等工程界重量级人物同台。\n\n【关键细节】\n核心论点：AI 编码工具已经覆盖了几乎所有软件工程师，这是「快」的部分。但问题是——让 Agent 直接开写代码往往产出低质量结果。「慢下来」指的是在规划阶段投入更多时间：充分描述需求、提供足够上下文、定义清晰的验收标准。\n\n这和 Claude Code 团队分享的 JIT 规划模式呼应，但角度不同：Claude Code 团队说的是流程变革，Gergely 说的是个人工作习惯的调整。\n\n【背景与上下文】\n这延续了 Gergely 一直关注的「AI 编码不等于工程提效」视角。他之前报道过 Cursor 的 46 倍产出鸿沟、工程部门削减 AI 开支等趋势。这次演讲可以看作是对这些现象的总结性方法论。\n\n【影响与前瞻】\n「慢下来才能快起来」是一个反直觉但对 AI 编码至关重要的原则。对正在推行 AI 编码的团队来说，这提醒我们培训重点不应是「怎么用工具」，而是「怎么写好 prompt 和 plan」。",
+      "source": "Pragmatic Engineer",
+      "source_type": "tavily",
+      "url": "https://newsletter.pragmaticengineer.com/p/ideas-slow-down-to-speed-up-when",
+      "timestamp": "2026-06-01T10:00:00Z",
+      "importance": 6,
+      "tags": [
+        "Pragmatic Engineer",
+        "AI编码",
+        "方法论",
+        "工程管理"
+      ],
+      "batch_time": "2026-06-03T10:00:00+08:00"
+    },
     {
       "title": "Anthropic 用约 1000 名人类工程师反馈改进 Claude Code：每个任务 280 美元",
       "summary": "Business Insider 独家披露 Anthropic 正通过外包公司 Snorkel 雇佣约 1000 名软件工程师，为 Claude Code 提供反馈。工程师们每个任务获 280 美元，需创建提示词、审查代码，对比两个模型输出并选择更优者。项目目标是训练 Claude Code 写出更简洁、更易维护的代码。",
@@ -857,186 +1036,6 @@
         "最佳实践"
       ],
       "batch_time": "2026-05-28T10:00:00+08:00"
-    },
-    {
-      "title": "微软悄悄取消 Claude Code 许可证：全球最大软件公司的 AI 编码实验可能终结",
-      "summary": "去年 12 月微软让数千名工程师、产品经理和设计师使用 Claude Code。到今年春天，工具已蔓延到非技术岗位。如今微软正取消 Experiences & Devices 部门（Windows、M365、Teams）的大部分 Claude Code 许可。这可能是企业 AI 编码「不计成本扩张期」结束的标志性事件。",
-      "detail_content": "【核心事件】\n\n去年 12 月，微软让数千名工程师、产品经理和设计师可以使用 Claude Code，费用由公司承担。到今年春天，Claude Code 已经渗透到非技术岗位——那些在以往企业软件浪潮中需要多年等待才能获得工具的职能。全球最大的软件公司，拥有自己的基础模型和编码助手，却花钱让员工使用竞争对手的产品。\n\n如今风向急转。据 Windows Central 和 The Verge 报道，微软正在取消 Experiences & Devices 部门内大部分直接的 Claude Code 许可证。该部门负责 Windows、Microsoft 365、Outlook、Teams 和 Surface 等核心产品。\n\n【关键细节】\n\n这并非微软对 Claude Code 质量的否定。相反，正是因为工具太好用了——从工程扩散到非技术岗位，成本失控才成为问题。Claude Code 的按 token 计费模式在大规模部署时产生了惊人的费用。\n\n【背景与上下文】\n\n这与 Uber 四个月烧完全年 Claude Code 预算的故事形成呼应。企业级 AI 编码正在从「先试用再说」转向「认真算 ROI」。同时，GitHub 内部也在挣扎——CEO 离职、人才外流、面临 Cursor 和 Claude Code 的直接竞争威胁。\n\n【影响与前瞻】\n\n微软的选择预示着一个拐点：AI 编码工具在企业中的部署将不再是无脑扩张，而是要证明 ROI。对于推动银行 AI 转型的人来说，这是一个关键的参考案例——微软尚且无法无限制承受 AI 编码成本，更不用说预算更紧的传统企业。",
-      "source": "The Next Web",
-      "source_type": "tavily",
-      "url": "https://thenextweb.com/news/microsoft-claude-code-retreat-ai-cost",
-      "timestamp": "2026-05-25T11:22:57Z",
-      "importance": 9,
-      "tags": [
-        "企业AI部署",
-        "Claude Code",
-        "微软",
-        "ROI",
-        "成本控制"
-      ],
-      "batch_time": "2026-05-27T10:00:00+08:00"
-    },
-    {
-      "title": "Anthropic Mythos 项目首月战报：发现超 1 万个高危漏洞，Cloudflare 单家扫出 2000 个",
-      "summary": "Anthropic 的 Project Glasswing 计划运营仅一个月，就在全球关键代码中发现超过 10,000 个高严重或关键级别的软件漏洞。Cloudflare 在自己的关键路径系统中发现 2,000 个 bug，其中 400 个评级为高或关键，误报率优于人类测试。Claude Security 公测版在三周内修补了 2,100 多个漏洞。",
-      "detail_content": "【核心事件】\n\nAnthropic 旗下运营仅一个月的 Project Glasswing 计划已发现超过 10,000 个高严重或关键级别的软件漏洞。这些发现来自合作伙伴报告和独立评估，涵盖系统重要性代码。这是前沿 AI 模型被用于大规模代码安全审计的首批公开成果之一。\n\nCloudflare 在其关键路径系统中发现了 2,000 个漏洞，包括 400 个高或关键级别。Cloudflare 表示其误报率优于人类测试人员。基于这些成果，Anthropic 已发布 Claude Security 公开测试版供企业客户使用，该工具在三周内利用 Claude Opus 4.7 修补了超过 2,100 个漏洞。同时启动了面向安全专业人员的 Cyber Verification Program。\n\n【关键细节】\n\nAnthropic 表示这一成果已经改变了网络安全的中心问题——从「发现漏洞」转变为「验证和修补漏洞」。这意味着瓶颈不再是 AI 的分析能力，而是人类团队处理和修复的速度。\n\n【背景与上下文】\n\n此项目基于 Mythos（Anthropic 的推理模型）的能力，结合合作伙伴的实际代码库进行实战测试。这是 AI 安全工程从理论走向生产的里程碑案例。\n\n【影响与前瞻】\n\n对金融行业尤其重要：银行的核心系统同样面临大量遗留代码和安全债务。用 AI Agent 大规模扫描和修补漏洞的范式，可能是下一个 AI 落地的杀手级场景。",
-      "source": "CyberScoop",
-      "source_type": "tavily",
-      "url": "https://cyberscoop.com/anthropic-mythos-software-flaws-glasswing/",
-      "timestamp": "2026-05-26T15:15:51Z",
-      "importance": 9,
-      "tags": [
-        "AI安全",
-        "Mythos",
-        "Cloudflare",
-        "漏洞扫描",
-        "企业部署"
-      ],
-      "batch_time": "2026-05-27T10:00:00+08:00"
-    },
-    {
-      "title": "WSJ 头条：OpenClaw 联合创始人警告 'Vibe Slop' 危机——AI 编码正在制造危险代码泛滥",
-      "summary": "华尔街日报报道，构建了 OpenClaw 核心的两位工程师发出严厉警告：AI 编码工具正在用大量低质量、潜在危险的代码淹没世界。他们称之为 'vibe slop'——vibe coding 和 AI slop 的结合体。",
-      "detail_content": "【核心事件】\n\n华尔街日报以头条形式报道了 OpenClaw 两位核心工程师的警告：AI 编码工具正在产生大量低质量、潜在危险的代码。他们将这一现象命名为「vibe slop」——结合了「vibe coding」（用自然语言描述让 AI 生成软件）和「AI slop」（大量低价值 AI 生成内容）。\n\n这两位工程师本身是 AI 编码革命的推动者，他们的警告因此更具分量。他们认为「最终这会追上我们」——暗示代码质量危机可能在未来引发严重的系统性问题。\n\n【关键细节】\n\n报道引用了 vibe coding 的核心理念：用自然语言描述功能，让 AI 工具生成代码。问题是，当非技术人员大量使用这些工具时，产出的代码缺乏工程规范、安全审查和可维护性考虑。\n\n【背景与上下文】\n\n这一警告与 Anthropic 内部调研的发现吻合——工程师使用 Claude 获得 ~50% 生产力提升，但技能退化和指导减少成为隐忧。Forbes 的报道也指出，AI 自动化实际上创造了更多需要专家判断的工作。\n\n【影响与前瞻】\n\n对于推动银行 AI 转型的人来说，这是一个必须正视的信号：AI 编码的效率提升是真实的，但代码质量管控必须同步跟上。在金融行业，'vibe slop' 的后果可能远比消费互联网严重。",
-      "source": "WSJ",
-      "source_type": "tavily",
-      "url": "https://www.wsj.com/tech/ai/vibe-coding-slop-ai-tools-e6a99394",
-      "timestamp": "2026-05-22T09:30:00Z",
-      "importance": 8,
-      "tags": [
-        "AI编码",
-        "代码质量",
-        "OpenClaw",
-        "安全风险",
-        "vibe coding"
-      ],
-      "batch_time": "2026-05-27T10:00:00+08:00"
-    },
-    {
-      "title": "Shopify AI-First 工程实战详解：约 20% 生产力提升、LLM 代理架构、'让 AI 看起来很容易'文化",
-      "summary": "Shopify 工程 VP Farhan Thawar 详细披露了他们的 AI-first 方法论：自建 LLM 代理统一路由请求（支持 Cursor、Claude Code、Copilot 等），实现约 20% 生产力提升。CEO Tobi Lütke 公开表示「几周内写的代码超过过去十年」。",
-      "detail_content": "【核心事件】\n\nShopify 的 VP & Head of Engineering Farhan Thawar 公开分享了 Shopify 的 AI-First 工程方法论。核心策略是不强制指定工具，而是建设标准化基础设施：自建内部 LLM 代理，统一路由请求到 Cursor、Claude Code、Copilot 等工具，同时控制成本和分析。\n\n生产力提升约 20%，主要体现在：原型探索从 2 个方案扩展到 10 个、交付质量更高、演示从月度变为周度。CEO Tobi Lütke 公开表示「几周内写的代码超过过去十年」。\n\n【关键细节】\n\n具体实践包括：1）MCP 服务器连接内部系统（带权限控制）；2）'Quick' 工具让非工程师部署简单应用；3）文化建模——领导层分享'偷懒但高效'的用法，'让 AI 看起来很容易'；4）坚持人类 PR 审查，回退率保持稳定。\n\n特别强调避免「理解债务」——要求工程师理解系统 2-3 层深度，不能只让 AI 写代码却不理解架构。\n\n【背景与上下文】\n\n这是目前公开的最完整的大厂 AI-First 工程方法论之一。与 Uber 的反面案例（烧预算无 ROI）形成对比：Shopify 的策略是「基础设施先行」，而不是「工具先行」。\n\n【影响与前瞻】\n\n对银行 AI 转型的启示：不是给所有人买 Claude Code 许可证就行了，而是要先建好 LLM 代理层、MCP 接口、成本管控和文化变革。「理解债务」概念尤其重要——金融系统的代码不能只是「vibe coded」。",
-      "source": "Grok AI Search",
-      "source_type": "grok",
-      "url": "https://grok.com/search/shopify-ai-first-engineering-playbook-thawar",
-      "timestamp": "2026-05-26T12:00:00Z",
-      "importance": 9,
-      "tags": [
-        "Shopify",
-        "AI-first",
-        "工程方法论",
-        "生产力",
-        "LLM代理"
-      ],
-      "batch_time": "2026-05-27T10:00:00+08:00"
-    },
-    {
-      "title": "Forbes 深度：AI 自动化创造的专家工作比它消灭的更多——Every 公司 30 人团队的实证",
-      "summary": "Every 公司 CEO Dan Shipper 公布了他们激进自动化后的真实数据：AI 廉价化了昨天的能力，但立即推高了对专家判断力的需求。30 人团队在编码、写作、客服全面自动化后，需要的人类专家比以前更多了。",
-      "detail_content": "【核心事件】\n\nEvery 公司（媒体和 AI 研究公司）CEO Dan Shipper 发布了详细报告，展示了 30 人团队在编码、写作和客服领域全面自动化后的真实状况。核心发现是反直觉的：AI 并非消灭工作，而是创造了对专家判断力的更多需求。\n\nShipper 的结论是：「AI 廉价化了昨天的能力，并立即推高了对指导、审查和改进它的专家判断力的需求。」\n\n【关键细节】\n\n关键洞察：在 AI 能工作之前，必须有人具备相关专业知识来框定问题。这创造了一个结构性需求——专家角色不是减少了，而是被重新定位为「AI 的导演和审查者」。\n\n【背景与上下文】\n\n这篇报道与 Forbes 同日另一篇文章呼应——「AI Likely Means More Work For Humans」。两篇文章都指向同一个模式：自动化非但不是消灭工作，而是在提升工作的层级。类似地，从手动铲子升级到推土机，人类的问题永远不会用完。\n\n【影响与前瞻】\n\n这一发现对「AI 替代论」的叙事提出了有力的数据反驳。对于银行 AI 转型，这意味着不应以「减少人头」为目标，而应以「提升工作层级」为目标——从手工操作转向 AI 指导和审查。",
-      "source": "Forbes",
-      "source_type": "tavily",
-      "url": "https://www.forbes.com/sites/josipamajic/2026/05/23/ai-automation-creates-more-expert-work-not-less/",
-      "timestamp": "2026-05-23T00:00:00Z",
-      "importance": 8,
-      "tags": [
-        "AI自动化",
-        "就业影响",
-        "专家判断",
-        "Ghost GDP",
-        "组织变革"
-      ],
-      "batch_time": "2026-05-27T10:00:00+08:00"
-    },
-    {
-      "title": "WIRED 长文：AI Agent 如何让科技世界陷入混乱——从 Claude Code 到 OpenClaw 的完整叙事",
-      "summary": "WIRED 发布了一篇从 2025 年 8 月伦敦 Claude Code Anonymous 聚会讲起的深度长文，完整记录了 AI Agent 如何从地下运动演变为席卷整个科技行业的力量。文章详细描述了 Peter Steinberger 如何从 Claude Code 上瘾者变成 OpenClaw 创始人。",
-      "detail_content": "【核心事件】\n\nWIRED 发布了一篇深度长文，从 2025 年 8 月伦敦的「Claude Code Anonymous」聚会讲起——Peter Steinberger 和一群「上瘾者」组织了这场聚会，与志同道合者交流。彼时 Claude Code 的 Opus 4.5 模型能处理更复杂的编程任务、保留更多记忆、持续运行数小时、管理 AI 子代理团队。\n\nAnthropic 有一套号称「出了名困难」的工程候选人带回家考试，在一次对比中 Opus 4.5 「比任何人类候选人都高」，「引发了对 AI 如何改变工程这一职业的质疑」。\n\n2025 年 11 月，Steinberger 推出了后来被称为 OpenClaw 的工具——一个利用 Claude Code 等编码工具进展的个人 AI Agent 创建平台。\n\n【关键细节】\n\n文章不只是技术叙事，更记录了这一浪潮的社会影响：从程序员到非技术人员，所有人都在被 AI 编码工具改变工作方式。文章用「混乱」(chaos) 来形容当前状态——既有生产力的飞跃，也有对代码质量和就业的担忧。\n\n【背景与上下文】\n\n这是目前最完整的 AI Agent 编码革命的叙事性报道之一。将分散的技术进展串联成了一个连贯的故事。\n\n【影响与前瞻】\n\n对于需要向非技术领导层解释 AI Agent 革命的人来说，这篇文章是很好的背景材料。它不只是技术分析，而是有故事、有人物的叙事。",
-      "source": "WIRED",
-      "source_type": "tavily",
-      "url": "https://www.wired.com/story/how-ai-agents-plunged-tech-world-into-chaos/",
-      "timestamp": "2026-05-26T10:00:00Z",
-      "importance": 8,
-      "tags": [
-        "AI Agent",
-        "Claude Code",
-        "OpenClaw",
-        "行业叙事",
-        "WIRED"
-      ],
-      "batch_time": "2026-05-27T10:00:00+08:00"
-    },
-    {
-      "title": "Pragmatic Engineer 深度：2026 年软件工程就业市场报告",
-      "summary": "Gergely Orosz 发布 2026 年软件工程就业市场深度报告，聚焦 AI 工程岗位的爆发、AI 是否真的在「替代」工程师，以及就业市场的结构性变化。这是目前最权威的行业就业数据报告之一。",
-      "detail_content": "【核心事件】\n\nPragmatic Engineer（Gergely Orosz）发布了 2026 年软件工程就业市场的深度调查报告。报告聚焦三个核心问题：AI 工程岗位是否真的在爆发？AI 是否在替代传统工程师？就业市场的结构性变化是什么？\n\n这是基于独家数据的深度报告，涵盖了软件工程岗位、AI 工程岗位增长和行业转型趋势。\n\n【关键细节】\n\n报告使用了独家数据来追踪就业市场的变化，不同于一般的行业观察或 CEO 声明，而是基于实际招聘数据和岗位分析。\n\n【背景与上下文】\n\nGergely Orosz 此前发布过「AI 对软件工程师的影响 Part 2——公司级采用为何如此困难」，本报告是系列深度调查的最新一环。\n\n【影响与前瞻】\n\n对于正在规划银行 AI 团队建设的人来说，这份报告提供了关键的市场基准数据：哪些技能在升值、哪些在贬值、AI 工程岗位的增长速度如何。",
-      "source": "Pragmatic Engineer",
-      "source_type": "tavily",
-      "url": "https://newsletter.pragmaticengineer.com/p/state-of-the-job-market-2026",
-      "timestamp": "2026-05-26T18:01:30Z",
-      "importance": 8,
-      "tags": [
-        "就业市场",
-        "软件工程",
-        "AI工程",
-        "Pragmatic Engineer",
-        "行业报告"
-      ],
-      "batch_time": "2026-05-27T10:00:00+08:00"
-    },
-    {
-      "title": "Anthropic 工程博客：不同产品中如何隔离和控制 Claude 智能体",
-      "summary": "Anthropic 发布工程文章，详细阐述通过三重机制控制 Claude 智能体的部署风险：沙箱/VM/网络控制、系统提示词和模型训练引导行为、MCP 服务器和第三方插件的细粒度权限管理。以 Claude Code、claude.ai 和 Claude Cowork 为例说明不同隔离架构。",
-      "detail_content": "【核心事件】\n\nAnthropic 发布工程实践文章，详细阐述了在 Claude Code、claude.ai 和 Claude Cowork 三个不同产品中如何设计 Agent 隔离架构。三重防护机制：1）通过沙箱、虚拟机和网络出口控制限制运行环境；2）利用系统提示词和模型训练引导行为；3）对 MCP 服务器和第三方插件实施细粒度权限管理。\n\n【关键细节】\n\n不同产品需要不同的隔离策略：Claude Code 作为开发工具需要本地执行权限但限制网络访问；claude.ai 作为消费者产品需要更严格的内容过滤；Claude Cowork 作为企业协作工具需要在权限和功能之间平衡。\n\n【背景与上下文】\n\n这篇文章是对 AI Agent 安全讨论的重要贡献。随着 Agent 能力增强（如 Mythos 的代码审计能力），隔离和控制变得愈发关键。\n\n【影响与前瞻】\n\n对于银行等金融行业，这篇文章提供了直接可参考的 Agent 部署安全架构设计。三种隔离机制的组合使用，对于处理敏感数据的 AI Agent 部署尤为重要。",
-      "source": "Anthropic Engineering",
-      "source_type": "aihot",
-      "url": "https://www.anthropic.com/engineering/how-we-contain-claude",
-      "timestamp": "2026-05-26T12:00:00Z",
-      "importance": 7,
-      "tags": [
-        "Agent安全",
-        "Anthropic",
-        "隔离架构",
-        "MCP",
-        "工程实践"
-      ],
-      "batch_time": "2026-05-27T10:00:00+08:00"
-    },
-    {
-      "title": "Code w/ Claude 伦敦 2026：自托管沙箱 + MCP 隧道，Agent 运行在客户自己基础设施上",
-      "summary": "Anthropic 在 Code w/ Claude 伦敦活动上宣布 Claude Managed Agents 两项新能力：自托管沙箱（公测）和 MCP 隧道（研究预览），让 AI Agent 的工具执行环境和 MCP 服务器连接都能运行在客户自有基础设施上。",
-      "detail_content": "【核心事件】\n\n在 Code w/ Claude 伦敦活动上，Anthropic 宣布了 Claude Managed Agents 的两项关键新能力：自托管沙箱（公开测试版）和 MCP 隧道（研究预览）。\n\n自托管沙箱让 AI Agent 的工具执行环境可以运行在客户自己的基础设施或指定托管服务商上，而不是 Anthropic 的云中。MCP 隧道则让 Agent 可以安全地连接到企业私有网络内的 MCP 服务器。\n\n【关键细节】\n\n这两项能力解决了企业级 Agent 部署的最大顾虑：数据安全和网络隔离。自托管意味着敏感数据不需要离开企业网络。MCP 隧道则解决了 Agent 需要访问内部系统的问题。\n\n活动还介绍了通过 Claude Code 优化思维预算和模型努力级别来提升开发体验的方法。\n\n【背景与上下文】\n\n这是 Anthropic 在 Agent 基础设施领域与 Cloudflare Managed Agents、Vercel Sandbox 等竞争的举措。Lance Martin 此前对比过四大 Managed Agents 沙箱方案。\n\n【影响与前瞻】\n\n对银行业极为重要：数据不出行是硬性要求。自托管沙箱 + MCP 隧道的组合，可能是让 Claude Agent 在银行真正落地的关键基础设施。",
-      "source": "Anthropic Blog",
-      "source_type": "aihot",
-      "url": "https://claude.com/blog/code-w-claude-london-2026-rethinking-how-we-build",
-      "timestamp": "2026-05-26T12:00:00Z",
-      "importance": 7,
-      "tags": [
-        "Managed Agents",
-        "自托管",
-        "MCP",
-        "企业部署",
-        "沙箱"
-      ],
-      "batch_time": "2026-05-27T10:00:00+08:00"
-    },
-    {
-      "title": "Lance Martin 新文：Claude Code 大型代码库实战技巧——导航性和 CLAUDE.md 维护",
-      "summary": "LangChain 的 Lance Martin 发布新文章，分享了 Claude Code 在大型代码库中的实用技巧，涵盖如何让代码库可导航、以及如何在模型越来越强的趋势下维护 CLAUDE.md 文件。",
-      "detail_content": "【核心事件】\n\nLance Martin（@RLanceMartin，LangChain 核心贡献者）发布了新文章，专门讨论 Claude Code 在大型代码库中的实战技巧。这是继他之前对比四大 Managed Agents 沙箱方案后的又一实用指南。\n\n【关键细节】\n\n文章聚焦两个核心挑战：1）如何让大型代码库对 AI Agent 可导航——包括文件组织、索引策略、上下文窗口优化；2）如何随着模型能力增强维护 CLAUDE.md 文件——Karpathy 此前分享的 65 行 CLAUDE.md 四条规则将准确率从 65% 提升至 94%。\n\n【背景与上下文】\n\n这与 Karpathy 的 CLAUDE.md 方法论、Shopify 的「理解债务」概念一脉相承：AI 编码的效率不仅取决于工具本身，还取决于人类如何组织代码库和编写指导文档。\n\n【影响与前瞻】\n\n对于维护大型遗留代码库的银行团队来说，这些技巧有直接的实操价值。代码库的可导航性是 AI Agent 能否有效工作的前提条件。",
-      "source": "X @RLanceMartin",
-      "source_type": "opentwitter",
-      "url": "https://x.com/RLanceMartin/status/2056406701889478657",
-      "timestamp": "2026-05-24T12:00:00Z",
-      "importance": 7,
-      "tags": [
-        "Claude Code",
-        "大型代码库",
-        "CLAUDE.md",
-        "实战技巧",
-        "Lance Martin"
-      ],
-      "batch_time": "2026-05-27T10:00:00+08:00"
     }
   ]
 }
