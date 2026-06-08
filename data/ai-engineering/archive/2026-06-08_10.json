@@ -1,0 +1,154 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-06-08T10:00:00+08:00",
+  "digest": "本周AI工程领域最重大的事件是Miasma蠕虫——首个针对AI编码工具（Claude Code、Gemini CLI、Cursor）的供应链攻击，73个微软GitHub仓库在105秒内被攻陷，暴露了AI agent信任模型的根本性安全缺陷。工程实践方面，Lance Martin分享了Claude Managed Agents的Outcomes自验证机制，Her工具让开发者可以审计Claude Code会话的token消耗和风险操作。非技术人员用AI的案例持续涌现——北海道农民用Codex管理农场的8个真实用法特别值得关注。组织层面，Kelowna市的AI聊天机器人\"救生员事件\"再次证明：数据质量比模型能力更重要。",
+  "items": [
+    {
+      "title": "Miasma 蠕虫：首个针对 AI 编码工具的供应链攻击，73 个微软 GitHub 仓库被攻陷",
+      "summary": "6月5日，自复制供应链恶意软件 Miasma 蠕虫攻陷了 Azure、Microsoft 等 4 个 GitHub 组织的 73 个仓库。攻击者通过泄露的贡献者凭证推送恶意提交，植入针对 Claude Code、Gemini CLI、Cursor 和 VS Code 的配置文件，在开发者打开仓库时自动执行凭证窃取负载。蠕虫窃取 AWS、Azure、GCP、Kubernetes 等 90+ 开发工具凭证后自主传播。GitHub 在 105 秒内自动封锁了受影响仓库，但 Azure Functions CI/CD 管道全面中断。",
+      "detail_content": "【核心事件】\n2026年6月5日，一个名为 Miasma 的自复制供应链蠕虫攻陷了 Microsoft 旗下 Azure、Azure-Samples、Microsoft 和 MicrosoftDocs 四个 GitHub 组织的 73 个仓库。攻击者利用此前泄露的贡献者账户凭证，向 Azure/durabletask 仓库推送了一个回溯至 2020 年的恶意提交（哈希：5f456b8），并标记 [skip ci] 以规避自动化检测。\n\n该提交不含源代码修改，而是添加了 5 个配置文件，分别针对 Claude Code（.claude/settings.json）、Gemini CLI（.gemini/settings.json）、Cursor（.cursor/rules/setup.mdc）、VS Code（.vscode/tasks.json）和 npm test 脚本。真正的恶意代码隐藏在 .github/setup.js 中——一个 4.3-4.6 MB 的混淆 JavaScript 凭证窃取器。\n\n【关键细节】\n蠕虫的设计目标是 AI 编码 agent 信任模型的核心弱点：当开发者用 Claude Code 或 Cursor 打开一个仓库时，这些工具会自动读取并执行项目目录中的配置文件。这意味着恶意代码在开发者仅仅打开项目时就已激活，无需安装任何依赖。\n\n窃取范围极为广泛：AWS、Azure、GCP、Kubernetes、npm、GitHub 凭证以及超过 90 种开发者工具配置。窃取的凭证随即被用于向受害者能访问的任何仓库推送蠕虫本体，形成自复制循环。\n\nGitHub 的自动化系统在 16:00:50 至 16:02:35 UTC 期间，用 105 秒分两波封锁了全部 73 个仓库。但 Azure/functions-action 的下线导致大量依赖该官方 GitHub Action 的 CI/CD 管道全面中断。\n\n【背景与上下文】\n技术分析将 Miasma 蠕虫与 2026 年 5 月威胁组织 TeamPCP 发布的 Mini Shai-Hulud 蠕虫关联——两次攻击使用了相同的泄露贡献者账户，载荷结构高度相似。这标志着供应链攻击从\"包安装钩子\"向\"编辑器/AI agent 会话启动事件\"的根本性转变。\n\nMITRE ATT&CK 映射涵盖 T1078（有效账户）、T1552（不安全凭证）、T1098（账户操纵）等多个战术。\n\n【影响与前瞻】\n这是首次大规模针对 AI 编码工具信任模型的攻击，意味着当前 Claude Code、Cursor 等工具的\"打开即执行\"架构存在系统性风险。安全团队需要立即审查仓库中的 AI agent 配置文件，轮换所有凭证，并在 CI/CD 中检测 [skip ci] 异常提交。对正在推进 AI 编码工具企业部署的团队来说，这是一个必须纳入风险评估的新维度。",
+      "source": "Rescana",
+      "source_type": "tavily",
+      "url": "https://www.rescana.com/post/miasma-worm-supply-chain-attack-73-microsoft-github-repositories-compromised-via-ai-coding-tools",
+      "timestamp": "2026-06-07T08:09:52Z",
+      "importance": 10,
+      "tags": [
+        "供应链安全",
+        "AI编码工具",
+        "Claude Code",
+        "Cursor",
+        "蠕虫攻击",
+        "GitHub"
+      ],
+      "batch_time": "2026-06-08T10:00:00+08:00"
+    },
+    {
+      "title": "Claude Code 会话分析工具 Her 发布：审计 token 消耗、风险操作与最佳实践",
+      "summary": "HuggingFace Build Small Hackathon 上诞生的 Her（हेर）工具，专门分析 Claude Code 的 .jsonl 会话文件。它用自然语言重建每轮交互，标记部署、配置变更和密钥暴露等高风险操作并定位到具体轮次。内置 Nemotron-Mini-4B 模型在本地 GPU 运行，不上传任何数据到第三方 API。",
+      "detail_content": "【核心事件】\n在 HuggingFace Build Small Hackathon 上，开发者 Ashish Chalke 发布了 Her（हेर，马拉地语\"侦探\"之意）——一个专门分析 Claude Code 会话的 Web 工具。每个 Claude Code 会话都会生成 .jsonl 追踪文件，记录每轮对话、工具调用和 token 消耗，但在实际使用中这些文件几乎不会被人工阅读。Her 解决了这个痛点。\n\n使用方式极其简单：将 .jsonl 会话文件拖放到 Her 页面，它就会自动分析。可以单文件查看会话视图，也可以多文件构建项目视图，跨会话追踪问题。\n\n【关键细节】\nHer 的核心能力包括：\n- 用自然语言重建每轮交互内容\n- 标记高风险操作：部署、配置变更、密钥暴露、生产环境访问\n- 追踪 token 消耗分布：哪个查询最贵、哪个子 agent 消耗最多\n- 识别使用的工具、子 agent、技能和 MCP 服务器\n- 内置 Ask Her 问答功能：可以问\"为什么用了这个工具\"并获取引用具体轮次的回答\n- 工具数据库：预装 Homebrew、npm、PyPI 上的热门工具信息，离线识别 CLI 工具用途\n\n架构设计有独到之处：评估引擎是纯确定性的（数字不会因模型变化而变），Nemotron-Mini-4B-Instruct 仅用于生成英文描述和软建议。模型运行在 ZeroGPU 上，不上传数据到任何第三方 API。\n\n【背景与上下文】\n这个工具诞生于一个周末，最初是为一位朋友构建的操作视图——一个旅程图，每个查询是一个按成本大小缩放的节点。后来因为另一位朋友需要更简洁的视图而增加了执行报告，再因为工具识别需求而加入了工具数据库。\n\n【影响与前瞻】\n对于在团队中推广 Claude Code 的工程管理者来说，Her 提供了一种可行的审计手段——了解 AI agent 到底在做什么、花了多少 token、有没有触达生产环境。在企业合规场景下，这类工具会成为 AI 编码工具治理的关键基础设施。",
+      "source": "HuggingFace Blog",
+      "source_type": "aihot",
+      "url": "https://huggingface.co/blog/build-small-hackathon/her-blog",
+      "timestamp": "2026-06-07T10:13:41Z",
+      "importance": 8,
+      "tags": [
+        "Claude Code",
+        "会话分析",
+        "工程工具",
+        "token审计",
+        "HuggingFace"
+      ],
+      "batch_time": "2026-06-08T10:00:00+08:00"
+    },
+    {
+      "title": "北海道西兰花农用 Codex 管理农场：非技术人员 AI 造工具的 8 个真实用法",
+      "summary": "日本北海道农民富安弘毅用 ChatGPT 和 OpenAI Codex 解决了 8 个农场实际问题：拍照识别西兰花病害、卫星 NDVI 监测、ESP32+LINE Bot 远程控制温室、农场群聊机器人、聊天记录追踪播种量、RTK-GPS 自动转向学习、Airtable 农场管理数据库。他说 AI 让传统昂贵的自动化变得低成本可及。",
+      "detail_content": "【核心事件】\n日本北海道农民富安弘毅（@AYi_AInotes 引述）分享了他用 ChatGPT 和 OpenAI Codex 在农场中解决实际问题的 8 个真实用法。这不是硅谷创业公司的故事，而是一个传统农民用 AI 造工具的实践记录。\n\n【8个用法详解】\n1. 拍照识别西兰花病害——用手机拍照 + ChatGPT 视觉能力快速诊断\n2. 卫星 NDVI 数据监测——获取和分析植被指数数据\n3. ESP32 + LINE Bot 远程控制温室卷帘——硬件+通讯的完整方案\n4. 农场群聊机器人——管理温度提醒和排期安排\n5. 聊天记录追踪播种数量——从非结构化对话中提取结构化数据\n6. 学习 RTK-GPS 自动转向原理——评估自建 vs 商业方案的成本\n7. 设计基于 Airtable 的农场管理数据库——非程序员构建数据系统\n8. 更多未详述的日常自动化应用\n\n富安弘毅的核心观点是：AI 让传统上只有大型农业企业才能负担的自动化技术，变得对小型农户也可及。\n\n【背景与上下文】\n这个故事之所以值得关注，是因为它打破了\"非技术人员用 AI\"的两种刻板印象：（1）不需要是程序员才能用 AI 造有用的工具；（2）这些工具不是玩具，而是真正解决了生产环境中的问题。\n\n【影响与前瞻】\n对于正在推动\"AI 民主化\"的团队来说，这类案例是最好的内部推广素材。它说明 AI 工具的价值不在于替代程序员，而在于让每个领域专家都能构建自己需要的工具。在银行等传统行业中，类似的\"业务人员用 AI 造工具\"场景同样值得期待。",
+      "source": "X：阿易 AI Notes (@AYi_AInotes)",
+      "source_type": "aihot",
+      "url": "https://x.com/AYi_AInotes/status/2063573709672104286",
+      "timestamp": "2026-06-07T10:48:06Z",
+      "importance": 8,
+      "tags": [
+        "非技术人员",
+        "Codex",
+        "实战案例",
+        "农业AI",
+        "AI民主化"
+      ],
+      "batch_time": "2026-06-08T10:00:00+08:00"
+    },
+    {
+      "title": "Mitiga 披露 Claude Code MCP 安全漏洞：明文存储的 Bearer Token 可被劫持",
+      "summary": "安全公司 Mitiga 披露 Claude Code 的 MCP 连接存在安全缺陷——OAuth 认证后的 Bearer Token 以明文存储在开发者本地配置文件中，攻击者修改该文件即可将 Claude Code 的认证请求重定向到恶意基础设施。Mitiga 于 4 月 10 日报告给 Anthropic，Anthropic 以\"需要先获得代码执行权限\"为由拒绝修复。",
+      "detail_content": "【核心事件】\n安全公司 Mitiga 披露了 Anthropic Claude Code 的 Model Context Protocol（MCP）连接机制中的安全缺陷。当开发者通过 Claude Code 连接 Jira、Confluence、GitHub 等外部服务时，工具会运行 OAuth 流程、获取用户授权，然后收到一个 Bearer Token 用于后续所有请求。问题在于：这个 Token 以明文形式存储在开发者机器的配置文件中。\n\n【关键细节】\n攻击场景很直接：如果攻击者能获得对开发者机器的文件系统访问（通过恶意包安装、供应链攻击等方式），只需修改配置文件中的 Token 即可将 Claude Code 的所有认证请求重定向到攻击者控制的基础设施。由于 Claude Code 通常拥有对 GitHub、内部 API、数据库等高权限服务的访问，这意味着一次文件篡改就可能暴露整个开发环境的认证体系。\n\nMitiga 于 2026 年 4 月 10 日向 Anthropic 披露了这个问题。Anthropic 在 4 月 12 日回应称该问题超出安全范围，理由是攻击需要通过用户已同意的包安装获得先前的代码执行权限。\n\n【背景与上下文】\n这并非 Claude Code 配置模型首次引发安全问题。随着 Miasma 蠕虫事件暴露出 AI 编码工具的配置文件可以被武器化，Mitiga 的披露获得了新的紧迫性。两者结合描绘了一个清晰的威胁图景：AI 编码工具的本地配置文件正在成为攻击者的重点目标。\n\n【影响与前瞻】\n对于正在部署 Claude Code 等工具的企业，建议（1）对配置文件设置严格的文件系统权限，（2）监控配置文件的异常变更，（3）限制 OAuth Token 的权限范围。MCP 安全问题不会自行消失，需要 Anthropic 和社区共同解决。",
+      "source": "CSO Online",
+      "source_type": "tavily",
+      "url": "https://www.csoonline.com/article/4181230/claude-code-has-an-mcp-security-problem-and-your-developers-are-already-using-it.html",
+      "timestamp": "2026-06-05T00:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Claude Code",
+        "MCP安全",
+        "安全漏洞",
+        "Bearer Token",
+        "企业安全"
+      ],
+      "batch_time": "2026-06-08T10:00:00+08:00"
+    },
+    {
+      "title": "Kelowna 市 AI 聊天机器人「救生员事件」：公共部门 AI 部署的数据质量教训",
+      "summary": "加拿大 Kelowna 市的 AI 聊天机器人被问\"哪些海滩有救生员\"时，错误列出了没有救生员的海滩——因为网站深处有一份过时的旧 PDF。CTO James McGregor 在 CIOCAN 论坛上以此为例说明：公共部门 AI 转型的核心挑战不是模型能力，而是数据管道——数据必须足够干净、流程足够一致、错误的影响范围足够可控。",
+      "detail_content": "【核心事件】\n加拿大 Kelowna 市的 AI 聊天机器人被市民问到\"哪些海滩有救生员\"时，列出了实际上没有救生员的海滩。错误原因很简单：城市网站深处有一份多年前（海滩确实有救生员时）的旧 PDF，聊天机器人检索到了这个过时信息并作为当前答案提供。\n\nKelowna 市 CTO James McGregor 在 CIOCAN 同行论坛上分享了这则\"好笑但关键\"的案例，用于说明公共部门 AI 转型的真正挑战所在。\n\n【关键细节】\nMcGregor 提出了公共部门 AI 部署的三个前提条件：\n1. 数据必须足够干净才能信任（Kelowna 的教训：一个被遗忘的旧 PDF 就能导致错误）\n2. 流程必须足够一致才能自动化\n3. 错误的影响范围（blast radius）必须可控\n\n这不是技术问题，而是\"管道\"问题——AI 转型本质上是数据管道、流程标准化和错误管理的系统工程。\n\n【背景与上下文】\n这个故事之所以引起共鸣，是因为它精准地戳中了当前 AI 部署的最大盲区：大多数组织把精力放在选择模型和优化 prompt 上，却忽视了底层数据质量。一个企业级 AI 系统的好坏，往往取决于它所连接的数据源的清洁度。\n\n【影响与前瞻】\n对银行等数据密集型行业的 AI 部署尤其有参考价值：在将 AI 连接到内部知识库、客户数据或合规文档之前，先做一次彻底的数据清理。否则 AI 只会让错误传播得更快、更广。Kelowna 的救生员事件是一个成本极低（没有造成实际伤害）但教训极深刻的案例。",
+      "source": "Digital Journal",
+      "source_type": "tavily",
+      "url": "https://www.digitaljournal.com/article/when-your-data-has-a-lifeguard-problem/",
+      "timestamp": "2026-06-05T22:04:59Z",
+      "importance": 6,
+      "tags": [
+        "数据质量",
+        "公共部门",
+        "AI部署",
+        "RAG",
+        "数据管道"
+      ],
+      "batch_time": "2026-06-08T10:00:00+08:00"
+    },
+    {
+      "title": "Lance Martin 详解 Claude Managed Agents：自验证（Outcomes）+ 自学习（Dreaming）的 Agent 工程方法论",
+      "summary": "LangChain 联合创始人 Lance Martin 分享了 Code With Claude 大会两个最受关注的新功能：Outcomes 让 agent 用评分子 agent 验证输出质量（本质是\"Ralph 循环\"），Dreaming 让 agent 在工作过程中持续写入文件系统积累经验。他还提供了 Opus 4.8 的实战建议：配合 Outcomes 使用、默认高努力模式、明确指定退出条件。",
+      "detail_content": "【核心事件】\nLangChain 联合创始人 Lance Martin 在 Twitter 上详细拆解了 Anthropic 在 Code With Claude 大会上发布的两个新功能——Outcomes 和 Dreaming，并分享了 Opus 4.8 的实战使用建议。\n\n【Outcomes：自验证机制】\nOutcomes 本质上是一个\"Ralph 循环\"——agent 完成任务后，用一个评分子 agent（grader sub-agent）对照用户提供的评分标准（rubric）验证输出质量。如果不达标，agent 会自动重试。这种设计的关键价值在于：将质量保证从\"人工抽查\"转变为\"自动化持续验证\"。\n\n对于长期运行的复杂任务（如大规模代码重构），Outcomes 能显著减少\"agent 跑偏但无人发现\"的风险。Martin 建议将其与 Claude Code 的 /goal 命令配合使用。\n\n【Dreaming：自学习机制】\nManaged Agents 在几周前上线了 Memory 功能，agent 可以在工作过程中持续向文件系统写入信息——做什么、学到了什么、遇到了什么问题。这相当于 agent 的\"工作日记\"，在后续任务中可以被检索和利用。\n\nMartin 指出这两个功能结合后，agent 具备了两个关键能力：自验证（知道自己做得对不对）和自学习（从经验中改进）。\n\n【Opus 4.8 实战建议】\nMartin 还分享了 Opus 4.8 的测试心得：\n- 长周期任务：配合 Outcomes 或 /goal 使用\n- 默认使用高努力（high effort）模式\n- 提供明确的退出条件，避免 agent 无限循环\n- 长上下文任务中，动态更新 System Prompt 不会破坏缓存\n\n【影响与前瞻】\nOutcomes + Dreaming 代表了 Agent 工程从\"一次性任务执行\"向\"持续质量保证和经验积累\"的演进。对于构建企业级 Agent 系统的团队，这些模式值得在设计阶段就纳入考虑。",
+      "source": "X：@RLanceMartin",
+      "source_type": "opentwitter",
+      "url": "https://x.com/RLanceMartin",
+      "timestamp": "2026-06-07T00:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Agent方法论",
+        "Claude Managed Agents",
+        "Outcomes",
+        "Opus 4.8",
+        "自验证"
+      ],
+      "batch_time": "2026-06-08T10:00:00+08:00"
+    },
+    {
+      "title": "Harness Engineering 分享：在 Agent-First 世界中用 Codex 的工程实践",
+      "summary": "CI/CD 平台 Harness 的工程团队在 OpenAI 官网分享了他们在智能体优先世界中利用 OpenAI Codex 的实践经验。文章发布于 6 月 6 日，在 Hacker News 上获得 102 点热度，引发了关于工程团队如何将 AI agent 融入现有开发工作流的讨论。",
+      "detail_content": "【核心事件】\nCI/CD 平台公司 Harness 的工程团队在 OpenAI 官方博客上分享了他们采用 OpenAI Codex 构建智能体优先（agent-first）开发工作流的实践经验。\n\n【关键细节】\n虽然原文因 Cloudflare 保护无法完整抓取，但从 AIHOT 摘要和社区讨论中可以提取以下要点：\n- Harness 作为 CI/CD 平台提供商，其工程实践对\"如何将 AI agent 融入已有开发流程\"具有代表性\n- 文章聚焦于 agent-first 模式下工作流设计的关键决策\n- 在 Hacker News 上获得 102 点热度，说明引发了工程社区的广泛共鸣\n\n【背景与上下文】\nHarness 的分享与近期一系列工程团队 AI 实践报告形成呼应：Anthropic 自己的 80% 代码 AI 生成、Booking.com 的瓶颈转移论、Hipcamp 的 Scout 编排系统。每一家都在回答同一个问题：AI agent 不是替代工程师，而是改变了工程工作的本质——从写代码变为编排、审查和协调。\n\n【影响与前瞻】\nCI/CD 平台公司分享 AI agent 实践具有特殊参考价值，因为它们本身就是\"代码到生产\"链条的关键环节。如果 Harness 这类公司认为 agent-first 模式可行，那说明 AI 编码工具已经从\"个人效率工具\"进化到\"团队级基础设施\"阶段。",
+      "source": "OpenAI Blog (via AIHOT)",
+      "source_type": "aihot",
+      "url": "https://openai.com/index/harness-engineering",
+      "timestamp": "2026-06-07T03:39:37Z",
+      "importance": 6,
+      "tags": [
+        "Codex",
+        "工程实践",
+        "CI/CD",
+        "Agent-First",
+        "Harness"
+      ],
+      "batch_time": "2026-06-08T10:00:00+08:00"
+    },
+    {
+      "title": "Visa、Mastercard 和 Coinbase 争夺 AI Agent 支付标准：Agent 经济的基础设施之争",
+      "summary": "Visa 推出 AI-Ready Cards、Mastercard 发布 Agent Pay、Coinbase 走加密货币路线——三家巨头在 AI Agent 如何代表人类支付的问题上形成了三个阵营。OpenAI 的 Instant Checkout 已覆盖超百万 Shopify 商家。AI Agent 支付不再是概念验证，而是正在形成的基础设施标准。",
+      "detail_content": "【核心事件】\n随着 AI Agent 从\"回答问题\"进化到\"执行任务\"，一个关键基础设施问题浮出水面：Agent 如何安全地代表人类进行支付？目前形成了三大技术路线：\n\n1. Visa 的 AI-Ready Cards——将信用卡详情替换为 Token 化凭证，确认消费者已授权特定 Agent 在限定范围内交易\n2. Mastercard 的 Agent Pay——基于 Agentic Tokens 的 Token 化栈，从非接触式支付扩展到 Agent 授权\n3. Coinbase 的加密路线——为 Agent 间的微支付设计，无需经过传统卡网络\n\nOpenAI 的 Instant Checkout 已在 ChatGPT 中上线，通过 Stripe 联合开发的 Shared Payment Token 协议，覆盖了 Etsy 卖家和超百万 Shopify 商家。\n\n【关键细节】\n技术路线的核心分歧在于结算层：Visa/Mastercard 走现有卡网络（每笔交易都有手续费），Coinbase 走链上结算（适合 Agent 间数千笔微支付）。AI-Ready Cards 特别强调了消费限额和授权范围控制。\n\n【背景与上下文】\n此前 Crossmint 发布报告称 7.1% 的 OpenClaw 技能暴露了卡号信息，暴露了当前 Agent 支付安全的现实风险。Visa 和 Mastercard 的方案本质上是在现有支付基础设施上加一层 Agent 安全代理。\n\n【影响与前瞻】\n对正在构建 Agent 应用的团队来说，支付能力是从\"信息助手\"到\"业务执行者\"的关键一跃。三个阵营的竞争意味着标准尚未统一，选择哪个支付路线可能影响未来 Agent 生态的互操作性。建议密切关注 OpenAI + Stripe 的 Shared Payment Token 协议，它可能是事实上最普及的 Agent 支付标准。",
+      "source": "Forbes",
+      "source_type": "tavily",
+      "url": "https://www.forbes.com/sites/digital-assets/2026/06/07/visa-mastercard-and-coinbase-are-fighting-over-how-ai-agents-pay/",
+      "timestamp": "2026-06-07T00:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Agent支付",
+        "Visa",
+        "Mastercard",
+        "Coinbase",
+        "AI经济",
+        "基础设施"
+      ],
+      "batch_time": "2026-06-08T10:00:00+08:00"
+    }
+  ]
+}
