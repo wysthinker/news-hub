@@ -1,0 +1,101 @@
+{
+  "channel_id": "ai-frontier",
+  "channel_name": "AI 前沿",
+  "generated_at": "2026-06-21T09:00:00+08:00",
+  "digest": "本周 AI 前沿的主线几乎被 Anthropic 一家承包：它发起了一项代号 Project Glasswing 的大规模网络安全研究行动，核心结论是内部新模型 Mythos Preview 已能自主发现并利用几乎所有主流操作系统和浏览器的 zero-day 漏洞（包括一个潜伏 27 年的 OpenBSD SACK 漏洞、FreeBSD NFS 未授权 root、Linux 内核提权链、浏览器 JIT 堆喷射），能力之强让 Anthropic 决定暂不公开发布，转而先用它帮全球关键软件打补丁。配套还有一份基于 832 个被封账号的年度网络威胁报告、与 NNSA 合作的核安全分类器，以及一个生物信息学评测 BioMysteryBench——后者显示 Claude 在 messy 真实数据上已与人类专家持平、在专家解不出的题上甚至反超。和上次（Fable 5 出口管制、Claude Code 专业知识研究）相比，这一轮的重心从「产品发布」明显转向「前沿模型的危险能力评估与防御」，是每个用 Claude 做安全/代码工作的人都该认真读的一周。",
+  "items": [
+    {
+      "title": "Anthropic 重磅：Mythos Preview 能自主攻破所有主流 OS 和浏览器，发起 Project Glasswing 暂不公开发布",
+      "summary": "Anthropic 发布 Claude Mythos Preview 的网络安全能力评估，结论令内部震动：该模型在被要求时能识别并利用所有主流操作系统和所有主流网页浏览器中的 zero-day 漏洞，且全过程基本无需人类介入即可写出完整 exploit。它找到了一个潜伏 27 年的 OpenBSD SACK 漏洞、FreeBSD NFS 未授权 root 远程代码执行（CVE-2026-4747），并把多个漏洞串成浏览器 JIT 堆喷射加沙箱逃逸。Anthropic 因此发起 Project Glasswing，先用它帮关键软件打补丁，并明确「不计划让 Mythos Preview 普遍可用」，新安全护栏要到下一个 Opus 模型才会推出。",
+      "detail_content": "【核心事件】Anthropic 在一篇署名 Nicholas Carlini 等近 30 位作者的超长研究中评估了内部新模型 Claude Mythos Preview 的网络安全能力。结论是：这个模型在被要求时，能识别并利用所有主流操作系统和所有主流网页浏览器中的 zero-day（此前未知）漏洞，且全过程基本无需人类介入。Anthropic 用一个固定的 agentic 脚手架（启动容器、跑 Claude Code、提示「请在这段代码里找一个漏洞」）反复扫描开源代码库，命中的漏洞往往非常隐蔽，很多已经存在 10-20 年，目前找到最老的是一个 27 年的 OpenBSD 漏洞。\n\n【关键细节与引用】几个被点名的案例：① OpenBSD 的 TCP SACK 实现——模型发现两段代码叠加，配合 32 位有符号整数溢出，能让内核向一个 NULL 指针写入从而崩溃主机，1000 次扫描总成本不到 2 万美元、单次命中成本不到 50 美元；② FreeBSD NFS 服务器一个存在 17 年的远程代码执行漏洞（CVE-2026-4747），模型完全自主写出 exploit，通过一个分拆在 6 个 RPC 包里的 ROP 链把攻击者公钥写进 /root/.ssh/authorized_keys 拿到 root；③ FFmpeg H.264 编解码器一个源于 2003 年提交、2010 年重构后才变成漏洞的 bug；④ 在多个浏览器里自主写出跨域绕过，甚至把漏洞链与沙箱逃逸+本地提权串成「访问网页就能写内核」的攻击。规模对比：在 OSS-Fuzz 约 7000 个入口上单跑，Sonnet 4.6 和 Opus 4.6 各只拿到 1 个 tier-3 崩溃，而 Mythos Preview 在 10 个已完全打补丁的目标上达成完整的控制流劫持（tier-5）。人类专家评级与模型评级在 89% 的案例完全一致、98% 在一级以内。\n\n【背景与上下文】作者明确对比：上个月他们还写「Opus 4.6 在利用漏洞上接近 0% 成功率」，而把 Firefox 147 引擎的漏洞变成可运行 exploit，Opus 4.6 几百次只成功 2 次、Mythos Preview 成功 181 次。他们强调这些能力不是专门训练出来的，而是代码/推理/自主性普遍提升的副产品——同一个让模型更会修 bug 的改进，也让它更会利用 bug。研究还提到逆向闭源二进制找漏洞、在主流加密库（TLS/AES-GCM/SSH）里发现可伪造证书或解密通信的弱点。\n\n【影响与前瞻】Anthropic 的判断是：短期内攻击者可能先获益，长期看防御方会占优，但过渡期会很动荡。因此他们发起 Project Glasswing，把 Mythos Preview 优先给关键行业伙伴和开源维护者用来加固系统，并明确不普遍发布该模型；新的网络安全护栏计划在下一个 Claude Opus 上推出（受影响的安全专业人员可申请即将推出的 Cyber Verification Program）。对普通团队的建议是：用当前已发布的 Opus 4.6 先把模型驱动的找 bug 流水线跑起来、缩短补丁周期、把人工 triage 交给模型。对每个用 Claude Code 的人来说，这等于 Anthropic 公开承认：模型已经跨过了一个「能自主利用真实软件漏洞」的门槛，而他们选择暂时把它锁在笼子里。",
+      "source": "Anthropic Research",
+      "source_type": "anthropic",
+      "url": "https://www.anthropic.com/research/mythos-preview",
+      "timestamp": "2026-06-17T17:00:00Z",
+      "importance": 10,
+      "tags": [
+        "Anthropic",
+        "Mythos",
+        "网络安全",
+        "漏洞利用",
+        "Project Glasswing",
+        "安全"
+      ],
+      "batch_time": "2026-06-21T09:00:00+08:00"
+    },
+    {
+      "title": "Anthropic 年度 AI 网络威胁报告：832 个被封账号显示攻击者正把 AI 用在攻击链更深处",
+      "summary": "Anthropic 把 2025.3–2026.3 间因恶意网络活动被封的 832 个账号映射到 MITRE ATT&CK 框架（部分结果已发在 Verizon 2026 DBIR）。三个核心结论：攻击者把 AI 越来越多地用在攻击链后期更复杂的环节；攻击变得更自主，旧的高低风险区分方法失效；现有 MITRE ATT&CK 框架根本无法描述 AI 编排式攻击。被判定为中风险或以上的攻击者占比从上半年的 33% 跳到下半年的 56%。",
+      "detail_content": "【核心事件】Anthropic 发布报告，分析了 2025 年 3 月到 2026 年 3 月间因恶意网络活动被封禁的 832 个 Claude 账号（只是这期间被封总数中有足够细节做技术评估的子集），并把它们的攻击手法映射到 MITRE ATT&CK 这个安全社区长期使用的行为知识库上。部分结果已并入 Verizon 的 2026 年度数据泄露调查报告（DBIR）。\n\n【关键细节与引用】三个主要结论：① 攻击者把 AI 用在更危险的地方——最常见的 AI 辅助活动是写恶意软件（560/832，67.3%），但更值得关注的是 54 个账号（6.5%）用 AI 做攻陷后的「横向移动」这类高难度操作；被风险评分系统判为中风险或更高的攻击者占比从上半段 33% 跳到下半段 56%（约 1.7 倍）。② AI 让旧的风险分级失灵——过去安全团队用「用了多少种技术」「用哪个平台」来判断威胁等级，但现在低水平攻击者也能让 AI 代劳高技术活：数据集里最不熟练的攻击者平均用约 16 种技术、最熟练的约 20 种，几乎没差别；而且攻击重点从「如何进入系统」（钓鱼下降 8.6%）转向「进入之后干什么」（账号发现上升 8.9%）。③ MITRE 框架落后了——AI 编排式攻击（自主串起攻击链各步骤、实时决策、几乎无需人类介入）在 ATT&CK 里根本没有对应 ID。\n\n【背景与上下文】报告举了 2025 年 11 月那起被挫败的国家级网络间谍行动作例子：攻击者操纵 Claude Code 自主渗透全球目标，映射到 ATT&CK 是跨 13 个战术的 30 种技术，看起来和很多中风险攻击者差不多——但用 Anthropic 自己的风险评分法打分是满分 100。这说明只数技术数量会严重低估这类自主 agent 攻击的危险性。\n\n【影响与前瞻】Anthropic 说这些发现已经反哺到模型护栏里——在最强大的模型上部署了能检测并拦截恶意软件开发、大规模数据外泄等行为的网络护栏，并正和 MITRE 讨论 ATT&CK 框架如何演进以纳入 AI 编排行为。配合同期的 Mythos Preview 研究一起看，信号很明确：AI 既是攻击者也是防御者的新主力，而行业现有的威胁分类词汇表已经跟不上。",
+      "source": "Anthropic News",
+      "source_type": "anthropic",
+      "url": "https://www.anthropic.com/news/AI-enabled-cyber-threats-mitre-attack",
+      "timestamp": "2026-06-17T17:00:00Z",
+      "importance": 9,
+      "tags": [
+        "Anthropic",
+        "网络安全",
+        "MITRE ATT&CK",
+        "威胁情报",
+        "安全"
+      ],
+      "batch_time": "2026-06-21T09:00:00+08:00"
+    },
+    {
+      "title": "Anthropic 与美国 NNSA 合作：训练出 96% 准确率的「核武器相关对话」分类器，已上线 Claude 流量",
+      "summary": "Anthropic 与美国能源部国家核安全局（NNSA）及国家实验室共同开发了一个分类器，能实时区分「核武器相关危险对话」与「核能/医学/政策的良性讨论」，在合成数据测试中整体准确率 96.2%、对核武器询问检出率 94.8%、零误报。该分类器已作为实验性模块部署到一部分 Claude 流量上，做法将分享给 Frontier Model Forum 作为行业模板。",
+      "detail_content": "【核心事件】Anthropic 与美国能源部国家核安全局（NNSA）及 DOE 国家实验室合作，共同开发了一个能自动对内容分类的 AI 分类器，专门区分「令人担忧的核武器相关对话」和「良性的核能/医学/政策讨论」。该分类器已经作为实验性补充部署到 Anthropic 的 Safeguards 框架中，监控一部分 Claude 流量。去年 4 月起双方就已在合作评估模型的核扩散风险。\n\n【关键细节与引用】在用合成数据做的初步测试里：对核武器相关询问的检出率 94.8%，零误报（即不会把合法的教育、医学、研究讨论误判为危险），整体 96.2% 的标签判断准确。技术路径是：NNSA 经过一年在安全环境里对 Claude 红队测试后，提供了一份经过脱敏分级、可分享给 Anthropic 的核风险指标清单；Anthropic 的政策与护栏团队把它转成实时分类器。最难的其实不是技术，而是如何在双方都有信息保密约束（NNSA 要保密、Anthropic 要保护用户数据）的前提下验证分类器真的有效——解法是用 NNSA 的示例 prompt 生成数百个合成测试用例，既不泄露任何一方的敏感信息，又建起了稳健的评测集。\n\n【背景与上下文】真实部署暴露了合成测试看不到的灰色地带：比如近期中东局势让核武器讨论激增，分类器一度把一些只是「讨论时事」的对话误标为可疑——好在经过层级化汇总（把多条被标对话一起复审），因为有更多上下文而被正确识别为无害。这反过来证明把多种安全工具组合起来比单一分类器更精准。分类器还成功抓住了一次内部红队不知情情况下的对抗性测试，把测试查询正确判为潜在有害。\n\n【影响与前瞻】Anthropic 把这套方法分享给 Frontier Model Forum，希望它成为任何 AI 公司都能拿来和 NNSA 合作部署类似护栏的蓝图，并强调这是「行业现在就能动手做」的有意义安全措施。对一个关心 AI 安全治理的读者来说，这是少见的「政府领域专长 × 企业技术能力」公私合作落地案例，也是 Anthropic 在危险能力评估上越做越细的又一证据。",
+      "source": "Anthropic Research",
+      "source_type": "anthropic",
+      "url": "https://www.anthropic.com/research/nuclear-safeguards-for-ai",
+      "timestamp": "2026-06-17T17:00:00Z",
+      "importance": 8,
+      "tags": [
+        "Anthropic",
+        "核安全",
+        "分类器",
+        "安全治理",
+        "NNSA",
+        "公私合作"
+      ],
+      "batch_time": "2026-06-21T09:00:00+08:00"
+    },
+    {
+      "title": "Anthropic 新评测 BioMysteryBench：Claude 在真实生物信息学数据上与人类专家持平、部分难题反超",
+      "summary": "Anthropic 发布生物信息学评测 BioMysteryBench：99 道由领域专家基于真实 messy 数据（WGS、scRNA-seq、ChIP-seq、宏基因组等）出的题，答案来自可验证的实验/临床事实而非科学家的主观结论。结果：Claude 在人类可解题上与专家持平且可靠，在「人类专家解不出」的 23 道难题上，Sonnet 4.6 起的模型能解出相当一部分，Mythos Preview 达到 30% 解出率。同期 Genentech/Roche 的 CompBioBench 印证了相似结论。",
+      "detail_content": "【核心事件】Anthropic 研究员 Brianna 发文介绍新评测 BioMysteryBench——一个针对生物信息学研究能力的 agent 评测。它用真实、嘈杂的生物数据出题，但通过把答案锚定在数据可客观验证的属性上（而不是某个科学家的主观结论），绕开了「评测科学能力」一向很难的几个老问题。题库共 99 题，来自 WGS、scRNA-seq、甲基化、ChIP-seq、宏基因组、Hi-C 以及蛋白组学/代谢组学。\n\n【关键细节与引用】BioMysteryBench 的四个独特性质：① 方法无关——给 Claude 一个装了常用生信工具的容器、允许 pip/conda 装包、允许访问 NCBI/Ensembl 等数据库，只看最终答案对不对，奖励它走任何能得出正确结论的分析路线；② 答案有客观 ground truth——比如「这个晶体结构属于哪个生物」「这个 RNA-seq 病人感染了哪种病毒（已被 PCR 验证）」；③ 允许「超人类」题目——不依赖人类能不能解出，所以包含了一批人类专家解不出的题。人类基线：每题最多 5 位领域专家从零作答，76 题至少有一人解出视为「人类可解」，去质控后剩 23 题为「人类困难」。结果：在人类可解题上 Claude 与专家持平且高度可靠（Opus 4.6 解出的题里 86% 至少 5 试 4 中）；在人类困难题上，Sonnet 4.6 及更强模型能解出可观一部分，Mythos Preview 解出率达 30%。作者还发现 Claude 有两种人类没有的策略——靠庞大预训练知识直接解题（「know-it-all」），以及不确定时叠加多种方法交叉验证。\n\n【背景与上下文】文章把它和现有科学评测做了清晰对比：MMLU-Pro/GPQA/LAB-Bench 是「聊天时代」的知识推理评测；BLADE/BixBench/SciGym 是 agent 时代的工作流评测，但都各有短板（BixBench 受单个科学家主观选择影响、SciGym 是模拟器而非真实数据）。BioMysteryBench 的定位是填补「评测模型在 messy 真实数据上做开放式研究」的空白。定稿期间 Genentech/Roche 发了同类评测 CompBioBench，Opus 4.6 在其上整体 81%、最难题 69%，方向一致。\n\n【影响与前瞻】作者判断：最新一代 Claude 已不再只是「跟得上」训练有素的科学家，在部分任务上已经领先，并且开始显出「研究品味」的雏形（虽然离产出深刻洞察还远）。对用 AI 做科研的人来说，这是一个相对可信、很难靠刷题作弊的基准——值得把它当作衡量「我的 agent 到底能不能做生信」的标尺。",
+      "source": "Anthropic Research",
+      "source_type": "anthropic",
+      "url": "https://www.anthropic.com/research/Evaluating-Claude-For-Bioinformatics-With-BioMysteryBench",
+      "timestamp": "2026-06-18T17:00:00Z",
+      "importance": 8,
+      "tags": [
+        "Anthropic",
+        "生物信息学",
+        "评测",
+        "BioMysteryBench",
+        "科研AI",
+        "Mythos"
+      ],
+      "batch_time": "2026-06-21T09:00:00+08:00"
+    },
+    {
+      "title": "Claude Code 负责人 Boris Cherny：用 Claude Code 尝试破译 3500 年前的线形文字 A",
+      "summary": "Claude Code 负责人 Boris Cherny（@bcherny）分享了一个新奇的 Claude Code 用法：用它去破译线形文字 A（Linear A）——一种来自克里特岛、约 3500 年历史、至今未被解读的古老文字。他表示「希望这个结果站得住脚」。这是一个把 agentic 编码工具用在语言学/考古学难题上的有趣尝试，也再次说明 Claude Code 的适用边界正被社区快速拓宽。",
+      "detail_content": "【核心事件】Claude Code 负责人 Boris Cherny 在推文里分享：用 Claude Code 来破译线形文字 A（Linear A）——米诺斯文明使用的、约公元前 1800–1450 年的古老文字系统，至今仍是语言学上未被解读的文字之一。他附了一句「Hope this holds up（希望这个结果站得住脚）」，说明这是一个探索性尝试而非已定论。\n\n【关键细节与引用】这条推文之所以值得记，是因为它和 Anthropic 自己发布的多项研究形成呼应——当模型被放进一个容器、给足工具和自主权时，它擅长的不再只是「写代码」，而是任何需要反复假设—验证—迭代的开放式研究任务（参见同期的 BioMysteryBench，Claude 在 messy 真实数据上靠「叠加多种方法交叉验证」解题）。线形文字 A 正是这类高难度、有明确客观答案（破译要么对要么不对）、但人类长期解不出的题。Cherny 同期还在推另一条「我把 Artifacts in Claude Code 用在一切场景」的实践分享。\n\n【背景与上下文】这只是一条个人推文而非 Anthropic 官方研究，破译结论也未经过学界同行评议，应作为「值得关注的用例」而非「已证实突破」来看。但它指向一个清晰趋势：agentic 编码工具（Claude Code、Codex 等）的适用场景正从软件工程快速外溢到语言学、密码学、生信等需要大规模假设验证的领域。\n\n【影响与前瞻】对读者的启发是：如果你手头有一个「答案可验证、但人很难一步步推」的难题，把它丢给一个有工具和自主权的 agent 跑通宵，可能比想象中更有效。是否成立、能否复现，还要看后续学界和社区的检验。",
+      "source": "Boris Cherny (@bcherny)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/bcherny",
+      "timestamp": "2026-06-19T20:12:00Z",
+      "importance": 7,
+      "tags": [
+        "Claude Code",
+        "Boris Cherny",
+        "线形文字A",
+        "agentic",
+        "用例"
+      ],
+      "batch_time": "2026-06-21T09:00:00+08:00"
+    }
+  ]
+}
