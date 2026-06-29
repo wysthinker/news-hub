@@ -1,9 +1,66 @@
 {
   "channel_id": "ai-engineering",
   "channel_name": "AI 工程实战",
-  "generated_at": "2026-06-28T10:06:22.434867+08:00",
-  "digest": "本周 AI 工程圈最清晰的主线，是「便宜的开源模型正在改写企业的成本与选型」。Gergely Orosz 援引推理服务商内部信息爆出 Coinbase 靠「GLM-5.2/Kimi 2.7 路由 + 智能路由 + 缓存」把 token 成本砍掉近一半且质量不变，同日他又判断 GLM-5.2 叠加美国出口禁令已让开源追平闭源编码 SOTA、Anthropic/OpenAI 营收承压，swyx 从「每美元 token 里程」给出同款经济学论证——三句话拼出一张完整的产业拐点图。就业市场则出现分化信号：swyx 称 FDE（前方部署工程师）成地球最抢手职业，两大厂商都砸数十亿建服务部门；Gergely Orosz 转述的一线招聘案例则显示，AI 让资深工程师被动流回市场，network 招聘开始跑赢公开投递。安全侧，一篇 HN 热门博客用 Claude Code 30 分钟识破了伪装成面试题的民族国家级供应链投毒，AI 既是攻击面也是最强防线。一句话：能落地复杂系统的人越来越贵，靠堆最贵模型干活的架构越来越亏。",
+  "generated_at": "2026-06-29T10:11:30.922949+08:00",
+  "digest": "本周 AI 工程圈没有重磅公司发布，但三条线索把同一个趋势推到了台前：编码 Agent 正在从「写代码的工具」变成「会自我纠错的循环系统」，再变成「挂接整套公司系统的组织级 harness」。Karpathy（已加入 Anthropic 预训练团队）流传出一份 10 条 CLAUDE.md，在社区 4 条模板上新增 6 条「循环级」自检规则——先写能复现的测试再修 bug、为依赖设永久性纪律、给 4 类典型失败模式（厨房水槽/错误抽象/乐观路径/失控重构）命名并立即叫停。Gergely Orosz 与 Anthropic 内部人士交流后点破：Claude Tag 的真正突破不是 Slack 集成，而是一个接入全部内部系统、开箱即用的云端 AI。Latent.Space 则梳理出「meta-harness」浪潮——Databricks CTO 开源 Omnigent、Cloudflare Flue、Vercel Eve 等争先恐后地为 Agent 造「harness 的 harness」。一句话：用户的关注点已从「哪个模型最强」转向「怎么给 Agent 搭一套能跑、能停、能审计的运行时」。",
   "items": [
+    {
+      "title": "Karpathy 流传的 10 条 CLAUDE.md：给 Agent「循环」装上自检刹车",
+      "summary": "一份署名 Karpathy（五周前刚加入 Anthropic 预训练团队）的 CLAUDE.md 文件周五开始在 X 流传，在社区广为流传的 4 条模板基础上新增 6 条规则，专门约束 Agent 在「无人盯每一轮」的自主循环里如何自我监控。核心动作是：修 bug 前先写能稳定复现的测试、把「做完了」定义成机器可验证的条件、为依赖和沟通设纪律，并给 4 类典型失败模式命名——一旦识别就立刻叫停。文档真实性尚未被 Karpathy 本人确认，但开发者普遍认为这 6 条「循环级」规则正中当前 Agent 工程的要害。",
+      "detail_content": "【核心事件】一份副标题写着「一份简短规则清单，来自两次看见同样的错误」的 10 条 CLAUDE.md 文件，周五开始在 X 流传，署名指向五周前刚加入 Anthropic 预训练团队的 Andrej Karpathy。它在 Forrest Chang 今年 1 月提炼的 4 条社区模板（已获超 20 万 GitHub star，是有史以来增长最快的文件之一）基础上，新增了 6 条规则。需要强调的是：文件真实性尚未被独立确认，Karpathy 本人也没有公开回应，读者应把它当作「来自实践者、按内容价值评估」的指南，而非确证的内部文件。\n\n【关键细节：4 条旧规则 + 6 条新规则】前 4 条覆盖社区版本已有的最昂贵失败模式：Think Before Coding（显式说出假设、宁可问也不猜）、Simplicity First（只写解决问题所需的最小代码）、Surgical Changes（每改动一行都能追溯到需求）、Goal-Driven Execution（把模糊指令改写成可验证的成功标准）。新增的 6 条针对「代码写完之后」——也就是 Agent 在自主运行、评估、决定是否继续的阶段：Verification 要求修 bug 前先写一个能稳定复现的测试，跑通才算修好，而不是 Agent「觉得」修好了；Debugging 要求读完完整堆栈、先复现再改、每次只动一个变量；Dependencies 把每个新增依赖当作「不受你控制、由别人按别人节奏更新」的永久代码，优先问标准库能否搞定；Communication 区分「有用的不确定」和「模糊的保证」——「我不确定这个库支持流式」是有用信息，「我觉得这应该能跑」不是；Common Failure Modes 最有特色，给四种复发性模式命名并要求识别后立即停止：Kitchen Sink（让你修水龙头、你把厨房重装了）、Wrong Abstraction（同一段逻辑出现三处却没意识到该抽函数）、Optimistic Path（只写快乐路径、不管坏输入和断网）、Runaway Refactor（一个文件滚成十个、没人喊停）。\n\n【背景：为什么是「循环级」规则】这条线索直接接上 Claude Code 之父 Boris Cherny 本月在 @Scale 大会的定调——「从源代码到 Agent 是一步，loops 是同样大的一步」。Cherny 自己的工作流已经变成「我不再给 Claude 写 prompt，我有循环在跑，我的工作是写循环」。4 条旧规则约束「逐轮行为」，6 条新规则约束「循环级行为」：当没有人在每一步盯着时，验证规则的分量大得多，命名失败模式的价值也大得多——一个跑一小时的循环能把错误方向复合成几千行代码。文中也给出技术机制：CLAUDE.md 在会话开始时作为项目上下文注入（而非系统提示），影响但不强制行为；Claude Code 2.1.139 的 /goal 命令则用一个独立、更快的「验证模型」（而非写代码的同一个模型）在每轮后检查完成条件，这正是 goal-conditioned loop 区别于简单重复 prompt 的架构关键。\n\n【影响与前瞻】对每个用 Claude Code / Cursor 跑 Agent 的团队，这份清单把抽象的「Loop Engineering」落成了可照抄的配置项，尤其适合银行这类既要提效、又要可审计可回滚的场景——Verification 和 Goal-Driven 两条几乎天然适配合规要求。但也别忘了社区反复警告的攻击面：恶意 CLAUDE.md 植入克隆仓库已多次诱导 Claude Code 窃取 SSH key 与 API 凭证，只应从官方仓库 forrestchang/andrej-karpathy-skills 或 multica-ai/andrej-karpathy-skills 拉取。",
+      "source": "Tech Times",
+      "source_type": "tavily",
+      "url": "https://www.techtimes.com/articles/319214/20260628/karpathy-claudemd-grows-ten-rules-new-self-check-protocol-ai-coding-loops.htm",
+      "timestamp": "2026-06-28T06:15:53Z",
+      "importance": 9,
+      "tags": [
+        "Karpathy",
+        "Claude Code",
+        "CLAUDE.md",
+        "Loop Engineering",
+        "Agentic SE",
+        "自我纠错"
+      ],
+      "batch_time": "2026-06-29T10:00:00+08:00"
+    },
+    {
+      "title": "Gergely Orosz 点破 Claude Tag 真正的突破：不是 Slack，是「接通全部内部系统」的云端 AI",
+      "summary": "Pragmatic Engineer 作者 Gergely Orosz 与多位 Anthropic 内部人士交流后发推（本周 ❤3155，是该圈最高互动）澄清大众对 Claude Tag 的误解：重点不是 Slack 集成，而是一个挂接到全部内部公司系统、开箱即用的云端 AI。他引述 Karpathy 的原话——这是一种「与组织内所有人类活动高度 inline」的全新交互范式，真正的难点是工具、集成、计算环境、记忆、权限这些「引擎盖下的工程」。这把 Agent 的主战场从「聊天框」拉到了「组织级 harness」。",
+      "detail_content": "【核心事件】Pragmatic Engineer 作者、工程圈顶流 Gergely Orosz 6 月 28 日发推（❤3155，本周该圈互动第一）：「我和 Anthropic 内部一些人聊过，开始理解 Karpathy 在说什么（以及大多数人误解了什么）——重点不是 Slack，而是一个挂接到全部内部公司系统、开箱即用的云端 AI。这才是突破。」他附上了 Karpathy 6 月 23 日的原推作为注脚。\n\n【关键细节与引用】Karpathy 原话：「这是一种与 Claude 交互的新范式，它与组织内所有其他人类活动高度 inline。一旦你把让它『开箱即用』所需的引擎盖下工程都做完（跨工具、集成、计算环境、记忆……），它就能嵌入到人们已经在做的一切事情里。」Gergely 的贡献是把这段容易被读成「Slack 又多了个机器人」的话，重新框定为「组织级 harness」——一个常驻云端、拿到全部内部系统访问权、随时能在员工真实工作流里行动的 AI。换句话说，Claude Tag 的杀手锏不是 UI 在 Slack，而是底层那套把工具/集成/计算/记忆/权限打通的运行时。\n\n【背景与上下文】这条推正好补全了本周 ai-engineering 圈的两条平行线索：一是 Boris Cherny 定调「loops 是和源代码→agents 同等大的一步」，二是 Lance Martin 把 Agent UX 概括为从「同步、被动、单人」走向「异步、主动、多人」。Gergely 的洞察相当于给出了这套异步多人协作能成立的物理基础——一个组织级云端 harness，而不是每个人在自己机器上跑的孤立 Agent。Latent.Space 同期报道也佐证：Hugging Face 内部已经在 Slack 里自建了叫 Moon Bot 的编码 Agent，强调自托管、可审计、零锁定，正是「团队想要 agent-native UX，但宁可自己拥有 harness 与记忆层，也不愿把组织智能外包给厂商」。\n\n【影响与前瞻】对正在做 AI 转型的企业（尤其是数据敏感的银行业），这条判断的意义在于重新定义了采购与自建的边界：真正的护城河不在「哪个模型」，而在那套把 Agent 接入全部内部系统、还做到可审计可回收权限的工程。这也解释了为什么 Anthropic 要专门设计「agent 身份」模型——Claude 拿自己的凭证、操作可审计、权限可集中回收。但 Latent.Space 同时记录了反方声音：研究者 random_walker 警告这种「记住一切、按思考计费的同事」会带来隐性知识锁定、prompt 注入风险和预算不透明；KentonVarda 则认为显式 per-agent 授权不可扩展，主张基于 capability 的细粒度任务级授权。组织级 harness 的红利与风险，现在同时摆上了台面。",
+      "source": "Gergely Orosz (@GergelyOrosz)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2071126385121452190",
+      "timestamp": "2026-06-28T06:59:44Z",
+      "importance": 8,
+      "tags": [
+        "Claude Tag",
+        "Anthropic",
+        "组织级 harness",
+        "Gergely Orosz",
+        "Karpathy",
+        "企业 AI"
+      ],
+      "batch_time": "2026-06-29T10:00:00+08:00"
+    },
+    {
+      "title": "Latent.Space 定调「Meta-Harness 之夏」：Agent 的运行时争夺战正式开打",
+      "summary": "Latent.Space 最新一期 AINews 把当前定义为「Meta-Harness Summer」——在 Conductor、Zed ACP、OpenInspect 之后，Cloudflare 的 Flue、Vercel 的 Eve 与 HarnessAgent、Databricks CTO 开源的 Omnigent 接连登场，争着为编码与知识工作 Agent 造「harness 的 harness」。同期 Lance Martin 把这套架构概括为「一个 brain（harness）调度多个 hands（执行环境/沙箱）」，Claude Managed Agents 刚刚加入更多自托管沙箱供应商。结论：业界正独立重复发明同一种标准化、安全、可扩展的 Agent 运行时。",
+      "detail_content": "【核心事件】Latent.Space 在 6 月 23-24 日的 AINews 中把这一波明确命名为「Meta-Harness Summer」——「让开，Harness Engineering，该轮到 harness 的 harness 了」。文章梳理出一条简史：先有 Conductor 和 Zed 的 ACP，再有 OpenInspect、Cloudflare 的 Flue，然后是 Vercel 的 Eve 与 HarnessAgent、Heypi。当期播客嘉宾、Databricks CTO Matei Zaharia 押注的开源项目 Omnigent，则是一个可插拔架构，目标是把任意编码或知识工作 Agent 拉进一个标准化、安全、可靠、可扩展的系统。swyx 的判断是：Omnigent 是否能复刻 MCP 的成功尚不明朗，但「在架构层面，某种长这样的开源架构几乎一定会赢，因为它此刻正在 1000 家 AI 原生公司里被独立地重新发明」。\n\n【关键细节：brain + hands 架构】这股浪潮的底层抽象，被 Lance Martin 在推文里讲得最清楚——「随着 Claude 变强，一个 brain（agent harness）可以驱动许多不同的 hands（执行环境/沙箱）」。他同期宣布 Claude Managed Agents 加入了更多自托管沙箱供应商支持，并附上一批文档与案例研究。这把「meta-harness」从抽象概念落到了具体能力：一个统一的大脑，挂接 GitHub、Athena、分析平台、MongoDB、Elasticsearch、HF Buckets 等多只「手」。Hugging Face 内部基于 Slack 的 Moon Bot 就是这套模式的自建样本——自托管、自定义工具、可审计会话、零锁定，Caleb Fahlgren 列出了它已经接通的一长串生产集成。\n\n【背景与上下文】这并不孤立。同期还有两条平行进展说明 Agent 运行时正在体系化：一是记忆层正在变成一等公民的系统层——Weaviate 的 Engram GA 把记忆当作异步基础设施（抽取、去重、对账、按作用域隔离），LangChain 的 Harrison Chase 演示了用 LangSmith/Context Hub 做「sleep-time compute」（离线分析 trace 再写回为记忆）；二是 Qwen 发布 Qwen-AgentWorld，把「语言世界模型」做进一个模型里模拟 7 种环境（MCP、Search、Terminal、SWE、Web、OS、Android），并开源 35B MoE/3B active、256K 上下文的版本。两条线合起来：harness 负责调度执行，记忆负责跨会话沉淀，世界模型负责环境预判——Agent 的「操作系统」正在长齐三大件。\n\n【影响与前瞻】对工程决策者，这一期的信号很明确：不要把精力全压在「选哪个前沿模型」上，Agent 的差异化正快速迁移到 harness + 记忆 + 执行环境这一层。开源 meta-harness 的涌现也意味着，自建一套可审计、可回收、不锁定的 Agent 运行时，成本正在被这些项目大幅摊薄——这对数据合规要求高的金融、政企场景尤其利好。需要盯的下一个分歧点是权限模型：是走 Anthropic 的显式 per-agent 身份，还是走 KentonVarda 主张的 capability-based 细粒度授权——谁成为事实标准，谁就拿到组织级 harness 的入场券。",
+      "source": "Latent.Space",
+      "source_type": "tavily",
+      "url": "https://www.latent.space/p/ainews-its-meta-harness-summer",
+      "timestamp": "2026-06-25T02:14:08Z",
+      "importance": 8,
+      "tags": [
+        "Meta-Harness",
+        "Agent 运行时",
+        "Omnigent",
+        "Latent.Space",
+        "Databricks",
+        "brain-hands 架构"
+      ],
+      "batch_time": "2026-06-29T10:00:00+08:00"
+    },
     {
       "title": "Coinbase 工程实战曝光：靠「便宜模型路由 + 智能路由 + 缓存」把 AI token 成本砍掉近一半",
       "summary": "Gergely Orosz 援引某主流推理服务商内部信息称，Coinbase 已把 AI 的 token 开销（按美元计）降到约原来的一半，而产出质量基本不变。具体做法是：把流量路由到 GLM 5.2、Kimi 2.7 这类便宜但性能仍够用的推理，再叠加智能路由（按任务难度选模型）和缓存。这是「开源便宜模型 + 工程优化」正在改写企业 AI 成本结构的第一个公开硬案例。",
@@ -646,78 +703,6 @@
         "跨语言"
       ],
       "batch_time": "2026-06-23T10:00:00+08:00"
-    },
-    {
-      "title": "Agentic Commerce 的「管道层」争夺战：Adyen、Stripe、Visa、Mastercard 抢着给 AI Agent 铺支付基建",
-      "summary": "Forbes 深度分析指出，Agent 经济要真正规模化，缺的不是模型，而是让 AI Agent 能安全、可互操作地完成交易的开放基础设施。Adyen 推出 Agentic API 套件（定位为「通用翻译器」），Stripe 则转向 Google 的 Universal Commerce Protocol（UCP）——后者正快速成为主导标准。Adyen 研究团队过去数月访谈了 200+ 全球企业商户，精准定位「投资者正在下注的基建缺口」。Visa、Mastercard 也已入局。文章核心判断：OpenAI 早期实验暴露的「Agent 付不了款」问题，现在正由支付巨头集体补课。",
-      "detail_content": "【核心事件】Josipa Majic 在 Forbes 撰文指出，Agentic Commerce（智能体商务）正进入「管道层」集中建设期。Adyen 发布了名为 Agentic 的 API 套件，自定位为不同 Agent 协议之间的「universal translator（通用翻译器）」；与此同时 Stripe 选择押注 Google 主导的 Universal Commerce Protocol（UCP），该协议正在成为 Agent 支付事实标准。Visa 和 Mastercard 也已加入战局，围绕 Agent 商务的安全性（verified credentials、欺诈防护）布局。Adyen 研究团队用了几个月时间访谈超过 200 家全球企业商户，目的是摸清「真实商家到底需要 Agent 具备什么样的支付能力」。\n\n【关键细节与引用】文章把当前局面定义为「The Infrastructure Gap Investors Are Betting On（投资者正在下注的基建缺口）」。原文核心论点：OpenAI 此前的 Agent 自主购物实验，把一个尴尬的事实暴露了出来——模型已经足够聪明可以下单，但整套让 Agent 合规、安全、可追溯地完成支付的「plumbing（管道）」根本不存在。现在 Adyen、Stripe、Visa、Mastercard 正在集体补这门课。值得注意的是阵营分化：Adyen 走「翻译器」路线（兼容多协议），Stripe 走「押注单一开放标准」路线（UCP）。\n\n【背景与上下文】这条新闻和近期 Cloudflare Radar 披露的「AI Agent 流量已占网页请求 57.5%、超过人类」是同一个大故事的两面——Agent 已经在大量访问网页、调用服务，但「访问」之后「如何付费」一直缺位。Cloudflare 此前推出的 pay-per-crawl（基于 HTTP 402 状态码按次付费给内容方）是内容侧的解法；现在 Adyen/Stripe 这套是通用交易侧的解法。两者合在一起，Agent 经济的「计费层」才第一次成形。\n\n【影响与前瞻】对工程团队的意义：如果你在做需要 Agent 自主完成交易的产品（订阅、按次付费、B2B 采购），下半年有了可对接的标准 API，不必再自己造支付轮子。要关注的是 UCP vs Adyen 多协议路线谁赢——选错标准意味着后续要重接。对银行/金融机构（用户本行）：Agent 支付基建的成熟，意味着「卡组织+收单方」这条价值链正在被 Agent 协议层重新中介，这是个需要提前研究的结构性变化。",
-      "source": "Forbes (Josipa Majic)",
-      "source_type": "tavily",
-      "url": "https://www.forbes.com/sites/josipamajic/2026/06/19/agentic-commerce-needs-open-infrastructure-to-scale/",
-      "timestamp": "2026-06-19T00:00:00Z",
-      "importance": 7,
-      "tags": [
-        "Agentic Commerce",
-        "Stripe",
-        "Adyen",
-        "支付基建",
-        "Agent经济"
-      ],
-      "batch_time": "2026-06-22T10:00:00+08:00"
-    },
-    {
-      "title": "Stripe × AWS：让 AI Agent 为网页内容付费——WAF 新能力把「Agent 付费访问」做成可上线产品",
-      "summary": "Stripe 为 AWS Web Application Firewall（WAF）的一项新能力提供技术骨干：让 AI Agent 在访问网页内容时直接向内容方付费。这是「Agent 为其消费的内容/数据付费」从概念讨论走向具体可部署产品的清晰实例，逻辑上与 Cloudflare 的 pay-per-crawl（HTTP 402）同属一套「Agent 经济基建」。对内容方/出版商而言，第一次有了让 Agent「付费解锁」而非「免费抓取」的工程化手段。",
-      "detail_content": "【核心事件】据 Finextra 报道，Stripe 将为 AWS Web Application Firewall（WAF）的一项新能力提供技术骨干（technology backbone），使 AI Agent 能够为网络上的内容付费。报道强调，这是由 Finextra 编辑团队基于「与社区的相关性和兴趣」遴选的内容——也就是说，这被视为面向金融科技/支付行业从业者的真实产品动态，而非概念炒作。核心是把「内容方/出版商」与「抓取内容的 Agent」之间的价值流转，做成了一个 WAF 层面可配置的能力。\n\n【关键细节与引用】报道的措辞是「Stripe is to supply the technology backbone for a new AWS WAF capability that enables AI agents to pay for content on the Web」「The agent pays to access...」——关键在「pay to access」这个模型：不再是 Agent 免费抓取、内容方抗议，而是 Agent 必须付费才能解锁内容，付费由 Stripe 在后端完成。这和 HTTP 402（Payment Required）状态码、Cloudflare pay-per-crawl 是同一思路的工程化落地，只不过这里把控制点放在了 AWS WAF 这一企业级入口上。\n\n【背景与上下文】这件事必须和上一条 Forbes 报道放在一起看：Forbes 讲的是 Adyen/Stripe/Visa/Mastercard 在「Agent 支付标准」层面的争夺（抽象的基建竞赛），这条 Finextra 讲的是 Stripe 已经把它落成了一个具体产品（AWS WAF 集成）。两条合起来，恰好是「概念 → 落地」的完整链条。这也解释了为什么内容出版商近期不再单纯呼吁「禁止 AI 抓取」——因为「让 Agent 付费」的工具开始可用了。\n\n【影响与前瞻】对运营内容站点/数据 API 的团队：现在有了「对 Agent 收费」的工程选项，不再是「全部放行」或「全部封禁」的二选一。对 Agent 开发者：未来调用第三方内容时，要把「付费获取」纳入 Agent 的成本与权限模型，而不是默认免费抓取。这条单独看重要性中等（具体产品上线），但和 Forbes 那条合在一起，标志着 Agent 经济的「内容付费层」在 2026 年中开始工程化。",
-      "source": "Finextra",
-      "source_type": "tavily",
-      "url": "https://www.finextra.com/newsarticle/47940/stripe-and-aws-enable-ai-agent-payments-for-content-owners-and-publishers",
-      "timestamp": "2026-06-19T00:00:00Z",
-      "importance": 6,
-      "tags": [
-        "Stripe",
-        "AWS",
-        "Agent支付",
-        "Agentic Commerce",
-        "内容付费"
-      ],
-      "batch_time": "2026-06-22T10:00:00+08:00"
-    },
-    {
-      "title": "Simon Willison 开源 Datasette Apps：把 Claude Artifacts 重做成「带关系型数据库 JSON API」的 Agent 应用容器",
-      "summary": "Simon Willison 发布 Datasette Apps 插件——在 iframe 沙箱里托管完整 HTML+JS 应用，应用可直接查询并操作底层数据库。他亲自定义其为「Claude Artifacts reimagined for Datasette」：不仅拥有 Artifacts 全部能力，还能通过 JSON API 访问一个完整的关系型数据库，让 HTML+JS 应用以任意形状读写数据。配套同期发布的还有 datasette-agent 0.3，新增带用户审批的 execute_write_sql 工具。这是「Agent 可访问应用」容器模式的一次重要实践。",
-      "detail_content": "【核心事件】Simon Willison（用户长期关注的 AI 工具实测与开源生态代表人物）发布 Datasette Apps 插件。它的核心机制是：在 iframe 沙箱中托管完整的 HTML+JS 应用，这些应用可以查询宿主 Datasette 实例背后的数据库，并对其做有意义的操作。同一周他还发布了 datasette-agent 0.3a0，新增 execute_write_sql 工具——这个工具会先请求用户审批，然后才写入数据库，并把用户权限纳入考量。\n\n【关键细节与引用】Simon 自己给出的定位非常精准，原文：「Think of this as Claude Artifacts reimagined for Datasette - you get all the power of artifacts but with a JSON API to a full relational database, allowing your HTML+JS apps to access and store data in all shapes and sizes」。配套表述：「a plugin for Datasette that lets you host full HTML+JS apps in an iframe sandbox that can query your database」。关键点有两个：一是「Artifacts + 真正的关系型数据库」——补上了 Claude Artifacts 原本缺失的持久化与结构化存储层；二是「iframe sandbox」——用沙箱隔离保住安全性。\n\n【背景与上下文】这其实是 2026 年 AI 工程的一个清晰趋势线：从「模型生成一段代码」到「模型生成一个能持久读写数据、可托管运行的完整小应用」。Claude Artifacts 解决了「快速预览生成物」，但没能解决「数据持久化」和「多应用共享数据」。Simon 的 Datasette Apps 直接补上这块——让 AI 生成的应用天然带一个 SQL 后端。同期 datasette-agent 的「写 SQL 需用户审批」则体现了另一条主线：Agent 做有副作用的操作时，必须有清晰的人机审批边界。\n\n【影响与前瞻】对在搭建 Agent 内部工具/数据看板的工程团队：这是一个可直接借鉴的架构模式——iframe 沙箱 + JSON API + 关系库 + 写操作审批。对非程序员用 AI 造产品（用户关注重点之一）：这类「带数据库的 Artifacts」大幅降低了「做一个能存数据的小应用」的门槛。Simon Willison 的实验往往预示半年后主流工具会跟进的方向，值得提前留意。",
-      "source": "Simon Willison (@simonw)",
-      "source_type": "opentwitter",
-      "url": "https://x.com/simonw/status/2067759482009194527",
-      "timestamp": "2026-06-19T00:00:00Z",
-      "importance": 6,
-      "tags": [
-        "Simon Willison",
-        "Datasette",
-        "Agent应用",
-        "Claude Artifacts",
-        "开源"
-      ],
-      "batch_time": "2026-06-22T10:00:00+08:00"
-    },
-    {
-      "title": "Ashpreet Bedi 断言：每个做 Agent 的团队最终都撞上同一堵墙——「跑 Agent 的平台」到底怎么建",
-      "summary": "Agentic Software Engineering 方法论代表人物 Ashpreet Bedi（用户长期关注的 @ashpreetbedi）观察：每个构建 Agent 的团队最终都会撞上同一堵墙——如何构建运行 Agent 的平台（the platform that runs them）。他将于 Databricks Summit 与 hanlin tang、jerry liu（LangChain 创始人）、joaomdmoura、hwchase17 等人同台讨论「agentic stack」。这是「Agent 平台/运行时」正成为下一阶段工程瓶颈的最明确信号——战场正从「单个 Agent 能力」转向「平台化运行多 Agent」。",
-      "detail_content": "【核心事件】Ashpreet Bedi 在社交平台抛出一句被业内广泛共鸣的判断：「Every team building agents eventually hits the same wall: how to build the platform that runs them.（每个做 Agent 的团队最终都会撞上同一堵墙——怎么建那个跑 Agent 的平台）」。他同时宣布将在 Databricks Summit 上，与 hanlin tang、jerry liu（LangChain 创始人）、joaomdmoura、hwchase17 等Agent 生态核心人物一起，专门讨论「agentic stack（智能体技术栈）」。\n\n【关键细节与引用】原文措辞虽短，但切中要害——他用「eventually hits the same wall」强调这是一个普遍的、必然的瓶颈，而非个别团队的问题。与会阵容本身就是信号：jerry liu（LangChain）、hwchase17（Harrison Chase，LangChain CEO）、joaomdmoura（CrewAI 作者）正是当前 Agent 框架层最有影响力的几位设计者。他们坐在一起讨论「agentic stack」，说明行业共识正在凝聚——Agent 的下一程不是「更强的单个 Agent」，而是「让一群 Agent 稳定运行的平台」。\n\n【背景与上下文】这个判断和近期 Anthropic 推 Claude Managed Agents、Databricks 开源 Omnigent（在一个会话里同时跑 Claude Code/Codex/Cursor 组成「AI 开发团队」）、以及 Lance Martin 整理「一个大脑调度多双手的多沙箱 Agent 架构」是同一条脉络。当单 Agent 编码能力被证明可行后，「多 Agent 编排 + 沙箱执行 + 平台化运行」就成了新的工程主战场。Ashpreet Bedi 作为「Agentic SE 方法论」的代表性布道者，他的发声具备风向标意义。\n\n【影响与前瞻】对本行（银行）这类要规模化部署 Agent 的组织：Ashpreet Bedi 点出的这堵墙，恰恰是大型企业最容易卡住的地方——单点 Agent demo 容易，但「一个能稳定运行、有权限隔离、可观测、可审计的 Agent 平台」极难。这意味着 Agent 落地的真正成本和难点在「平台层」而非「模型层」。建议关注 Databricks Summit 这场 agentic stack 讨论的后续产出，以及 LangChain/Anthropic 在 Agent 平台方向的产品化动作。",
-      "source": "X @ashpreetbedi",
-      "source_type": "opentwitter",
-      "url": "https://x.com/ashpreetbedi/status/2067118499663863966",
-      "timestamp": "2026-06-17T00:00:00Z",
-      "importance": 6,
-      "tags": [
-        "Agent平台",
-        "Agentic SE",
-        "Ashpreet Bedi",
-        "LangChain",
-        "Databricks"
-      ],
-      "batch_time": "2026-06-22T10:00:00+08:00"
     }
   ]
 }
