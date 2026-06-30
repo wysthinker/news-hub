@@ -1,0 +1,148 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-06-30T10:00:00+08:00",
+  "digest": "本周最清晰的主线是『AI 编码工具集体上手机』——Cursor 和 OpenClaw 在同一个周末先后发布原生 iOS/Android 应用，Claude Code 之父 Boris Cherny 公开说自己大部分编码已经在手机上完成。agentic coding 正从『亲自写代码』转向『在移动端监督智能体』，云端 agent 跑在隔离虚拟机里、输出可合并的 PR，人只需要在锁屏推送里点头。第二条主线是大厂开始用硬数据证明『自己先用』：OpenAI 内部披露 Codex 输出 token 半年里在工程/研究/客服/法务分别涨了 27/56/32/13 倍，WSJ 也指出 AI 三巨头让员工把复杂任务大规模交给 AI，而多数普通公司还在为『让员工用起来』挣扎。但越往深走，工程纪律反而越被收紧——从 Anthropic 应用工程师『评估是唯一严谨方式』的提示词方法论，到 GergelyOrosz 与 mipsytipsy 对谈强调『AI 要求更多而非更少的工程纪律』，再到一线（steipete）感慨 harness 工程每几个月就要重写一遍。对想在银行推进 AI 落地的人，信号很明确：工具在变轻（手机可 supervize），但底层的评估、纪律、平台化反而要变重。",
+  "items": [
+    {
+      "title": "Cursor 推出 iOS 移动端公测：把编码智能体装进口袋，Claude Code 之父自称大半编码已在手机完成",
+      "summary": "Cursor 发布 iOS 原生公测版（所有付费计划可用），用户可在手机上启动始终在线的云端智能体，或远程操控电脑端智能体。云端 agent 跑在隔离虚拟机里，能自动迭代出可合并的 PR，并附带演示、截图和日志；锁屏 Live Activities 和推送实时反馈状态。Claude Code 负责人 Boris Cherny 近期公开表示『现在大部分编码在手机上完成』，为这波从『写代码』转向『监督 agent』的潮流背书。",
+      "detail_content": "【核心事件】6 月 29 日，Cursor 推出 iOS 原生公测版，面向所有付费计划开放。开发者可以直接在手机上启动一个始终在线的云端编码智能体，也可以远程接管此前在桌面端发起的 agent。移动端支持语音输入、斜杠命令，并可选择前沿模型。\n\n这次更新最关键的工程含义不在『手机能聊天』，而在工作流的彻底异步化：云端智能体运行在隔离的虚拟机里，能够自主迭代、直接产出『合并就绪』的 Pull Request，并附带演示、截图和运行日志。本地 agent 与云端 agent 支持双向切换。当 agent 在后台跑起来后，iOS 锁屏的 Live Activities 和推送通知会实时更新状态——完成或需要人工输入时再提醒。\n\n【关键细节与引用】TechCrunch 报道指出，Anthropic Claude Code 负责人 Boris Cherny 在近期一次演讲中说：\"Most of my coding now is on my phone.\"（我现在大部分编码都在手机上完成。）Cursor 的移动化紧跟 Anthropic 和 OpenAI——两家都已提供在移动端与编码工具交互的方式。这反映 AI 编码工具一个更广的转向：越来越从『写代码』抽象到『监督写代码的 agent』。\n\n【背景与上下文】这和本周另一条主线——OpenClaw 同步发布原生 iOS/Android app——形成共振。两者共同指向同一个判断：当 agent 能自主跑数小时甚至数天，编码的瓶颈不再是『坐在电脑前敲键盘』，而是『随时随地给 agent 方向、在关键节点拍板』。手机成了 supervize（监督）层，而不是 authoring（创作）层。\n\n【影响与前瞻】对工程团队而言，这意味着『谁能在碎片时间里高质量地 review agent 产出』谁就拿走杠杆。但也带来新风险：手机屏幕小、上下文浅，更容易对 agent 输出『盲目点头』。可预见的是，围绕『移动端 agent 监督』会出现新的护栏需求——比如强制 diff 摘要、关键变更二次确认、PR 体积上限。银行这类强合规场景，短期更可能先在内部桌面端用 agent、把移动端限制为只读 review。",
+      "source": "Cursor Blog / TechCrunch",
+      "source_type": "tavily",
+      "url": "https://cursor.com/blog/ios-mobile-app",
+      "timestamp": "2026-06-29T17:03:50Z",
+      "importance": 9,
+      "tags": [
+        "Cursor",
+        "移动端编码",
+        "Agent工作流",
+        "agentic SE"
+      ],
+      "batch_time": "2026-06-30T10:00:00+08:00"
+    },
+    {
+      "title": "OpenClaw 发布原生 iOS/Android 应用：智能体首次正式登入 App Store 和 Play Store",
+      "summary": "OpenClaw 发布 iOS 与 Android 原生应用，由 OpenClaw Foundation 维护（创始人 Peter Steinberger 年初已加入 OpenAI，OpenAI 提供某种未公开支持）。用户可在手机上与 AI 助手对话，并授权其访问相机、屏幕、位置、通讯录、日历和提醒等设备组件。此前 iOS 用户只能借助 Telegram/WhatsApp 等 chat 工具与 agent 沟通，苹果更严格的审核流程曾是最大障碍。",
+      "detail_content": "【核心事件】6 月 29 日，OpenClaw 宣布推出 iOS 与 Android 原生应用，由 OpenClaw Foundation 发布。这标志着 agentic AI 助手首次正式进入 App Store 和 Google Play 两大主流应用市场。用户可以在手机上与 AI 助手对话，并授权它访问设备的相机、屏幕、位置、照片、通讯录、日历和提醒等组件。\n\n【关键细节与引用】Engadget 报道指出，OpenClaw 目前是一个由基金会运营的开源项目，起因是创始人 Peter Steinberger 年初转投 OpenAI；OpenAI 对该组织提供某种未明确说明形式的支持。报道还点出一个关键背景：在苹果阵营，agentic AI 一直是个棘手议题，官方审核流程更为严苛，此前 iOS 用户只能借助 Telegram、WhatsApp 等聊天应用与自己的 agent 通信——这次原生 app 算是把这条绕路给拉直了。\n\n【背景与上下文】OpenClaw 把『agent 能直接操作设备』作为核心卖点，权限粒度覆盖相机、屏幕、位置、通讯录、日历等敏感能力。这与 Cursor Mobile 的定位形成对照：Cursor 的移动端是『远程监督编码 agent』，OpenClaw 的移动端是『让 agent 在本机替你做事』。两条路径都把手机变成 agent 的执行入口。\n\n【影响与前瞻】对关注 agent 生态的人，这是 OpenClaw 走出开发者圈子、面向终端用户的关键一步——但基金会化 + 创始人离开的双重不确定性也意味着项目方向需要持续观察。更大的看点是苹果审核：OpenClaw 能过审并开放这么多敏感权限，可能为后续 agentic app 在 iOS 上的权限模型定下先例。安全视角下，『agent 能读屏幕和通讯录』是全新的攻击面，企业部署前需要明确数据隔离与撤销机制。",
+      "source": "Engadget / @openclaw",
+      "source_type": "tavily",
+      "url": "https://x.com/openclaw/status/2071688039114342592",
+      "timestamp": "2026-06-29T20:11:00Z",
+      "importance": 9,
+      "tags": [
+        "OpenClaw",
+        "移动端",
+        "智能体生态",
+        "权限模型"
+      ],
+      "batch_time": "2026-06-30T10:00:00+08:00"
+    },
+    {
+      "title": "OpenAI 内部披露 Codex 用量半年暴增：工程涨 27 倍、研究涨 56 倍，AI 三巨头自己先把复杂任务交给 AI",
+      "summary": "Latent.Space 梳理 OpenAI 内部数据：自 2025 年 11 月以来，OpenAI 内部 Codex 输出 token 的中位数在研究部门增长 56 倍、客服 32 倍、工程 27 倍、法务 13 倍。WSJ 同期观察指出，OpenAI/Google/Anthropic 让员工把复杂任务大规模交给 AI，而多数普通公司还在为『让员工用起来』挣扎。这是少数关于头部 AI 公司自身如何 dogfooding 的硬数据。",
+      "detail_content": "【核心事件】Latent.Space 在其 AINews 栏目中援引 OpenAI 内部披露：自 2025 年 11 月以来，OpenAI 内部 Codex 的中位输出 token 量在多个职能出现数量级跃升——Research（研究）部门增长 56 倍、Customer Support（客服）32 倍、Engineering（工程）27 倍、Legal（法务）13 倍。这是公开渠道里少见的、关于头部 AI 公司自身如何使用自家编码 agent 的硬数据。\n\n【关键细节与引用】原文表述：\"OpenAI reports median internal Codex output tokens grew 56x in Research, 32x in Customer Support, 27x in Engineering, and 13x in Legal since November 2025.\" 这一增速曲线说明 Codex 已不只是工程部门的工具，而是渗透进了研究、客服乃至法务等非纯编码职能——客服和法务的涨幅尤其值得注意，意味着 agentic 工具正在『跨职能化』。\n\nWSJ 近期报道（See How AI Giants Are Using AI in Their Own Offices）补充了一个对照视角：在美国多数公司还在为『让员工真正用起 AI』挣扎时，OpenAI、Google、Anthropic 这些建造 AI 工具的公司已经让自己的员工把复杂任务交给 AI，报道还提到 OpenAI 内部举办 Codex Hackathon，由 Codex 部署工程师 Kelsey Pedersen 现场演示如何用 AI 创建文档和演示。\n\n【背景与上下文】这呼应了 Anthropic 此前披露的内部数据（Anthropic 工程师人均每季度交付代码量是 2021-2025 基线期的 8 倍）。把两家放在一起看，趋势很清楚：头部 AI 公司的内部吞吐量正在指数级抬升，且这种抬升已经从『写代码』外溢到客服、法务等知识工作。\n\n【影响与前瞻】对旁观者的现实启示是：『让员工用起来』本身就是一个被低估的竞争壁垒——三巨头不是工具更强，而是组织已经把 AI 嵌进日常流程。客服 32 倍、法务 13 倍这两个数字对金融业尤其有参考价值：它说明在受监管、强合规的环境里，agentic 工具同样可以实现量级渗透，前提是配套的评估与把关机制跟得上。这也接上了 GergelyOrosz 与 mipsytipsy 本周的判断——规模越大，越需要工程纪律兜底。",
+      "source": "Latent.Space / WSJ",
+      "source_type": "tavily",
+      "url": "https://www.latent.space/p/ainews-openai-reports-median-internal",
+      "timestamp": "2026-06-29T10:00:00Z",
+      "importance": 9,
+      "tags": [
+        "OpenAI",
+        "Codex",
+        "内部使用数据",
+        "dogfooding",
+        "大厂实践"
+      ],
+      "batch_time": "2026-06-30T10:00:00+08:00"
+    },
+    {
+      "title": "Anthropic 应用工程师实战：提示词工程大部分时间在『调试生产提示词』，评估是唯一严谨方式",
+      "summary": "Anthropic 应用 AI 工程师 Margot Van Laar 在 Code with Claude 分享提示词工程实战，核心观点颠覆直觉：大部分时间花在调试和维护已有的生产提示词上，而不是从零写。她给出两个场景——客服机器人维护中用 XML 标签结构化、清理旧模型遗留的『禁止列表』指令；零售排班 agent 从零构建时拆成『生成-评估-修复』三个简单提示词循环。结论是：评估（evals）是唯一能严谨迭代的方式。",
+      "detail_content": "【核心事件】Anthropic 应用 AI 工程师 Margot Van Laar 在 Code with Claude 活动中分享提示词工程的一线实战经验。最反直觉的判断是：提示词工程师的大部分时间并不在『从零写提示词』，而在调试和维护已经跑在生产里的旧提示词。\n\n【关键细节与引用】她给出两个具体场景。第一个是客服机器人的维护：用 XML 标签做结构化清理，移除那些为旧模型遗留的『禁止做某事』式指令——因为新模型会对此过度拟合，反而表现更差；同时精确约束『什么时候该调用工具』，并把『转人工』这一步的代价与收益写明白，避免模型在不该转的时候转。\n\n第二个场景是从零构建一个零售排班 agent：她没有写一个巨大的复杂提示词，而是把它拆成『生成 → 评估 → 修复』三个简单提示词组成的小循环。核心方法论贯穿两点——一是绝大多数提示词工作是『维护』而非『创作』；二是『评估（evals）是唯一严谨的方式』，没有评估就无法判断改动到底是在改进还是在倒退。\n\n【背景与上下文】这和近期 agentic SE 圈的共识高度一致：Boris Cherny 把『loops（循环）』称为和『源代码 → agents』同等量级的一步；Karpathy 流传的 CLAUDE.md 也强调 agent 要能在循环里自检。Margot 的贡献在于把『循环/评估』这套理念下沉到了最朴素的提示词层面——不需要多复杂的框架，三个提示词 + 一个评估步骤就能撑起一个生产 agent。\n\n【影响与前瞻】对正在搭客服、排班、风控类 agent 的团队，这是可以直接照搬的方法论：把『转人工决策』的代价显式写进提示词、用 XML 标签隔离新旧指令、任何改动都先过评估集再上线。特别值得银行借鉴的是『旧指令在新模型上反而有害』这一点——模型升级后，历史上为纠偏加的提示词很可能变成新的故障源，需要定期清理而不是只做加法。",
+      "source": "X：Berry Xia (@berryxia)",
+      "source_type": "aihot",
+      "url": "https://x.com/berryxia/status/2071610700213191075",
+      "timestamp": "2026-06-29T15:04:00Z",
+      "importance": 8,
+      "tags": [
+        "Anthropic",
+        "提示词工程",
+        "评估",
+        "实战方法论",
+        "agent维护"
+      ],
+      "batch_time": "2026-06-30T10:00:00+08:00"
+    },
+    {
+      "title": "Vibe Coding 两个关键 Prompt 实战：『第一性原理』+『对抗式审查』，撑起一个千万级请求的开源项目",
+      "summary": "数字生命卡兹克分享 Vibe Coding 中两个高频使用的 Prompt。一是『从第一性原理出发』，强制 AI 跳出类比推理、从基本事实重新推导，作者借此发现并重构了 AIHOT 抓取海外信源的底层流量路由隐患；二是『对抗式审查』，让 AI 站在恶意用户角度攻防式审查代码，揪出 OOM 死循环、未来时间污染等手工难发现的 bug。两个 Prompt 构成『生成—验证』闭环，使一个纯 Vibe Coding 项目最近一周请求量超千万次。",
+      "detail_content": "【核心事件】博主『数字生命卡兹克』分享了在纯 Vibe Coding（不手写代码、全靠对话驱动 AI 生成）实践中两个反复验证有效的 Prompt。这不是理论，而是支撑一个真实开源项目（AIHOT 信息聚合）跑量的方法——该项目最近一周请求量超过千万次。\n\n【关键细节与引用】第一个 Prompt 是『从第一性原理出发』。它的作用是强制 AI 跳出『类比推理』（基于既有模式推断），转而从最基本的事实重新推导问题本质。作者举了一个具体例子：用这个 Prompt 让 AI 重新审视系统，结果发现并彻底重构了 AIHOT 抓取海外信源时的底层流量路由隐患——这是一个藏在架构深处、靠常规修修补补发现不了的问题。\n\n第二个 Prompt 是『对抗式审查』。做法是让 AI 切换到『恶意用户』视角，对刚生成的代码做攻防式审查。它检出了几类人工 review 容易漏掉的 bug：OOM（内存溢出）死循环、『未来时间污染』（用未来的时间戳污染数据）等边界条件问题。\n\n这两个 Prompt 恰好构成一个闭环：『第一性原理』负责把生成质量抬高，『对抗式审查』负责把残留缺陷捞出来。\n\n【背景与上下文】这与 agentic SE 圈强调的『loops + 评估』思路一脉相承，但落地更轻——不需要搭评估框架，靠两个角色扮演式 Prompt 就能在对话里实现生成与验证的分离。对个人开发者和非工程师造产品的人，这是性价比很高的实践模式。\n\n【影响与前瞻】值得注意的风险提示：『对抗式审查』能抓 bug，但抓的是 AI 自己能想到的攻击面，对真正新颖的攻击向量仍可能盲区。可借鉴的姿势是把它当作『廉价的第二轮 review』而非『替代安全审计』。对想用 Vibe Coding 快速搭原型的银行人，这两个 Prompt 适合用在内部工具类小项目上；面向客户或处理敏感数据的系统，仍必须叠加上正式的代码审查和安全测试。",
+      "source": "公众号：数字生命卡兹克",
+      "source_type": "aihot",
+      "url": "https://mp.weixin.qq.com/s/umPqTD_-IubbhXIgiS47eQ",
+      "timestamp": "2026-06-29T02:08:00Z",
+      "importance": 7,
+      "tags": [
+        "Vibe Coding",
+        "提示词",
+        "代码审查",
+        "实战"
+      ],
+      "batch_time": "2026-06-30T10:00:00+08:00"
+    },
+    {
+      "title": "EverOS：开源的 Markdown 优先 agent 记忆运行时，每个任务沉淀为可复用 Skill",
+      "summary": "EverMind 推出开源 agent 记忆运行时 EverOS（Apache 2.0）。它以可编辑的 Markdown 文件作为记忆主体，由 SQLite 管理状态、LanceDB 提供混合检索（BM25 关键词 + 向量搜索 + 标量过滤）。每个完成的任务被记录为一个 Case，离线提炼成可复用的 Skill，使 agent 记忆随使用自我进化。v1.1.0 新增支持分类与话题搜索的 Knowledge API。",
+      "detail_content": "【核心事件】EverMind 发布开源 agent 记忆运行时 EverOS，采用 Apache 2.0 许可。它解决的是 agent 工程里一个公认的痛点：如何让 agent 在长期、跨会话的工作中真正『记住』并复用经验，而不是每次都从零开始。\n\n【关键细节与引用】EverOS 的设计有几个明确选择。第一，记忆主体是可编辑的 Markdown 文件——这意味着人可以随时直接查看和修改 agent 的记忆，而不是面对一个黑盒向量库。第二，状态由 SQLite 管理，检索由 LanceDB 提供混合检索能力：BM25 关键词检索 + 向量语义搜索 + 标量过滤，三者组合以兼顾精确匹配和语义相似。\n\n最关键的设计是它的『记忆进化』机制：每个完成的任务被记录为一个 Case，离线阶段这些 Case 会被提炼成可复用的 Skill。换句话说，agent 用得越多、积累的 Skill 越多，下一次面对类似任务时可以直接调用而不是重新探索。v1.1.0 版本新增了 Knowledge APIs，支持按分类和话题搜索，进一步把『记忆』组织成可查询的知识结构。\n\n【背景与上下文】记忆和自纠循环是当下 agent 框架竞争的两个焦点（Lance Martin 也分享过 Fable 5 的自纠循环与记忆设计）。EverOS 的差异化在于把『可读、可编辑的 Markdown』放在第一位，这和 agentic SE 圈『不要把人排除在循环外』的理念一致——记忆对人可读，人才能在 agent 出错时介入纠偏。\n\n【影响与前瞻】对自建 agent 平台的团队，EverOS 提供了一个可参考的『记忆层』开源基线：Markdown + SQLite + 混合检索的栈足够轻，便于内网部署和审计。需要权衡的是 Markdown 作为记忆主体在大规模下的检索效率，以及 Case→Skill 的自动提炼质量。适合作为内部 agent 平台记忆模块的起点，再按场景替换存储后端。",
+      "source": "MarkTechPost",
+      "source_type": "aihot",
+      "url": "https://www.marktechpost.com/2026/06/29/meet-everos-an-open-source-markdown-first-agent-memory-runtime-with-hybrid-bm25-vector-retrieval-and-self-evolving-skills",
+      "timestamp": "2026-06-29T10:42:00Z",
+      "importance": 7,
+      "tags": [
+        "开源",
+        "agent记忆",
+        "混合检索",
+        "agent框架"
+      ],
+      "batch_time": "2026-06-30T10:00:00+08:00"
+    },
+    {
+      "title": "steipete 一线观察：OpenClaw harness 工程几个月就要重写一遍，未来靠『动态分类模型并优化』",
+      "summary": "重度 OpenClaw 用户 steipete 在推文里透露一线实战细节：当前主力模型（ds4）表现不错，OpenClaw 已经能做到『按需启动服务』；针对更小的模型，团队加了设置来简化 harness，而『自动给模型分类并动态优化』的工作仍在推进。他直言 OpenClaw 的设计空间巨大，很多 5 个月前还合理的决策今天已经不成立——这是他公认的『节奏极快』的领域。",
+      "detail_content": "【核心事件】重度 OpenClaw 用户、被追踪的一线信源 steipete 在多条推文里分享了 OpenClaw 工程实战的最新细节，提供了一个少见的『用户侧』视角——不是厂商宣传，而是真正每天在用的人的感受。\n\n【关键细节与引用】他提到几个具体进展：当前主力模型（他称作 ds4）表现不错，他为它做了不少优化；OpenClaw 已经能做到『claw can even boot the service on demand』（按需启动服务）；针对更小的模型，团队增加了设置来简化 harness（agent 运行时框架）；而『自动给模型分类并动态优化』这套更智能的机制仍在开发中。\n\n最有信号价值的，是他对节奏的判断。在回复中他直言：\"It's way better and also there's a million things to do. Many of the design decisions that made sense for models 5 months ago don't make sense anymore — it's an incredibly fast paced area.\"（好多了，但也有一百万件事要做。很多 5 个月前对模型还合理的设计决策，今天已经不成立了——这是个节奏快到离谱的领域。）\n\n【背景与上下文】steipete 此前就有刷屏金句『半年前我的瓶颈是 token，现在是注意力』。这次他补充了一个工程层面的版本：harness（运行 agent 的框架代码）本身因为底层模型换代太快，几乎每几个月就要重写一遍。这与 Lance Martin、Ashpreet Bedi 等人讨论的『agentic stack 仍在剧烈演化』完全吻合——agent 平台的『harness eng（运行时工程）』正在成为一类独立的工程工种。\n\n【影响与前瞻】对自建 agent 平台的团队，信号是：不要把今天针对某个模型做的 harness 优化当作长期资产，要预留『模型换代就重写』的预期；同时优先投入『动态按模型特性优化』这类能跨模型复用的抽象。steipete 提到的『按需启动服务』也提示了一个成本优化方向：agent 不必常驻，按需拉起能显著降低资源占用。",
+      "source": "X：@steipete",
+      "source_type": "opentwitter",
+      "url": "https://x.com/i/web/status/2071509367770509463",
+      "timestamp": "2026-06-29T08:21:00Z",
+      "importance": 7,
+      "tags": [
+        "OpenClaw",
+        "steipete",
+        "harness工程",
+        "agent运行时",
+        "一线实战"
+      ],
+      "batch_time": "2026-06-30T10:00:00+08:00"
+    },
+    {
+      "title": "GergelyOrosz 与 mipsytipsy 对谈：AI 要求『更多而非更少』的工程纪律；同期 Uber 12 年后弃用 PagerDuty",
+      "summary": "Pragmatic Engineer 作者 GergelyOrosz 即将与可观测性专家 mipsytipsy 录制播客，预告核心议题之一是『AI 要求更多而非更少的工程纪律』，以及『在 AI 语境下什么是好的可观测性（o11y）』、如何带新人工程师。同期他透露一个工程工具换代信号：作为 12 年老客户的 Uber 即将弃用 PagerDuty，理由是 PagerDuty 上市后创新停滞，错失了 Slack 和 AI 两波浪潮，他认识的科技公司都在迁出。",
+      "detail_content": "【核心事件】Pragmatic Engineer 作者 GergelyOrosz 本周透露两件值得工程管理者关注的事。第一，他将与可观测性领域代表人物 mipsytipsy 做一期播客，预告的核心议题直击当下 AI 工程的痛点：『为什么 AI 要求更多而非更少的工程纪律』『在 AI 语境下什么是好的可观测性（o11y）』『如何培养新人工程师』。第二，他透露 Uber 在作为 PagerDuty 12 年以上的老客户后，即将弃用 PagerDuty。\n\n【关键细节与引用】关于 PagerDuty，GergelyOrosz 的原话判断很直接：\"PagerDuty used to be the leading paging + incident management tool, went public, then fell asleep at the wheel when Slack came around, then AI. Now everyone tech company I know is moving off.\"（PagerDuty 曾是排班和事件管理工具的领导者，上市后在 Slack 那波、再到 AI 那波都睡着了。现在我认识的每个科技公司都在迁出。）他把这归因于上市后聚焦季度盈利、对手却在创新，并感慨 PagerDuty 如今『像一家僵尸公司』。\n\n关于 AI 与工程纪律的对谈预告，则点出一个正在成型的反共识：许多人默认『AI 让工程变简单、纪律可以放松』，但一线实践者（mipsytipsy 长期主张可观测性与 SRE 纪律）反而得出相反结论——agent 越自主、产出越多，对监控、可观测性、变更纪律的要求越高，否则失控的风险也成倍放大。\n\n【背景与上下文】这两件事放在一起，其实讲的是同一个故事：工程工具链正在因为 AI 经历一轮换血。PagerDuty 式的『上市后停滞』被 AI-native 的事件管理新工作流替代；同时 agent 时代把『可观测性』从可选项抬升为基础设施。\n\n【影响与前瞻】对工程组织的实务启示：一是评估自己依赖的『上市型』工具是否也在 AI 浪潮里掉队，提前考察 AI-native 的替代方案；二是把『agent 的可观测性』（agent 跑了什么、调用了什么工具、为何失败）纳入当下的监控建设，而不是等事故发生再补。对带团队的 leader，mipsytipsy 对『新人工程师如何在 AI 时代成长』的看法值得期待——这是当下招聘经理普遍焦虑的议题。",
+      "source": "X：@GergelyOrosz",
+      "source_type": "opentwitter",
+      "url": "https://x.com/i/web/status/2071709320199164184",
+      "timestamp": "2026-06-29T17:38:00Z",
+      "importance": 7,
+      "tags": [
+        "GergelyOrosz",
+        "工程纪律",
+        "可观测性",
+        "PagerDuty",
+        "工具换代"
+      ],
+      "batch_time": "2026-06-30T10:00:00+08:00"
+    }
+  ]
+}
