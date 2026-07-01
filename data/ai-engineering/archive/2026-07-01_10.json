@@ -1,0 +1,187 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-07-01T10:00:00+08:00",
+  "digest": "本周是 AIE World's Fair（AI 工程师世界大展）周，整条主线高度收敛到「云端 Agent」。三方独立观察指向同一结论：OpenAI、Anthropic、Cursor 都 all-in 云端 Agent，GergelyOrosz 走访 Cursor 后甚至断言「本地 Agent 很快会消失」。这条主线向上承接「工程师的活正变成让 Agent 更高效」（Pragmatic Engineer 深度走访），向下落地为 AWS 砸 10 亿美元组建前方部署工程师（FDE）部门——纯卖模型 token 的时代过去，「模型+驻场工程」成为新的利润池。第二条线是「工程方法论产品化」：Every 的复利工程、Matt Pocock 的 Skill 写作指南、Claude Code 的循环实操指南、Ashpreet Bedi 的自驱动 Agent 平台，都在把「如何给 Agent 喂上下文」固化成可复制的资产。就业侧，Ramp/Revelio 对 2.2 万家公司的硬数据给「AI 抢饭碗」争论泼了冷水——高 AI 投入企业员工数反增 10.2%、入门级岗位增 12%。整体看，行业焦点正从「模型够不够强」快速转向「谁能把 Agent 工程化跑起来」，这对组织能力的要求远高于采购模型本身。",
+  "items": [
+    {
+      "title": "AWS 砸 10 亿美元组建「前方部署工程师」部队：跟进 OpenAI、Anthropic，FDE 成为巨头标配",
+      "summary": "AWS 宣布投资 10 亿美元成立 Forward Deployed Engineering（FDE，前方部署工程师）部门，由前沿 AI 工程副总裁 Francessca Vasquez 领衔，初始配给「数千名」FDE，嵌入客户内部帮其搭建和部署 AI 系统。这是继 OpenAI、Anthropic 今年早些时候各自成立 FDE 公司后，第三家巨头跟进。swyx 此前判断 FDE 正成为「地球上最抢手的职业」，如今被云巨头的真金白银验证。",
+      "detail_content": "【核心事件】6 月 30 日，亚马逊云（AWS）宣布投资 10 亿美元成立全新的 Forward Deployed Engineering（前方部署，FDE）业务部门，专门帮助客户构建和部署 AI 系统。新部门由 AWS 前沿 AI 工程与服务副总裁 Francessca Vasquez 负责，初始将配备「数千名」FDE 工程师。Vasquez 表示，AWS 过去多年零散具备这些能力，但这次是「把所有人汇聚到一个业务部门、用统一的部署标尺」。\n\n【关键细节】FDE 模式源自 Palantir：把顶尖工程师派驻到客户现场，深度嵌入业务流程交付定制化 AI 方案。OpenAI 和 Anthropic 今年早些时候已分别成立自己的 FDE 公司，并在服务部门砸下数十亿。AWS 此番跟进意味着：所有头部 AI 厂商都把「帮客户把 AI 真正跑起来」当成核心营收引擎，而非单纯卖 API。Vasquez 称新部门会「用一种通用标尺（common rubric）统一部署方法论」。\n\n【背景与上下文】swyx 近期断言 FDE 正成为「地球上最抢手的职业」，原因在于大模型本身已趋于同质，真正的差异化在于谁能把它落地到具体企业环境。对工程就业市场而言，这是少数因 AI 而「扩张」而非「萎缩」的高薪岗位，与 Ramp/Revelio 本周「高 AI 投入企业增员」的数据互为印证。\n\n【影响与前瞻】FDE 大规模建制化释放了明确信号：纯卖模型 token 的生意天花板已现，未来利润来自「模型+驻场工程」的打包交付。对企业 AI 负责人意味着头部厂商会越来越愿意派团队驻场，但也意味着要为这部分「人力」付高价。银行等传统行业若想吃到这波红利，需要提前培养既懂业务又懂 Agent 架构的内部「翻译官」。",
+      "source": "CNBC",
+      "source_type": "tavily",
+      "url": "https://www.cnbc.com/2026/06/30/aws-amazon-ai-forward-deployed-engineers.html",
+      "timestamp": "2026-06-30T15:00:01Z",
+      "importance": 10,
+      "tags": [
+        "AWS",
+        "前方部署工程师",
+        "FDE",
+        "组织转型",
+        "AI 就业"
+      ],
+      "batch_time": "2026-07-01T10:00:00+08:00"
+    },
+    {
+      "title": "Every 拆解「复利工程」：一个人维护 5 款产品，80% 时间不写代码，靠 CLAUDE.md 让 AI 自动避坑",
+      "summary": "媒体软件公司 Every 公开其「复利工程（Compound Engineering）」方法论——以单人工程团队同时维护 5 款产品。核心是 Plan→Work→Review→Compound 四步循环，其中 Compound 把每次解决问题学到的方法写进 CLAUDE.md 和 docs/solutions/，让 AI 下次自动避坑。工程师 80% 时间花在 Plan 和 Review，只有 20% 用于写代码。配套开源插件支持 Claude Code 等，含 260+ 配方。",
+      "detail_content": "【核心事件】媒体软件公司 Every 公开其「复利工程（Compound Engineering）」方法论，演示如何以单人工程团队同时维护 5 款产品。整套体系的灵魂是 Plan→Work→Review→Compound 四步循环：前三步是常规的规划、执行、复核，关键在第四步 Compound——把这次解决问题过程中学到的方法、踩过的坑，结构化地写进 CLAUDE.md 和 docs/solutions/ 知识库，使 AI 在下一次遇到类似任务时自动调用、自动避坑。\n\n【关键细节】在这一模式下，工程师 80% 的时间花在 Plan（规划）和 Review（审查）上，真正写代码的时间压缩到 20%。Every 同步开源了配套插件，支持 Claude Code 等主流 Agent 工具，内置 260+ 可复用配方，覆盖常见工程任务。这本质上是把「工程经验」从人脑迁移到 AI 可读的持久记忆里，让每一次迭代都站在前一次的肩膀上。\n\n【背景与上下文】这套方法与 Karpathy 流传的 CLAUDE.md 规则、Anthropic 的 Skills 体系一脉相承——核心共识是：Agent 时代的工程资产不再是代码本身，而是「喂给 AI 的上下文与规则」。EverOS、Every 都在把这一理念产品化，Matt Pocock 本周发布的「写好 Skill」指南也属于同一脉络。\n\n【影响与前瞻】对中小团队这是可直接复制的范式：用 CLAUDE.md 把团队最佳实践固化，单兵作战能力可成倍放大。但风险在于 Compound 的质量高度依赖 Review 环节——若把错误解法写进知识库，AI 会反复重蹈。它要求工程师从「写代码的人」转型为「写规则、审输出的人」。",
+      "source": "Every（小互 转述）",
+      "source_type": "aihot",
+      "url": "https://x.com/xiaohu/status/2071796715162857477",
+      "timestamp": "2026-06-30T03:23:23Z",
+      "importance": 9,
+      "tags": [
+        "复利工程",
+        "CLAUDE.md",
+        "单人团队",
+        "工作方式",
+        "Skill"
+      ],
+      "batch_time": "2026-07-01T10:00:00+08:00"
+    },
+    {
+      "title": "GergelyOrosz 走访 Cursor 办公室后断言：云端编码 Agent 来得太快，本地 Agent 很快会消失",
+      "summary": "Pragmatic Engineer 作者 GergelyOrosz 在走访 Cursor 办公室后发推（655 赞、12 万浏览）判断：「这一切可能比大多数人以为的结束得更快，因为云端编码 Agent 正在飞速到来，尤其在 Cursor 这样的公司内部——我读出的信号是，本地 Agent 很可能很快会消失。」这是一线观察对「云端 Agent 取代本地 Agent」趋势的最直接背书。",
+      "detail_content": "【核心事件】6 月 30 日，Pragmatic Engineer 作者、近 50 万粉丝的 GergelyOrosz 在 AIE World's Fair 期间走访 Cursor 办公室后发推，给出一个相当激进的判断：「这一切（对本地编码 Agent 的依赖）可能比大多数人以为的结束得更快，因为云端编码 Agent 正在飞速到来，尤其在 Cursor 这样的公司内部——我读出的信号是，本地 Agent 很可能很快就会消失。」该推文获 655 赞、12.1 万次浏览。\n\n【关键细节】GergelyOrosz 强调这是他在 Cursor 办公室「读出的房间气氛（read the room）」。同期 Cursor 刚发布 iOS 移动端应用，主打「从手机指挥在云端运行的编码 Agent」——这本身就是 cloud-first 的产品信号。Anthropic 的 Boris Cherny 也公开表示自己大半编码已在手机上完成。GergelyOrosz 还在另一条推文里补充，走访期间看到的最强共识是工程师都该做「napkin math（餐巾纸估算）」——算清楚一个系统的吞吐理论上限是多少、实际又为何更低。\n\n【背景与上下文】这与 Pragmatic Engineer 本周另一篇深度文章《Impressions from visiting OpenAI, Anthropic, & Cursor》互为印证：三家实验室都 all-in 云端 Agent。Latent.Space 也把本周定义为围绕 Agent 运行时的争夺战。本地 vs 云端的分歧正在快速收敛到「云端胜出」。\n\n【影响与前瞻】若本地 Agent 真的退场，意味着开发者工作流将从「本地终端跑 Agent」彻底迁移到「浏览器/手机指挥云端 Agent」。这对硬件（本地 GPU 需求下降）、对安全（代码全在云沙箱）、对成本（按时计费的云端算力）都是结构性冲击。对企业而言，云端 Agent 更易统一治理和审计，反而可能加速内部落地。",
+      "source": "GergelyOrosz（X）",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2071846250484535575",
+      "timestamp": "2026-06-30T06:40:13Z",
+      "importance": 9,
+      "tags": [
+        "云端 Agent",
+        "Cursor",
+        "本地 Agent",
+        "趋势判断",
+        "AIEWF"
+      ],
+      "batch_time": "2026-07-01T10:00:00+08:00"
+    },
+    {
+      "title": "Pragmatic Engineer 走访 OpenAI、Anthropic、Cursor 后定调：云端 Agent 成主流，工程师的活变成「让 Agent 更高效」",
+      "summary": "Pragmatic Engineer 在 AIE World's Fair 期间走访 OpenAI、Anthropic、Cursor 三家后的核心观察：①云端运行的 Agent 正在成为主流，三家都 all-in 且预期需求爆炸式增长；②编码 harness 正从「手艺」扩散为通用基础设施；③越来越多工程工作的本质变成「搭建让 Agent 更高效执行的环境」。文章抛出一个尖锐问题：工程师的主要任务会不会变成「让 Agent 更高效」？",
+      "detail_content": "【核心事件】Pragmatic Engineer 在旧金山 AI Engineer's World Fair 期间，与 OpenAI、Anthropic、Cursor 三家模型/工具公司的工程团队深度交流后撰文，总结出当下 AI 工程实践的三条主线，是本周被引用最多的行业综述之一。\n\n【关键细节】第一，「云端运行的 Agent 走向主流」——OpenAI、Anthropic、Cursor 三家都把云 Agent 作为重注，且预期需求将「爆炸式」增长。第二，「编码 harness 正在扩散到手艺之外」——harness（Agent 运行外壳）不再只是少数极客的玩具，正在成为像数据库一样的基础设施层。第三，也是最尖锐的判断：越来越多工程工作的本质，变成了「搭建环境让 Agent 更高效地执行」。\n\n【背景与上下文】这篇文章与 GergelyOrosz 同期「Cursor 办公室走访」推文、Latent.Space 的「Meta-Harness 之夏」判断形成共振。三方的独立观察都指向同一个结论：Agent 运行时正在取代单一模型，成为新的争夺焦点。Anthropic 官方本周发布的《Getting started with loops》循环指南，也把「让 Agent 高效循环」当成了一等公民话题。\n\n【影响与前瞻】「工程师的活变成让 Agent 更高效」是一个值得每个技术管理者深思的命题。它意味着衡量工程师的标尺可能从「产出代码量」转向「设计 Agent 工作流、搭建沙箱环境、编写 SKILL.md 规则的质量」。对正在做 AI 转型的组织，这暗示着岗位说明（JD）和绩效体系都需要重写——那些擅长「编排」而非「手写」的人会越来越值钱。",
+      "source": "Pragmatic Engineer",
+      "source_type": "tavily",
+      "url": "https://newsletter.pragmaticengineer.com/p/impressions-from-visiting-openai",
+      "timestamp": "2026-06-30T12:00:00Z",
+      "importance": 9,
+      "tags": [
+        "云端 Agent",
+        "harness",
+        "工程师角色",
+        "趋势分析",
+        "AIEWF"
+      ],
+      "batch_time": "2026-07-01T10:00:00+08:00"
+    },
+    {
+      "title": "Ramp/Revelio 硬数据搅浑「AI 抢饭碗」争论：高 AI 投入企业员工数反增 10.2%，入门级岗位增 12%",
+      "summary": "TechCrunch 报道，截至 2026 年 5 月 AI 相关裁员近 9 万、预计未来五年美国最多 15% 岗位被 AI 替代；但 Ramp 与 Revelio Labs 对近 2.2 万家公司的报告显示，高 AI 投入企业（前三个月人均月支出 30 美元）总员工数增长 10.2%、入门级岗位增长 12%。报告认为 AI 在资源充裕的科技公司里更像「扩张工具」而非「裁员工具」，但只买订阅不持续投入的公司未见增员。",
+      "detail_content": "【核心事件】「AI 到底抢不抢饭碗」的争论因一份新数据变得更复杂。TechCrunch 6 月 29 日报道，截至 2026 年 5 月，AI 相关裁员已接近 9 万人，部分预测认为未来五年美国最多 15% 的岗位将被 AI 替代。但支付公司 Ramp 与劳动力数据公司 Revelio Labs 联合对近 2.2 万家公司的研究，给出了相反的信号。\n\n【关键细节】报告把企业按 AI 投入强度分档，发现「高 AI 投入企业」（前三个月人均月支出 30 美元）的总员工数增长了 10.2%，其中入门级岗位增长 12%。报告的结论是：在资源充裕的科技公司里，AI 更像「扩张工具」——它降低了工程、销售、客服等职能的生产成本，企业因此扩张而非收缩。但一个关键限定：仅仅购买了 AI 订阅、却没有持续投入的公司，并未出现人头增长。\n\n【背景与上下文】这份报告与 SignalFire 此前「工程是 2025 年最具韧性岗位」的结论（基于 8000 万家公司数据）相互印证，也和字节跳动「AI Coding 正确率高但可交付性低」的内部实验形成对照——AI 的净就业影响高度取决于企业的「投入深度」而非「是否采用」。\n\n【影响与前瞻】对决策者的启示是：AI 不会自动带来增效或裁员，结果取决于组织是否愿意深度重构流程。报告同时警告，这种分化可能加剧企业间的「资源鸿沟」——会用的越用越强，浅尝辄止的反而被拉开差距。这对银行的启示尤为直接：采购大模型只是起点，配套的流程重构和持续投入才是决定 ROI 的关键。",
+      "source": "TechCrunch",
+      "source_type": "aihot",
+      "url": "https://techcrunch.com/2026/06/29/the-ai-jobs-debate-just-got-messier",
+      "timestamp": "2026-06-30T04:01:00Z",
+      "importance": 8,
+      "tags": [
+        "AI 就业",
+        "Ramp",
+        "Revelio",
+        "裁员",
+        "硬数据"
+      ],
+      "batch_time": "2026-07-01T10:00:00+08:00"
+    },
+    {
+      "title": "Matt Pocock 拆解「写好 AI Skill」：三层信息结构 + 五种失败模式，让 Agent 行为可预测",
+      "summary": "TypeScript 大神 Matt Pocock 公开其最常调用的 Skill——/writing-great-skills，系统讲解如何编写「稳定可预测」的 AI Skill。核心：以「过程可预测」为目标；区分 model-invoked（自动触发）与 user-invoked（用户调用）；采用三层信息结构（主步骤、参考、外部文件）实现渐进式披露；每步骤需明确完成标准。他还诊断了五种 Skill 失败模式：过早完成、重复、沉积、蔓延、空操作。",
+      "detail_content": "【核心事件】TypeScript 领域知名开发者 Matt Pocock 公开了自己最常调用的 Skill——/writing-great-skills，它本身就是一个「教 AI 如何写好 Skill」的元 Skill，系统化讲解了编写稳定、可预测 AI Skill 的方法论。\n\n【关键细节】几个核心原则：①目标设为「过程可预测」而非「结果完美」；②严格区分 model-invoked（模型自动触发）与 user-invoked（用户主动调用）两种 Skill，description 字段应被当作触发器来设计；③采用三层信息结构——主步骤、参考资料、外部文件，以实现「渐进式披露」，避免一次性把所有上下文塞给模型；④每个步骤都要写明「完成标准」，让 Agent 知道何为做完。他还归纳了 Skill 的五种典型失败模式：Premature completion（过早收尾）、Duplication（重复）、Sediment（陈旧沉积）、Sprawl（无序膨胀）、No-op（无效空转），并给出「No-op 测试」作为判断一句话是否有效的标尺。\n\n【背景与上下文】这套方法论与 Anthropic 官方 Skills 设计、Every 的 CLAUDE.md 复利工程、Karpathy 的 CLAUDE.md 规则同源——都把「如何给 Agent 喂上下文」当成一门独立工程学科。Matt Pocock 的贡献在于把「写 Skill」这件事的失败模式命名清楚了，使其可诊断、可优化。\n\n【影响与前瞻】对任何在用 Claude Code、OpenClaw 自建 Skills 的人，这是一份可直接落地的工程清单。尤其是五种失败模式的命名，让团队在 review Skill 文件时有了共同语言。未来「Skill 工程」很可能像「提示工程」一样成为独立岗位。",
+      "source": "邵猛 转述 Matt Pocock",
+      "source_type": "aihot",
+      "url": "https://x.com/shao__meng/status/2072126769986220157",
+      "timestamp": "2026-07-01T01:14:54Z",
+      "importance": 8,
+      "tags": [
+        "Skill 工程",
+        "方法论",
+        "Agent 可预测性",
+        "失败模式"
+      ],
+      "batch_time": "2026-07-01T10:00:00+08:00"
+    },
+    {
+      "title": "Claude Code 官方「循环」实操指南：定义四类 Agent 循环，把人工验证写进 SKILL.md 实现端到端自检",
+      "summary": "Claude Code 团队发布官方指南《Getting started with loops》，把 Agent 循环定义为「重复工作直到满足停止条件」的过程，并划分四类：①turn-based（用户提示触发，Claude 自判完成）；②goal-based（用 /goal 命令设可验证完成标准与最大轮次）；③time-based（用 /loop 按时间间隔重复，可用 /schedule 移至云端）；④proactive（基于事件/计划自动运行，无人实时参与）。文章还介绍如何编写 SKILL.md 把人工验证步骤编码、让 Claude 端到端自检。",
+      "detail_content": "【核心事件】继 Boris Cherny 把「loops（循环）」提升为与「源代码→agents」同等量级的里程碑后，Claude Code 团队发布了官方实操指南《Getting started with loops》，第一次系统给出 Agent 循环的分类与落地方式，把概念炒作推进到工程分类阶段。\n\n【关键细节】指南把 Agent 循环定义为「重复工作直到满足停止条件」的过程，划分四类：①turn-based 循环——由用户提示触发，Claude 自行判断完成或需要更多上下文；②goal-based 循环——通过 /goal 命令设定可验证的完成标准与最大轮次，适合明确目标的任务；③time-based 循环——通过 /loop 按时间间隔重复执行，可用 /schedule 移至云端持续运行；④proactive 循环——基于事件或计划自动运行，无需人实时参与。文章还重点介绍如何编写 SKILL.md 文件，把原本需要人工的验证步骤编码进去，让 Claude 进行端到端自检，从而减少 turn-based 循环里的手动干预。\n\n【背景与上下文】Karpathy 流传的 10 条 CLAUDE.md 规则强调给循环装「自检刹车」，本指南则给出了实现这些刹车的标准位置——SKILL.md。它与 Every 的复利工程、Matt Pocock 的 Skill 写作法形成完整闭环：循环负责让 Agent 持续干活，SKILL.md 负责让它在每一轮知道「做到什么程度算合格」。\n\n【影响与前瞻】四类循环的划分给团队设计 Agent 工作流提供了清晰的选型框架：客服类用 turn-based，研发任务用 goal-based，监控巡检用 time-based，自动化运维用 proactive。把人工验证写进 SKILL.md 这一招，直接决定了 Agent 能否真正「无人值守」——这是企业级落地的关键门槛。",
+      "source": "Claude Blog",
+      "source_type": "aihot",
+      "url": "https://claude.com/blog/getting-started-with-loops",
+      "timestamp": "2026-06-30T17:28:28Z",
+      "importance": 7,
+      "tags": [
+        "Claude Code",
+        "循环",
+        "Agent 运行时",
+        "SKILL.md",
+        "方法论"
+      ],
+      "batch_time": "2026-07-01T10:00:00+08:00"
+    },
+    {
+      "title": "Ashpreet Bedi 展示「自驱动 Agent 平台」：5 个 Skill 让 Agent 自己造 Agent、自己改进自己",
+      "summary": "Agno（前 phidata）联创 Ashpreet Bedi 演示其「自驱动 Agent 平台」的 5 个核心 Skill：create-new-agent（造新 Agent）、improve-agent（改进 Agent）、extend-agent（扩展 Agent）、eval-and-improve（评估改进）、review-and-improve（审查改进）。他还展示 Claude Code 已能在循环里跑仿真、自动改进其 Agent 并打包成 Skill。其判断是「未来已来，只是分布不均」。",
+      "detail_content": "【核心事件】Agno（前身 phidata）联合创始人、Agentic SE 方法论代表人物 Ashpreet Bedi 公开了其「自驱动 Agent 平台」的核心架构——用 5 个 Skill 让 Agent 平台具备自我迭代能力。这是把「Agent 维护」本身也 Agent 化的一次实战演示。\n\n【关键细节】5 个核心 Skill 分别是：create-new-agent（创建新 Agent）、improve-agent（改进现有 Agent）、extend-agent（扩展 Agent 能力）、eval-and-improve（基于评估自动改进）、review-and-improve（基于审查自动改进）。他在另一条推文（84 赞）补充：Claude Code 现在已能在循环中运行仿真、自动改进其 Agent，并打包成 Skill 复用。Ashpreet Bedi 把 Agno 的使命定义为「让任何公司都能构建、运行、管理自己的 Agent 平台」，强调 Agent 不是「在循环里调工具的 LLM」，而是「持续运行、管理上下文、能存活数小时甚至数天的耐久服务」，所有 session 和 trace 都落在企业自有数据库里。\n\n【背景与上下文】这与 Pragmatic Engineer「工程师的活变成让 Agent 更高效」的判断高度一致——Ashpreet Bedi 把这件事具象成了 5 个可调用的 Skill。也与 IBM 开源 CUGA、EverOS 等轻量 Agent 框架的思路呼应：行业正在把「Agent 运维」标准化、平台化。\n\n【影响与前瞻】「Agent 自己造 Agent、自己改自己」是走向真正自主的关键一步，但也带来新的失控风险——自动改进若没有严格的 eval 把关，可能让 Agent 越改越偏。对想自建 Agent 平台的企业，Agno 这套开源架构（模型/框架/云无关、数据在己方）是值得参考的蓝本。",
+      "source": "Ashpreet Bedi（X）",
+      "source_type": "opentwitter",
+      "url": "https://x.com/ashpreetbedi/status/2071914524899192909",
+      "timestamp": "2026-06-30T11:11:31Z",
+      "importance": 7,
+      "tags": [
+        "Agno",
+        "自驱动平台",
+        "Agent 运维",
+        "Skill",
+        "耐久服务"
+      ],
+      "batch_time": "2026-07-01T10:00:00+08:00"
+    },
+    {
+      "title": "Google 发布 ADK Go 2.0：图式工作流引擎 + 内置人工参与循环，给多 Agent 应用上「工程纪律」",
+      "summary": "Google 推出 Agent Development Kit（ADK）for Go 2.0，引入基于图（graph）的工作流引擎来组合复杂多 Agent 应用。新版本内置 human-in-the-loop（人工参与）编排、纯 Go 代码的动态执行、指数退避重试等弹性特性。统一执行模型后，单 Agent 应用与复杂图均跑在同一运行时上，简化了遥测与状态持久化。",
+      "detail_content": "【核心事件】Google 在 AIE World's Fair 期间发布 Agent Development Kit（ADK）for Go 2.0，把构建多 Agent 应用的工程化能力向前推了一步，主打「可靠」二字，回应了「Agent demo 容易、上生产难」的普遍痛点。\n\n【关键细节】2.0 版本最核心的升级是引入了一类基于图（graph）的工作流引擎，专门用于组合复杂的多 Agent 应用。同时内置 human-in-the-loop（HITL，人工参与）编排——在关键节点把控制权交还给人；支持用纯 Go 代码做动态执行；并加入指数退避重试等自动弹性特性。统一执行模型后，无论简单的单 Agent 应用还是复杂的图工作流，都运行在同一个运行时之上，从而简化了遥测采集与状态持久化。\n\n【背景与上下文】这呼应了 GergelyOrosz 与 mipsytipsy 对谈的核心观点——「AI 要求更多而非更少的工程纪律」。ADK Go 2.0 把 HITL、重试、状态持久化这些生产级需求做进框架，与 Anthropic Skills、Agno AgentOS 一道，把「Agent 运行时」这个层级逐渐标准化。Google 此举也是在 Agent 框架层与 LangChain、Anthropic、Agno 正面竞争。\n\n【影响与前瞻】对用 Go 构建后端的团队（许多金融、云原生场景），ADK Go 2.0 提供了一条把多 Agent 编排纳入现有工程体系的最短路径。图式工作流 + HITL 的组合，特别适合风控、合规等需要人工兜底的场景——银行在审批、反欺诈链路里嵌入 Agent 时，这种「自动跑、关键处让人兜底」正是监管最欢迎的形态。",
+      "source": "Google Developers Blog",
+      "source_type": "aihot",
+      "url": "https://developers.googleblog.com/announcing-adk-go-20",
+      "timestamp": "2026-06-30T17:17:40Z",
+      "importance": 7,
+      "tags": [
+        "Google ADK",
+        "多 Agent",
+        "图工作流",
+        "人工参与",
+        "Go"
+      ],
+      "batch_time": "2026-07-01T10:00:00+08:00"
+    },
+    {
+      "title": "Simon Willison 新作 shot-scraper video：让编码 Agent 自己录一段工作演示视频",
+      "summary": "Simon Willison 的浏览器自动化工具 shot-scraper 1.10 新增 video 命令，支持用 storyboard.yml 定义操作步骤、由 Playwright 录制浏览器视频。他强调让编码 Agent 在交付功能时顺便产出一段演示视频，是验证 Agent 工作成果的有效手段。该功能依赖 Playwright 1.61.0 新增的 screencast 机制，解决了开头白帧、宽度固定 800px 等老问题。",
+      "detail_content": "【核心事件】AI 工具实测达人 Simon Willison 为其浏览器自动化工具 shot-scraper 发布 1.10 版，最大亮点是新增 shot-scraper video 命令——让编码 Agent 能自动录制一段自己工作过程的演示视频，把「录屏演示」纳入 Agent 的标准交付清单。\n\n【关键细节】新命令接受一个 storyboard.yml 文件，在其中定义一整套操作步骤，然后调用 Playwright 录制浏览器执行这些步骤的视频。Simon Willison 演示了让 Agent 在 Datasette 中从粘贴的 CSV/TSV/JSON 数据创建新表的完整过程录像。该功能依赖 Playwright 1.61.0 新增的 screencast 机制，解决了此前视频开头白帧、宽度固定 800px 等问题。他还特别强调：把 --help 输出设计得足够详细，能让编码 Agent 直接读懂并调用该命令生成演示。他自己就用 Codex Desktop + GPT-5.5 xhigh 生成的 YAML 实跑了一个示例。\n\n【背景与上下文】Simon Willison 一直主张「让 Agent 产出可验证的交付物」。视频演示比代码 diff 更直观，能让非技术相关方也快速理解 Agent 到底做了什么——这在企业内部汇报、合规审计场景下格外有用。\n\n【影响与前瞻】这是一个小巧但思路重要的实践。对团队而言，要求 Agent 每完成一个功能就附一段视频，能显著降低 review 成本、也便于事后追溯。它也示范了一个更大原则——设计工具时把 Agent 当一等用户（详细 --help、机器可读输出），工具的采用率会有质的提升。",
+      "source": "Simon Willison",
+      "source_type": "aihot",
+      "url": "https://simonwillison.net/2026/Jun/30/shot-scraper-video",
+      "timestamp": "2026-06-30T16:54:26Z",
+      "importance": 6,
+      "tags": [
+        "shot-scraper",
+        "Agent 演示",
+        "Playwright",
+        "工具实测",
+        "交付物"
+      ],
+      "batch_time": "2026-07-01T10:00:00+08:00"
+    }
+  ]
+}
