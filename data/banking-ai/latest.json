@@ -1,9 +1,85 @@
 {
   "channel_id": "banking-ai",
   "channel_name": "银行业 AI 应用",
-  "generated_at": "2026-07-02T09:40:56.184402+08:00",
-  "digest": "本周银行业 AI 的主旋律是「Agentic AI 从试点走向企业级」——JPMorgan 拿出了迄今最完整的 agentic 银行样板：23 万员工用 LLM Suite、COiN 自动化 36 万小时法律工时、年省约 20 亿美元，并明确把运营条线裁员 10% 写进对投资者的承诺，是「降本数据 + 人岗重塑」最硬的案例。落地侧，欧洲 Agentic 支付在两周内连下两城：继 ING/Worldline 之后，法国首笔 AI Agent 支付由 Crédit Agricole 联手 Worldline/Mastercard 完成，场景是让 AI 帮客户搜索并购买音乐节门票。基础设施层面，Danske Bank 扩大与 AWS 合作、用 Bedrock + AgentCore 把 agent 从实验推向生产，AIB 推出新一代数字平台，北欧 Digital Workforce 直接收购 Front AI 的客服 agent 业务——银行核心系统「Agent 化」的整并与投融正在加速。反欺诈赛道上，Quantifind 拿到 2 亿美元融资。国内侧，21 财经披露仅 13 家 A 股上市银行金融科技年投入合计已超 1800 亿元、招行 AI 全年替代人工超 1556 万小时，蚂蚁数科 Agentar 在宁波银行把复杂业务问答准确率从 68% 拉到 91%。整体看，比上期更明显的变化是：行业讨论重点已从「要不要用 Agent」转向「Agent 怎么编排、怎么治理、怎么算清 ROI」，大行开始用真金白银的裁员/投资数字回答这个问题。",
+  "generated_at": "2026-07-03T09:38:50.765764+08:00",
+  "digest": "本周银行业 AI 的主线从「谁在落地」切到「谁来踩刹车」：BIS（央行之央行）在年度经济报告里把 1 万亿美元 AI 资本开支直接类比史上以衰退收场的几次投资狂热，这是迄今最高层级的泡沫警告——对每一家正在向董事会要 AI 预算的银行 CIO 都是必须引用的注脚。落地端，中国大行原行长（邮储刘建军）给出最务实的路线图：智能客服、营销推荐、风险预警、运营提效四类场景先跑，绕开幻觉高风险的重大决策；Robinhood CEO Tenev 则把 agentic trading 推到「AI agent 将具备人类交易员全部能力」的激进判断，agentic AI 正式进入零售投资执行层。整体看，行业正同时经历「监管泼冷水」和「应用加速冲」两股力，银行的 AI 治理与场景选择比模型本身更决定胜负。",
   "items": [
+    {
+      "title": "央行之央行喊话：1 万亿美元 AI 投资热潮正走向「清算」，BIS 类比历次以衰退收场的投资狂热",
+      "summary": "国际清算银行（BIS）在《2026 年度经济报告》中警告，五大超大规模云厂商 2025-2026 两年 AI 资本开支将超 1 万亿美元，已超过其盈利和自由现金流，部分被迫举债填补。BIS 明确把本轮 AI 投资热与历史上几次「最终以投资逆转、经济衰退收场」的先例并列。这是迄今对 AI 投资泡沫最高层级的官方警告，对正寻求董事会 AI 预算支持的银行 CIO 是关键注脚。",
+      "detail_content": "【核心事件】6 月 28 日（周日）发布的《BIS 2026 年度经济报告》中，总部位于巴塞尔、有「央行之央行」之称的国际清算银行对 AI 投资热发出迄今最尖锐的官方警告。BIS 指出，全球五大 hyperscaler（超大规模云厂商）2025 与 2026 两年的 AI 相关资本开支将突破 1 万亿美元，这一规模已超过它们的盈利和自由现金流，部分厂商被迫通过举债来补足缺口。\n\n【关键引用】BIS 在报告中直言不讳：\"The scale and pace of the current AI investment boom, accompanied by expectations of large productivity payoffs, bear resemblance to these precedents. These episodes ended with an eventual reversal in investment, inducing economy-wide recessions.\"（当前 AI 投资热潮的规模与速度，连同对巨额生产力回报的预期，与历史先例如出一辙——而这些先例最终都以投资逆转、引发全经济体范围的衰退收场。）\n\n【背景与上下文】BIS 的关切并非认为 AI 是骗局。报告承认任务级研究一致显示 AI 能带来 20%-50% 的时间节省式生产力提升。真正的风险在于：所有主要玩家同时在押同一笔巨型赌注，背后是\"只有少数玩家能最终主导市场\"的认知——BIS 认为这种逻辑正是集体过度承诺（collective overcommitment）的配方。BIS 将其与历史上几次投资最终远超商业回报所能解释的水平、且均以衰退收场的案例相提并论。\n\n【影响与前瞻】这是迄今为止对 AI 投资周期最高层级、最权威的\"泼冷水\"，信号意义极强：① 对银行业，BIS 是全球金融监管的最高协调者，其表态会传导至各国审慎监管机构，银行 AI 资本支出的\"正当性证明\"门槛将被抬高；② 对正在向董事会申请 AI 预算的银行 CIO/CFO，这份报告是绕不开的对照材料——必须能回答\"我们的投入如何避免落入 BIS 所说的集体过度承诺\"；③ 若 hyperscaler 投资逆转，作为下游买家的银行可能面临 AI 算力/推理服务价格波动或产能约束。值得持续跟踪各国央行后续是否据此出台针对金融机构 AI 投资的审慎指引。",
+      "source": "Fortune",
+      "source_type": "tavily",
+      "url": "https://fortune.com/2026/06/29/bis-central-bank-warning-hyperscaler-data-center-1-trillion-gamble-recession/",
+      "timestamp": "2026-06-29T10:00:00Z",
+      "importance": 9,
+      "tags": [
+        "BIS",
+        "央行",
+        "AI投资泡沫",
+        "监管",
+        "hyperscaler",
+        "资本开支"
+      ],
+      "batch_time": "2026-07-03T09:30:00+08:00"
+    },
+    {
+      "title": "邮储银行原行长刘建军给出最务实 AI 路线图：四类场景先跑，绕开幻觉高风险的重大决策",
+      "summary": "邮储银行原行长刘建军在第十一届融城杯上系统阐述 AI 浪潮下零售银行转型，判断银行业 AI 已「走出概念炒作、进入工程落地」。他给出可直接复用的落地优先级：智能客服、营销推荐、风险预警、运营提效四类场景门槛低、受幻觉干扰小、适合全行优先铺开；主张 AI 投入遵循「方向押注、发展留白」原则。工行原行长杨凯生同台。",
+      "detail_content": "【核心事件】6 月 30 日，第十一届\"融城杯金融科技创新案例评选\"启动仪式上，中国邮政储蓄银行原行长刘建军发表《专业制胜的时代——AI 浪潮下零售银行的转型之路》主题演讲，系统阐述其对银行业 AI 落地的判断。中国工商银行原行长杨凯生同台演讲，近 50 家商业银行与科技企业代表到场。\n\n【关键观点与引用】刘建军的核心判断是：\"当前银行业 AI 应用已经走出概念炒作阶段，进入工程落地阶段。竞争的焦点不再是'是否拥有大模型'，而是能否把 AI 场景做密、做深、做出实效。\" 他给出最务实的落地优先级框架——现阶段可落地、可大规模推广的场景包括四类：智能客服、营销推荐、风险预警、运营提效；理由是这些场景\"不涉及最终的重大风险决策，受幻觉影响较小，落地门槛低、实用性强\"。在投入策略上，他主张\"AI 投入应当遵循'方向押注，发展留白'原则，锚定智能化长期主线，同时预留适配未来技术迭代的调整空间\"。\n\n【背景与上下文】这一判断切中当下国内银行业 AI 的真实痛点：多数大行已私有化部署大模型，但真正难的是把场景做\"密\"——把 AI 嵌进足够多的业务环节并产生可量化效益。刘建军把\"是否涉及最终重大风险决策\"作为场景筛选的第一道闸门，实质上给出了一套与银行风控文化兼容的渐进式上线路径，绕开了生成式 AI 幻觉与监管问责的最大冲突点。这与同期招行\"AI 贡献比\"、工行\"领航 AI+ 500 余场景\"的实践方向一致：先在低风险高频场景把 AI 用深用透，再向核心决策渗透。\n\n【影响与前瞻】对银行 AI 管理者，这是一份可直接搬用的内部立项优先级清单：智能客服、营销推荐、风险预警、运营提效四个方向最容易拿到 ROI 并通过合规审查，是向管理层汇报\"AI 见效\"最稳的抓手。\"方向押注、发展留白\"也提示不要把赌注全押在某一代模型/某一家供应商上，架构要为技术迭代留弹性。",
+      "source": "新浪财经",
+      "source_type": "tavily",
+      "url": "https://finance.sina.cn/bank/yhgd/2026-07-02/detail-inifkuqa2704942.d.html",
+      "timestamp": "2026-07-02T05:00:00Z",
+      "importance": 8,
+      "tags": [
+        "邮储银行",
+        "刘建军",
+        "零售银行",
+        "场景落地",
+        "智能客服",
+        "中国银行业"
+      ],
+      "batch_time": "2026-07-03T09:30:00+08:00"
+    },
+    {
+      "title": "Robinhood CEO Tenev 押注 agentic trading：AI agent 将具备人类交易员的全部能力，宣布代客交易工具已上线",
+      "summary": "Robinhood CEO Vlad Tenev 在 CNBC 采访中放话，agentic AI 很快将具备与人类交易员匹敌的能力，「人类能做的每一件事 AI agent 都能做到」。Robinhood 5 月已发布让 AI agent 代客买卖股票的工具，本周又推出自有 L2 链 Robinhood Chain、股票代币化推向 120+ 国。一边 10% 裁员，一边 all-in agentic，零售投资的执行层正被 AI agent 接管。",
+      "detail_content": "【核心事件】7 月 2 日，Robinhood CEO Vlad Tenev 接受 CNBC 采访时对 agentic trading（智能体交易）给出激进判断：AI agents 很快将能匹敌人类交易员的全部能力。Robinhood 已于 5 月发布让 AI agent 代用户执行股票交易和购物支付的工具，本周进一步发布自有 L2 区块链 Robinhood Chain，并将股票代币化产品推向 120 多个国家。\n\n【关键引用】Tenev 原话：\"The idea behind agentic trading…[is] every capability a human can do will be available to an AI agent.\"（agentic trading 的核心理念是：人类能做的每一件事，AI agent 都将能做到。）他称 agentic trading 将\"拉平散户与机构的竞技场\"（level the playing field）。\n\n【关键细节】① Robinhood 同时被指定为待推出的 Trump Accounts（与美财政部、BNY Mellon 合作）的经纪商和受托人，Tenev 称目标是\"做出政府参与过的最好的消费产品\"；② Robinhood 现服务近 2800 万客户、覆盖 38 国；③ 就在本月初，Robinhood 裁减 10% 员工以\"更高效运营\"，Tenev 在内部信中称\"不能再默认以层层叠叠的重组织方式运营\"——一边裁员一边 all-in agentic，是其组织正在围绕 AI 重塑的明确信号。\n\n【影响与前瞻】这是 agentic AI 从\"客服/分析\"切入到\"投资执行\"环节的标志性事件：当 AI agent 可以代客完成交易决策与下单，零售金融服务中\"人\"的角色被进一步压缩到信任、合规与异常处理。对银行的财富管理/经纪业务构成两层冲击：① 产品层面，需思考是否推出对标 agentic 顾问能力，否则客户体验落后于 Robinhood 这类原生数字玩家；② 风控与合规层面，\"AI agent 代客交易\"在适当性、投资者保护、市场操纵防范上会引发监管高度关注，传统银行的审慎文化使其在这条路上必然更慢但也更稳。",
+      "source": "CNBC",
+      "source_type": "tavily",
+      "url": "https://www.cnbc.com/2026/07/02/robinhood-ceo-ai-agents.html",
+      "timestamp": "2026-07-02T06:16:00Z",
+      "importance": 7,
+      "tags": [
+        "Robinhood",
+        "agentic trading",
+        "AI agent",
+        "零售投资",
+        "财富管理",
+        "Tenev"
+      ],
+      "batch_time": "2026-07-03T09:30:00+08:00"
+    },
+    {
+      "title": "资管赛道首现 agentic AI 原生玩家：伦敦初创 Macro Technologies 推出决策引擎 The Macro Analyst",
+      "summary": "伦敦初创 Macro Technologies 正式发布首个面向资产管理行业的 agentic AI 产品 The Macro Analyst——一个为资管机构打造的 agentic AI 决策引擎。由联创 Jaime Villa 领衔，定位是为资管行业补上 agentic AI 基础设施。标志 agentic AI 在金融的渗透从银行客服/支付延伸到资管投研这一更专业的前台环节。",
+      "detail_content": "【核心事件】总部位于伦敦的初创公司 Macro Technologies 正式亮相，并发布首款产品 The Macro Analyst——面向资产管理的 agentic AI 决策引擎。公司由联创 Jaime Villa 领衔，定位是为资管行业构建 agentic AI 基础设施，The Macro Analyst 是其落地的第一个产品。\n\n【背景与上下文】过去一年 agentic AI 在金融业的落地主要集中在银行后台与中台（客服、反欺诈、运营提效、支付编排），而资产管理/投研这一高度专业、决策密度极高的前台环节一直相对空白——原因是要把分散的宏观数据、研报、持仓、风险约束整合成可执行的投研判断，对 agent 的编排能力要求极高。Macro Technologies 直接切入这一环节，是 agentic AI 在金融前台渗透加深的信号。\n\n【影响与前瞻】① 对资管机构，专门面向投研的 agentic 决策引擎意味着分析师工作流的潜在重构，\"人+agent\"混合投研团队可能成为新标配；② 对银行系资管/理财子公司，留意这类原生 agentic 工具是否会挤压传统投研工具链（如万得、彭博终端的智能助手）的市场空间，以及自研 vs 采购的取舍；③ 行业层面，agentic AI 在金融的细分赛道专用化（先客服、再支付、再资管）正在加速，垂直 agentic 工具的创业窗口依然敞开。",
+      "source": "FinTech Futures",
+      "source_type": "tavily",
+      "url": "https://www.fintechfutures.com/fintech-start-ups/macro-technologies-launches-ai-decision-engine-for-asset-managers",
+      "timestamp": "2026-07-01T09:00:00Z",
+      "importance": 6,
+      "tags": [
+        "Macro Technologies",
+        "资产管理",
+        "agentic AI",
+        "投研",
+        "初创公司",
+        "伦敦"
+      ],
+      "batch_time": "2026-07-03T09:30:00+08:00"
+    },
     {
       "title": "JPMorgan 拿出迄今最完整的「Agentic 银行」样板：23万员工在用、年省20亿、运营裁员10%",
       "summary": "Forbes 拆解 JPMorgan Chase 的 AI 转型：超 23 万员工已用自研 LLM Suite 起草报告、自动化合规、识别欺诈；COiN 平台把原本需 36 万小时的法律文档分析自动化，员工效率提升 30-40%。CEO Jamie Dimon 透露 AI 每年为银行省下约 20 亿美元，并已向投资者承诺运营与账户服务条线裁员 10%。这是连续四年蝉联 Evident AI 成熟度榜首的大行，给出的是「不靠聊天机器人贴皮、而是全公司工作流重构」的范本。",
@@ -424,62 +500,6 @@
         "研究报告"
       ],
       "batch_time": "2026-06-27T09:30:00+08:00"
-    },
-    {
-      "title": "中国四大行交出AI「半年成绩单」：工行数字员工干5.5万人年的活，招行856个场景替代约8000全职",
-      "summary": "陆家嘴论坛前后四大行高管罕见密集就AI战略「交底」。工行「工银智涌」在30余业务领域落地500+应用，AI数字员工年承担5.5万人年工作量；招行落地856个大模型场景、183个专精模型，累计替代人工超1556万小时（约8000名全职）；建行大模型赋能398个场景、AI助手覆盖率99.42%；农行董事长谷澍则把话题拉回模型黑箱、幻觉与智能体风险。结合6/18监管32条「谁使用谁负责」，银行业正从「要不要用AI」进入「如何重新定义自身价值」的必答阶段。",
-      "detail_content": "【核心事件】2026年6月陆家嘴论坛前后，工商银行、农业银行、中国银行、建设银行四大行高管罕见地密集就AI战略「交底」，新浪财经以《大模型拍岸，四大行高管交了底》为题做了专题梳理。同一窗口期，金融监管总局已于6月18日发布银行业保险业首份系统性AI安全指导意见（32条），行业进入「竞速与合规并行」的新阶段。一组硬数据勾勒出大行AI的真实渗透深度。\n\n【关键数据与引用】工行行长刘珺抛出「算力阈值」「机器人报价」「技术期权」等新概念——「工银智涌」大模型技术体系已在30余个业务领域规模化落地500余个AI应用，AI数字员工年承担工作量5.5万人年，全行业务应用日均词元消耗量达百亿级（较两年前增长近百倍）。前台个人金融AI助理把客户需求与产品匹配时间从约1小时压缩到2-3分钟，中台智能询价交易比率已超96%。招行落地183个领域专精模型和856个大模型应用场景，累计替代人工时长超1556万小时（约等于节省超8000名全职员工），并推出国内首张搭载Token权益的信用卡（新户每月最高18亿Token）。建行副行长雷鸣透露，截至2025年末大模型已赋能集团398个场景应用，AI助手在网点柜面问题响应覆盖率99.42%、日均访问超10万人次，授信审批平均处理时间下降超30%。\n\n【背景与上下文】政策端「人工智能+」三年三提：2024年首次写入政府工作报告→2025年持续推进→2026年深化拓展并强调「完善人工智能治理」。基本面是净息差已降至1.52%、「铺网点放贷款」的增长模式失效，AI成为降本增效最直接的抓手。但四位一把手的口径并不一致——农行董事长谷澍主动把话题拉回模型黑箱、模型幻觉和智能体风险，是四大行里最审慎的表态；中行行长张辉给出「326」全球化AI赋能框架；浦发董事长张为忠强调AI让金融服务从「标准化产品」走向「千人千面」；兴业董事长吕家进更激进：「硅基生命将大量替代碳基生命的工作，今后客户经理将不再区分公司、零售、同业」。\n\n【影响与前瞻】监管32条的核心原则是「谁使用谁负责」——涉及信贷审批、资金交易、资产评估、风险管理的场景均被列为「高风险应用」，须经机构风险管理委员会批准并保留人工监督。这意味着大行的「先发规模优势」会进一步放大，而中小银行在资金、人才、试错容忍度上的短板被同步放大（指导意见鼓励有条件的大行向中小机构输出算力、共建共享基础设施）。对身处银行业AI一线的判断价值在于：四大行已集体越过「要不要用」的阶段，竞争焦点正转向「算力密度与算法精度」——刘珺明确提出应以「算力规模和数据密度」替代传统估值维度来衡量AI企业。",
-      "source": "新浪财经 / 网易",
-      "source_type": "tavily",
-      "url": "https://finance.sina.com.cn/money/bank/gsdt/2026-06-22/doc-iniehscs2535255.shtml",
-      "timestamp": "2026-06-22T00:00:00+08:00",
-      "importance": 9,
-      "tags": [
-        "中国银行业",
-        "四大行",
-        "工商银行",
-        "招商银行",
-        "大模型",
-        "AI战略"
-      ],
-      "batch_time": "2026-06-26T09:30:00+08:00"
-    },
-    {
-      "title": "ChatGPT要连你的银行账户了：OpenAI联手Plaid进军个人理财，月均200万人已用它问钱",
-      "summary": "在Plaid Effects 2026大会上，OpenAI与开放金融平台Plaid宣布把ChatGPT接入个人理财场景，用户将能通过ChatGPT连接银行账户进行财务管理。Plaid CEO透露每月已有超200万人向ChatGPT提出金融问题，如今由Plaid覆盖9000+应用、12000+机构的数据网络支撑。这标志着最主流的AI助手正从「问答工具」演进为「能直接触达账户和资金的金融Agent」。",
-      "detail_content": "【核心事件】6月下旬Plaid Effects 2026大会（纽约），开放金融平台Plaid发布「Intelligent Finance（智能金融）」新阶段，并与OpenAI达成整合：ChatGPT将获得个人理财能力，可连接用户银行账户。多名参会金融科技KOL现场报道并引述TechCrunch消息：「OpenAI launches ChatGPT for personal finance, will let you connect bank accounts」。\n\n【关键细节与引用】Brett King（@brettking）现场实录原话：「Every month more than 2 million people ask ChatGPT financial questions. Now it's powered by Plaid @zachperret.」同期Plaid发布《State of Intelligent Finance》报告：过去12个月过半美国人已用AI管理财务，且明确表示「不会回头」。Plaid支撑这一能力的数据网络覆盖9000+应用、12000+金融机构——这是「AI管钱」能真正落地的底层管道。\n\n【背景与上下文】这是一条具有行业拐点意味的消息，需放在更大的「Agent基础设施就位」图景里看：此前Visa已正式开放AI Agent可用信用卡最终确认订单并扣款，欧洲首笔端到端Agentic支付（Mastercard/ING/Worldline）已完成，Robinhood推出Agentic Trading允许AI Agent直接开户交易。支付与账户侧的「Agent基础设施」在过去两个月快速成型，而OpenAI/ChatGPT直接接入账户，等于把用户最高频的AI入口与银行账户之间打通了「最后一公里」——开放金融（Open Finance）正式演进为智能金融（Intelligent Finance）。\n\n【影响与前瞻】对银行的冲击是双重的。渠道侧：用户越来越多通过ChatGPT这类通用AI入口而非银行自有App管钱，银行可能失去客户关系与交易数据——零售业已发出明确警告「retailers may still get the sale, but they may lose everything else（the customer relationship）」，Coveo《2026 Commerce Relevance Report》显示仅16%消费者愿意让AI代为完成购买。信任侧：账户连接的信任缺口仍大，是规模化扩张的现实瓶颈。对国内（受限于无法接入ChatGPT）的启示偏战略层面：开放金融→智能金融的演进方向是确定的，谁掌握了「AI管钱」的数据层与编排层，谁就占据下一代金融入口；银行App若只甘当底层账户管道，客户关系将被AI助手层截流。",
-      "source": "Plaid Effects 2026 现场 / Brett King @brettking",
-      "source_type": "opentwitter",
-      "url": "https://www.fintechfutures.com/ai-in-fintech/report-the-state-of-intelligent-finance-ai-agents-and-trust",
-      "timestamp": "2026-06-25T00:00:00+08:00",
-      "importance": 9,
-      "tags": [
-        "OpenAI",
-        "Plaid",
-        "ChatGPT",
-        "个人理财",
-        "Agentic支付",
-        "开放金融"
-      ],
-      "batch_time": "2026-06-26T09:30:00+08:00"
-    },
-    {
-      "title": "澳大利亚国民银行NAB建「AI网络犯罪中枢」NAB Nexus：CEO警告AI让犯罪比纯人类环境快得多",
-      "summary": "澳大利亚四大行之一NAB（国民银行）上线新一代对话式AI客服，同时组建「NAB Nexus」一体化运营中枢，把技术、网络安全、欺诈、支付、物理安全的一线响应人员整合到同一平台实时识别威胁。CEO Andrew Irvine直言「AI会极大改善我们的生活和工作，但同时也会让犯罪分子及其威胁比纯人类环境快得多」。这是大行首次把「AI赋能业务」与「防御AI驱动犯罪」放在同一战略层级。",
-      "detail_content": "【核心事件】6月22-23日，NAB（National Australia Bank，澳大利亚四大行之一）连发两项AI动作：一是上线新一代对话式AI客服；二是组建名为「NAB Nexus」的一体化运营中枢，把分布在技术、网络安全、欺诈、支付、物理安全条线的一线响应者聚合到同一平台，目标是实时识别威胁与威胁行为者。\n\n【关键细节与引用】CEO Andrew Irvine原话：「AI is going to do a lot of great things for how we live and how we work, but at the same time, AI is also going to help criminals and their threats much faster than when it was a human-only environment.」这段表态的分量在于：一家主流大行一把手公开把「AI驱动的新型犯罪速度」与「AI的业务收益」对等看待，并据此重构安全组织架构，而不是把反欺诈留在传统的单点工具层。\n\n【背景与上下文】NAB此举并非孤立动作。同期「五眼」情报联盟发出「必须立即行动（must act now）」的警告，应对AI驱动的网络攻击；澳大利亚还出现「假IT员工」就业欺诈从科技业向医疗、土木工程、客服扩散的趋势（Okta全球威胁研究协调员Alex Tilley在AUSCERT 2026披露）。NAB选择把防御前置到「一体化中枢」而非堆叠单点工具，反映出大行安全战略的范式转变。\n\n【影响与前瞻】这代表大行AI战略的一个新分支——不只问「AI能帮我做什么业务」，也开始系统化问「AI会带来什么新型攻击面」。反欺诈、反AI犯罪正成为继合规反洗钱之后，Agent规模化的下一个「必争战场」（全球前20大行已有超10家在生产环境部署反洗钱AI Agent）。对国内银行的启示：随着deepfake开户、AI语音诈骗、Agent化攻击工具的普及，把安全、反欺诈、支付风控整合到统一的「AI威胁感知与响应中枢」，很可能从可选项变为标配；而NAB「业务AI」与「防御AI」双轮驱动的架构思路，值得作为对标参考。",
-      "source": "Finextra / iTnews",
-      "source_type": "tavily",
-      "url": "https://www.finextra.com/newsarticle/47972/nab-rolls-out-conversational-ai-creates-ai-crybercrime-hub",
-      "timestamp": "2026-06-23T10:51:00Z",
-      "importance": 8,
-      "tags": [
-        "NAB",
-        "澳大利亚银行业",
-        "AI反欺诈",
-        "网络安全",
-        "Agentic AI"
-      ],
-      "batch_time": "2026-06-26T09:30:00+08:00"
     }
   ]
 }
