@@ -1,0 +1,154 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-07-03T10:00:00+08:00",
+  "digest": "AI 工程实战正出现两条主线的汇合。一条是\"诚实的基准\"：Senior SWE-Bench 把 AI 在高级工程师任务上的天花板量化出来——最强模型（Opus 4.8）也只完成 24%，超过 75% 的高难度任务失败；Remote Labor Index 则显示 AI 完成真实付费自由职业工作的比例 8 个月涨了 6 倍（Fable 5 达 16.1%）。两份数据合在一起说明：能力曲线在快速爬升，但\"独立胜任高级工程\"还远未到。另一条是\"Harness 工程化\"：SGLang 把 GPU 内核开发流程编码成 SKILL.md、千问团队把 agent 运行时拆成四大组件并喊出\"Harness Engineering 取代 Prompt Engineering\"、browser-use 和阿里 Page Agent 各自用\"文本先行、视觉兜底\"的思路把 agent 能力下沉成可复用 Skill。能力在涨，但\"会用 agent\"本身正在变成一门独立、可复利的工程学科——这是本批最值得带回组织的一句话。另外补一条竞争格局：Z.ai（智谱）发布 ZCode 正式入场 agentic IDE，国产编码 agent 开始向上层工具延伸。",
+  "items": [
+    {
+      "title": "Senior SWE-Bench：最强模型也只能完成 24% 的高级工程师任务，AI 编程的\"天花板\"被量化",
+      "summary": "Snorkel 推出 Senior SWE-Bench——专门评估 AI agent 能否胜任\"高级软件工程师\"级任务的基准，分功能开发与 Bug 修复两类，Bug 任务要求根据日志和 profiling 深入调查。排行榜结果给 AI 编程热泼了一盆量化冷水：Claude Opus 4.8 搭配 Mini-SWE-Agent（max effort）通过率仅 24.0%，Sonnet 5 为 19.4%，GPT-5.5 为 16.0%——最强前沿模型在超过 75% 的高级任务上未能达标。这是迄今最直接回答\"AI 到底能独立做到高级工程师的活吗\"的基准：答案是\"还差得很远\"。",
+      "detail_content": "【核心事件】AI 编程工具厂商 Snorkel 发布 Senior SWE-Bench，一个开源基准测试，专门评估 AI 智能体完成\"高级软件工程师\"级别任务的能力。任务分两类：功能开发（指令类似自然语言消息，由验证智能体基于专家配方自动生成行为测试来判分）和 Bug 修复（要求根据日志、profiling 等运行时信息深入调查根因）。这个基准的定位很明确：原有的 SWE-Bench 已被\"刷爆\"，但那些任务更接近初级工单；Senior SWE-Bench 想测的是真正需要资深判断的活。\n\n【关键数据】排行榜截至 7 月初：Claude Opus 4.8 + Mini-SWE-Agent（max effort）通过率 24.0% 排第一，Claude Sonnet 5 为 19.4%，GPT-5.5 为 16.0%。换句话说，当前最强的前沿模型组合，在超过 75% 的高级工程师任务上失败。这个数字与 LLM 厂商营销话术里\"AI 已能独立完成复杂工程\"形成鲜明反差。\n\n【背景与上下文】过去一年 SWE-Bench Verified 等基准分数被快速刷高，多家 agent 框架宣称接近或超过 50%，但这些任务的难度被业界批评为\"更像 Stack Overflow 抄答案\"。Senior SWE-Bench 刻意提高门槛：需要多文件推理、运行时调试、对大型代码库的整体理解。它和同期出现的 Remote Labor Index（用真实付费自由职业项目测）一起，构成了对 AI 编程能力更诚实的\"第二意见\"。\n\n【影响与前瞻】对在银行推动 AI Coding 的人，这个基准提供了关键的预期管理工具：AI 在明确、单文件、有先例的任务上表现极好，但在\"高级工程师判断\"层面仍是辅助而非替代。工程师分化的判断由此更扎实——初级重复工作被压缩，资深架构与调试能力反而更值钱。值得持续追踪这个榜单的版本演进。",
+      "source": "Snorkel / Hacker News",
+      "source_type": "aihot",
+      "url": "https://senior-swe-bench.snorkel.ai/",
+      "timestamp": "2026-07-02T10:00:00Z",
+      "importance": 9,
+      "tags": [
+        "AI编程",
+        "基准测试",
+        "Senior SWE-Bench",
+        "高级工程师",
+        "能力天花板"
+      ],
+      "batch_time": "2026-07-03T10:00:00+08:00"
+    },
+    {
+      "title": "SGLang 团队实战：把整套 MLSys 开发流程编码成 Claude Code 的 SKILL.md",
+      "summary": "LMSYS（Chatbot Arena 团队、SGLang 推理框架维护者）发文披露，他们已把 LLM 服务、分布式运行时、GPU 内核、扩散管道等开发工作流编码成可执行的 SKILL.md 文件、脚本、基准合约和审查循环，让 Claude Code agent 参与真实开发。现有技能覆盖 CUDA 调试、内核集成、性能分析、扩散模型调优，还包括 MLSys 2026 FlashInfer 内核竞赛获胜方案 KDA。这是一线严肃基础设施团队用 agentic coding 做硬核系统开发、并把方法论沉淀为可复用资产的范本。",
+      "detail_content": "【核心事件】SGLang 团队（LMSYS，同时维护 Chatbot Arena）发布博客《Agent 辅助的 SGLang 开发：初步探索》，详细描述他们如何把日常 MLSys 开发工作流交给 Claude Code agent。具体做法是把每类工作编码为一组资产：可执行的 SKILL.md 文件、确定性脚本、基准合约（benchmark contracts）、以及审查循环。这意味着 agent 不是在\"写片段代码\"，而是在一套预先定义好的工程纪律下工作。\n\n【关键细节】团队已沉淀的技能清单包括：SGLang .claude/skills（CUDA 调试、内核集成、性能分析）、SGLang diffusion .claude/skills（扩散模型添加与调优）、BBuf/AI-Infra-Auto-Driven-SKILLS（跨框架 SOTA 循环）、KDA（MLSys 2026 FlashInfer 内核竞赛获胜方案），以及 BBuf/KDA-Pilot。这些都属于高性能 GPU 编程和分布式系统领域——传统上认为\"AI 最难胜任\"的硬核系统工作。\n\n【背景与上下文】SGLang 是当前最活跃的开源 LLM 推理框架之一，性能优化涉及大量 CUDA kernel、内存调度、批处理等底层细节，这类代码对人类专家都极具挑战。SGLang 团队的实践表明，关键不在模型多强，而在把专家经验\"外化\"成 agent 可遵循的合约和审查步骤——这与 Karpathy 的 CLAUDE.md 自检协议、Anthropic 官方的 agentic loops 思路同源。\n\n【影响与前瞻】这是\"agentic software engineering 不是玩具\"的硬证据：连 GPU 内核开发这种最难的领域都在工程化引入 agent。对工程管理者的启示是——agent 落地的真正杠杆是\"把团队专家知识沉淀成 SKILL.md + 审查循环\"，而不是寄望模型自己搞定。这套资产还会随时间复利增值，构成团队的竞争壁垒。",
+      "source": "LMSYS Blog",
+      "source_type": "aihot",
+      "url": "https://www.lmsys.org/blog/2026-07-02-agent-assisted-sglang-development",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "importance": 9,
+      "tags": [
+        "SGLang",
+        "LMSYS",
+        "SKILL.md",
+        "agentic coding",
+        "GPU内核",
+        "MLSys"
+      ],
+      "batch_time": "2026-07-03T10:00:00+08:00"
+    },
+    {
+      "title": "Remote Labor Index：AI 完成专业级自由职业工作的比例 8 个月涨了 6 倍，Fable 5 达 16.1%",
+      "summary": "Remote Labor Index（RLI）用 240 个、总价值 14.4 万美元的真实付费自由职业项目，衡量 AI 智能体能以\"专业质量\"完成多大比例。最新结果：Anthropic Fable 5 达 16.1%，是 8 个月前最佳系统 2.5% 的六倍多，也超过 Opus 4.8（8.3%）和 GPT-5.5（6.3%）。因美国政府访问限制，Fable 5 只完成 218/240 项评估，最坏情况仍达 14.6%。Gemini 3 Pro 仅 1.25%，落后于更老的模型。基准还发现 AI 裁判会系统性高估模型表现。",
+      "detail_content": "【核心事件】Remote Labor Index（RLI）发布了最新一期评估。该基准的方法论比常见的编程 benchmark 更贴近\"AI 能否真正替代人类干活\"：它采购 240 个真实付费自由职业项目（合计约 14.4 万美元），让 AI 智能体尝试完成，再衡量达到\"专业交付质量\"的比例，覆盖的不只是写代码，而是一整套真实市场化劳动。\n\n【关键数据】截至 7 月初评估：Anthropic Fable 5 自动化率 16.1% 居首；Claude Opus 4.8 为 8.3%；GPT-5.5 为 6.3%；Google Gemini 3 Pro 仅 1.25%，甚至落后于若干更老的模型。Fable 5 因美国政府出口限制无法访问，仅完成 218/240 个项目评估——即便按最坏情况补齐，比例仍达 14.6%，领先优势不变。8 个月前，当时最佳系统仅 2.5%，这意味着真实劳动自动化率 8 个月翻了 6 倍多。\n\n【背景与上下文】RLI 的价值在于用\"市场愿意付钱的活\"做标尺，比 SWE-Bench 这类合成任务更难自欺。一个值得注意的方法论发现：AI 裁判（用模型评模型）会系统性高估被测模型的表现——例如 GPT-5.5 自评分数显著高于人类评估。这解释了为什么很多厂商自报的 benchmark 数字水分大。RLI 与 Senior SWE-Bench 一起，构成了对 AI 实战能力更冷静的参考系。\n\n【影响与前瞻】16% 这个数字两面看：一方面远低于\"AI 取代打工人\"的营销话术，另一方面增速（8 个月 6 倍）远超大多数人的线性预期。对组织决策者，这意味着\"现在还不必恐慌，但必须按 12-18 个月翻数倍的曲线做准备\"。RLI 是少数能持续追踪\"AI 真实劳动替代率\"的硬指标，建议长期关注。",
+      "source": "The Decoder",
+      "source_type": "aihot",
+      "url": "https://the-decoder.com/ai-agents-can-now-complete-16-percent-of-freelance-jobs-at-pro-quality-up-from-2-5-percent-eight-months-ago",
+      "timestamp": "2026-07-02T09:00:00Z",
+      "importance": 8,
+      "tags": [
+        "Remote Labor Index",
+        "AI替代劳动",
+        "Fable 5",
+        "基准测试",
+        "能力曲线"
+      ],
+      "batch_time": "2026-07-03T10:00:00+08:00"
+    },
+    {
+      "title": "千问团队朱达复盘：C 端 Agent 的\"多快好省\"工程哲学与从 Prompt 到 Harness 的范式迁移",
+      "summary": "阿里千问团队（2026 年 1 月上线通用复杂任务 Agent，千问 App 胶囊入口）由朱达出面复盘工程方法论，给出具体成绩：执行时间降到初始的 1/3，Token 消耗仅为海外同类产品的 1/10。团队把架构拆成 User Memory、Environment、Task System、Assistant 四大组件，并提出 Agent 工程正从 Prompt Engineering 演进到 Harness Engineering——决定 agent 表现的不再是单条提示词，而是整套运行时框架。最难的环节是让 agent 主动服务所需的\"情商\"。",
+      "detail_content": "【核心事件】阿里千问团队 2026 年 1 月在千问 App 上线通用复杂任务 Agent（胶囊入口），支持信息搜集、研究分析等任务。团队成员朱达发文复盘工程方法论，总结为\"多快好省\"：支持的任务类型多（多）、执行速度快（快，时间降至初始的 1/3）、交付质量好（通过搜索范式与上下文管理优化）、Token 省（消耗仅为海外同类产品的 1/10）。\n\n【关键架构】团队把 agent 运行时拆为四大组件：User Memory（用户长期记忆）、Environment（环境感知）、Task System（任务调度）、Assistant（执行体）。在此基础上，团队明确了一个范式判断——Agent 工程正从 Prompt Engineering 演进到 Harness Engineering：决定 agent 表现的不再是某条提示词写得多巧，而是整套 harness（运行时、记忆、调度、工具）的设计。这与海外 SGLang、Anthropic loops、Karpathy CLAUDE.md 的方向高度一致。\n\n【背景与上下文】\"Harness Engineering\"作为术语近期在工程圈快速流行，核心共识是：在模型能力趋同后，竞争主战场转移到 agent 外壳工程。千问团队的\"Token 1/10\"数据尤其值得关注——它说明中国团队在模型同等能力下，靠 harness 优化做到了显著更低的边际成本，这对成本敏感的企业部署是关键优势。\n\n【影响与前瞻】朱达特别指出\"主动服务\"中最难的是 agent 的\"情商\"——什么时候主动出手、什么时候克制。这个判断对组织 agent 落地有直接借鉴：技术架构可以抄，但\"主动服务的分寸感\"需要大量场景打磨。对 Eason 在银行推 agent，\"Harness > Prompt\"的范式迁移意味着投资重心应放在运行时框架和记忆系统，而非纠结提示词调优。",
+      "source": "公众号：千问APP（阿里）",
+      "source_type": "aihot",
+      "url": "https://mp.weixin.qq.com/s/l70iUM0bIpG9EdV9Px7QPQ",
+      "timestamp": "2026-07-01T08:00:00Z",
+      "importance": 8,
+      "tags": [
+        "千问",
+        "阿里",
+        "Harness Engineering",
+        "Agent架构",
+        "Prompt Engineering"
+      ],
+      "batch_time": "2026-07-03T10:00:00+08:00"
+    },
+    {
+      "title": "阿里巴巴开源 Page Agent：纯文本 DOM 映射让普通模型直接操控网页，告别截图多模态",
+      "summary": "阿里巴巴发布开源 JS 库 Page Agent，嵌入网页后可通过自然语言指令直接操作 DOM 元素。与 Playwright、Puppeteer 等外部浏览器自动化工具不同，它不依赖截图或多模态模型，而是把实时 DOM 脱水压缩为 FlatDomTree 文本映射，让纯文本模型就能精准执行点击、填表等操作。它继承用户 cookies 和会话、无需独立后端，支持任意 OpenAI 兼容端点。这是一个降低 GUI agent 门槛、绕开昂贵多模态模型的具体工程思路。",
+      "detail_content": "【核心事件】阿里巴巴发布开源 JavaScript 客户端库 Page Agent。它嵌入网页后，允许通过自然语言指令直接操控页面 DOM 元素（点击、表单填写、导航等）。与传统浏览器自动化方案的关键差异在于：它跑在页面内部而非外部驱动，且不依赖截图或多模态视觉模型。\n\n【关键创新】核心是 FlatDomTree——把实时 DOM 脱水压缩成一棵纯文本结构映射，让纯文本 LLM 就能理解页面并执行操作，无需调用昂贵的多模态模型。它直接继承用户已有的 cookies 和会话，无需独立后端服务，支持任意 OpenAI 兼容端点（示例使用 qwen3.5-plus）。这意味着部署成本极低，且规避了多模态模型的延迟和 token 开销。\n\n【背景与上下文】当前 GUI agent 主流方案（Browser Use、OpenClaw Computer Use 等）多走\"截图 + 多模态模型识别\"路线，瓶颈是视觉模型成本高、易误判、对动态页面处理慢。Page Agent 的文本化思路代表了另一条路径：与其让模型\"看\"页面，不如把页面结构化喂给它。这与 agent 圈\"能用文本就别用视觉\"的工程共识一致——文本更便宜、更确定、更易调试。\n\n【影响与前瞻】对正在构建或采购 agent 能力的团队，Page Agent 提供了一个可复用的思路：内部系统集成 agent 时，优先把界面结构化为文本而非走视觉路线，可大幅降低成本和提升可靠性。开源 + 无需后端的特性也降低了试用门槛。值得让团队技术 lead 评估在银行内部工具 agent 化场景的适用性。",
+      "source": "MarkTechPost",
+      "source_type": "aihot",
+      "url": "https://www.marktechpost.com/2026/07/02/meet-alibabas-page-agent-a-javascript-in-page-gui-agent-that-controls-web-interfaces-with-natural-language-through-the-dom",
+      "timestamp": "2026-07-02T07:00:00Z",
+      "importance": 7,
+      "tags": [
+        "阿里",
+        "Page Agent",
+        "GUI agent",
+        "DOM",
+        "开源"
+      ],
+      "batch_time": "2026-07-03T10:00:00+08:00"
+    },
+    {
+      "title": "browser-use 开源「video-use」：让编码 agent 自己剪视频，音频转 12KB 文本就能做 EDL",
+      "summary": "browser-use 团队推出面向 Codex、Claude Code 等 AI 编码智能体的开源 Skill「video-use」，让 LLM 直接做视频剪辑。技术管线：先用 ElevenLabs Scribe 把音频转写成约 12KB 的纯文本（含逐词时间戳、说话人分离、事件标记），仅在需要决策的节点才调用 timeline_view.py 生成 PNG 帧图。然后生成 JSON 格式的 EDL（剪辑决策表），交给 ffmpeg 渲染，最多 3 轮自评估迭代。渲染用分段提取 + ffmpeg `-c copy` 拼接，避免重编码。",
+      "detail_content": "【核心事件】browser-use 团队（开源 GUI agent 框架）发布新 Skill「video-use」，把视频剪辑能力交给 Codex、Claude Code 等 AI 编码智能体。它是一个标准的 Skill 包，编码 agent 加载后即可执行视频剪辑任务。这是 agent 生态从\"操作网页/代码\"向\"操作媒体内容\"扩展的具体信号。\n\n【关键工程思路】整个管线刻意避开\"让模型看视频\"的昂贵路线：第一步用 ElevenLabs Scribe 把音频转写成约 12KB 的纯文本，包含逐词时间戳、说话人分离、事件标记；模型基于这份文本理解内容并规划剪辑点。仅在真正需要视觉决策的节点，才调用 timeline_view.py 生成 PNG 帧图喂给模型。最终输出 JSON 格式的 EDL（Edit Decision List），交给 ffmpeg 渲染，最多 3 轮自评估迭代。\n\n【渲染优化】一个值得抄的工程细节：渲染采用分段提取 + ffmpeg `-c copy` 拼接 + 30ms 音频淡入淡出，全程避免重编码，速度和画质损失都做到最低。这体现了\"agent 时代工程原则\"——把重活交给确定性工具（ffmpeg），让模型只做规划判断。\n\n【背景与上下文】这条 Skill 与同期阿里 Page Agent、SGLang 的 SKILL.md 套件、千问的 Harness Engineering 共同指向一个趋势：复杂能力的载体正从\"一个模型\"变成\"一套围绕模型的 Skill + 工具 + 审查循环\"。video-use 的\"文本先行、视觉兜底、确定性渲染\"架构，是这套范式在媒体领域的范本。",
+      "source": "X：邵猛 (@shao__meng)",
+      "source_type": "aihot",
+      "url": "https://x.com/shao__meng/status/2072644710523691110",
+      "timestamp": "2026-07-02T06:00:00Z",
+      "importance": 7,
+      "tags": [
+        "browser-use",
+        "video-use",
+        "视频剪辑",
+        "Skill",
+        "ffmpeg"
+      ],
+      "batch_time": "2026-07-03T10:00:00+08:00"
+    },
+    {
+      "title": "Z.ai（智谱）发布 ZCode 挑战 Cursor/Claude Code：国产 agentic 编程环境入场",
+      "summary": "北京 AI 公司 Z.ai（前身智谱 AI，即 GLM 系列模型开发方）正式发布 ZCode，定位为免费桌面端\"Agentic Development Environment\"，正面挑战 Cursor、Claude Code、GitHub Copilot。这是国产 AI 编程工具首次以\"agentic IDE\"形态切入主流竞争。对深度使用 GLM 生态的中国用户，意味着编码 agent 多了一个本土低成本选项；对竞争格局，Cursor/Claude Code 的护城河正被多方蚕食。",
+      "detail_content": "【核心事件】Z.ai——这家北京 AI 公司前身是智谱 AI（Zhipu AI），即 GLM 系列大模型的开发方——正式发布 ZCode。它是一款免费桌面应用，官方定位为\"Agentic Development Environment\"（智能体化开发环境），明确对标 Cursor、Claude Code、GitHub Copilot。这意味着国产 AI 编程工具首次以完整的 agentic IDE 形态切入主流编码 agent 竞争。\n\n【产品定位】ZCode 与单纯补全工具不同，强调\"agentic\"——即能自主规划、多步执行、调用工具的编码智能体，而非仅做代码片段建议。免费策略 + 本土团队，对国内开发者有天然的合规和成本优势。考虑到 Z.ai 同时是 GLM 模型（被广泛用于国内 agent 部署）的开发方，ZCode 与 GLM 的协同值得追踪。\n\n【背景与上下文】编码 agent 赛道过去半年进入\"全员 agentic\"阶段：Cursor 推出移动端、Claude Code 开放 loops、OpenAI Codex 用量暴涨、Anthropic 把 Claude Tag 接入企业内部系统。ZCode 的入场说明中国团队不再只做模型层，开始向上层 agentic 工具延伸。这与同期 Kimi K2.7 Code 成为 GitHub Copilot 首个开源权重模型、千问推出复杂任务 Agent 一起，构成国产 AI 工程能力向上迁移的完整图景。\n\n【影响与前瞻】对国内工程团队，编码 agent 的可选项正变得多元，且本土选项在成本和合规上具备差异化优势。值得让团队评估 ZCode + GLM 组合在内部试点，尤其适合对数据出境敏感的金融场景。但要警惕：agentic IDE 的护城河在 harness 工程和生态（Skill/MCP/插件），模型能力只是入场券——ZCode 能否在工程体验上追平 Cursor/Claude Code 还需实战检验。",
+      "source": "VentureBeat",
+      "source_type": "tavily",
+      "url": "https://venturebeat.com/technology/z-ai-launches-zcode-to-challenge-cursor-claude-code-and-github-copilot-in-ai-coding",
+      "timestamp": "2026-06-30T08:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Z.ai",
+        "智谱",
+        "ZCode",
+        "agentic IDE",
+        "GLM",
+        "国产AI"
+      ],
+      "batch_time": "2026-07-03T10:00:00+08:00"
+    },
+    {
+      "title": "实战：用 Fable 5 优化网站 SEO，22 个 Agent 自主调研并独立提交 CDN 工单 22 分钟开通",
+      "summary": "一位开发者用 Claude Fable 5 全流程优化 AIHOT 网站的 SEO 与 GEO，记录了 agent 的自主行为链：模型启动 22 个 Agent 调研 40 分钟，发现豆包 App 每天六千多次访问未被统计等异常；规划境外加速时否定 Claude Opus 4.8 给出的 Cloudflare 方案（无法国内直连且默认拦截 AI 爬虫），改用火山引擎 CDN；因需白名单，模型自行找到工单入口提交专业工单，22 分钟开通；发现工程师漏答回源 IP 网段，礼貌追问并补备选方案。这是一手观察：agent 已能完成\"调研-决策-对接人工-验收\"的闭环。",
+      "detail_content": "【核心事件】一位开发者在公众号「数字生命卡兹克」记录了用 Claude Fable 5 全流程优化 AIHOT 网站 SEO 与 GEO 的实战。这篇记录的价值不在 SEO 本身，而在它呈现了 agent 一条相对完整的自主工作链：多 agent 调研 → 方案选型与否定 → 自主对接人工流程 → 验收与追问。\n\n【关键自主行为】几个值得注意的细节：(1) 模型自主启动 22 个 Agent 并行调研 40 分钟，发现\"豆包 App 每天六千多次访问未被统计\"这类人容易漏掉的异常；(2) 在规划境外加速时，模型否定了 Claude Opus 4.8 给出的 Cloudflare 方案——理由是它无法国内直连、国外分流不畅，且 2025 年起默认拦截 AI 爬虫——改用火山引擎 CDN，体现了跨模型比较和场景化判断；(3) 因 CDN 需要白名单，模型自行定位到火山引擎工单入口、撰写并提交专业工单，22 分钟开通；(4) 发现对方工程师漏答回源 IP 网段问题后，礼貌追问并补充备选方案。\n\n【背景与上下文】这篇案例之所以值得收，是因为它展示了 agent 在\"非编码、跨系统、需对接真人\"任务上的闭环能力——这恰恰是过去 agent 最薄弱的环节。完成的不只是写代码，还包括和外部供应商的人工流程交互。这与 Remote Labor Index 衡量的\"真实市场化劳动\"高度契合。\n\n【影响与前瞻】对组织 agent 落地的启发：agent 的价值边界正从\"写代码\"扩展到\"端到端运营任务\"。但案例也暴露了风险点——agent 自主提交工单、自主决策供应商方案，需要明确的权限边界和审计。在银行等强合规场景，这类能力需配置人在回路审批节点后才可放开。",
+      "source": "公众号：数字生命卡兹克",
+      "source_type": "aihot",
+      "url": "https://mp.weixin.qq.com/s/L6R_SPWlOBv6dI0wWWHQrg",
+      "timestamp": "2026-07-01T10:00:00Z",
+      "importance": 6,
+      "tags": [
+        "Fable 5",
+        "SEO",
+        "自主Agent",
+        "工单",
+        "闭环"
+      ],
+      "batch_time": "2026-07-03T10:00:00+08:00"
+    }
+  ]
+}
