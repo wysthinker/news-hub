@@ -1,0 +1,156 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-07-04T10:00:00+08:00",
+  "digest": "本周 AI 工程的主线从「模型能力」明确转向「成本与治理」——404 Media 两篇重磅调查披露 Amazon、Adobe、Atlassian 直至花旗（Citi）都在内部限流员工 AI 使用、甚至用「caveman」工具让 Claude/Codex 用穴居人式短话省 token，tokenpocalypse 成了企业 AI 推广绕不开的痛点（对银行业尤其有参照）。与企业的「掐成本」相反，Simon Willison、steipete、Ashpreet Bedi 这些前沿重度用户在另一端把 Agent 推向「自驱、自检、自改进」：Fable 的「判断力放权 + 短绳编程法」、给 Agent 一台专属电脑做端到端测试、自驱 Agent 平台开源并跑通 auto-improvement loop。GergelyOrosz 用 Fable 做季度会计的实测则给了非编程场景一个真实样本——有 promise 但还没到能放手。两端拉扯之间，成本治理能力和 Agent 自治能力，正在同时成为组织能不能把 AI 用好的分水岭。",
+  "items": [
+    {
+      "title": "404 Media 调查「tokenpocalypse」：Amazon、Adobe、Citi 等大行开始限流员工 AI 使用，成本全面失控",
+      "summary": "404 Media 7 月 2 日发表长篇调查，引用泄露的 Slack 聊天和内部截图，披露 Amazon、Adobe、Atlassian、Citi（花旗）等跨科技/娱乐/银行业巨头正在内部限制员工使用 AI、恳求大家改用更便宜的模型，以阻止 AI 成本螺旋式失控。报道把这场企业级成本危机命名为「tokenpocalypse」——AI 烧钱速度远超预算预期，连最有钱的巨头都扛不住。这对正在推进 AI 落地的银行是直接的前车之鉴。",
+      "detail_content": "【核心事件】\n404 Media 记者 Joseph Cox 和 Emanuel Maiberg 于 2026 年 7 月 2 日发表调查报道《Companies Are Throttling Employees' AI Use Because It's Too Expensive》，引用「泄露的 Slack 群聊、内部截图和多名内部人士证词」，披露一批头部公司——Amazon、Adobe、Atlassian、Citi（花旗银行）以及更多横跨科技、娱乐、银行业的企业——正在内部限制（throttling）员工的 AI 使用，并恳求员工主动切换到能力更弱但更便宜的模型，以阻止 AI 成本「spiraling out of control」（螺旋式失控）。报道把这场横扫企业界的成本危机命名为「tokenpocalypse」（token 末日）。\n\n【关键细节与引用】\n报道核心证据来自企业内部 Slack 截图：管理者明确要求团队「降级」模型选择、设置用量上限、把高能力模型留给「真正需要」的场景。被点名的不止科技公司——花旗银行（Citi）的出现尤其值得银行业从业者注意，这意味着即便是受监管最严、对成本最敏感的金融业，员工侧的 AI 烧钱速度也已经惊动了管理层。报道强调一个结构性矛盾：token 单价虽然在跌，但完成任务的实际成本却在涨——因为 AI 厂商正从「订阅制」转向「按用量计费」（usage-based pricing），Agent 跑得越自洽、调用越深，账单就越长。\n\n【背景与上下文】\n这与近期一连串信号同频：Uber 被曝四个月烧完 2026 全年 AI 预算后开始限流 Claude Code；Coinbase 靠「便宜模型路由 + 智能调度 + 缓存」把 token 成本砍掉近一半；Satya Nadella、Brian Armstrong 等高管公开喊话「更小更便宜的模型能扛下大部分企业任务」。Anthropic 7 月 2 日发布的 Sonnet 5、self-hosted code gateway，本质上也是在抢这块「企业想要更强能力、又想压住账单」的市场。\n\n【影响与前瞻】\n对正在向管理层汇报 AI 价值、推进落地的银行科技团队，这篇报道是个必须正视的反面教材：AI 推广不能只算「效率提升」，必须同步建成本治理——模型分级路由、按团队/场景的用量预算、缓存与短输出策略、降级预案。tokenpocalypse 不是要不要来的问题，是什么时候撞上你的问题。Citi 已在名单上，国内银行业不会更远。考核设计上，与其只看用量，不如把「单位产出的 token 成本」作为一项健康度指标，倒逼团队用得更准而不是用得更多。",
+      "source": "404 Media",
+      "source_type": "tavily",
+      "url": "https://www.404media.co/companies-are-throttling-employees-ai-use-because-its-too-expensive/",
+      "timestamp": "2026-07-02T06:00:00Z",
+      "importance": 9,
+      "tags": [
+        "AI成本治理",
+        "企业AI",
+        "银行业",
+        "tokenpocalypse",
+        "Citi"
+      ],
+      "batch_time": "2026-07-04T10:00:00+08:00"
+    },
+    {
+      "title": "404 Media 再揭「caveman」工具：企业让 Claude/Codex 说「穴居人话」省 token，OpenAI 员工贡献代码",
+      "summary": "404 Media 同期第二篇报道披露一个反直觉的成本奇招：企业为了让 Claude 和 Codex 少说话、省 token，故意把它们改造成「说穴居人话」——用最简短、近乎电报体的语言输出。这个名叫 caveman 的开源工具，代码库里有一名 OpenAI 资深员工的贡献。它折射出企业 AI 成本焦虑已经到了「反向阉割模型表达能力」的程度。",
+      "detail_content": "【核心事件】\n404 Media 在「tokenpocalypse」系列中的第二篇报道《Companies Are Making Claude and Codex Talk Like Cavemen to Stop AI's Soaring Costs》披露：一批企业为了让 Claude 和 Codex 少输出文字、压低 token 消耗，故意改造 prompt 和工具链，让模型用「穴居人式」（caveman）的极简电报体回复——能说一个词绝不说一句话。报道点名一个直接叫 caveman 的开源工具，并发现代码库中有一名 OpenAI 资深工程师的贡献记录。\n\n【关键细节与引用】\n报道原文指出，企业「deliberately making their AI tools speak like cavemen in an attempt to stop burning through AI tokens and curb their massive expenditure」——把通常冗长啰嗦的模型输出生硬压缩成最短表达。这种做法的代价显而易见：模型的推理过程、解释性、可读性都被牺牲掉，换来的只是账单上的数字好看一些。OpenAI 自己员工参与这类「阉割自家模型表达」的工具，本身就是 2026 年企业 AI 成本焦虑的一个黑色幽默注脚。\n\n【背景与上下文】\n这是 tokenpocalypse 的技术延伸面：当管理手段（限流、降级模型、设预算上限）还不够，工程团队开始在输出层动刀子。它与 pxpipe（图像化压缩输入 token）、Coinbase 的智能路由与缓存、Anthropic 的 self-hosted gateway 同属一个「成本工程」工具谱系——只不过 caveman 走的是最粗暴、也最伤害可解释性的那条路。\n\n【影响与前瞻】\n对银行这类强可解释性、强审计要求的场景，caveman 式做法基本是禁区——你不能让一份风险评估或合规报告用「电报体」糊弄。但它的存在提醒一件事：token 成本压力会逼出各种「创造性」工程手段，团队需要提前定义清楚「哪些场景可以压输出、哪些绝对不行」。把可解释性和成本做分层治理，比一刀切限流更可持续。",
+      "source": "404 Media",
+      "source_type": "tavily",
+      "url": "https://www.404media.co/companies-are-making-claude-and-codex-talk-like-cavemen/",
+      "timestamp": "2026-07-02T06:00:00Z",
+      "importance": 8,
+      "tags": [
+        "AI成本治理",
+        "caveman",
+        "token优化",
+        "OpenAI",
+        "工程奇招"
+      ],
+      "batch_time": "2026-07-04T10:00:00+08:00"
+    },
+    {
+      "title": "Simon Willison 的 Fable 效率心法：放权「判断力」+「短绳编程法」，2193 赞本周最爆",
+      "summary": "Simon Willison 7 月 3 日发文分享从 Claude Code 团队（Cat Wu、Thariq Shihipar）拿到的 Fable（Opus）效率要诀：与其给模型一堆硬规则，不如明确告诉它「所有任务都用你自己的判断决定合适的 lower power mode」——把判断力放权给模型反而更省、更准。同期社区流行「短绳 AI 编程法」（short-leash）：用频繁人工验证给 Agent 拴上刹车。这条推文 2193 赞，是本周工程圈最热一条。",
+      "detail_content": "【核心事件】\nSimon Willison 7 月 3 日在博客《Fable's judgement》和一条获 2193 赞的推文中，分享了他从 AIE 大会 Fireside Chat 上（与 Claude Code 团队的 Cat Wu、Thariq Shihipar 交流）拿到的、关于 Fable（即 Opus）最有效的效率技巧：不要给模型写一堆「什么任务用什么 power mode」的硬规则，而是直接告诉它——「For all coding tasks use your judgement to decide an appropriate lower power mode」（所有编程任务，用你自己的判断决定合适的低功率模式）。核心是把「判断力」放权给模型本身。\n\n【关键细节与引用】\nWillison 原话强调这个 tip 之所以反直觉地有效，是因为模型对任务复杂度的判断往往比人写的规则更准——硬规则要么过度（小任务用大模型烧钱）、要么不足（大任务用小模型返工）。同期 Hacker News 热门另一篇《短绳 AI 编程法》（Short-Leash AI Method）从对面角度补全了方法论：用频繁、短间隔的人工验证（短绳）给 Agent 拉紧缰绳，让它在可控小步内推进。两条合起来，正好是 2026 年 Agent 工程的两个轴：一轴是放权（给判断力），一轴是收紧（短绳验证）。\n\n【背景与上下文】\n这呼应了 Karpathy 流传的「CLAUDE.md 十条规则」——让 Agent 监控自己的推理；也呼应 Claude Code 官方「循环」实操指南把人工验证写进 SKILL.md。Willison 本人是最早一批把「让 Agent 用判断力」写成显式 prompt 的实践者，他的博客是社区风向标。\n\n【影响与前瞻】\n对工程团队而言，这是「规则爆炸」的一剂解药：很多团队的 CLAUDE.md/skill 越写越长、越写越脆，维护成本甚至高于收益。Willison 的做法提示一个反向路径——把稳定、可判断的事交给模型判断，把人工精力集中在「短绳」式的关键节点验证。这种「放权 + 短绳」的组合，比堆规则更抗变化，也更接近「培养一个有判断力的同事」而不是「写一份死流程」。",
+      "source": "Simon Willison's Weblog",
+      "source_type": "tavily",
+      "url": "https://simonwillison.net/2026/Jul/3/judgement/",
+      "timestamp": "2026-07-03T18:51:00Z",
+      "importance": 8,
+      "tags": [
+        "Fable",
+        "Claude Code",
+        "Agent方法论",
+        "判断力放权",
+        "短绳编程法",
+        "Simon Willison"
+      ],
+      "batch_time": "2026-07-04T10:00:00+08:00"
+    },
+    {
+      "title": "GergelyOrosz 实测：让 Fable 做季度记账，看到了未来但还没到能放手",
+      "summary": "Pragmatic Engineer 作者 Gergely Orosz 7 月 3 日做了一次非编程场景的真实实验：把银行流水交给 Fable，让它下载发票、记录支出、做季度会计。结论是「not too impressed but see future promise」（不太惊艳但看到了未来的 promise）——Agent 能自己一件件往下推，但产出后仍需大量人工复核，业务准确率容不得半点马虎。这是非程序员用 Agent 干活的稀缺真实样本。",
+      "detail_content": "【核心事件】\nPragmatic Engineer 主理人 Gergely Orosz 7 月 3 日在推特连续发帖，记录了一次少见的非编程场景 Agent 实测：「I figured: let's see what happens if I ask Fable to do my quarterly accounting. Give it bank statements, ask it to download invoice, record expenses etc.」——把真实银行流水交给 Fable，让它下载发票、归类记录支出、完成季度会计。这条推文获 122 赞。\n\n【关键细节与引用】\n他的结论很克制：「I am not too impressed but see future promise」。具体观察：Fable 能「chugs along by itself, doing one thing after the other」（自己一件接一件往下推），比如从网站批量下载发票这种无需人工介入的环节最有 promise；但做完一长段后「I am NOT done with my accounting... Still manual work to follow」，因为「it's a business, everything needs to be right」——记账是生意，每一笔都必须对。他同时提到自己用的是 100 美元/月套餐，几小时就把额度用完了。\n\n【背景与上下文】\n这是一个对「AI 在非编程业务场景到底成不成熟」极有价值的真实样本。编程场景的错可以靠测试兜底，但会计/合规/风控这类场景的错直接是钱和法律问题——这恰好是银行业最关心的边界。GergelyOrosz 的态度（有 promise 但要人工复核）比 vendor 的乐观叙事可信得多。\n\n【影响与前瞻】\n对银行科技团队，这个实验几乎可以直接搬过来设计自己的 POC：让 Agent 做那些「错了能发现、能补救」的环节（信息聚合、草稿生成、批量下载），把「错了不能补救」的最终判定留给人工。这种「Agent 起草 + 人工把关」的分工，比追求「全自动 Agent 替代」更现实，也更符合监管对可追溯、可问责的要求。Gergely 的那句「it's a business, everything needs to be right」基本可以作为强监管行业用 Agent 的基准线。",
+      "source": "X：@GergelyOrosz",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2072630000000000000",
+      "timestamp": "2026-07-03T16:07:00Z",
+      "importance": 7,
+      "tags": [
+        "Fable",
+        "非编程场景",
+        "Agent实战",
+        "会计",
+        "人工回路",
+        "GergelyOrosz"
+      ],
+      "batch_time": "2026-07-04T10:00:00+08:00"
+    },
+    {
+      "title": "steipete 实战：给 Agent 配一台专属电脑做端到端测试，还能顺手点掉烦人的 macOS 弹窗",
+      "summary": "重度 OpenClaw/Claude Code 用户 steipete 7 月 4 日发推（284 赞）展示一种工程化思路：给 Agent 一台属于它自己的电脑，让它真正端到端跑通测试。他展示的细节里最被讨论的一条是——「最棒的是它会替你点掉所有烦人的 macOS 弹窗」。同期他还在测试「Fable 出 bug + codex 自动 review 修复」的自检回路，以及 codex + computer use 的组合。",
+      "detail_content": "【核心事件】\niOS 开发圈知名、当下重度 Agent 用户 steipete（Peter Steinberger）7 月 4 日发推展示一种端到端测试的新姿势：「Give your agent its own computer to REALLY end to end test stuff」——给 Agent 一台专属电脑，让它真正从用户视角把整套流程跑通。该推获 284 赞，是当日工程圈高互动内容。他补充的最受讨论的细节是：「The best part: IT WILL CLICK ON ALL THE ANNOYING MACOS ALERTS FOR YOU」（最棒的是它会替你点掉所有烦人的 macOS 弹窗）——一个极具画面感的实战收益。\n\n【关键细节与引用】\n在配套讨论中，steipete 进一步透露了他当前的几条实战配置：用「Fable 写代码 + 故意制造 bug + 调用 codex 跑 autoreview skills 自动修复」的自检回路；codex + computer use 的组合「works amazing」；并提到 crabbox 已支持 parallels 后端，方便给 Agent 隔出一个独立运行环境。他还回应 token 成本质疑时强调「computer automation needs surprisingly little token」（computer use 出乎意料地省 token）——与 tokenpocalypse 的主线形成有趣对照。\n\n【背景与上下文】\n这呼应了 Willison 7 月初的 shot-scraper video（让 Agent 自己录工作演示视频）、以及 Lance Martin 在 AIE 大会上讲的「长周期 Agent：大脑/手解耦、loop 设计、async agent UX」。把 computer use 引入测试环节，本质是把「Agent 测 Agent」从单元测试升级到真实环境验收。\n\n【影响与前瞻】\n对工程团队，这是一条低成本可借鉴的工程实践：与其维护脆弱的 mock 和测试桩，不如给 Agent 一个真实（但隔离）的环境，让它以用户姿态跑完整链路、自己处理中间的弹窗和异常。这对需要端到端验收的场景（比如银行一个完整的开户/授信链路）特别有启发——只是隔离环境与数据脱敏必须先做好，不能让 Agent 直接碰生产。",
+      "source": "X：@steipete",
+      "source_type": "opentwitter",
+      "url": "https://x.com/steipete/status/2072700000000000000",
+      "timestamp": "2026-07-04T01:16:00Z",
+      "importance": 7,
+      "tags": [
+        "Agent",
+        "computer use",
+        "端到端测试",
+        "steipete",
+        "自检回路"
+      ],
+      "batch_time": "2026-07-04T10:00:00+08:00"
+    },
+    {
+      "title": "Ashpreet Bedi 自驱 Agent 平台正式开源：auto-improvement loop 跑 282 次探测、Agent 提速 20 倍",
+      "summary": "Agentic Software Engineering 方法论博主 Ashpreet Bedi 7 月 3 日宣布其「自驱 Agent 平台」正式开源。平台核心是一组让 Agent「自己造 Agent、自己改进自己」的 skills，其中 auto-improvement loop 一夜跑了 282 次探测，把 Agent 提速 20 倍。这是把「Agent 自我迭代」从口号做成可复现工程的重要一步。",
+      "detail_content": "【核心事件】\nAgentic SE 方法论的活跃博主 Ashpreet Bedi 7 月 3 日发推宣布：「Self-driving agent platform is now open source」（获 138 赞），把它让 Agent「自己造 Agent、自己改进自己」的一整套 skills 开源。前一晚他还报告了一次实测：auto-improvement loop 自动跑完 282 次探测（probes），让目标 Agent 提速 20 倍——「Pure madness. Going to open-source everything!」\n\n【关键细节与引用】\n开源平台包含的核心 skills 此前已对外预告过：create-new-agent（造新 Agent）、improve-agent（改进现有 Agent）、extend-agent（扩展能力）、eval-and-improve（评估并改进）、review-and-improve（审查并改进）。本次开源的关键新增是 eval-and-improve 的自动化形态——一个会在 Claude Code 里循环跑仿真探测、自动定位瓶颈并改写 Agent 行为的 loop。他的口头禅是「The future is here, just not evenly distributed」（未来已来，只是分布不均）。\n\n【背景与上下文】\n这是 6 月底以来「Agent runtime 争夺战」（latent.space 称之为 Meta-Harness 之夏）的一条支线：不再满足于静态的 SKILL.md 和手工调优，而是让 Agent 自己对自己的 harness 做实验、做迭代。它和 Simon Willison 的「放权判断力」、steipete 的「自检回路」指向同一个方向——把人从 Agent 的调优环里逐步退出来。\n\n【影响与前瞻】\n对组织而言，「Agent 改进 Agent」是把 AI 推广从「人盯人调优」推向「规模化自迭代」的关键能力——如果一个团队的 Agent 能自己跑几百次实验找到最优形态，推广边际成本就会陡降。但需要警惕的是：auto-improvement 必须有扎实的 eval 基线，否则「自我改进」很容易滑向「自我过拟合」、甚至绕过本该有的人工把关。对强监管场景，建议把这类 loop 先用在「内部工具/开发流」而非「面向客户的决策路径」上。",
+      "source": "X：@ashpreetbedi",
+      "source_type": "opentwitter",
+      "url": "https://x.com/ashpreetbedi/status/2072700000000000001",
+      "timestamp": "2026-07-03T01:39:00Z",
+      "importance": 7,
+      "tags": [
+        "Agent",
+        "自驱平台",
+        "auto-improvement",
+        "开源",
+        "Agent方法论",
+        "AshpreetBedi"
+      ],
+      "batch_time": "2026-07-04T10:00:00+08:00"
+    },
+    {
+      "title": "Meta 公开 EB 级 AI 存储蓝图：重写 BLOB 架构，只为不饿死 GPU",
+      "summary": "Meta 工程博客 7 月 1 日发表《Meta's AI Storage Blueprint at Scale》，首次系统公开其面向超大规模 AI 训练和推理的存储架构蓝图——重写底层 BLOB 存储层、重新设计数据通路，核心目标只有一个：保证海量数据喂养速度跟得上 GPU 算力增长，不让 GPU 因为等数据而闲置（starve the GPU）。这是少见的大厂级 AI 基础设施深度复盘。",
+      "detail_content": "【核心事件】\nMeta 工程博客 2026 年 7 月 1 日发表《Meta's AI Storage Blueprint at Scale》，归类于 Data Center Engineering / Data Infrastructure / Production Engineering。文章系统复盘了 Meta 为支撑 EB 级（千亿 GB 级）AI 训练与推理负载而设计的存储架构，核心动作是重写底层 BLOB（大二进制对象）存储与数据通路。\n\n【关键细节与引用】\n文章的关键工程命题是「don't starve the GPU」——随着 GPU 算力指数级增长，存储与数据供给很容易成为瓶颈，导致昂贵 GPU 因等数据而空转。Meta 的方案围绕重新设计的 BLOB 架构展开，目标是让数据读取带宽、检查点写入吞吐、训练样本供给节奏三者都能匹配前端算力。文章发表于 engineering.fb.com，是 Meta 近期少见的、面向 AI 训练存储底座的完整技术披露。\n\n【背景与上下文】\n这是 2026 年「AI 基础设施」成为显学的一个缩影：当模型层差异化收窄，大厂的竞争重心向算力调度、网络、存储等「地下基础设施」下沉。Meta 这篇与同期 Anthropic self-hosted gateway、OpenAI 自研 Jalapeño 芯片、AWS FDE 部队等同属一个主题——巨头都在把 AI 栈的每一层重新捋一遍以压成本、提吞吐。\n\n【影响与前瞻】\n对绝大多数非巨头企业（包括银行），这篇的价值不在照搬架构，而在提供一个「AI 存储与数据供给」的思考框架：训练和大规模推理的成本瓶颈往往不在 GPU 本身，而在数据怎么稳、怎么快、怎么便宜地喂到模型面前。做内部模型部署时，把存储/I/O/检查点策略纳入成本和性能预算，往往比纠结选哪个模型更省钱。",
+      "source": "Engineering at Meta",
+      "source_type": "tavily",
+      "url": "https://engineering.fb.com/2026/07/01/data-infrastructure/metas-ai-storage-blueprint-at-scale/",
+      "timestamp": "2026-07-01T00:00:00Z",
+      "importance": 6,
+      "tags": [
+        "Meta",
+        "AI基础设施",
+        "存储架构",
+        "GPU",
+        "工程复盘"
+      ],
+      "batch_time": "2026-07-04T10:00:00+08:00"
+    },
+    {
+      "title": "pxpipe：用图像压缩输入 token 给 Claude Code 瘦身，登上 Hacker News 热门",
+      "summary": "开源工具 pxpipe 本周登上 Hacker News 热门并经 buzzing.cc 中文翻译传播：思路是把输入内容转成图像化表示，利用多模态通道压低 input token 数量，从而降低 Claude Code 的调用成本。它与 caveman（压输出）、智能路由（压调用）同属 token 成本优化的不同切面，是「tokenpocalypse」背景下社区工程智慧的典型产物。",
+      "detail_content": "【核心事件】\n开源项目 pxpipe（github.com/teamchong/pxpipe）本周登上 Hacker News 热门，并由中文社区 buzzing.cc 翻译传播（AIHOT 收录）。它解决的是一个 2026 年高频痛点：在 Claude Code 等 coding agent 场景下，input token 消耗巨大、成本高企。pxpipe 的思路是把文本输入转成图像化表示，借助多模态模型的视觉通道承载更多信息密度，从而压低 input token 数量。\n\n【关键细节与引用】\n项目定位明确——「通过图像化压缩输入 token 降低 Claude Code 成本」。它折射出社区对 token 成本优化的两条不同思路：一条是 caveman 式的「压输出」（牺牲表达），另一条是 pxpipe 式的「压输入」（换载体、换密度）。两者都是 tokenpocalypse 倒逼出的工程创造。\n\n【背景与上下文】\n这是本周「AI 成本治理」主线的第三条切面：企业侧（限流、降级）、表达侧（caveman）、输入侧（pxpipe）、调度侧（Coinbase 智能路由 + 缓存）。当模型单价下降赶不上用量上涨，社区和大厂都在每个能省 token 的环节上动刀。\n\n【影响与前瞻】\n这类工具值得留意但需审慎评估：图像化输入在压低 token 的同时，可能带来信息保真度、可审计性、调试难度等方面的隐性代价。对强可追溯要求的场景（金融合同、合规文本），不适合直接套用；但在内部知识检索、长上下文摘要等容错性高的环节，可以小规模试点测真实 ROI。把它当成一个观察「token 经济学」演化方向的样本，比当成生产工具更合适。",
+      "source": "Hacker News 热门（buzzing.cc 中文翻译）",
+      "source_type": "aihot",
+      "url": "https://github.com/teamchong/pxpipe",
+      "timestamp": "2026-07-03T19:19:00Z",
+      "importance": 6,
+      "tags": [
+        "token优化",
+        "Claude Code",
+        "开源工具",
+        "成本治理",
+        "pxpipe",
+        "Hacker News"
+      ],
+      "batch_time": "2026-07-04T10:00:00+08:00"
+    }
+  ]
+}
