@@ -1,0 +1,28 @@
+{
+  "channel_id": "ai-frontier",
+  "channel_name": "AI 前沿",
+  "generated_at": "2026-07-05T09:15:00+08:00",
+  "digest": "美国独立日后首个周六，AI 前沿进入本周最安静的窗口——claude.com / anthropic.com / openai.com / deepmind.google 官方博客全线停更，结构化信源（Tavily 站内搜、AIHOT）全空或宕机，Grok 双引擎连续第 12 天 502。昨日 7/4 批次已覆盖本周全部重大事件（阿里禁 Claude Code、Fable 5 重上线、三星定制芯片、Langflow agentic 勒索首例、微软 Frontier Company）。今日唯一新增、且具备实质编辑价值的一条来自第三方实测：Fable 5 在高强度真实使用中展现的「涌现深度」——同一 prompt 在低/高推理档位下耗时相差 10 倍（12 分钟 vs 近 2 小时），输出是融合知识与代码的可交互 3D 世界，Karpathy 罕见地公开背书为「新一代模型的质变跃迁」。这构成对昨日「Fable 缩水」叙事的关键对冲：护栏压住了 benchmark 分数，但模型在长时程 agentic 任务上的涌现能力反而让一线用户（和 Karpathy 本人）感到意外。对 Claude Code 日常使用者的直接启示：reasoning effort 这一档位旋钮带来的不是线性提速，而是任务复杂度上限的质变。",
+  "items": [
+    {
+      "title": "Fable 5 实测：同一 prompt 低/高推理档位耗时差 10 倍，Karpathy 罕见背书其 3D 涌现能力——对冲「缩水」叙事",
+      "summary": "AI 研究者 petergostev 把同一个 prompt 喂给 Fable 5 的低档（12 分钟）和最高档（近 2 小时）推理，输出是融合知识、代码、可交互的 3D 可玩世界（three.js 环境）。Karpathy 在转发时罕见地公开背书，称「没意识到模型已经能造出这种融合知识与代码的丰富可玩世界」，并把 Fable 的 3D 环境生成称为「每一代新模型都会有的那种质变跃迁」。这是本周 AI 推特互动最高的一条（原贴 ♥8943）。它直接对冲了昨天「Fable 重上线后被指 nerfed」的舆论：护栏可能压住了 benchmark 数字，但在长时程、高推理档位的 agentic 任务上，模型展现出的是上一代没有的涌现深度。",
+      "detail_content": "【核心事件】\n独立开发者、长期跟踪前沿模型能力的 petergostev（@petergostev）在 7 月 3-4 日连续发布对 Fable 5 的高强度实测。最有信息量的一组对照实验是：他把完全相同的 prompt 分别提交给 Fable 5 的低推理档位（low effort）和最高推理档位（max effort），前者耗时约 12 分钟，后者跑了近 2 小时。两者的输出都不是文本，而是可直接交互的 3D 场景——用 three.js 写成、融合领域知识与可执行代码的「可玩世界」（playable worlds），其中一个被反复引用的 demo 是一只会捕捉猎物的熊。\n\n【关键细节与引用】\npetergostev 原文（7/4，♥528）：\"Fable - same prompt, different reasoning efforts - 12 mins vs nearly 2 hours between 'low' and 'max'.\" 同一 prompt 不同推理档位——低档 12 分钟、最高档近两小时。\n\nKarpathy 的转发评论（7/4 20:08，♥175）：\"incredible, ty for putting this together, i didn't appreciate that models would be able to create these awesome, rich, playable worlds that fuse knowledge and code.\"（难以置信，谢谢整理——我之前没意识到模型已经能造出这种融合知识与代码的丰富可玩世界。）\n\n紧接的二次评论（7/4 20:33，♥65）更关键：\"Agree, it's beautiful, top tier fablemaxxing! :) I think with every new model tier there is something new that qualitatively leaps and surprises, for Fable so far these threejs envs seem to be that thing.\"（同意，很美，顶级 fablemaxxing。我的判断是：每一代新模型都会有某种让人意外、质变式跃升的新东西，对 Fable 来说目前看就是这个 three.js 环境。）\n\npetergostev 同期最火的一条（7/3，♥8943，本周 AI 推特互动最高）把视角拉到能力分层：\"We are now in a position where a tiny proportion of the population uses Fable or soon GPT-5.6, while everyone else's experience of AI is 8-30b-model level — Google's AI Overviews, Meta AI, ChatGPT free tier, maybe MS Copilot at best.\"（一小撮人在用 Fable 或即将上线的 GPT-5.6，而其他人体验到的 AI 只是 8B-30B 级别。）\n\n【背景与上下文】\n这条实测是对昨日（7/4）\"Fable 5 回归版被指 nerfed\" 舆论的直接对冲。BleepingComputer 当时报道用户吐槽回归版性能缩水，Karpathy 本人确认 Fable 5 = Mythos + 安全护栏——护栏的存在意味着 benchmark 分数有代价。但 petergostev 这组对照实验揭示了一个被 benchmark 遗漏的维度：在最高推理档位下，Fable 5 能稳定地把一个 prompt 展开成两小时的多步骤 agentic 工作流，并产出可交互的代码+知识产物。这正是 \"agentic loops\" 范式（Claude Code 官方博客 6/30 详解的目标驱动/时间驱动循环）在真实使用中的兑现——reasoning effort 旋钮不是线性提速开关，而是任务复杂度上限的挡位切换。\n\n【影响与前瞻】\n对 Claude Code 日常使用者有两个直接启示：第一，reasoning effort 这一档位在 Fable 5 上效果被显著放大，遇到复杂 agentic 任务时切到 max 是值得的，但要做好「单次任务跑两小时」的心理预期和上下文管理；第二，Fable 在 three.js / 可视化 / 知识融合代码这条线上的涌现能力，可能让「用 Claude 做可交互原型」成为新的产品范式——这一点对关注 AI 如何改变工作产出的人比 benchmark 分数更重要。风险提示：petergostev 是单一样本的第三方测试，未覆盖失败率和稳定性，demo 与 production 之间的 gap（错误恢复、可重复性、成本）仍需更多数据验证。Karpathy 的背书虽具分量，但他本人也只用了几小时体验，不构成完整评估。",
+      "source": "X：@petergostev（@karpathy 转发背书）",
+      "source_type": "opentwitter",
+      "url": "https://x.com/petergostev/status/2073407026214809640",
+      "timestamp": "2026-07-04T18:09:00Z",
+      "importance": 8,
+      "tags": [
+        "Anthropic",
+        "Fable 5",
+        "推理档位",
+        "涌现能力",
+        "3D生成",
+        "Karpathy",
+        "Claude Code"
+      ],
+      "batch_time": "2026-07-05T09:15:00+08:00"
+    }
+  ]
+}
