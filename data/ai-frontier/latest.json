@@ -1,9 +1,47 @@
 {
   "channel_id": "ai-frontier",
   "channel_name": "AI 前沿",
-  "generated_at": "2026-07-05T09:13:57.060923+08:00",
-  "digest": "美国独立日后首个周六，AI 前沿进入本周最安静的窗口——claude.com / anthropic.com / openai.com / deepmind.google 官方博客全线停更，结构化信源（Tavily 站内搜、AIHOT）全空或宕机，Grok 双引擎连续第 12 天 502。昨日 7/4 批次已覆盖本周全部重大事件（阿里禁 Claude Code、Fable 5 重上线、三星定制芯片、Langflow agentic 勒索首例、微软 Frontier Company）。今日唯一新增、且具备实质编辑价值的一条来自第三方实测：Fable 5 在高强度真实使用中展现的「涌现深度」——同一 prompt 在低/高推理档位下耗时相差 10 倍（12 分钟 vs 近 2 小时），输出是融合知识与代码的可交互 3D 世界，Karpathy 罕见地公开背书为「新一代模型的质变跃迁」。这构成对昨日「Fable 缩水」叙事的关键对冲：护栏压住了 benchmark 分数，但模型在长时程 agentic 任务上的涌现能力反而让一线用户（和 Karpathy 本人）感到意外。对 Claude Code 日常使用者的直接启示：reasoning effort 这一档位旋钮带来的不是线性提速，而是任务复杂度上限的质变。",
+  "generated_at": "2026-07-06T09:10:49.239254+08:00",
+  "digest": "美国独立日长周末后的第一个工作日（北京周一=美东周日），三巨头官方全线停更、结构化信源集体哑火，是典型的淡讯日。Tavily 四组站内搜（claude.com / anthropic.com / openai.com / deepmind.google）全空，Grok 双路连续第 14 天 502/403 故障，opentwitter 白名单 9 账号本周多为已收录或非 AI 内容（AmandaAskell 聊医患沟通、jackclarkSF 发徒步、alexalbert__ 最新仍是 7/1「Welcome back Fable」）。逐一核对 Anthropic news 列表里疑似未收录的 slug，发布日期实为旧文（RSP 更新是 2024-10、Claude Tag 是 6/23、Public Record 是 6/12），无新增官方内容。两条新增实质内容都来自硬件/国产开源侧：① SemiAnalysis 独家——NVIDIA 在 GTC 上展示仅 3 个月的 Kyber NVL144 延期超 12 个月至 2028、配套 NVL72x2 机架架构同步取消，继 Rubin Ultra 4-die 流产后次世代算力底盘第二次受挫；② 美团 LongCat-2.0 以 MIT 许可完全开源（1.6T MoE、1M 上下文、Zero-Compute Experts），把 Owl Alpha 的性能亮相落成可下载的权重。硬件供给摩擦 + 国产开源闭环，是本周开局的两个信号。",
   "items": [
+    {
+      "title": "NVIDIA Kyber NVL144 延期超 12 个月至 2028，NVL72x2 背靠背机架架构同步取消",
+      "summary": "半导体分析机构 SemiAnalysis 7 月 5 日独家透露，Jensen 在 GTC 上重点展示仅 3 个月的 Kyber NVL144 系统遭遇重大延期，整体推迟超过 12 个月、最早 2028 年才能交付；配套的 NVL72x2 背靠背机架架构被直接取消，导致已流产的 Rubin Ultra 扩展域进一步受限。这是 NVIDIA 次世代 AI 算力底盘短期内第二次受挫——此前 Rubin Ultra 的 4-die 版本已因制造问题取消。",
+      "detail_content": "【核心事件】半导体行业分析机构 SemiAnalysis 7 月 5 日发布独家线索：NVIDIA 在今年 GTC 上重点展示的 Kyber NVL144 系统——距发布仅约 3 个月——已遭遇重大挫折，整体推迟超过 12 个月，最早要到 2028 年才能交付。与此同时，配套的 NVL72x2 背靠背机架架构被直接取消。这是 NVIDIA 次世代 AI 算力底盘短期内第二次受挫：此前 Rubin Ultra 原定的 4-die 版本已因制造问题取消，新版尺寸减半、性能约为原版一半。\n\n【关键细节与引用】SemiAnalysis 在原贴中预告将解释「Kyber 为何面临大幅延迟，以及 NVIDIA 的 NVL72x2 背靠背机架架构为何也被取消，导致 Rubin Ultra 的扩展域受限」。NVL144 指单机架 144 颗 GPU 的整机方案，是超大规模训练集群的基本 building block；NVL72x2 是把两套 NVL72 背靠背互连以扩大高速互联域的方案。两条路线同时出问题，意味着靠「拼机架规模」上探算力的路径在工程上正在收窄。\n\n【背景与上下文】NVIDIA 过去两年靠 Rubin→Rubin Ultra→Feynman 的密集路线图维持了 AI 算力供给的指数增长预期，这也是支撑前沿模型 scaling 假设的物理基础。但 2026 年中开始，制造良率、互联工程、机架功耗密度等问题集中浮现。本频道此前已收录「英伟达 Rubin Ultra 被取消：原 4-die 版因制造问题流产」(SemiAnalysis, 6/29)，本次 Kyber 延期是同一叙事的延续与加码。\n\n【影响与前瞻】对前沿模型厂商（Anthropic / OpenAI / Google / Meta）而言，NVIDIA 次世代算力连续延期意味着 2027 年的算力供给曲线可能不如此前乐观——这会直接影响下一代模型的训练时间表和资本开支节奏。结合近日 BIS 把五大 hyperscaler 两年 AI 资本开支估到 1 万亿美元并警告「以衰退收场的投资狂热」，硬件供给端的摩擦正在从「需求侧有多少钱」转向「供给侧能不能造出来」。在 GPU 供给受限的窗口里，自研芯片路线（OpenAI Jalapeño、Anthropic×三星、AWS Trainium）和国产 ASIC + 国产开源模型的「双国产」组合会获得更多叙事空间。",
+      "source": "SemiAnalysis (@SemiAnalysis_)",
+      "source_type": "aihot",
+      "url": "https://x.com/SemiAnalysis_/status/2073874671498387899",
+      "timestamp": "2026-07-05T21:00:00Z",
+      "importance": 7,
+      "tags": [
+        "NVIDIA",
+        "Kyber",
+        "Rubin Ultra",
+        "AI算力",
+        "供应链",
+        "半导体"
+      ],
+      "batch_time": "2026-07-06T09:00:00+08:00"
+    },
+    {
+      "title": "美团 LongCat-2.0 完全开源（MIT）：1.6 万亿参数 MoE、开放权重与推理代码",
+      "summary": "美团 7 月 5 日通过官方账号宣布 LongCat-2.0 以 MIT 许可完全开源，公开模型权重与推理代码。架构为 MoE，总参数 1.6T、每 token 激活约 48B，支持 1M token 上下文。技术亮点包括 LongCat Sparse Attention、Zero-Compute Experts（动态激活 33B-56B、号称零浪费计算）、MOPD 按任务路由 Agent/Reasoning 双路径。",
+      "detail_content": "【核心事件】美团 7 月 5 日通过官方账号 @Meituan_LongCat 宣布，LongCat-2.0 大模型以 MIT 许可证完全开源，公开模型权重和推理代码。这是继 LongCat Owl Alpha 登顶 OpenRouter 之后，美团在国产开源大模型赛道落下的第二子——Owl Alpha 是性能亮相，LongCat-2.0 MIT 开源是真正把权重交到社区手里。\n\n【关键细节与引用】架构：MoE（混合专家），总参数量 1.6T（1.6 万亿），每 token 激活约 48B。上下文窗口：1M token。三项主推技术：① LongCat Sparse Attention——高效处理长文本；② Zero-Compute Experts——动态激活 33B–56B、号称「零浪费计算」；③ MOPD（按任务路由）——区分 Agent 和 Reasoning 两种负载走不同专家路径。MIT 许可是最宽松的开源协议之一，允许商用、修改、闭源衍生，比 Llama 系的定制 license 更彻底。\n\n【背景与上下文】国产开源大模型 2026 年进入「万亿参数 MoE」量产期：美团 LongCat-2.0（1.6T）、此前 Z.ai 开源的 GLM-5.2、以及 DeepSeek V4 路线，都在把「开源=前沿能力」的命题坐实。本频道此前已收录「Z.ai 开源 GLM-5.2：仓库级编码 + 漏洞发现能力对标 Mythos，Forbes 警告坏家伙也有了同级别模型」和「美团 LongCat Owl Alpha 登顶 OpenRouter：1.6 万亿参数 MoE、国产 ASIC 训练」两条。LongCat-2.0 的不同在于：它是可下载、可商用、可改的权重，而不只是一个 leaderboard 排名。\n\n【影响与前瞻】对关心 AI 在组织内落地的人，LongCat-2.0 MIT 开源的意义在于：可私有化部署的万亿级 MoE 模型又多一个选项，且许可无商用限制——金融、银行这类不能调外部 API 的强监管场景，自建权重推理的门槛继续下探。MoE 架构（激活仅 48B）也意味着单 token 推理成本远低于 dense 万亿模型，是性价比敏感场景的现实选择。结合 NVIDIA 次世代算力延期，国产 ASIC + 国产开源模型的「双国产」闭环正在成为可独立运行的技术栈。",
+      "source": "美团 LongCat (@Meituan_LongCat)",
+      "source_type": "aihot",
+      "url": "https://x.com/Meituan_LongCat/status/2073768940078317713",
+      "timestamp": "2026-07-05T14:00:00Z",
+      "importance": 6,
+      "tags": [
+        "美团",
+        "LongCat",
+        "开源模型",
+        "MoE",
+        "国产大模型",
+        "MIT许可"
+      ],
+      "batch_time": "2026-07-06T09:00:00+08:00"
+    },
     {
       "title": "Fable 5 实测：同一 prompt 低/高推理档位耗时差 10 倍，Karpathy 罕见背书其 3D 涌现能力——对冲「缩水」叙事",
       "summary": "AI 研究者 petergostev 把同一个 prompt 喂给 Fable 5 的低档（12 分钟）和最高档（近 2 小时）推理，输出是融合知识、代码、可交互的 3D 可玩世界（three.js 环境）。Karpathy 在转发时罕见地公开背书，称「没意识到模型已经能造出这种融合知识与代码的丰富可玩世界」，并把 Fable 的 3D 环境生成称为「每一代新模型都会有的那种质变跃迁」。这是本周 AI 推特互动最高的一条（原贴 ♥8943）。它直接对冲了昨天「Fable 重上线后被指 nerfed」的舆论：护栏可能压住了 benchmark 数字，但在长时程、高推理档位的 agentic 任务上，模型展现出的是上一代没有的涌现深度。",
@@ -632,78 +670,6 @@
         "产品更新"
       ],
       "batch_time": "2026-06-30T09:00:00+08:00"
-    },
-    {
-      "title": "Anthropic Fable 5 解禁在即：被美国政府封禁两周后将恢复全球可用，安全争议已化解",
-      "summary": "Anthropic 最强模型 Fable 5 被美国政府封禁超过两周后即将重返全球市场。Axios 援引 Anthropic 内部消息，称围绕「潜在越狱」的安全争议已通过与政府谈判解决，预计本周内重新部署到美国以外。Anthropic 此前批评封禁决定仅基于「一个狭窄、非普遍的潜在越狱的口头证据」，不应据此召回一款服务数亿人的商用模型。Mythos 5 也在重型护栏下继续向授权机构开放。",
-      "detail_content": "【核心事件】Fable 5，Anthropic 目前最强大的 AI 模型，在被美国政府封禁两周多之后，即将恢复全球可用。Axios 周六报道，Anthropic 内部人士透露，特朗普政府提出的安全担忧已经解决，模型将很快重新部署到美国以外，知情人士称问题将在本周内尘埃落定。特朗普政府于 6 月 12 日封禁了 Fable 5 的访问，这是数月来政府与公司在技术访问、监管和安全机制上冲突的 culmination。\n\n【关键细节与引用】争议焦点在于：政府认为存在一种方法能「越狱」（绕过）Fable 5 防止其被用于识别软件漏洞的安全护栏。Anthropic 方面反驳称，这一封禁决定「仅仅基于一个狭窄、潜在的、非普遍越狱的口头证据」。公司原话：「我们不认为发现一个狭窄的潜在越狱，就足以成为召回一款部署给数亿人的商用模型的理由。」商务部长 Howard Lutnick 周五在致 Semafor 的信中表示：「Anthropic 已与政府合作应对 Mythos 5 和 Fable 5 相关风险，这些努力已取得重大进展。Anthropic 还承诺与政府就协议、标准和发布继续合作。」\n\n【背景与上下文】Mythos 5——Anthropic 主打网络安全的模型——同样在政府重压下仅向授权个人开放，目前运行在「重型护栏」下，据 Anthropic 称已无法用于网络攻击或生物武器开发，这两点正是美国官员的主要担忧。这条线呼应了此前 Mythos 5 部分解禁（100+ 选定机构获准）和 Tom Brown 接手 Fable 5 谈判的报道——如今谈判终于有了结果。\n\n【影响与前瞻】这是 Anthropic 出口管制危机的实质性转折。值得注意的是，Anthropic 与 OpenAI 现在都在推动将特朗普「自愿审查新 AI 模型」的行政令编入正式法律，两家公司都计划在今年晚些时候 IPO，希望以更透明的框架换取政府对其研发的否决权。对用户而言，Fable 5 回归意味着这款最强模型的能力将重新可用；对行业而言，「政府可凭一个狭窄越狱就召回商用模型」这一先例已被确立，未来前沿模型的发布节奏和安全测试标准将受其塑造。",
-      "source": "The Jerusalem Post / Axios",
-      "source_type": "tavily",
-      "url": "https://www.jpost.com/business-and-innovation/tech-and-start-ups/article-900712",
-      "timestamp": "2026-06-28T21:39:00Z",
-      "importance": 9,
-      "tags": [
-        "Anthropic",
-        "Fable 5",
-        "出口管制",
-        "美国政府",
-        "安全"
-      ],
-      "batch_time": "2026-06-29T09:00:00+08:00"
-    },
-    {
-      "title": "Google 因算力不足限制 Meta 使用 Gemini：AI 军备竞赛从「比模型」转向「比容量」",
-      "summary": "据英国《金融时报》报道，Google 限制了对 Meta 的 Gemini 模型供应，原因是 Meta 想买的算力超过 Google 能提供的。Google 约在 3 月就告知 Meta 无法满足其全部 Gemini 容量需求，导致 Meta 部分内部 AI 项目被打断和延迟。多家 Google 客户也受影响，但程度较轻。Meta 已开始要求员工更高效地使用 AI token。",
-      "detail_content": "【核心事件】Google（Alphabet 旗下）限制了对 Meta 的 Gemini AI 模型供应，原因是这家社交媒体巨头寻求的算力超出了 Google 能提供的范围。《金融时报》周日援引知情人士报道称，Google 约在 3 月就告诉 Meta，无法满足其想购买的 Gemini 全部容量，这一缺口打断并延迟了 Meta 的部分内部 AI 项目。\n\n【关键细节与引用】报道指出，Google 还有其他多家客户受到影响，但程度较轻；Meta 受冲击格外严重，因为其对 Google 模型的需求异常之高。由于限制，Meta 已鼓励员工更高效地使用 AI token（衡量 AI 用量的单位）。背景数据很有说服力：Google Cloud 第一季度营收增长至 200 亿美元，但 CEO Sundar Pichai 表示，算力限制阻碍了更高的增长，并导致云业务积压订单环比几乎翻倍。\n\n【背景与上下文】这则新闻揭示了一个被模型发布掩盖的事实——即便各大公司仍在芯片和数据中心上投入数十亿美元，它们仍难以获得足够的算力来支撑不断膨胀的 AI 服务需求。算力供给正在成为新的硬约束。值得玩味的是竞争格局：Meta 与 Google 同为 AI 第一梯队玩家，Meta 却要向直接竞争对手 Google「买」模型容量，这本身就是 AI 行业分工与依赖关系的真实写照。\n\n【影响与前瞻】对行业而言，这是一个信号性的转折——瓶颈正在从「模型能力」转移到「原始算力」。当连 Google 这种自研 TPU、自建数据中心的巨头都供不应求时，二级玩家获取算力的难度可想而知。这可能加速两个趋势：一是各家更激进地自研芯片（OpenAI 联合博通的 Jalapeño、Google 的 TPU）、抢建数据中心；二是「token 效率」从工程优化话题上升为企业级战略——Meta 让员工省 token 就是缩影。",
-      "source": "Financial Times / CNBC / Reuters",
-      "source_type": "tavily",
-      "url": "https://www.cnbc.com/2026/06/28/google-limits-metas-use-of-its-gemini-ai-models-ft-reports.html",
-      "timestamp": "2026-06-28T10:30:00Z",
-      "importance": 8,
-      "tags": [
-        "Google",
-        "Meta",
-        "Gemini",
-        "算力",
-        "竞争格局"
-      ],
-      "batch_time": "2026-06-29T09:00:00+08:00"
-    },
-    {
-      "title": "奥地利争取让欧盟托管 Anthropic：致信欧盟技术委员，对冲美国对前沿模型的封锁",
-      "summary": "奥地利提议欧盟考虑在欧盟境内托管 Anthropic，以对抗美国阻止外国人使用其最先进模型的努力。奥地利数字化国务秘书 Alexander Proell 致信欧盟技术委员 Henna Virkkunen，呼吁「共同探索 Anthropic 在欧盟的战略性建立与参与」。这是在美国出口管制背景下，欧洲争夺前沿 AI 资产的最新动作。",
-      "detail_content": "【核心事件】路透社 6 月 28 日报道，奥地利提议欧盟考虑在其境内托管 Anthropic，以对抗美国阻止外国人使用该公司最先进模型的努力。在奥地利政府公开的一封致欧盟技术委员 Henna Virkkunen 的信中，奥地利数字化国务秘书 Alexander Proell 写道，重要的是欧洲不能被切断于重大创新之外。\n\n【关键细节与引用】Proell 在信中写道：「让我们共同探索 Anthropic 在欧盟的战略性建立与参与——要有法律确定性、市场准入、资本，以及契合这家公司的价值观体系。」他没有说明这一步具体如何落地，也承认外界会对可行性存疑。但他抛出了一句有分量的反问：「真正的问题不是这是否容易，而是我们欧洲人是准备成为自身技术未来的架构师，还是甘愿只做别处决策的管理者。」Anthropic 未立即回应置评请求。\n\n【背景与上下文】这一提议发生在美国对 Anthropic 前沿模型实施出口管制的背景下——Fable 5 被封禁、Mythos 5 仅限授权机构使用，欧洲对能否用上最先进模型感到焦虑。本月早些时候，欧盟委员会刚提议立法，推动本土云、AI 和半导体产业发展、减少对美国大型科技公司的依赖，顶住了美国政府对其产业政策的批评。奥地利的动作可以视为欧洲这一战略转向在「争夺具体公司」层面的延伸。\n\n【影响与前瞻】这对 Anthropic 是个新变量：一边要与美国政府就安全审查周旋，一边又被欧洲主动招手。若欧洲真的为前沿 AI 公司提供「法律确定性 + 市场准入 + 资本」的组合，可能成为美国管制压力下前沿公司的备选落脚点。短期内 Anthropic 大概率仍以美国为主，但欧洲的拉拢会强化其在与政府谈判中的筹码。这也预示着前沿 AI 模型的地缘争夺，正从「谁能用」延伸到「公司归谁托管」。",
-      "source": "Reuters / Bloomberg",
-      "source_type": "tavily",
-      "url": "https://www.reuters.com/business/austria-lobbies-eu-host-anthropic-ai-after-us-curbs-bloomberg-news-reports-2026-06-28/",
-      "timestamp": "2026-06-28T12:59:00Z",
-      "importance": 7,
-      "tags": [
-        "Anthropic",
-        "欧盟",
-        "奥地利",
-        "出口管制",
-        "地缘政治"
-      ],
-      "batch_time": "2026-06-29T09:00:00+08:00"
-    },
-    {
-      "title": "Elon Musk 透露 Grok 4.5 正在 SpaceX 和 Tesla 内部私测，性能已逼近 Claude Opus",
-      "summary": "Elon Musk 在推文中表示，xAI 的新模型 Grok 4.5 正在 SpaceX 和 Tesla 内部进行私测，其性能已接近 Anthropic 的 Claude Opus。这是 xAI 贴身追赶第一梯队模型的最新信号，意味着三巨头之外的竞争者正在缩小差距。",
-      "detail_content": "【核心事件】Elon Musk 透露，xAI 的新一代模型 Grok 4.5 正在 SpaceX 和 Tesla 内部进行私测，并称其性能已经接近 Anthropic 的 Claude Opus。这一消息来自 Musk 在 X 上的发文。\n\n【关键细节与引用】Musk 没有给出具体的 benchmark 数据或正式发布时间，但「接近 Opus」的定位本身就是一个强烈的信号——Opus 是目前公认的能力天花板之一，Grok 能贴到这个水位意味着 xAI 已经挤进第一梯队。值得注意的是测试场景：SpaceX（航天工程）和 Tesla（自动驾驶、机器人），都是对推理和工程能力要求极高的真实生产环境，这种「内部吃狗粮」式的私测比公开 benchmark 更能说明模型在实际任务中的成色。\n\n【背景与上下文】这放在更大的竞争图景里看：当前 Anthropic 的 Fable/Opus 系列、OpenAI 的 GPT-5.x 系列、Google 的 Gemini 占据第一梯队，xAI 的 Grok 一直被视为追赶者。如果 Grok 4.5 真能逼近 Opus，竞争格局会从「三巨头」向「四强」演变。Musk 一贯倾向于在自己公司内部先行验证模型（Grok 早先也优先接入 X 平台和 Tesla 场景），这种内部私测往往是为大规模商用铺路。\n\n【影响与前瞻】对用户和行业而言，多一个 Opus 级别的玩家意味着更强的竞争压力和更快的迭代节奏——尤其在定价和 API 可用性上。需要保持谨慎的是，Musk 的能力宣称历来偏乐观，且尚无第三方独立评测佐证「接近 Opus」的具体含义。建议关注后续 Grok 4.5 正式发布时的公开 benchmark 和实际使用反馈，再校准其在能力梯队中的真实位置。",
-      "source": "X：Elon Musk (@elonmusk)",
-      "source_type": "aihot",
-      "url": "https://x.com/elonmusk/status/2071184354756477041",
-      "timestamp": "2026-06-28T00:00:00Z",
-      "importance": 7,
-      "tags": [
-        "xAI",
-        "Grok 4.5",
-        "Elon Musk",
-        "模型评测",
-        "竞争格局"
-      ],
-      "batch_time": "2026-06-29T09:00:00+08:00"
     }
   ]
 }
