@@ -1,0 +1,46 @@
+{
+  "channel_id": "ai-frontier",
+  "channel_name": "AI 前沿",
+  "generated_at": "2026-07-06T09:00:00+08:00",
+  "digest": "美国独立日长周末后的第一个工作日（北京周一=美东周日），三巨头官方全线停更、结构化信源集体哑火，是典型的淡讯日。Tavily 四组站内搜（claude.com / anthropic.com / openai.com / deepmind.google）全空，Grok 双路连续第 14 天 502/403 故障，opentwitter 白名单 9 账号本周多为已收录或非 AI 内容（AmandaAskell 聊医患沟通、jackclarkSF 发徒步、alexalbert__ 最新仍是 7/1「Welcome back Fable」）。逐一核对 Anthropic news 列表里疑似未收录的 slug，发布日期实为旧文（RSP 更新是 2024-10、Claude Tag 是 6/23、Public Record 是 6/12），无新增官方内容。两条新增实质内容都来自硬件/国产开源侧：① SemiAnalysis 独家——NVIDIA 在 GTC 上展示仅 3 个月的 Kyber NVL144 延期超 12 个月至 2028、配套 NVL72x2 机架架构同步取消，继 Rubin Ultra 4-die 流产后次世代算力底盘第二次受挫；② 美团 LongCat-2.0 以 MIT 许可完全开源（1.6T MoE、1M 上下文、Zero-Compute Experts），把 Owl Alpha 的性能亮相落成可下载的权重。硬件供给摩擦 + 国产开源闭环，是本周开局的两个信号。",
+  "items": [
+    {
+      "title": "NVIDIA Kyber NVL144 延期超 12 个月至 2028，NVL72x2 背靠背机架架构同步取消",
+      "summary": "半导体分析机构 SemiAnalysis 7 月 5 日独家透露，Jensen 在 GTC 上重点展示仅 3 个月的 Kyber NVL144 系统遭遇重大延期，整体推迟超过 12 个月、最早 2028 年才能交付；配套的 NVL72x2 背靠背机架架构被直接取消，导致已流产的 Rubin Ultra 扩展域进一步受限。这是 NVIDIA 次世代 AI 算力底盘短期内第二次受挫——此前 Rubin Ultra 的 4-die 版本已因制造问题取消。",
+      "detail_content": "【核心事件】半导体行业分析机构 SemiAnalysis 7 月 5 日发布独家线索：NVIDIA 在今年 GTC 上重点展示的 Kyber NVL144 系统——距发布仅约 3 个月——已遭遇重大挫折，整体推迟超过 12 个月，最早要到 2028 年才能交付。与此同时，配套的 NVL72x2 背靠背机架架构被直接取消。这是 NVIDIA 次世代 AI 算力底盘短期内第二次受挫：此前 Rubin Ultra 原定的 4-die 版本已因制造问题取消，新版尺寸减半、性能约为原版一半。\n\n【关键细节与引用】SemiAnalysis 在原贴中预告将解释「Kyber 为何面临大幅延迟，以及 NVIDIA 的 NVL72x2 背靠背机架架构为何也被取消，导致 Rubin Ultra 的扩展域受限」。NVL144 指单机架 144 颗 GPU 的整机方案，是超大规模训练集群的基本 building block；NVL72x2 是把两套 NVL72 背靠背互连以扩大高速互联域的方案。两条路线同时出问题，意味着靠「拼机架规模」上探算力的路径在工程上正在收窄。\n\n【背景与上下文】NVIDIA 过去两年靠 Rubin→Rubin Ultra→Feynman 的密集路线图维持了 AI 算力供给的指数增长预期，这也是支撑前沿模型 scaling 假设的物理基础。但 2026 年中开始，制造良率、互联工程、机架功耗密度等问题集中浮现。本频道此前已收录「英伟达 Rubin Ultra 被取消：原 4-die 版因制造问题流产」(SemiAnalysis, 6/29)，本次 Kyber 延期是同一叙事的延续与加码。\n\n【影响与前瞻】对前沿模型厂商（Anthropic / OpenAI / Google / Meta）而言，NVIDIA 次世代算力连续延期意味着 2027 年的算力供给曲线可能不如此前乐观——这会直接影响下一代模型的训练时间表和资本开支节奏。结合近日 BIS 把五大 hyperscaler 两年 AI 资本开支估到 1 万亿美元并警告「以衰退收场的投资狂热」，硬件供给端的摩擦正在从「需求侧有多少钱」转向「供给侧能不能造出来」。在 GPU 供给受限的窗口里，自研芯片路线（OpenAI Jalapeño、Anthropic×三星、AWS Trainium）和国产 ASIC + 国产开源模型的「双国产」组合会获得更多叙事空间。",
+      "source": "SemiAnalysis (@SemiAnalysis_)",
+      "source_type": "aihot",
+      "url": "https://x.com/SemiAnalysis_/status/2073874671498387899",
+      "timestamp": "2026-07-05T21:00:00Z",
+      "importance": 7,
+      "tags": [
+        "NVIDIA",
+        "Kyber",
+        "Rubin Ultra",
+        "AI算力",
+        "供应链",
+        "半导体"
+      ],
+      "batch_time": "2026-07-06T09:00:00+08:00"
+    },
+    {
+      "title": "美团 LongCat-2.0 完全开源（MIT）：1.6 万亿参数 MoE、开放权重与推理代码",
+      "summary": "美团 7 月 5 日通过官方账号宣布 LongCat-2.0 以 MIT 许可完全开源，公开模型权重与推理代码。架构为 MoE，总参数 1.6T、每 token 激活约 48B，支持 1M token 上下文。技术亮点包括 LongCat Sparse Attention、Zero-Compute Experts（动态激活 33B-56B、号称零浪费计算）、MOPD 按任务路由 Agent/Reasoning 双路径。",
+      "detail_content": "【核心事件】美团 7 月 5 日通过官方账号 @Meituan_LongCat 宣布，LongCat-2.0 大模型以 MIT 许可证完全开源，公开模型权重和推理代码。这是继 LongCat Owl Alpha 登顶 OpenRouter 之后，美团在国产开源大模型赛道落下的第二子——Owl Alpha 是性能亮相，LongCat-2.0 MIT 开源是真正把权重交到社区手里。\n\n【关键细节与引用】架构：MoE（混合专家），总参数量 1.6T（1.6 万亿），每 token 激活约 48B。上下文窗口：1M token。三项主推技术：① LongCat Sparse Attention——高效处理长文本；② Zero-Compute Experts——动态激活 33B–56B、号称「零浪费计算」；③ MOPD（按任务路由）——区分 Agent 和 Reasoning 两种负载走不同专家路径。MIT 许可是最宽松的开源协议之一，允许商用、修改、闭源衍生，比 Llama 系的定制 license 更彻底。\n\n【背景与上下文】国产开源大模型 2026 年进入「万亿参数 MoE」量产期：美团 LongCat-2.0（1.6T）、此前 Z.ai 开源的 GLM-5.2、以及 DeepSeek V4 路线，都在把「开源=前沿能力」的命题坐实。本频道此前已收录「Z.ai 开源 GLM-5.2：仓库级编码 + 漏洞发现能力对标 Mythos，Forbes 警告坏家伙也有了同级别模型」和「美团 LongCat Owl Alpha 登顶 OpenRouter：1.6 万亿参数 MoE、国产 ASIC 训练」两条。LongCat-2.0 的不同在于：它是可下载、可商用、可改的权重，而不只是一个 leaderboard 排名。\n\n【影响与前瞻】对关心 AI 在组织内落地的人，LongCat-2.0 MIT 开源的意义在于：可私有化部署的万亿级 MoE 模型又多一个选项，且许可无商用限制——金融、银行这类不能调外部 API 的强监管场景，自建权重推理的门槛继续下探。MoE 架构（激活仅 48B）也意味着单 token 推理成本远低于 dense 万亿模型，是性价比敏感场景的现实选择。结合 NVIDIA 次世代算力延期，国产 ASIC + 国产开源模型的「双国产」闭环正在成为可独立运行的技术栈。",
+      "source": "美团 LongCat (@Meituan_LongCat)",
+      "source_type": "aihot",
+      "url": "https://x.com/Meituan_LongCat/status/2073768940078317713",
+      "timestamp": "2026-07-05T14:00:00Z",
+      "importance": 6,
+      "tags": [
+        "美团",
+        "LongCat",
+        "开源模型",
+        "MoE",
+        "国产大模型",
+        "MIT许可"
+      ],
+      "batch_time": "2026-07-06T09:00:00+08:00"
+    }
+  ]
+}
