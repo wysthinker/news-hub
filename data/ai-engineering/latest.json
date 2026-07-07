@@ -1,9 +1,27 @@
 {
   "channel_id": "ai-engineering",
   "channel_name": "AI 工程实战",
-  "generated_at": "2026-07-07T10:11:03.771572+08:00",
-  "digest": "美东独立日长周末后第一个工作日，工程圈回流，但 OpenAI/DeepMind 官方博客全线静默，增量集中在独立工程媒体和 KOL 一线观察。今天最值得 Eason 留意的是一条「反直觉」主线：AI 让写代码飞快，但「软件提速」并没有兑现到所有地方——斯坦福+ADP 460万样本硬实证年轻程序员就业崩塌、GergelyOrosz 指出金融服务跨国落地并没变快（软件从来不是瓶颈）。这两条合在一起，对银行 AI 转型是重要校准：别把「编码提速」等同于「业务提速」。与此同时，工具链在向「判断力外包」收敛：Simon Willison 让 Fable 做 release 前 final review、149美元抓出5个 blocker；OpenClaw 登陆 HuggingFace 实现完全本地化；OfficeCLI 让 agent 直接改 Word/Excel/PPT。本周 Grok 双路搜索仍 502/403 故障（已连续约15天）。",
+  "generated_at": "2026-07-07T10:14:18.067035+08:00",
+  "digest": "补发此前因 URL 冲突被去重遗漏的一条。",
   "items": [
+    {
+      "title": "GergelyOrosz 观察：开发者把 SOTA 模型当成了新的「编程语言」——选型圣战正在复刻",
+      "summary": "GergelyOrosz 抛出一个引发共鸣的观察（593赞）：开发者对 SOTA 模型及其编程表现的「门派之争」，已经变得和当年对编程语言、框架的圣战一模一样——大家如数家珍地比较各模型的编码性能和提效技巧，就像过去比较 Python/Java/Rust。他同时指出反差：模型更替极快，这种「偏好」本质上是临时的。开源模型目前基本不被视为 SOTA（除了 GLM-5.2 很多人正在试）。",
+      "detail_content": "【核心事件】\nGergelyOrosz 在7/6发推（593赞），捕捉到开发者文化的一个微妙迁移：现在的程序员讨论 SOTA 模型（Fable、Opus、Sonnet、GLM 等）的 coding 表现时，那种「如数家珍、各持己见、互相安利或劝退」的姿态，和他入行时见证的「编程语言圣战」（Python vs Java vs Rust、Emacs vs Vim）几乎一模一样。\n\n开发者开始像熟悉一门语言的「tips-and-tricks」那样，熟悉每个模型的脾气、最佳 prompt 姿势、适用场景。\n\n【关键细节与引用】\n原推：「Many of us devs are becoming as opinionated and knowledgeable about SOTA models (and their coding performance) like we used to be about programming languages and the tips-and-tricks to be more productive with them.」\n\n他点出一个有意思的反差：和编程语言不同，模型迭代极快——今天公认的 SOTA 下个月可能就被超越，所以这种「门派忠诚」在本质上比语言圣战更脆弱、更临时。同一天他在另一条推里点破：开源模型目前基本不被视为 SOTA（save for GLM-5.2 that many are experimenting with），SOTA 的定义本身也在流动。\n\n【背景与上下文】\n这其实是 BusinessInsider 早前那条「tokenmaxxing 时代落幕、modelmaxxing 登场」的文化延伸：当企业从「省 token」转向「精细化选模型」，开发者个人的「模型选型能力」正在变成一种新的可见技能符号——就像当年「会不会用某框架」是简历亮点一样。本周还有一条呼应：Morgan Linton 每周两次给16个工程师开会，专门讲「这周该用哪个模型、什么时候用」。\n\n【影响与前瞻】\n对一个管理工程团队的人，这个观察的隐含信号是：「模型选型/编排能力」正在成为团队里一种新的隐性分层——谁更懂模型脾性、谁能搭出更省更快的工作流，谁就拿到了新的杠杆。短期内值得做的，是把这种「个人 tips」沉淀成团队共享的 playbook（比如维护一份「什么任务用什么模型 + 怎么 prompt」的内部清单），而不是任由它变成新一轮的「语言圣战」内耗。",
+      "source": "GergelyOrosz (X)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2074112943365497196",
+      "timestamp": "2026-07-06T12:47:15Z",
+      "importance": 6,
+      "tags": [
+        "模型选型",
+        "开发者文化",
+        "modelmaxxing",
+        "GergelyOrosz",
+        "工程管理"
+      ],
+      "batch_time": "2026-07-07T10:00:00+08:00"
+    },
     {
       "title": "斯坦福+ADP 460万样本硬实证：AI 正在「烧掉」初级程序员就业市场，22-25岁开发者就业暴跌、年长者反增",
       "summary": "斯坦福数字经济实验室联合 ADP（覆盖约460万美国工人薪资数据）发布迄今最大样本的 AI-就业实证：22-25岁软件开发者就业较2022年峰值明显下滑（不同口径约9-19%），入门级岗位招聘萎缩、CS毕业生失业率升至6.1%；而41-49岁开发者就业反增约14%。程序员总就业仍涨4.4%，但增量全来自年长群体。核心推手指向2024-2025年爆发的 agentic programming——GitHub一年新增3600万账号、80%新用户一周内就用上 Claude/Copilot。这是「工程师分化」主线迄今最强硬数据落锤。",
