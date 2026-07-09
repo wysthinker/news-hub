@@ -1,9 +1,122 @@
 {
   "channel_id": "ai-frontier",
   "channel_name": "AI 前沿",
-  "generated_at": "2026-07-08T09:07:59.624032+08:00",
-  "digest": "Anthropic 今天一口气发四篇博客，核心是 Cowork 从桌面走向全终端（关笔记本 agent 照跑）+ 用 120 万会话数据揭示知识工作者用 AI 主要做「围绕工作的工作」而非核心专业判断，同时把 Claude Code/Cowork 带进 FedRAMP High 政府市场（hash-chain 审计+按拨款计费，强监管治理样板）+ 官方详解 model vs effort 选型（Fable/Opus/Sonnet = specialist/expert/generalist）。跨公司侧：微软为降本在 Copilot 用自研 MAI 替换 OpenAI/Anthropic 模型（与花旗Adobe限用旗舰同主线，AI 进单位经济阶段），Meta Superintelligence Labs 发首个媒体生成模型 Muse Image/Video。整体看，AI 竞争正从「谁模型最强」转向「谁把 agent 嵌入日常工作流 + 谁把单位成本打下来 + 谁在强监管下跑通治理」。Grok 双路连续第 18 天 502/403 故障。",
+  "generated_at": "2026-07-09T09:08:38.890755+08:00",
+  "digest": "昨天的旗舰发布潮退去，今天进入「落地消化 + 新赛道试探」：OpenAI 用 GPT-Live 全双工语音模型抢回一天头条——它能在你说话的同时听、用「mhmm」回应、还能把深度推理委托给后台 GPT-5.5 而不打断对话，这是语音交互从「轮次制」走向「连续流」的架构跃迁；Anthropic 这边没有新旗舰，而是补了三块拼图——一篇可控性研究论文 GRAM（给模型双重用途知识装上可拔插的「隔间」）、一个重量级客户故事（Thomson Reuters 把 CoCounsel 在 Agent SDK 上重建成单 agent 操控数百工具）、以及内部营销团队 dogfooding Cowork 的实战细节。值得关注的是 Thomson Reuters CTO 那句「写代码不再是工作本身，真正稀缺的是 systems thinking、judgment 和 taste」——这和你一直强调的「判断力稀缺」论完全咬合，且来自一线企业买家之口。Google DeepMind 今天沉默。",
   "items": [
+    {
+      "title": "OpenAI 发布 GPT-Live：全双工语音模型，能边听边说、用「mhmm」回应，深度任务后台委托给 GPT-5.5",
+      "summary": "7/8 OpenAI 推出新一代语音模型 GPT-Live，核心是 full-duplex 全双工架构——模型能同时处理输入和生成输出，每秒多次决定是说、继续听、停顿、打断还是调工具。它能用「mhmm」「got it」表示在听，能做实时翻译，最关键的是把搜索/推理/agentic 任务委托给后台 GPT-5.5、同时保持对话不断流。GPT-Live-1 和 mini 当天全球向 ChatGPT 推出，1.5 亿+ 语音用户受影响。在 GPQA、BrowseComp、τ³-Voice Telecom 上全面超越 Advanced Voice Mode。",
+      "detail_content": "【核心事件】7/8 OpenAI 发布 GPT-Live，称其为「新一代语音模型」，目标是让和 AI 说话像跟真人对话一样自然。当天向全球 ChatGPT 用户（iOS/Android/Web）推出 GPT-Live-1（Go/Plus/Pro 默认）和 GPT-Live-1 mini（免费用户默认），API 版本随后开放。OpenAI 透露每周已有超过 1.5 亿人使用 ChatGPT 的语音和听写功能。\n\n【架构跃迁：从轮次制到连续流】GPT-Live 建立在两大架构变化上。第一是 full-duplex 全双工：模型不是处理一条条独立消息，而是持续处理输入的同时生成输出，因此每秒能多次做出交互决策——说话、继续听、停顿、打断或调用工具。这让它能进行更自然的来回、保持时间感、甚至做实时翻译。第二是与「深度工作」解耦：当问题需要搜索、推理或更 agentic 的能力时，GPT-Live 把任务委托给 GPT-5.5，对话不中断，结果就绪后再带回。这意味着语音层和前沿智能层分离，且语音层可随时切换最新的后台模型。\n\n【三代语音架构对比】OpenAI 自己梳理了演进：① 级联式（最早的 ChatGPT Voice）把语音转文字→LLM→文字转语音三个模型串起来，信息会跨模型丢失、响应生硬；② 轮次制（Advanced Voice Mode）单模型处理音频、延迟更低，但仍要等用户说完才回应，且靠静音判断轮次，一点停顿或背景噪音就被误判为发言结束；③ GPT-Live 连续交互，响应快、自然、有表现力、且主动倾听。\n\n【评测】OpenAI 自建了测「愉悦感和对话流畅度」的人类评估，GPT-Live-1 和 mini 在 5-10 分钟对话的整体偏好、轮次把控、打断、对话流畅度、自然度上均强于 Advanced Voice Mode。在 GPQA（专家级科学推理）、BrowseComp（agentic 网页搜索）、τ³-Voice Telecom（真实多轮电信客服任务）上也全面超越。推理档位分 Instant（GPT-5.5 Instant）和 Medium/High（GPT-5.5 Thinking）。\n\n【安全】专门为语音扩展了安全测试，新增 audio-native 评估和合成音频评估，覆盖自残、精神病与躁狂、对 AI 的情感依赖、暴力、性内容；red-team 针对语音独有风险。能在模型说话过程中实时干预——检测到不安全输出时转向更安全回应、附加安全信息、或在高风险情形结束对话。青少年有额外保护。明确设计为「对话用、非声音模仿」，用预定义声音并防止模仿真人。\n\n【影响与前瞻】这是继昨天 Anthropic Cowork 跨终端化之后，OpenAI 在「人机交互范式」上的一次主动进攻——把语音从「轮次工具」推进到「持续在场、后台并行」的流式助手，逻辑和 agentic 后台委托高度一致。值得留意：GPT-Live 把「持续交互」和「深度推理」解耦的架构思路，本质上是承认单一模型难以同时做好低延迟对话和高难度推理，分而治之。当前不支持语音+视频/屏幕共享，非英语母语口音和流利度有差距。",
+      "source": "OpenAI",
+      "source_type": "tavily",
+      "url": "https://openai.com/index/introducing-gpt-live/",
+      "timestamp": "2026-07-08T17:00:00Z",
+      "importance": 9,
+      "tags": [
+        "OpenAI",
+        "GPT-Live",
+        "语音模型",
+        "全双工",
+        "ChatGPT",
+        "人机交互"
+      ],
+      "batch_time": "2026-07-09T09:00:00+08:00"
+    },
+    {
+      "title": "Anthropic 研究：给 AI 模型的双重用途知识装上「可拔插隔间」——GRAM 方法一次训练产出 16 种配置",
+      "summary": "Anthropic（与 AE Studio 合作）发布研究 GRAM（Gradient-Routed Auxiliary Modules）：给 Transformer 每一层加可删除的辅助神经元「模块」，按双重用途类别（病毒学/网络安全/核物理/特定编程语言）隔离训练。模型能正常「用」通用知识，但只有对应模块能「学」双重用途数据。一次训练即可产出 2^4=16 种部署配置，删掉模块就移除对应能力且几乎不损通用性能，抗恢复攻击远强于传统 unlearning。明确声明属初步研究、未用于任何生产模型。",
+      "detail_content": "【核心问题】前沿模型本质是一座巨大的知识库，其中部分知识是「双重用途」(dual use)——网络安全知识既能修补漏洞也能利用漏洞，病毒学知识能造疫苗也能造病原体。当前靠拒答训练和分类器筛输入输出，但这些护栏不改变模型底层存储的知识，够强的攻击者仍可越狱取到。更彻底的办法是「控制模型知道什么」，但传统做法——在预训练数据里过滤掉——是钝器，要一个能讨论高级病毒学的版本（给受信任的生物安全实验室）和一个不能的版本，就得训练两个昂贵的前沿模型。\n\n【GRAM 方法】新方法叫 GRAM（Gradient-Routed Auxiliary Modules，梯度路由辅助模块）。核心思路是给模型每个双重用途类别一个专属的、可移除的「隔间」，并且只在学双重用途数据时更新这些隔间。具体实现：GRAM 在标准 Transformer 每一层加额外神经元，按类别分成模块。训练时遇到通用文本按常规学；遇到双重用途类别（如病毒学）文本时规则改变——模型可以「用」通用知识做预测，但只有病毒学模块被允许「学」这段文本，通用权重被临时冻结。结果是病毒学知识积累进专门模块而非扩散到全网，训完后删掉模块、能力随之消失，或留给受信任部署。\n\n【关键数据】① 在合成的儿童故事数据集（按主题标注）上，小模型重新配置「忘记」任选主题后，表现几乎等同于从头在过滤数据上训练的独立模型——即一次训练拿到原本要多次训练跑不同数据集才能拿到的结果。② 在更真实的混合数据（网页+代码+科学论文）上设四个双重用途域（病毒学、网络安全、核物理、一个小众编程语言作为特殊双重用途代码代理），每个域路由到自己的模块；删除模块移除能力的效果几乎等同于从没在该数据上训练过，且不损通用性能。攻击者想用少量恶意数据恢复被删知识时，GRAM 的抵抗力与数据过滤相当；而训后「遗忘」技术只是「压制」知识、少量微调即可恢复。③ 在 50M 到 5B 参数的七个模型规模上跑，GRAM 在每个规模都匹配数据过滤的性能，且「模块开/关」的 gap 随规模增大而变宽——即越大的模型，这种隔离越有效，绕过防护也越贵。\n\n【对齐意义与局限】这是 Anthropic 在「能力可控性」研究线上的实质进展，思路比事后遗忘更根本——从「让模型不输出」转向「让模型根本不拥有」。但论文明确列出局限：未在前沿规模或生产训练管线测试（没用在任何 Claude 模型上，且不确定是否会用）；评测只量化 next-token 预测能力而非真实下游任务；更深的开放问题是——某些双重用途能力可能与通用知识纠缠太深，任何方法都无法干净分离。详细实验发在 Alignment Science 博客。\n\n【为什么对你重要】作为关注 AI 可控性与治理的人，GRAM 代表了一条比「围栏式护栏」（拒答+分类器）更具架构性的路径：把危险知识物理隔离成可插拔模块，按部署场景「按需供货」。在银行业这种强监管场景里，这种「能力可审计、可按角色裁剪」的思路比一味加拒答更有说服力——当然目前还停留在研究阶段。",
+      "source": "Anthropic",
+      "source_type": "tavily",
+      "url": "https://www.anthropic.com/research/off-switch-dual-use",
+      "timestamp": "2026-07-08T00:00:00Z",
+      "importance": 8,
+      "tags": [
+        "Anthropic",
+        "GRAM",
+        "对齐研究",
+        "双重用途",
+        "知识可控性",
+        "安全"
+      ],
+      "batch_time": "2026-07-09T09:00:00+08:00"
+    },
+    {
+      "title": "Thomson Reuters CTO 谈如何为法律/税务/合规造「受信级 AI」：CoCounsel 在 Agent SDK 上重建成单 agent 操控数百工具，Fable 5 让动议起草首次可行",
+      "summary": "Anthropic 官博发布 Thomson Reuters 客户深度故事，CTO Joel Hron 讲如何在律师级别的专业审查标准下构建 AI。提出「Fiduciary-Grade AI™」（受信级 AI）概念：以权威内容、深度领域专长、工作流嵌入为根基，输出透明可验证可辩护。CoCounsel Legal 在 Claude Agent SDK 上重建，单一 agent 同时访问数百个公司工具，从「逐个技能串联」变成「定义结果、agent 自己编排」。Fable 5 让原本需数天数周精修的复杂动议起草变得可行。Hron 还给了一句直击要害的判断：「写代码不再是工作本身，现在重要的是 systems thinking、judgment 和 taste」。",
+      "detail_content": "【核心事件】7/8 Anthropic 官博发布 Thomson Reuters（全球内容与科技公司，为法律/税务/会计/合规等专业领域服务 175 年）的深度客户故事，主角是 CTO Joel Hron（四年前创业公司被收购加入）。这不是一篇普通 case study，而是给出了「在高风险专业场景里如何严肃构建 AI」的一套方法论。\n\n【Fiduciary-Grade AI™：受信级 AI】Thomson Reuters 把自己的方法论命名为「受信级 AI」——扎根于权威内容、由深度领域专长塑造、直接嵌入专业工作流，使输出在高风险场景下透明、可验证、可辩护。Hron 的核心论点是：律师能依赖一个 Westlaw 答案，靠的不是模型本身，而是几十年策展的判例法、全球 2700+ 领域专家每天标注增强的内容、以及 Thomson Reuters 在模型之上构建的评测体系。「最终对工作成果负责的仍是那个人类专业人士。」验证在这里比流畅性更重要——他们围绕「不只是搜索不只是检索，而是引用验证与核实」调优的 agent 重建法律研究，要求系统帮助验证引用、清晰呈现来源，让专业人士能带着信心审查、核实并施加判断。客户的反馈是：过去「要花几十小时」的研究现在「几分钟内」拿到高质量起点。\n\n【Agent-first 产品重构】CoCounsel Legal 展示了 agent-first 的样子：过去它是一个个技能先后跑，现在在 Claude Agent SDK 上重建后，能跨工具和内容源实时规划、委托、编排，专业人士只需定义结果而非每步指令。单个 agent 现在能同时访问数百个公司工具。这改变了他们评估模型的方式——「我们对 Claude 的大测试，是评估它做计划和正确有效使用这些工具的能力」。客户数据受保护、不用于训练第三方模型。\n\n【模型必须做到的四件事】Hron 团队总结了一个模型被信任前必须做到的四点：① 作为 CoCounsel 系统一部分自查引用——检索到来源后不能就此放过，必须在呈现给人类最终审查前验证所引用的内容；② 在长链工具调用中保持稳定——长任务需要更好的上下文管理和可靠的工具使用，agent 要能跨多步多系统保持线索，完成真实工作而非半路卡住；③ 把人带入「工作过程」而非只给答案——最难的工作里，Hron 要模型「把人带入开发工作产品的循环，而不是指望 agent 一次性给出答案」；④ 释放出过去没带宽做的工作——正在开发复杂法律工作的高级起草能力，包括专业人士原本「要花数天数周精修」的动议和诉状，「对早期模型来说总是需要太多上下文和精度」，而有了 Claude Fable 5 现在变得可行了。\n\n【ROI 反共识观点】Hron 对 AI 的 ROI 持反共识看法：「如果你过度优化回报率计算，就是只见树木不见森林。」他要团队先感受到文化和思维方式的转变，再去调单位任务成本——思维转变一旦发生，回报自然跟上。他仍跟踪 DORA、从想法到生产的时长等传统工程指标，并举例一个基于 Claude 的内部错误修复工具，把一个生产问题从三小时根因分析变成四分钟修复。更深的改变是工作本身——「写代码不再是工程师的工作」，现在最重要的技能是 systems thinking、judgment 和 taste，并看到 AI 让人变得更「T 型」，能跨产品、设计、财务延伸而非困守一条线。\n\n【为什么对你重要】这篇最值钱的不在产品细节，而在两个判断：一是「受信级 AI」框架（权威内容+领域专长+工作流嵌入+验证优先），可直接挪用到你向银行管理层论证 AI 落地价值时的叙事；二是 Hron 那句「写代码不再是工作本身，稀缺的是 judgment 和 taste」——这是一线企业买家（非 Anthropic 自己）对你「判断力稀缺」论的用脚投票印证，和此前招聘市场那位洛杉矶 tech lead 的判断、Fadell「工具买得到判断力买不到」形成完整闭环，是你汇报素材里的又一块硬石头。",
+      "source": "Claude by Anthropic",
+      "source_type": "tavily",
+      "url": "https://claude.com/blog/working-at-the-frontier-how-thomson-reuters-builds-ai-for-high--stakes-professional-work",
+      "timestamp": "2026-07-08T18:00:00Z",
+      "importance": 8,
+      "tags": [
+        "Anthropic",
+        "Thomson-Reuters",
+        "Fable-5",
+        "Agent-SDK",
+        "受信级AI",
+        "企业落地",
+        "判断力"
+      ],
+      "batch_time": "2026-07-09T09:00:00+08:00"
+    },
+    {
+      "title": "Claude Code 新功能 /checkup：一键清理未用的 skills/MCPs/plugins 省 context、去重本地配置",
+      "summary": "7/8 bcherny（Claude Code 团队 Boris Cherny）发布 Claude Code 新命令 /checkup，主要做三件事：清理未使用的 skills、MCPs、plugins 以节省上下文；对本地配置去重（dedup your local settings）；并给出清理后的上下文节省报告。这是继 Artifacts 扩展到 Pro/Max、Enterprise 用量控制之后 Claude Code 工具层的又一细节打磨。",
+      "detail_content": "【核心事件】7/8 23:22（UTC）bcherny 在 X 发布 Claude Code 新功能 /checkup，附「我跑了一次 /checkup 后发生了什么」的截图演示。功能聚焦三块：① 清理未使用的 skills、MCPs、plugins，释放被占用的上下文窗口；② 对本地配置（local settings 类）做去重；③ 输出上下文节省情况的报告。\n\n【为什么这个小更新值得注意】Claude Code 这类 agentic 编码工具的核心瓶颈之一就是上下文管理——装得越多 skills/MCPs/plugins，静默占用的 context 越多，留给实际任务的窗口越小，长期使用后配置臃肿是真实痛点。/checkup 把「主动审计并回收 context」做成了一等公民命令，方向和 Anthropic 反复强调的「agentic 长链任务依赖上下文管理」（见 Thomson Reuters 故事里 Hron 的第二点要求）一致。对重度用户（如你日常大量使用 Claude Code、又装了不少 skill 和 MCP）而言，这是个低成本高收益的卫生习惯命令。\n\n【背景】bcherny 是 Claude Code 团队核心成员，本周另有一则「首次讲述 Claude Code 的起源故事」（从 Anthropic 内部 predecessor Clide 讲起），属视频形态，更适合 ai-interviews 频道收录。/checkup 是本周 Claude Code 产品线除 Artifacts 扩展（7/2 已收）外唯一的实质新功能点。",
+      "source": "bcherny (Boris Cherny, Claude Code)",
+      "source_type": "twitter",
+      "url": "https://x.com/bcherny",
+      "timestamp": "2026-07-08T23:22:00Z",
+      "importance": 7,
+      "tags": [
+        "Claude-Code",
+        "新功能",
+        "上下文管理",
+        "bcherny"
+      ],
+      "batch_time": "2026-07-09T09:00:00+08:00"
+    },
+    {
+      "title": "Anthropic 营销运营团队 dogfooding Cowork 实战：周报从 1-2 天压到 2 小时，活动搭建全自动化（dispatcher + 5 个 specialist skills + 独立 audit agent）",
+      "summary": "Anthropic 官博发布内部营销运营团队用 Claude Cowork 的两个实战。Ian Chan 把每周营销指标评审从 1-2 天压到 2 小时（周日定时任务自动拉数+读会议纪要+查 Slack+出建议焦点，配 prep/proofreading/action-items 三个 skills）。Annabel Custer 把活动搭建几乎全自动化——一个 dispatcher skill 每小时读 Slack 取最紧急请求、分发给 5 个 specialist skills 之一，完成后由独立的 audit agent（零先验上下文）在真实落地页提交测试注册验证。两人都把反复纠正的东西沉淀成 skill，并让 Claude 反思指令哪里难读。",
+      "detail_content": "【核心事件】7/8 Anthropic 官博发布自家营销运营（marketing operations）团队用 Claude Cowork 的深度实战，主角是 Ian Chan（营销运营，负责周报）和 Annabel Custer（campaign 运营，负责活动搭建）。这是继昨天 Cowork 扩展 web/mobile 之后，Anthropic 用「自己怎么用」来示范产品能力的连续动作。\n\n【Ian 的周报自动化】Ian 过去每周要花 1-2 天拼凑营销指标周报——有些指标在仪表盘里、有些还在数据仓库没接进来、有些只在 Slack 消息或会议纪要里。现在 Cowork 接管了大部分「找数据」的活：一个定时任务每周日晚跑，提示 Claude 读上周评审、读最新会议纪要、查 Slack 看销售在关注什么、查数据仓库，留一个夹子装好数字和建议焦点。周一早 Ian 打开 Cowork 拉初稿（含指标表和建议标题），确认焦点后让 Claude 用支撑细节展开，同一套数据和叙事生成领导层幻灯片，后续项变成 Asana 任务。数字对不上时 Claude 会标出 mismatch 而非瞎猜——一次销售团队重组后两套汇报口径对不上，Claude 主动标出 gap 问 Ian 怎么处理。整个流程跑在三个 Ian 自建并持续更新的 skill 上：prep skill 驱动报告组装、proofreading skill 把草稿里每个数字对照已验证来源核对、action-items skill 把后续项变 Asana 任务。每次会话结束 Ian 让 Claude 总结该回灌进 skill 的东西。结果：过去最多两天的活，现在最多两小时。\n\n【Annabel 的活动搭建自动化】营销活动的基础设施搭建（每个活动/网研/整合 campaign 都要在 CRM、营销自动化平台、活动管理平台各建一套，且它们之间集成很少）是营销里最手工的流程之一。Annabel 过去从专门 Slack 频道取每个请求手动串接。新方案几乎全由 Cowork 处理：从一个 intake 表单开始，每小时一个 dispatcher skill 读频道、挑最紧急请求、给工单盖戳防重复、分发给五个 specialist skill 之一——dispatcher 自己不做任何搭建，只决定下一步跑什么，单独剥离出来让 Annabel 能在不碰路由的前提下各自精调 specialist。最复杂的 event-build skill 端到端处理 CRM 建活动、营销自动化 campaign、活动平台、邮件起草、落地页生成及它们之间的集成。完成后交给一个全新的 audit agent——它不带任何先前上下文，在真实落地页提交测试注册、在 Gmail 打开确认邮件，一切正常就把 Asana 任务标记完成。Annabel 每个结果发布前都审一遍。她还常开一个单独的「manager」agent，某次跑飞了就让它看发生了什么、提调整建议，值得保留的回灌进 skill。\n\n【可迁移的方法论】博客给了营销运营团队上手 Cowork 的四条建议，对任何用 agentic 工具的人都成立：① 把反复出现的纠正沉淀成 skill——纠正 Claude 超过一次的东西就该进 skill，而且你不用自己写 skill、Claude 能帮你写；② 先建 proofreading skill，确保报告里每个数字都能追溯到已验证来源；③ 让 Claude 反思——Claude 读指令的方式和人类写指令的方式不同，新流程跑完头几次后问它指令哪里难读，把浮现的问题回灌；④ 依赖定时任务——周日晚或每小时自己跑的活，是没人需要记得去做的活。\n\n【为什么对你重要】这篇的价值不在营销本身，而在它把「agentic 工作流如何在一个真实运营团队里落地」拆得很细——dispatcher/specialist/audit 三层分离架构、把人的反复纠正自动沉淀为 skill、用独立无上下文 agent 做审计验证，这套模式可以直接挪用到银行内部的运营自动化（对账、报表、合规审查）设计里。Anthropic 连续两天用自家团队示范 Cowork，是在为「Cowork 不只是编码工具、是知识工作运营平台」这个定位铺叙事。",
+      "source": "Claude by Anthropic",
+      "source_type": "tavily",
+      "url": "https://claude.com/blog/how-anthropics-marketing-operations-team-uses-claude-cowork-to-automate-reporting-and-campaign-builds",
+      "timestamp": "2026-07-08T18:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Anthropic",
+        "Claude-Cowork",
+        "dogfooding",
+        "营销运营",
+        "agentic工作流",
+        "企业落地"
+      ],
+      "batch_time": "2026-07-09T09:00:00+08:00"
+    },
+    {
+      "title": "OpenAI 发布《国家安全原则》：Daybreak 网络防御项目已接入澳/加/日/韩/法/德等九国，对军方合作划三条红线",
+      "summary": "7/8 OpenAI 发布《国家安全原则》(National Security Principles)，为政府与国安用途提供透明度框架。披露 Daybreak 网络防御项目已与澳大利亚、加拿大、日本、韩国、法国、德国、波兰、荷兰及 EU 机构（如 ENISA）建立 Trusted Access for Cyber 合作，英国在测试评估上有合作，生物安全方面把 GPT-Rosalind 模型扩展给部分美国政府及盟友的公共卫生/生物防御任务。对与国防部（Department of War）的合作重申三条合同红线：不用于大规模国内监控、不指挥自主武器系统、不做高风险自动决策，并支持立法在高风险军事用途上设护栏。",
+      "detail_content": "【核心事件】7/8 OpenAI 发布《国家安全原则》(National Security Principles)，称这是「跨公司努力」的成果，请了资深国安专家 David Kris 协助、在全公司开倾听会、涵盖研究/安全/政策/政府合作多个团队。发布时机是 OpenAI 正扩大与美国政府及盟友在关键防御领域（尤其网络和生物安全）的合作。\n\n【已在落地的合作】披露了两块实质进展：① Daybreak 网络防御项目——过去一个月已与澳大利亚、加拿大、日本、韩国、法国、德国、波兰、荷兰及 EU 机构（如 ENISA）建立 Trusted Access for Cyber 合作关系，与英国政府在网络安全、测试与评估上有日益深化的合作；② 生物安全——上月宣布把 GPT-Rosalind 模型扩展给部分美国政府及盟友、支持公共卫生和生物防御任务。\n\n【三条红线】原则适用于现有及未来的国安与执法合作，包括与国防部（OpenAI 用了 Department of War 这个称谓）的既有合作。今年早些时候公布合作协议时定下的合同限制被重申：不把 OpenAI 技术用于大规模国内监控、不用于指挥自主武器系统、不用于高风险自动决策。OpenAI 称这些限制与今天发布的原则一致。\n\n【立场表态】OpenAI 表态「正确的做法是清楚说明技术能怎么用、不能怎么用并保持透明」，但强调许多最重大的问题——尤其国安领域——「应通过民主程序回答，公司角色是帮助 informing 这些决策而非独自做出」。因此支持立法在高风险军事用途（国内监控、自主武器、直接影响美国国安的其他高风险用途）上设护栏。\n\n【为什么对你重要】这是一份政策框架类发布而非产品或研究突破，重要性在于它划定了 frontier AI 实验室与政府/军方合作的公开边界——三条红线（不搞大规模国内监控、不指挥自主武器、不做高风险自动决策）是目前业内相对克制、可参照的表态。和昨天 Anthropic 把 Claude Code/Cowork 带进政府（FedRAMP High + hash-chain 审计）形成对照：两家都在抢占政府/国安赛道，Anthropic 走「合规与可审计」路线、OpenAI 走「原则框架 + 联盟网络」路线。对关注 AI 治理与监管的人，这是观察实验室如何自我设界、又如何与国家权力结合的一手材料。",
+      "source": "OpenAI",
+      "source_type": "tavily",
+      "url": "https://openai.com/index/government-national-security-partnerships/",
+      "timestamp": "2026-07-08T21:00:00Z",
+      "importance": 6,
+      "tags": [
+        "OpenAI",
+        "国家安全",
+        "政策",
+        "网络防御",
+        "国防",
+        "AI治理"
+      ],
+      "batch_time": "2026-07-09T09:00:00+08:00"
+    },
     {
       "title": "Anthropic 把 Claude Cowork 扩展到 web 和 mobile：关上笔记本，agent 继续干活",
       "summary": "7/7 Anthropic 宣布 Cowork 从桌面扩展到手机和网页，beta 从 Max 用户开始未来几周铺开。三大变化：工作跨设备跟随你、后台任务无需设备在线也能跑、决策仍需你拍板。Anthropic 透露 Cowork 里 90% 以上不是写代码，而是日常知识工作——业务运营和内容创作加起来约占一半。",
@@ -517,93 +630,6 @@
         "政策"
       ],
       "batch_time": "2026-07-03T09:00:00+08:00"
-    },
-    {
-      "title": "Anthropic 重新上线 Fable 5，联合亚马逊微软谷歌推出 AI「越狱严重性」行业分级框架",
-      "summary": "Fable 5 与 Mythos 5 在 6 月 12 日被美国政府以出口管制为由封禁两周后，于 7 月 1 日全球恢复访问。Anthropic 训练了新的安全分类器，把当初触发封禁的那类「越狱」在 99% 以上的情况下拦截。更重要的是，它联合 Amazon、Microsoft、Google 等 Glasswing 伙伴起草了行业首套通用的越狱严重性评估框架（能力增量、影响广度、武器化难度、可发现性四维度），并宣布与美国政府建立更深度的前置测试与信息共享协作，同时上线 Fable 5 网络越狱的 HackerOne 悬赏项目。",
-      "detail_content": "【核心事件】6 月 9 日 Anthropic 发布 Fable 5 与 Mythos 5（同一底座，Fable 5 带强安全护栏面向大众，Mythos 5 护栏较少、仅给 Project Glasswing 防御性网络安全伙伴）。6 月 12 日，因亚马逊研究员发现一种绕过 Fable 5 护栏、让其识别并演示利用软件漏洞的方法，美国政府随即对两个模型施加出口管制，Anthropic 因无法实时核验国籍，被迫对所有用户暂停访问。7 月 1 日，Fable 5 在 Claude Platform、Claude.ai、Claude Code、Claude Cowork 全球恢复；Mythos 5 也按政府 6 月 26 日的批准恢复给部分美国机构。\n\n【关键细节】Anthropic 测试发现，报告里那些漏洞识别能力，Claude Opus 4.8、GPT-5.5、Kimi K2.7 等较弱模型同样能做到；至于利用漏洞的演示代码，测试范围内所有模型（含 Haiku 4.5 到 Opus 4.8、GPT-5.4/5.5、Kimi K2.7）都能复现——也就是说该「越狱」并未释放 Mythos 级别的独有攻击能力，只是碰到了 Fable 5 护栏的一个边界个案。Anthropic 随即与政府协作训练了针对该行为的新分类器，拦截率超 99%，被拦截的请求会转交 Opus 4.8 处理；美国商务部 CAISI 已验证新旧护栏均「极其强固」。代价是日常编码调试中的误拦会增加。\n\n【Glasswing 越狱严重性框架】这是全文最有行业意义的新东西。Anthropic 指出业界目前没有客观描述越狱严重程度的共识标准，导致每次新越狱出现都陷入混乱。它提议用四个维度打分：能力增量（越狱带来的能力是否显著超越现有工具）、影响广度（同一手法能覆盖多少种攻击任务）、武器化难度（需要多少人工与重试）、可发现性（手法是否已广泛流传）。对最高严重等级（如正被用于冲击电网或银行系统），将在确认后立即部署初步缓解，并组建 7×24 小时监控团队。\n\n【政府协作与影响】Anthropic 承诺四项深化协作：前沿模型发布前给政府评测伙伴前置访问并派技术人员陪同、重大越狱/滥用快速通报并共享新护栏、设立专门团队与算力配额支撑政府联合研究、推动面向全行业的自愿安全评测标杆。对用户而言，Pro/Max/Team 及部分 Enterprise 用户在 7 月 7 日前可享 Fable 5 占周用量上限 50% 的额度，之后转为用量积分。这篇文章实质上把一次封禁危机转化成了 Anthropic 主导行业安全话语权、并深度嵌入美国国家安全流程的契机。",
-      "source": "Anthropic",
-      "source_type": "tavily",
-      "url": "https://www.anthropic.com/news/redeploying-fable-5",
-      "timestamp": "2026-07-01T17:00:00Z",
-      "importance": 10,
-      "tags": [
-        "Anthropic",
-        "Fable 5",
-        "AI安全",
-        "越狱",
-        "出口管制",
-        "Glasswing"
-      ],
-      "batch_time": "2026-07-02T09:00:00+08:00"
-    },
-    {
-      "title": "Meta 效仿 SpaceX 进军云算力生意：自研模型掉队，转而把海量 GPU 算力卖给别人",
-      "summary": "Bloomberg 报道 Meta 正筹建云基础设施业务，对外出售 AI 算力和模型访问，直接对标 AWS、Google Cloud、Azure。Gizmodo 点出背景：Meta 自家前沿模型在竞争中掉队，于是像 xAI 一样转向「出租算力」回血。Meta 已承诺未来几年投入约 1829 亿美元建设 AI 基础设施，新业务由基础设施主管 Santosh Janardhan、超级智能实验室负责人 Daniel Gross 和总裁 Dina Powell McCormick 牵头，可能托管近期发布的闭源模型 Muse Spark。",
-      "detail_content": "【核心事件】7 月 1 日 Bloomberg 报道，Meta 正在规划一项云基础设施业务，计划把自建数据中心的算力能力和模型访问权限对外出售，直接进入 AWS、Google Cloud、Azure 的地盘。消息传出后 Meta 股价上扬。新业务形态可能参照 CoreWeave 出售裸算力，同时像 AWS 那样托管 AI 模型（包括 Meta 近期发布的闭源模型 Muse Spark）。\n\n【为什么这么做】这是当前 AI 竞争格局变化的一个缩影。Gizmodo 的标题说得直白——「Meta 走上 xAI 的老路，考虑出租算力，因为自家模型在前沿竞争中挣扎」。当模型本身没能打进第一梯队，把已砸下去的天量 GPU 变现就成了最现实的回血路径。今年 5 月初，SpaceX 刚与 Anthropic 签约，把 Colossus 1 数据中心的全部算力整包卖断；Meta 现在做同样的事，被 TechCrunch 解读为「AI 军备竞赛的赢家开始把过剩算力当生意做」的信号。\n\n【规模与团队】Meta 已承诺未来几年投入约 1829 亿美元建设 AI 基础设施，其中俄亥俄州一个规模堪比曼哈顿的数据中心将于今年上线。新业务由三人牵头：基础设施主管 Santosh Janardhan、Meta 超级智能实验室负责人 Daniel Gross、总裁 Dina Powell McCormick。扎克伯格此前已表态云业务「deferred but not denied」（被推迟但未被否决）。\n\n【影响与前瞻】这件事标志着 AI 竞争的主战场正从「谁训出最强模型」转向「谁掌握最多算力并能把它变现」。如果 Meta 真的把海量自有算力投入开放市场，会直接压低推理算力价格、挤压 neocloud 和三大云的利润空间；同时它选择托管闭源 Muse Spark 而非坚持开源 Llama，也暗示 Meta 内部对开源路线的信心可能正在动摇。对算力买家（包括大量 AI 创业公司）是利好，对正在融钱的推理服务商则是新的竞争压力。",
-      "source": "TechCrunch",
-      "source_type": "tavily",
-      "url": "https://techcrunch.com/2026/07/01/meta-like-spacex-looks-to-turn-excess-ai-compute-into-cash/",
-      "timestamp": "2026-07-01T13:43:07Z",
-      "importance": 8,
-      "tags": [
-        "Meta",
-        "AI算力",
-        "云服务",
-        "竞争格局"
-      ],
-      "batch_time": "2026-07-02T09:00:00+08:00"
-    },
-    {
-      "title": "NVIDIA 开源 Nemotron-Labs-TwoTower 扩散语言模型：生成吞吐量 2.42 倍、质量保留 98.7%",
-      "summary": "NVIDIA 发布扩散语言模型 Nemotron-Labs-TwoTower，基于冻结的自回归骨干 Nemotron-3-Nano-30B-A3B。采用双塔架构：上下文塔冻结、降噪器塔训练，通过层对齐交叉注意力和「状态播种」协作。在 2×H100 BF16 评估下，保留 98.7% 的自回归基线质量，生成吞吐量提升 2.42 倍（γ=0.8、块大小 16）。降噪器在约 2.1T token 上训练，骨干用 25T token 预训练；总参约 60B、每 token 活跃约 3B/塔，支持扩散、模拟 AR、AR 三种解码模式。",
-      "detail_content": "【核心事件】7 月 1 日 NVIDIA 发布开放权重的扩散语言模型 Nemotron-Labs-TwoTower，把「扩散」这条原本主要用于图像生成的技术路线，认真推进到了文本生成领域。它基于自回归骨干 Nemotron-3-Nano-30B-A3B 构建，最大卖点是：在几乎不损失生成质量的前提下，把生成吞吐量显著拉高。\n\n【架构关键】之所以叫 TwoTower（双塔），是因为它把模型拆成两个协作的塔——上下文塔（context tower）保持冻结，负责把已有上下文编码成键值缓存；降噪器塔（denoiser tower）才是被训练的部分，负责在扩散过程中逐步去噪生成 token。两塔通过「层对齐交叉注意力」耦合，并采用「状态播种」（state seeding）让降噪塔能复用上下文塔已算好的状态，避免重复计算。这种解耦让训练和推理成本都大幅下降：只有 3B 级别的降噪塔需要训练，骨干那 30B-A3B 参数全程冻结。\n\n【性能数字解读】在 2×H100、BF16 精度下评测，TwoTower 相对自回归基线保留了 98.7% 的质量，生成吞吐量提升 2.42 倍（γ=0.8、块大小 S=16，即一次并行去噪 16 个 token）。降噪塔在约 2.1T token 上训练，骨干则用了 25T token 预训练。总参数约 60B，每 token 活跃参数约 3B/塔。它同时支持纯扩散、模拟 AR、标准 AR 三种解码模式，方便在不同延迟/质量权衡下切换。\n\n【背景与前瞻】扩散语言模型是当前少数几条可能撼动自回归（AR）统治地位的技术路线之一——理论上它能并行生成、可控性更强，但长期受困于质量和成本。NVIDIA 这版用「冻结大骨干 + 训练小降噪塔」的思路，第一次把质量损失压到 1.3% 以内，同时拿到 2.4 倍加速，是一个相当扎实的工程信号。对推理成本敏感的应用（尤其高并发场景）值得关注；它也和近期 DeepSeek 的投机解码（DSpark 提速 60-85%）一道，说明「推理效率」正在成为继模型能力之后的第二个主战场。模型已开放权重，技术细节可预见会很快被社区复现和改进。",
-      "source": "MarkTechPost",
-      "source_type": "aihot",
-      "url": "https://www.marktechpost.com/2026/07/01/nvidia-releases-nemotron-labs-twotower",
-      "timestamp": "2026-07-01T08:10:17Z",
-      "importance": 7,
-      "tags": [
-        "NVIDIA",
-        "扩散语言模型",
-        "开源",
-        "推理加速"
-      ],
-      "batch_time": "2026-07-02T09:00:00+08:00"
-    },
-    {
-      "title": "OpenAI 论文披露 GPT-5.6 三个 Pro 变体：Sol Pro 基因组学基准 31.5%，约为 Opus 4.8 的两倍",
-      "summary": "OpenAI 一篇论文首次列出 GPT-5.6 的三个 Pro 变体——Luna Pro、Terra Pro、Sol Pro，打破以往单一 Pro 模型的策略。在基因组学基准中，Sol Pro 通过率 31.5% 居 60 个测试模型之首，领先标准 Sol（28.7%）和 Claude Opus 4.8（16.0%）。但 Pro 提升呈递减：Luna Pro +7.1pp、Terra Pro +5.2pp、Sol Pro 仅 +2.8pp，Terra Pro（28.5%）几乎与标准 Sol 持平。论文未披露 Pro 运行的 token 用量。",
-      "detail_content": "【核心事件】7 月 1 日 The Decoder 报道，OpenAI 一篇论文首次披露 GPT-5.6 不止有此前公布的 Sol/Terra/Luna 三个标准版，还各对应一个 Pro 变体（Luna Pro、Terra Pro、Sol Pro），一共六个型号。这打破了 OpenAI 以往只保留单一「Pro」旗舰的策略——现在 Pro 本身也被拆成了三档。\n\n【基准数据】在一个基因组学（genomics）基准上，Sol Pro 以 31.5% 的通过率位列 60 个被测模型之首，领先标准版 Sol（28.7%），更把 Claude Opus 4.8（16.0%）甩开近一倍。这是少数几个公开给出 GPT-5.6 与 Claude 旗舰直接对比的硬数字，对关注两家竞争动态的人是有价值的数据点。Terra Pro 和 Luna Pro 分别为 28.5% 和 23.6%。\n\n【边际递减的含义】更值得玩味的是提升幅度的递减：从标准版升到 Pro，Luna Pro 提升 7.1 个百分点（16.5%→23.6%）、Terra Pro 提升 5.2 个百分点（23.3%→28.5%）、Sol Pro 只提升 2.8 个百分点（28.7%→31.5%）。换句话说，模型越强，Pro 带来的增益越小——Terra Pro（28.5%）已经几乎追平标准 Sol（28.7%）。这暗示在最前沿的能力天花板附近，「砸更多推理算力换 Pro」的回报正在快速衰减，和近期行业从「tokenmaxxing（堆 token）」转向「讲效率」的大趋势互相印证。\n\n【未解的疑问】论文没有披露 Pro 变体运行时消耗的 token 数量。考虑到 Pro 通常意味着显著更多的推理计算，Sol Pro 那 2.8 个百分点的提升究竟是「划算」还是「烧钱换来的」，目前无法判断。这也呼应了 Cursor 早前的研究发现——编码智能体在 SWE-bench Pro 上很大比例的「修复」靠检索而非真正推导，benchmark 分数本身就可能有水分。对用户而言，Pro 三档化意味着选型更复杂，而基因组学这种窄领域的领先未必代表通用能力上的差距。",
-      "source": "The Decoder",
-      "source_type": "aihot",
-      "url": "https://the-decoder.com/openai-paper-reveals-three-gpt-5-6-pro-models-breaking-with-single-top-tier-strategy",
-      "timestamp": "2026-07-01T10:03:41Z",
-      "importance": 7,
-      "tags": [
-        "OpenAI",
-        "GPT-5.6",
-        "基准测试",
-        "竞争格局"
-      ],
-      "batch_time": "2026-07-02T09:00:00+08:00"
-    },
-    {
-      "title": "AI 推理 neocloud Together AI 融资 8 亿美元，估值跃升至 83 亿",
-      "summary": "AI neocloud Together AI 完成 8 亿美元 C 轮融资，估值达 83 亿美元。公司 2022 年成立，2023 年 A 轮由 Kleiner Perkins 领投、英伟达和 Emergence Capital 跟投（1.025 亿）。这轮融资反映推理算力与开源模型托管层持续吸金，与 Meta 进军云算力、企业从「堆 token」转向「要效率」的大趋势一致——但 Meta 这类巨头亲自下场，也意味着 neocloud 面临新的竞争压力。",
-      "detail_content": "【核心事件】7 月 1 日 TechCrunch 报道，成立于 2022 年的 AI neocloud（新型云服务商）Together AI 完成 8 亿美元 C 轮融资，估值站上 83 亿美元。公司起步即资金充裕——2023 年的 1.025 亿美元 A 轮由 Kleiner Perkins 领投，英伟达和 Emergence Capital 跟投，此次 C 轮此前业内早有传闻。\n\n【赛道定位】Together AI 属于「neocloud」这一新兴类别：不像 AWS/Azure/GCP 那样提供全栈云，而是专注于 AI 这个垂直场景，尤以开源模型（Llama、DeepSeek、Qwen 等）的推理托管和微调服务见长。它是过去两年随开源大模型生态爆发而崛起的一批算力中间商的代表，同类玩家还包括 CoreWeave、Crusoe 等。\n\n【为什么此刻吸金】这轮融资和同一天曝出的 Meta 进军云算力业务，是同一个故事的两面：AI 推理算力的需求仍在高速增长，企业越来越倾向用更便宜的开源模型 + 专业推理服务来替代直接调用闭源 API，neocloud 正好卡在这个需求上。英伟达持续出现在这类公司的股东名单里也不意外——算力中间商越多、越成功，GPU 出货量就越有保障。\n\n【风险与前瞻】对 Together AI 这类 neocloud 而言，最大的新变量恰恰是 Meta 这样的巨头亲自下场卖算力：巨头手里是自有数据中心和更深的资金池，一旦把过剩算力投入开放市场，很可能通过价格战挤压 neocloud 的利润。所以这轮 8 亿融资既是弹药，也是抢在窗口期关上前加固护城河的举动。对 AI 应用开发者而言，算力供给侧玩家增多、竞争加剧，长期意味着更低的推理成本和更多选择。",
-      "source": "TechCrunch",
-      "source_type": "tavily",
-      "url": "https://techcrunch.com/2026/07/01/neocloud-together-ai-raises-800m-leaps-to-8-3b-valuation/",
-      "timestamp": "2026-07-01T18:29:14Z",
-      "importance": 6,
-      "tags": [
-        "Together AI",
-        "融资",
-        "AI算力",
-        "neocloud"
-      ],
-      "batch_time": "2026-07-02T09:00:00+08:00"
     }
   ]
 }
