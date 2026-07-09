@@ -1,0 +1,116 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-07-09T10:00:00+08:00",
+  "digest": "本周 AI 工程的主线异常清晰：行业重心从'AI 能不能写代码'彻底滑向'人怎么驾驭它'。AIEWF 收官日把这件事量化了——95% 的人已在用 agent、89% 的 agent 已能写数据，但'控制层没人收敛'、59% 担心 AI 代码制造长期负债，成本也开始反向限制野心。Latent Space 同期两篇把'怎么驾驭'具象化：一场关于 loops 的大辩论（自比为'火车工程师'的一方 vs 喊'炒作跑在纪律前面'的一方），和一门正在成型的'skill engineering'学科（给 agent 一套设计词汇表、前 80% 给 AI、后 20% 归人）。外围两条信号把这个趋势顶得更实：会计事务所开始 vibe-code 自己的软件、直接改写 build-vs-buy 经济账（但治理、维护、单人依赖全成了新坑），Perplexity CTO 下令工程师'年底前停止看代码'。一线社区情绪也到了拐点——一位 fintech 工程师自白'Fable 强到我怀疑当工程师还有什么意义'，结论仍落回'需要一个胜任的人坐在驾驶位'。另有 NVDB 给 Claude Code 贴'安全后门'警告（实为反倒卖/反蒸馏实验、已回滚），提醒深度介入开发环境的 coding agent，其遥测策略本身已是合规审查对象。整体判断：驾驭能力、控制层、治理结构、信任成本，正在取代'写得出代码'成为新的稀缺品——这恰好对上 Eason 反复主张的'判断力稀缺'。",
+  "items": [
+    {
+      "title": "AIEWF 收官战：loops 大辩论 + AI 工程现状——95% 的人在用 agent，但没人搞定'控制层'",
+      "summary": "AI Engineer World's Fair 最后一天把整场大会的暗线摆上台面：一场关于'智能体循环(loops)'的辩论，折射出行业对'自治软件工厂现在到底可行不可行'的真实纠结。Amplify 年度调研给了硬数据：95% 受访者已用 agent(约去年两倍)、89% 的 agent 已能写数据(去年 52%)，但控制层仍很原始，59% 担心 AI 生成代码正在制造长期负债，40% 说成本已在限制他们用 AI 的野心。Anthropic Labs 负责人 Mike Krieger 讲了 Claude Tag 怎么把团队带进'软件工厂'雏形——用法从'修 bug'变成'你负责这块代码库'，但他坦承团队卡在 review 上。",
+      "detail_content": "【核心事件】7月3日，AI Engineer World's Fair（AIEWF）收官日把整场大会的暗线摆上了台面：一场关于'loops（智能体循环）'的辩论。主持人 Allie Howe（Keycard）抛出的问题很直接——'loops 的炒作与实际效果之间，到底有没有 gap？' 支持方是 Geoffrey Huntley（Ralph Loop 创造者）和 Ian Livingstone（Keycard CEO）；反方是 HumanLayer 的 Dex Horthy 和 Subroutine 的 Greg Pstrucha。辩论折射出整个行业正在纠结的真问题：自治的'软件工厂'现在到底可行不可行？\n\n【硬数据：Amplify 2026 AI 工程师调研】Barr Yaron（Amplify）公布年度调研：95% 的受访者已在用 agent（约为去年两倍）；在用 agent 的团队里，89% 说 agent 已经能'写数据'（去年只有 52%）——'agent 不再只是读、总结、起草，而是在系统里采取行动'。但控制层还很原始：人类审批和权限是主流护栏，剩下是任务分解、检索、记忆、沙箱等散乱手法。'没人搞定 agent 的控制层（Nobody has settled the control layer for agents）。' 成本也在收紧：40% 说 AI 成本经常限制他们用 AI 的野心，另有 36% 说偶尔限制；token 用量已是仅次于质量的第二大生产监控指标。最刺眼的一句：59% 的受访者担心今天的 AI 生成代码正在制造长期负债（long-term liabilities）。\n\n【关键引用】Huntley 的金句把 loopmaxxing 描绘得画面感十足：'我们现在有点像火车工程师（locomotive engineers），工作就是把火车留在轨道上。' 反方 Horthy 没有否定 loops——'Kubernetes 本身就建在控制循环上，但那是有确定性的循环'——他的判断是'炒作跑在了工程纪律前面'，甚至认为该往下退一层抽象而非往上。Pstrucha 直指经济账：靠 agentic loops 撑全局'经济上不可持续'，'你不能靠多买 token 把问题编排没了（orchestrate your problems away by buying more tokens）'。\n\n【Anthropic 的内部样本】Anthropic Labs 负责人、Instagram 联合创始人 Mike Krieger（swyx 采访）讲了 Claude Tag 怎么把团队带进'软件工厂'雏形：用法从'修这个 bug'变成'你负责这块代码库，盯着反馈渠道，主动接活'——更多是多人协作、异步、主动式。但他坦承负面后果：团队'卡在 review 上'，卡在'人类自己能不能完整理解我们在做什么'上。\n\n【影响与前瞻】Theo Browne（'过去算一个创业公司的东西，现在是个 side project'）和 Garry Tan（'最快的创始人不把 AI 当自动补全，而是当劳动力'）给了乐观收尾。但这篇真正的价值是把行业矛盾量化了：用 agent 的人翻倍、agent 开始写数据，可控制层、成本、长期负债三条线全都没收敛。对 Eason 这种要在银行推 agent 的人，Amplify 这组数可以直接拿进汇报——尤其'59% 担心 AI 代码制造长期负债'和'控制层无人收敛'，正是强监管场景里最该被点名的风险。",
+      "source": "Latent Space",
+      "source_type": "tavily",
+      "url": "https://www.latent.space/p/aiewf-daily-dispatch-locomotives",
+      "timestamp": "2026-07-03T00:00:00Z",
+      "importance": 9,
+      "tags": [
+        "AIEWF",
+        "智能体循环",
+        "控制层",
+        "软件工厂",
+        "AI工程调研"
+      ],
+      "batch_time": "2026-07-09T10:00:00+08:00"
+    },
+    {
+      "title": "会计事务所开始 vibe-code 自己的软件：build-vs-buy 经济账被改写，治理/维护/单人依赖成新坑",
+      "summary": "Accounting Today 深度报道：越来越多会计事务所不再买专业 SaaS，而是让（哪怕没技术背景的）合伙人用 Claude Code/Cursor 自己 vibe-code 出来用。MJD Advisors 创始人算账——某审计平台报价 30 万美元/年，他用 Retool(年费不到 3 万)+AI 自搭省下几十万。但报道真正有价值的是把真实代价摊开：难以 scale、治理结构缺失、最尖锐的是'单人依赖'(只有 prompt 出来的那一个人懂)，有人自嘲'住院了他们得打电话到病房'。做得好的所有事务所都收敛到同一套做法：上 guardrail、和开发组配对、先做内部 admin 活、离客户数据远一点。",
+      "detail_content": "【核心事件】7月8日 Accounting Today 深度报道：会计行业正出现一个结构性转变——越来越多事务所不再买专业 SaaS，而是让（哪怕没技术背景的）合伙人用 Claude Code、Cursor、Replit 自己 vibe-code 出来用。Edgefield Group 创始人 Ellen Choi 的判断是：'这是头一年大家真的在想——我还要不要买？还要不要这个专业厂商？' 厂商端已感受到反推力——有人直接对销售说'我们不会花每人每月 300 美元买，因为我们自己能 vibe code，虽然没你们 UI 好看、功能全，但我不需要那些'。\n\n【硬数据与案例】MJD Advisors 创始人 Mike DeKock 算了笔账：某审计平台报价 30 万美元/年，他用 Retool（年费不到 3 万）+ AI 自己搭了，省下几十万美元。他还花 6 小时复刻了一个 IT 审计软件公司的 demo 产品。但硬话也来了：这种东西'显然达不到厂商方案的精细度'，好在'我们的工作流不需要那个精细度'。\n\n【新坑：治理、维护、单人依赖】报道最有价值的是把 vibe-code 的真实代价摊开了。第一，难以 scale：在某个极具体场景下能跑，'一换个配置就崩'。第二，安全/治理结构缺失——Abacus Technologies 的 Brown 发现'个人搭的东西没法套进全所的安全架构和治理'。第三，最尖锐的'单人依赖'：这些 app '通常只有把它 prompt 出来的那一个人懂'。DeKock 自嘲：SOC 2 专业公司老板天天修 bug '不是 CEO 该干的'，问他要是哪天住院 app 罢工怎么办，'他们得打电话到病房（call me at the hospital）'。他的应对是请了个 fractional CTO + 开发团队，把一切文档化。\n\n【方法与边界】做得好的事务所都收敛到同一套做法：上 guardrail——谁有 idea 谁和开发组配对，强制套安全结构、编程语言规范；先做内部 facing 的 administrative 活（收单、归类、OCR），离客户数据/总账/审计软件越远越安全；越靠近 client-facing 越谨慎。Choi 一句很准的定位：'这与其说是把从业者变成蹩脚工程师，不如说是把从业者变成更好的产品经理。' DeKock 甚至反感'vibe code'这个词——'有一种狂野西部的意味，但我完全不是那样做的'。\n\n【影响与前瞻】这是非工程师用 AI 造产品在专业服务业最扎实的一手样本，对银行极有借鉴价值：vibe-code 不会消灭 SaaS，但会啃掉'长尾、内部、admin'那一段；真正难的不是写出原型，而是 scale、治理、维护、知识不集中在一人。报道里反复出现的 fractional CTO + 开发组配对 + guardrail + 离核心系统远一点，几乎可以直接翻译成银行 AI 推广的落地清单。",
+      "source": "Accounting Today",
+      "source_type": "tavily",
+      "url": "https://www.accountingtoday.com/news/should-accountants-vibe-code-their-own-software",
+      "timestamp": "2026-07-08T13:00:00Z",
+      "importance": 8,
+      "tags": [
+        "vibe-code",
+        "build-vs-buy",
+        "非工程师造产品",
+        "治理",
+        "单人依赖"
+      ],
+      "batch_time": "2026-07-09T10:00:00+08:00"
+    },
+    {
+      "title": "Skill engineering 浮现为新学科：给 agent 一套'设计词汇表'，loopmaxxing 时代人怎么握住方向盘",
+      "summary": "Latent Space 专访 Paul Bakaus——开源设计 skills 系统 Impeccable 作者。核心论点：让 agent 更强的关键不是放权放到底，而是正在成型的'skill engineering'——给 agent 领域知识、上下文、人能精准 steering 的接口。机制是把形容词变成可操作指令（裸模型做'bolder'会加霓虹毛玻璃，Impeccable 定义为层级/尺度/果断排版）。最关键的判断是他拒绝'全自动'终局：'没有 auto，将来也不会有 auto'——AI 快速产出前 80%，人拥有最后 20% 的品味与判断。直接接住 Eason 的'判断力稀缺'论。",
+      "detail_content": "【核心事件】7月2日 Latent Space 专访 Paul Bakaus——开源设计 skills 系统 Impeccable 的作者。他的核心论点：在 loopmaxxing 时代，让 agent 更强的关键不是放权放到底，而是一门正在成型的'skill engineering（技能工程）'——给 agent 领域知识、上下文、以及人能精准 steering 的接口。他在 AIEWF 开了场工作坊，戏称这是造 skill 的'黑魔法（dark arts）'。\n\n【机制：把形容词变成可操作指令】Impeccable 的创新是把设计师熟悉的词赋予精确的、对 agent 可执行的含义。一个裸模型被要求'做得更大胆（bolder）'可能会加渐变、霓虹、毛玻璃；Impeccable 则把 boldness 定义成层级、尺度、果断的排版——吸引注意力但不破坏既有设计系统。'一个背后没有东西的形容词，只是一个漂亮的撇号（a nice apostrophe）。你必须告诉 agent 你到底指什么。' Bakaus 发现同样模型，设计师和工程师产出差异巨大，原因只是设计师更会 articulation——于是他把这套'被赋予含义的语言'压缩进 skill。\n\n【跨 harness 的现实】skill engineering 还得处理 agent harness 和模型差异：Codex 和 Claude 对 subagent、权限的处理不一样，一个想跑在 Claude Code/Cursor/Copilot/Codex 上的 skill 不能假设它们能力一致。他还实验了 skill 内部 routing——把多个能力组合、把任务导向相关指令，类比 mixture-of-experts，既省 token 又提效。他也警告：当所有人都用同一套 skill，产出会趋同（'everything ends up looking the same'）。\n\n【设计/工程/产品经理的角色融合】Bakaus 看到三者边界在消融：'设计师在往代码走，工程师在往设计走。' 谁的工作主要是'把一个现成产物翻译成另一种形式'（比如把 Figma 翻成代码的工程师、把界面做得'看起来不差'的设计师），谁就最危险。他原以为 Impeccable 主要吸引工程师、专业设计师会反感，结果设计师占了至少一半受众——把它当成'桥梁'，用自己习惯的方式和 agent 沟通。\n\n【最关键的判断：there will be no auto】Bakaus 拒绝'全自动'作为终局。他描述了两个阵营：守 Figma 老工作流的人，和恨不得人完全不干预的 loopmaxxing 派——'真相在中间'。他的模型是 AI 快速产出前 80%（合格的布局和基础实现），人拥有最后 20%——品味、上下文、独特观点进来的地方。用户反复求他加 auto mode，他不加。'没有 auto，将来也不会有 auto。' 被问及'软件工厂'这类把人移出工程的愿景，他一句话：'我坚决反对（I'm squarely against that）。'\n\n【影响与前瞻】这篇直接接住 Eason 反复强调的'判断力稀缺'——Bakaus 的'前 80% 给 AI、后 20% 归人'，和 Fadell'工具买得到判断力买不到'、Thomson Reuters CTO Hron'写代码不再是工作本身，稀缺的是 systems thinking/judgment/taste'是同一个判断的不同表述。skill engineering 这个提法也值得记进词汇表：差异化又回到了谁更会 articulation、谁的 taste 更准。",
+      "source": "Latent Space",
+      "source_type": "tavily",
+      "url": "https://www.latent.space/p/skill-engineering-design",
+      "timestamp": "2026-07-02T00:00:00Z",
+      "importance": 8,
+      "tags": [
+        "skill-engineering",
+        "loopmaxxing",
+        "判断力",
+        "设计词汇表",
+        "Impeccable"
+      ],
+      "batch_time": "2026-07-09T10:00:00+08:00"
+    },
+    {
+      "title": "中国 NVDB 给 Claude Code 贴'安全后门'警告：实为 Anthropic 反倒卖/反蒸馏实验，已紧急回滚",
+      "summary": "CBS 报道：中国工信部旗下国家信息安全漏洞库(NVDB)公开警告 Claude Code 存在'安全后门风险'，称可回传用户位置/身份标识，建议立即排查卸载。但这不是恶意后门——Claude Code 工程师 Thariq Shihipar 解释这是 3 月上线的反倒卖/反蒸馏(distillation)遥测实验，明天发布版完全回滚。阿里已通知员工 7/10 起禁用 Claude Code。对银行的提醒：coding agent 深度介入开发环境，其遥测/数据回传策略本身就是合规审查对象。",
+      "detail_content": "【核心事件】7月8日 CBS：中国工信部旗下的国家信息安全漏洞库（NVDB）公开警告，称检测到 Anthropic 的 AI 编程工具 Claude Code 存在'安全后门风险，构成严重威胁'——指控该后门可在未经用户同意下，把用户位置、身份标识等敏感信息回传 Anthropic 服务器。NVDB 建议'相关机构和用户立即全面排查'，'及时卸载或升级到已移除后门代码的最新安全版本'，并加强网络流量监控。\n\n【关键细节：这不是恶意后门，是反滥用实验】Anthropic 尚未官方回应 AFP 置评，但 Claude Code 工程师 Thariq Shihipar 上周在 X 上已解释了来龙去脉：'这是我们 3 月上线的一个实验，目的是防止未授权经销商滥用账号、防止被蒸馏（distillation）。团队之后已经落地了更强的缓解措施，而且我们本来就想把它下掉……明天发布版会完全回滚。' 换句话说，被 NVDB 定性为'后门'的代码，本质是 Anthropic 用于打击灰色倒卖和模型蒸馏的遥测实验——不是窃密，但确实是不透明的、未充分披露的数据回传。\n\n【背景：阿里禁令与蒸馏之争】阿里上周已通知员工，因安全顾虑从 7月10日起禁用 Claude Code，将其列入'高风险软件'名单。值得玩味的是，Anthropic 此前曾指控阿里逆向工程其模型、用蒸馏方式模仿能力——这让'反蒸馏实验'与'被禁'之间形成了微妙的因果链。Anthropic 本身屏蔽中国等被视为对手国家的访问，但通过 VPN/第三方代理仍可使用。\n\n【影响与前瞻】对 Eason 这种在强监管银行环境用 Claude Code 的人，这条的价值不在'是不是后门'（已被澄清为反滥用实验并回滚），而在三个延伸点：一是 coding agent 这类深度介入开发环境的工具，其遥测/数据回传策略必须被当作合规审查对象，'未披露的数据回传'在银行业就是事故级；二是即便工具本身无害，地缘与监管标签（NVDB 警告、企业禁用名单）会直接影响团队能不能用、敢不敢用；三是反蒸馏这个猫鼠游戏会持续——模型厂商的防护代码与买方/对手的合规要求之间的张力，才刚开始。",
+      "source": "CBS News",
+      "source_type": "tavily",
+      "url": "https://www.cbsnews.com/news/china-security-backdoor-anthropic-ai-coding-tool/",
+      "timestamp": "2026-07-08T11:10:00Z",
+      "importance": 7,
+      "tags": [
+        "Claude Code",
+        "安全后门",
+        "NVDB",
+        "反蒸馏",
+        "合规"
+      ],
+      "batch_time": "2026-07-09T10:00:00+08:00"
+    },
+    {
+      "title": "Perplexity 内部代号 'Teammate' 的 AI 编程工具曝光：CTO 下令工程师'年底前停止看代码'",
+      "summary": "Business Insider 独家：Perplexity(估值 200 亿美元)悄悄自建内部 AI 编程工具 Teammate，工程师 5 月起在用，定位'从头到尾管整个软件项目'——own 项目、排查 bug、监控服务，model-agnostic。CTO Denis Yarats 在内部下的指令相当激进：'今年年底或更早，软件工程师就应该停止看代码(stop looking at code)，就用 AI。' 他还正面回怼 slop 质疑：'只要代码能过质量检查，slop 就不会是个问题。' 价值不在'又一款工具'，而在 CTO 用行政命令推'别看代码'的文化立场。",
+      "detail_content": "【核心事件】7月7日 Business Insider 独家：AI 搜索公司 Perplexity（去年估值 200 亿美元）悄悄自建了一款内部 AI 编程工具，代号 Teammate，工程师从 5 月起就在用，未来可能公开发布。它定位是'从头到尾管整个软件项目'——按内部公告原文，'为长周期工程工作而建：own 项目、排查问题、监控服务'。截图显示工程师已让它去找内部系统的 bug。工具 model-agnostic（不绑定某个模型），CTO Denis Yarats 一直在内部推动工程师用 AI 写代码。\n\n【关键引用：'停止看代码'】Yarats 在 Teammate 内部上线前几周，给工程师下的指令相当激进——'今年年底或更早，软件工程师就应该停止看代码（stop looking at code），就用 AI。' 他还正面回怼了'AI 产出是 slop（垃圾）'的批评：'只要它生成的代码能通过质量检查，slop 就不会是个问题（slop is not going to be a thing）。'\n\n【背景与定位】Perplexity 原本主攻 AI 搜索（对标 Google），若 Teammate 公开，它将直接杀入 Cursor、Anthropic、OpenAI 盘踞的 AI 编程战场。Perplexity 发言人拒绝对此置评。\n\n【影响与前瞻】这条值得收的不是'又一款 coding 工具'（那是 ai-frontier 的范畴），而是 CTO 级别给工程组织下的明确文化指令：'停止看代码'。这是一个比'用 AI 提效'激进得多的立场——把人从代码审查环节主动抽离。它和同批收录的 AIEWF 辩论里 Horthy 的担忧（'炒作跑在纪律前面'）、Amplify 调研'59% 担心 AI 代码制造长期负债'正好构成张力：一边是 CTO 用行政命令推'别看代码'，一边是行业集体焦虑'没人 review 得过来'。对银行这种强审计场景，Yarats 这句'能过质量检查就不算 slop'恰恰是最该被 challenge 的——质量检查本身能不能 cover 住合规与安全，才是真问题。",
+      "source": "Business Insider",
+      "source_type": "tavily",
+      "url": "https://www.businessinsider.com/perplexity-building-ai-coding-tool-take-on-cursor-and-openai-2026-7",
+      "timestamp": "2026-07-07T23:22:00Z",
+      "importance": 7,
+      "tags": [
+        "Perplexity",
+        "Teammate",
+        "停止看代码",
+        "AI编程",
+        "工程文化"
+      ],
+      "batch_time": "2026-07-09T10:00:00+08:00"
+    },
+    {
+      "title": "r/ClaudeCode 一线工程师自白：Fable 已经强到我开始怀疑'当软件工程师还有什么意义'",
+      "summary": "r/ClaudeCode 上一条高共鸣帖子，作者是在一家'相当大的 fintech 公司'工作的软件工程师，坦诚到了心理拐点：Fable 已强到他自问'除了我比 Fable 便宜……目前，当软件工程师还有什么意义'。他描述的真实状态是'几乎不用手动写代码，但活儿一点没少、更早犯困、产出高得多'，代码库'全是插件和面条代码'。结论落回人的价值：'即便 Fable 这么强，你仍然需要一个胜任的人坐在驾驶位。' 与 Eason'判断力稀缺'论、Fadell'工具买得到判断力买不到'完全同频。",
+      "detail_content": "【核心内容】这是 r/ClaudeCode 上一条引发大量共鸣的帖子，作者是在一家'相当大的 fintech 公司'工作的软件工程师，坦诚到了一个心理拐点：Fable（Claude 的 agentic 编程形态）已经强到他开始自问——'除了我比 Fable 便宜……目前之外，当软件工程师还有什么意义？' 这种来自一线、不带任何厂商色彩的真实焦虑，比任何行业报告都更能反映工程社区的情绪温度。\n\n【关键自述：干得更累、产出更高、方向盘还得人在】贴主没滑向虚无。他描述的真实状态是：Opus 4.8 和 GPT-5.5 已经好到他'几乎不用再手动写代码'，但他'感觉活儿一点没少、甚至一样累，更早犯困，只是产出高得多'。更实在的是他对自己代码库的判断——'全是自定义插件、面条代码，每个部分都是一团糟'。结论反而落回人的价值：'即便 Fable 这么强，你仍然需要一个胜任的人坐在驾驶位上（someone competent in the driver's seat）。' 他还提到一个组织层面的意外收获：能独立 own 整个 feature，因为身边没人需要依赖，终于有了 ownership 和 agency。\n\n【影响与前瞻】这条社区声音的价值在于它把好几条宏大叙事压进了一个活人身上：模型能力跃迁、工程师身份焦虑、验证/维护负担不降反升、'人还在驾驶位'的底线共识。贴主那句'你仍然需要一个胜任的人坐在驾驶位'——和 Eason 一直主张的'判断力稀缺'、Fadell 的'工具买得到判断力买不到'、招聘市场 LA tech lead'宁要判断力不要 agent 玩得花'、Thomson Reuters Hron'写代码不再是工作本身'完全同频。值得作为推 AI 时'人往何处去'的鲜活佐证：工程师的产出会被放大，但'谁能 review、谁能兜底'这件事的权重反而在上升。",
+      "source": "Reddit r/ClaudeCode",
+      "source_type": "tavily",
+      "url": "https://www.reddit.com/r/ClaudeCode/comments/1ul74ti/ok_ill_admit_it_at_this_point_fable_is_good",
+      "timestamp": "2026-07-08T00:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Fable",
+        "工程师身份",
+        "判断力",
+        "fintech",
+        "社区声音"
+      ],
+      "batch_time": "2026-07-09T10:00:00+08:00"
+    }
+  ]
+}
