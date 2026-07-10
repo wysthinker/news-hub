@@ -1,0 +1,136 @@
+{
+  "channel_id": "ai-frontier",
+  "channel_name": "AI 前沿",
+  "generated_at": "2026-07-10T09:00:00+08:00",
+  "digest": "OpenAI 本周扔出 GPT-5.6 三件套（Sol/Terra/Luna + ChatGPT Work），在 Agents' Last Exam、Coding Agent Index 等多个 benchmark 上直接点名超越 Claude Fable 5，但 SWE-Bench Pro 仍由 Anthropic 的 Mythos 5/Fable 5 把守——旗舰模型之争进入 OpenAI 攻、Anthropic 守的阶段。与此同时马斯克公开认输，称 Anthropic 是「当前 AI 领导者」并承诺不切断其依赖的 SpaceX 算力（背后是约 400 亿美元协议）。Anthropic 则以治理侧回应：前美联储主席伯南克入长期利益信托、发起「硬问题」公众倡议、推出 Claude 用量反思工具。竞争主轴从「谁更强」延展到「谁能被信任」。",
+  "items": [
+    {
+      "title": "OpenAI 发布 GPT-5.6 三件套：Sol/Terra/Luna 三档旗舰，多个 benchmark 直接点名超越 Claude Fable 5",
+      "summary": "OpenAI 推出 GPT-5.6 系列：旗舰 Sol、均衡 Terra、廉价 Luna，并新增 ultra 多 agent 并行设置。Sol 在 Agents' Last Exam 拿 53.6 分（超 Fable 5 13.1 分）、Coding Agent Index 80 分（SOTA，超 Fable 5 2.8 分），但 SWE-Bench Pro 仍落后 Anthropic 的 Mythos 5/Fable 5。定价 Sol $5/$30、Luna 低至 $1/$6。",
+      "detail_content": "【核心事件】7 月 9 日 OpenAI 全面发布 GPT-5.6 模型家族，分三档：旗舰 Sol、均衡型 Terra、最廉价 Luna。同步推出 ultra 设置——最高能力档，默认协调 4 个 agent 并行处理复杂任务（可扩展到 16 个），用更高 token 换更强结果和更快交付。模型即日起在 ChatGPT、Codex、API 全量铺开，24 小时内全球可用。\n\n【关键细节与引用】OpenAI 直接拿 Claude Fable 5 当靶子：Agents' Last Exam（55 个领域的长程专业任务）Sol 拿 53.6 分，\"eclipsing Claude Fable 5 (adaptive reasoning) by 13.1 points\"；即便 medium reasoning 也比 Fable 5 高 11.4 分，成本约其 1/4。Artificial Analysis Coding Agent Index Sol+max 拿 80 分（SOTA），超 Fable 5 的 77.2，且\"using less than half the output tokens, taking less than half the time, costing about one-third less\"。但 SWE-Bench Pro 上 Sol 仅 64.6%，Anthropic 的 Claude Mythos 5（80.3%）和 Fable 5（80%）仍守擂。最尖锐一刀：GeneBench Pro 评测里\"Claude Fable 5 is not included as it does not answer advanced biology questions and refuses the majority of questions in this eval\"。网络安全是另一重点：ExploitBench 73.5%（GPT-5.5 为 47.9%），SEC-Bench Pro 71.2% vs 45.8%。定价：Sol $5/$30、Terra $2.50/$15、Luna $1/$6（每百万 token）。安全侧投入约 70 万 A100e GPU 小时黑盒红队测试，Sol 的 cyber 护栏拦截量约为前代 10 倍。\n\n【背景与上下文】这是 Fable 5 解禁、GPT-Live 语音模型之后 OpenAI 的又一次重火力发布。值得注意的是 Anthropic 似乎有\"Fable 5\"和\"Mythos 5\"两条线——OpenAI 的评测表里 Mythos 5 在 coding/cyber 多项上反超 Fable 5（SWE-Bench Pro 80.3% vs 80%、ExploitBench 78% vs 40%），暗示 Anthropic 内部模型分工比外界看到的更细。\n\n【影响与前瞻】对重度 Claude/Fable 用户：Fable 5 在 SWE-Bench Pro 等\"真实仓库长程工程\"上仍有优势，但 GPT-5.6 在成本效率和多 agent 并行上拉开了身位。ultra 多 agent 是新范式——不再是单模型推理，而是模型自己编排一个 agent 团队。RSI Index（递归自改进）GPT-5.6 较 GPT-5.5 提升 16.2 分，OpenAI 内部研究用量暴增 22 倍，说明模型自举研究的闭环在加速。",
+      "source": "openai.com",
+      "source_type": "tavily",
+      "url": "https://openai.com/index/gpt-5-6/",
+      "timestamp": "2026-07-09T20:00:00Z",
+      "importance": 9,
+      "tags": [
+        "OpenAI",
+        "GPT-5.6",
+        "模型发布",
+        "benchmark",
+        "Claude Fable 5"
+      ],
+      "batch_time": "2026-07-10T09:00:00+08:00"
+    },
+    {
+      "title": "OpenAI 发布 ChatGPT Work：跨应用自主工作数小时的 agent，正面叫板 Claude Cowork",
+      "summary": "ChatGPT Work 是 ChatGPT 内置的 agent，能跨 Slack/Teams/Drive/SharePoint 等应用收集信息、把复杂项目拆解成小步独立完成、停留数小时，由 GPT-5.6 驱动。内置 Codex 技术，周活超 500 万、其中 100 万+用于非编程场景。同步推出 Sites 和 Scheduled Tasks。",
+      "detail_content": "【核心事件】OpenAI 发布 ChatGPT Work——一个能在 ChatGPT 里跨应用和文件自主工作的 agent。它能把一个目标拆解成小步骤独立完成，对复杂项目可停留数小时，产出 sheets、slides、docs、web apps 等成品。由 GPT-5.6 驱动，内置 Codex 技术，web/mobile 端即日起向 Pro/Enterprise/Edu 推出，未来几天扩展到 Plus/Business。\n\n【关键细节与引用】\"ChatGPT can now move beyond answering questions to getting real work done.\" Codex 周活已超 500 万，其中 100 万+用于非软件开发。核心能力：跨应用串联工作流（一句指令把客户调研→campaign brief→营销素材→多市场适配全链路跑完）；Scheduled Tasks 让它在你离开时持续推进（如把 Teams/Slack 新消息自动转成文档或 slides）；Sites 功能公测，可把工作变成可分享的交互式站点/看板。桌面端新增内置浏览器 + Computer Use（替你在本地应用里点击打字）。Codex app 合并进新版桌面应用。OpenAI 内部案例：销售把一场 discovery 对话 24 小时内转成定制 PoC（原需数周）；财务把月末结账和预测从\"数天压到数小时\"。企业治理沿用 ChatGPT Enterprise 基座，Compliance API 可审计 Work 的对话和动作，Auto-review 用最强模型在动作执行前审查。\n\n【背景与上下文】这是对 Anthropic Claude Cowork 的正面回应——Cowork 之前已扩展到 web/mobile、关上笔记本 agent 继续干活。OpenAI 的差异化在于 Codex 的编程基因 + Computer Use + Sites，且把 Codex app 直接合并进 ChatGPT 桌面端统一入口。Atlas 独立浏览器将被 sunset。\n\n【影响与前瞻】对 Eason 这类用户：ChatGPT Work 的 Scheduled Tasks + 跨应用编排，和 Cowork 定位高度重合，选择将取决于既有的工具生态（Slack/Teams/Drive vs Claude 的集成面）。注意 OpenAI 强调\"usage varies with the amount of work required, more complex tasks may use more of your plan's included usage\"——复杂 agent 任务的用量计费是新变量，企业侧需关注 spend controls。这是 agentic 办公从\"单点辅助\"走向\"全流程托管\"的标志，但同样意味着判断力外包的风险面扩大。",
+      "source": "openai.com",
+      "source_type": "tavily",
+      "url": "https://openai.com/index/chatgpt-for-your-most-ambitious-work/",
+      "timestamp": "2026-07-09T17:00:00Z",
+      "importance": 9,
+      "tags": [
+        "OpenAI",
+        "ChatGPT Work",
+        "agent",
+        "Claude Cowork",
+        "agentic办公"
+      ],
+      "batch_time": "2026-07-10T09:00:00+08:00"
+    },
+    {
+      "title": "马斯克公开认输：称 Anthropic 是「当前 AI 领导者」，承诺不切断其依赖的 SpaceX 算力",
+      "summary": "马斯克在 X 上收回去年「Anthropic 不可能赢」的判断，盛赞 Mythos/Fable 是目前最好的模型，承诺不会恶意切断 Anthropic 租用的 SpaceX/xAI 算力。背景是 5 月签署的 300MW Colossus 1 协议——月付 12.5 亿、总价约 400 亿美元至 2029 年。",
+      "detail_content": "【核心事件】7 月 9 日，针对 X 上用户担忧马斯克可能\"某天醒来就把 Anthropic 踢出 SpaceX 服务器\"以打压对手，马斯克公开回应收回此前判断：\"I was clearly wrong about Anthropic\"，称其\"obviously currently the leader in AI\"，盛赞 Mythos/Fable 是目前最好的模型，并承诺\"would never cut them off in a way that hurt them badly, even as a competitor. That's not my style.\"还预言 Anthropic\"will undoubtedly have Mythos 2 ready soon\"。\n\n【关键细节与引用】背景是一笔巨型算力交易：Anthropic 5 月签约买下 xAI Colossus 1 数据中心（孟菲斯附近）全部 300MW 算力，月付 12.5 亿美元、持续到 2029 年 5 月，总价值约 400 亿美元。xAI 已于 2 月与 SpaceX 合并，故 Anthropic 现为 SpaceX 最大客户之一。Google 也签了 SpaceX 基础设施租赁，月付 9.2 亿至 2029 年 6 月。马斯克以 Tesla 2014 年开放专利、开放超充网络，以及 SpaceX 发射竞争对手卫星不加价为例自证\"不挤兑对手\"风格。但 TechCrunch 指出他并非真的超然——他起诉过 OpenAI。更微妙的隐患：马斯克在 OpenAI 诉讼庭审中承认 AI\"distilling\"（用大量假账号向对手发 prompt 套取技术）真实存在，被问及 xAI 是否蒸馏过 OpenAI 时答\"Generally AI companies distill other AI companies\"；Anthropic 2 月曾指控三家中国模型厂商蒸馏 Claude。托管算力让 SpaceX 对 Anthropic 的运行方式获得比一般竞争对手更高的可见度。\n\n【背景与上下文】去年 9 月马斯克曾发帖\"Winning was never in the set of possible outcomes for Anthropic\"，而当时 Anthropic 实际上已企业市占率领先。此次表态 reversal 的时机——恰逢 OpenAI 发布 GPT-5.6、Anthropic Fable/Mythos 系列站稳——意味马斯克在重新下注。\n\n【影响与前瞻】对行业格局：Anthropic 把核心算力命脉放在最大对手之一的机房里，是赌注极大也极脆弱的安排——合同约束 + SpaceX 自身商业利益是当前护栏，但\"三年后合同老化时谁知道\"。对 Eason 关注的银行业 AI 供应链：头部 AI 公司的算力依赖已深度交织（Anthropic-xAI、Google-SpaceX），地缘和商业风险不再可分割。distilling 风险是软实力层面的隐忧。",
+      "source": "TechCrunch",
+      "source_type": "aihot",
+      "url": "https://techcrunch.com/2026/07/09/elon-musk-praises-mythos-fable-promises-not-to-cut-off-anthropic",
+      "timestamp": "2026-07-09T21:57:00Z",
+      "importance": 8,
+      "tags": [
+        "Anthropic",
+        "马斯克",
+        "SpaceX",
+        "xAI",
+        "算力",
+        "Mythos"
+      ],
+      "batch_time": "2026-07-10T09:00:00+08:00"
+    },
+    {
+      "title": "前美联储主席伯南克加入 Anthropic 长期利益信托：将主导 AI 经济影响研究",
+      "summary": "伯南克（2006-2014 任美联储主席、2022 诺奖经济学奖）受任 Anthropic 长期利益信托（LTBT）最新受托人。LTBT 独立于管理层和投资人、受托人不持股不分红，有权向董事会任命成员。伯南克将参与 Anthropic 经济研究，聚焦 AI 对全球劳动力与经济的影响。",
+      "detail_content": "【核心事件】7 月 9 日 Anthropic 宣布，前美联储主席、2022 年诺贝尔经济学奖得主本·伯南克（Ben Bernanke）受任公司长期利益信托（Long-Term Benefit Trust, LTBT）最新受托人。他将与 Neil Buddy Shah、Richard Fontaine、Mariano-Florentino Cuéllar 共同履职。\n\n【关键细节与引用】LTBT 是 Anthropic 治理架构的核心：受托人独立于公司管理层和投资者，不持股、不分红、仅按服务时间获酬，新受托人由现有受托人遴选。LTBT 有权向 Anthropic 董事会任命成员，并就 AI 风险与社会影响等关键决策提供建议。伯南克 2006-2014 领导美联储、驾驭 2008 金融危机，此前在普林斯顿任教二十余年研究大萧条与银行危机——这段研究正是其诺奖依据。Daniela Amodei：\"AI may have the most significant economic effects of any technology in modern history.\"伯南克本人：\"The potential of artificial intelligence is enormous, and so is the range of outcomes. How that potential plays out will depend, in part, on the institutions we build around it.\"他将专门为 Anthropic 的经济研究贡献判断力，聚焦 AI 如何改变全球劳动力与经济。\n\n【背景与上下文】这是 Anthropic 治理牌的延续——同日还发起\"硬问题\"公众倡议。把一位亲手处理过近代最大经济冲击的前央行行长请进 AI 治理层，信号很明确：Anthropic 想把\"AI 经济影响\"这件事的制度重量，从公司叙事抬到接近宏观政策层级。与 Eason 关注的 ai-org 主线直接相关——昨天 ai-org 频道刚记录美联储设立「AI 与就业」咨询组，今天 Anthropic 就把前 Fed 主席纳入自家治理，两条线在\"AI 经济影响的制度基建\"上汇合。\n\n【影响与前瞻】对银行业 AI 汇报：这是可引用的治理样本——一家 AI 公司主动把宏观经济与就业的外部性纳入内部治理结构。Anthropic 此举既是对监管焦虑的预防，也是把\"可信治理\"做成差异化竞争资产。可关注伯南克后续是否会产出关于 AI 经济影响的公开研究，那将成为行业级参考。",
+      "source": "anthropic.com",
+      "source_type": "tavily",
+      "url": "https://www.anthropic.com/news/ben-bernanke",
+      "timestamp": "2026-07-09T17:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Anthropic",
+        "伯南克",
+        "治理",
+        "LTBT",
+        "AI经济影响"
+      ],
+      "batch_time": "2026-07-10T09:00:00+08:00"
+    },
+    {
+      "title": "Cognition 发布 SWE-1.7：从 Kimi K2.7 底座 RL 出来的编程模型，挑战「后训练天花板」",
+      "summary": "Cognition（Devin 母公司）发布 SWE-1.7，称以远低于前沿模型的成本达到 frontier 级智能。基于 Kimi K2.7 底座再做大规模 RL，作者称这「挑战了后训练天花板的概念，表明 RL 能把能力推得比此前认为的更远」。FrontierCode 1.1 拿 42.3%（GPT-5.5 43.0%、Opus 4.8 46.5%），Terminal-Bench 2.1 拿 81.5%。",
+      "detail_content": "【核心事件】7 月 8 日 Cognition 发布 SWE-1.7，称是其训练过最强的模型，以更低成本逼近前沿智能、推进\"成本-性能帕累托曲线\"。已在 Devin（Web/桌面/CLI）通过 Cerebras 以 1000 TPS 上线。关键论点：SWE-1.7 基于 Kimi K2.7 底座（本身已做过大量 RL 后训练），Cognition 自己的 RL 又在其上获得大幅提升——\"the large additional gains from our own training challenge the idea of a 'post-training ceiling' and suggest that RL can push capabilities much further than previously believed.\"\n\n【关键细节与引用】编程 benchmark（Cognition 自家口径）：FrontierCode 1.1 Main 42.3%（GPT-5.5 43.0%、Opus 4.8 46.5%、GLM-5.2 24.5%）；Terminal-Bench 2.1 81.5%（GPT-5.5 84.2%、Opus 4.8 86.9%）；SWE-Bench Multilingual 77.8%（Opus 4.8 84.4%）。技术四要点：①Preserving entropy——用 top-p 采样 + sampling distribution replay 防止 entropy collapse，让训练持续提升；②Multi-cluster training——RL 跨三洲四数据中心，压缩权重增量（超 99% 压缩）经对象存储分发，1T 参数模型跨洲更新 1-2 分钟完成；③数据质量——自动化执行测试过滤低学习信号任务、防 reward hacking；④Self-compaction——模型学会自我总结工作状态并从摘要恢复，rollout 可长达 6 小时。行为观察：SWE-1.7 比基础模型更彻底地探索代码库、思考更精炼、更主动探查边界情况。\n\n【背景与上下文】Cognition 是 Devin 的母公司，长期押注 agentic software engineering。选择 Kimi K2.7（月之暗面开源）做底座再 RL，本身就是\"开源底座 + 专精 RL\"路线的代表——与 OpenAI/Anthropic 的全栈自研形成对照。注意 benchmark 是 Cognition 自家的 FrontierCode，存在厂商自评偏向。\n\n【影响与前瞻】对编程模型格局：SWE-1.7 没有全面超越 GPT-5.5/Opus 4.8，但\"接近前沿、成本更低\"的定位 + RL 后训练天花板的反例，对靠开源底座做垂直优化的玩家是强信号。对 Eason 关注的 AI Coding 推广：多 cluster RL 训练和 self-compaction 是可借鉴的工程思路（长程任务上下文管理）。但今日 GPT-5.6 Sol 在 Coding Agent Index 拿 80 SOTA，SWE-1.7 在 FrontierCode 42.3%——需注意两套 benchmark 不可直接比较，Cognition 的叙事偏利于自家。",
+      "source": "cognition.com",
+      "source_type": "aihot",
+      "url": "https://cognition.com/blog/swe-1-7",
+      "timestamp": "2026-07-08T21:46:00Z",
+      "importance": 7,
+      "tags": [
+        "Cognition",
+        "SWE-1.7",
+        "编程模型",
+        "RL",
+        "Devin",
+        "Kimi"
+      ],
+      "batch_time": "2026-07-10T09:00:00+08:00"
+    },
+    {
+      "title": "Anthropic 发起「硬问题」倡议：邀请公众提 AI 尖锐问题并公开追踪回应进展",
+      "summary": "Anthropic 作为公益公司发起 hard questions 倡议，邀请公众就 AI 对就业、社会、家庭、科学医学的影响提出最尖锐问题，承诺公开追踪和报告为回应这些问题采取的具体行动（含不足）。已通过 5.2 万美国人公众调查、159 国 8.1 万 Claude 用户访谈、数十场线下焦点小组收集看法。",
+      "detail_content": "【核心事件】7 月 9 日 Anthropic 发起\"硬问题\"（hard questions）倡议，明确邀请公众就 AI 对就业、社会、家庭、科学医学等领域提出最尖锐的问题，并承诺公开追踪和报告公司为回应这些问题采取的具体行动——包括坦承\"可能在哪些方面达不到既定目标\"。配套发布了一部收录真实受访者希望与担忧的影片。\n\n【关键细节与引用】Anthropic 强调自身是 Public Benefit Corporation（公益公司），使命是\"secure the benefits of advanced AI models and mitigate their risks\"。已铺开的多渠道民意基建：Anthropic Public Record 公众调查首轮问询 5.2 万美国人；通过 Anthropic Interviewer 调研 159 国、70 种语言的 8.1 万 Claude 用户；数十场线下焦点小组；以及基于匿名真实数据的 Claude 使用研究。公司还成立了 Anthropic Institute（内部研究部门，专攻 AI 对社会最重大挑战），LTBT 提供独立监督。倡议核心承诺：\"we'll publicly track and report the specific actions we're taking to address those questions—and we'll be clear about the ways in which we might fall short of our stated goals.\"\n\n【背景与上下文】与同日伯南克入 LTBT、Reflect 功能发布构成 Anthropic 的\"制度+产品\"三连发。时机正值 GPT-5.6 发布、OpenAI 在 benchmark 上猛攻——Anthropic 选择以\"透明度与公共问责\"作为差异化叙事，而非纯能力比拼。这与 Eason 的 AI Slop 批判主线契合：在浮夸叙事满天飞时，主动承诺\"show our work\"并坦承不足，是建立专业可信度的路径。\n\n【影响与前瞻】对 Eason 向银行管理层汇报 AI：这是一份可借鉴的\"可信 AI 治理\"叙事框架——把公众最关心的问题（就业/安全/责任）系统化收集、公开追踪、承认局限。可作为讨论\"AI 公司应如何对外问责\"的参照样本。但要警惕倡议本身也可能沦为品牌叙事（soft slop 的一种），关键看后续公开追踪的实质内容是否经得起检验。",
+      "source": "anthropic.com",
+      "source_type": "tavily",
+      "url": "https://www.anthropic.com/news/hard-questions",
+      "timestamp": "2026-07-09T18:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Anthropic",
+        "治理",
+        "公益公司",
+        "透明度",
+        "AI问责"
+      ],
+      "batch_time": "2026-07-10T09:00:00+08:00"
+    },
+    {
+      "title": "Anthropic 推出 Reflect：Claude 用量反思仪表盘 + 4D AI Fluency 框架",
+      "summary": "Anthropic 推出 beta 版 Reflect 功能，让用户追踪和可视化自己如何使用 Claude（过去 1/3/6/12 个月），并基于 4D AI Fluency Framework（Delegation/Description/Discernment/Diligence）给出技能建议。可设静音时间和休息提醒。不读取无痕聊天和连接工具的源文件。面向 Free/Pro/Max（需开启 Memory）。",
+      "detail_content": "【核心事件】7 月 9 日 Anthropic 推出 beta 版\"Reflect\"功能，让用户追踪、可视化并反思自己如何使用 Claude。仪表盘位于 Claude web/桌面端设置内，可回看过去 1/3/6/12 个月的聊天活动，展示使用高峰时段和主要工作类型，并定期抛出反思性问题引导用户审视 AI 在生活中的角色。\n\n【关键细节与引用】核心是 4D AI Fluency Framework：Delegation（决定是否及如何委托 AI）、Description（有效描述目标以触发有用输出）、Discernment（准确评估 AI 输出质量）、Diligence（对 AI 产出负责）。报告会按四个维度总结你的协作模式，例如指出你\"常用自己的口吻重写邮件草稿\"或\"只在敲定策略后才委托任务\"，并给实操建议（如用 Project 而非反复重述上下文）。可设静音时间和\"使用一段时间后提醒休息\"。隐私：不读取无痕聊天、不拉取连接工具的源文件（如让 Claude 总结收件箱，摘要点会出现在反思里但源邮件不会），健康集成相关对话完全排除；数据仅用于反思、不挪作他途。与 MIT Media Lab AHA、Boston Children's Digital Wellness Lab、Family Online Safety Institute 合作开发敏感话题处理。\n\n【背景与上下文】与伯南克入 LTBT、硬问题倡议同日发布，是 Anthropic\"以人为本\"叙事的产品侧落地。Reflect 直接把\"AI 使用是否健康/是否契合目标\"做成可量化仪表盘，与 Eason 此前讨论的\"判断力增长\"考核方向呼应——它衡量的不是产出量，而是协作模式的质量。\n\n【影响与前瞻】对重度 Claude 用户：这是一面镜子，能看到自己把判断力委托出去的程度。4D 框架里的 Discernment（判断 AI 输出好坏）和 Diligence（对产出负责）正是 Eason 反复强调的\"判断力稀缺\"的产品化。对组织 AI 推广：Reflect 的维度可作为团队 AI 培训/考核的参考——衡量\"是否学会了有效委托和辨别\"，比单纯统计 token 用量更指向能力成长。需开启 Memory 才能用，Cowork 对话的反思后续推出。",
+      "source": "anthropic.com",
+      "source_type": "tavily",
+      "url": "https://www.anthropic.com/news/reflect-with-claude",
+      "timestamp": "2026-07-09T13:00:00Z",
+      "importance": 6,
+      "tags": [
+        "Anthropic",
+        "Reflect",
+        "AI素养",
+        "4D框架",
+        "产品功能"
+      ],
+      "batch_time": "2026-07-10T09:00:00+08:00"
+    }
+  ]
+}
