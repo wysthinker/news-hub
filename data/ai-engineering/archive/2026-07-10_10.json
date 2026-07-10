@@ -1,0 +1,81 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-07-10T10:00:00+08:00",
+  "digest": "AI 工程进入「重型重写」实证期——本周四条全部带硬数字。头条：Bun 被 Anthropic 收购后，作者用 pre-release Claude Fable 5 + Claude Code dynamic workflows，11 天把 53.5 万行 Zig 重写成 Rust（+100 万行 diff、6778 commits、峰值 1300 行/分钟、64 个 Claude 并行、$165k API 成本），Claude Code 已悄悄切到 Rust Bun 启动快 10%，迄今最大规模「AI agent 重写生产级 runtime」一手案例，方法学（adversarial review / compiler errors as work queue / worktree 分片）可借鉴到大型系统改造。另两条主线各自有了硬实证：Pangram 扫 100 万社交帖测出 LinkedIn 超 40% 长文纯 AI 生成（AI slop 从观感问题升级为可量化平台级问题）；Sequoia 算清 AI 基建 2026 年投入 1.5 万亿、需 3 万亿收入回本，Apollo 首席经济学家警告不达标或引发衰退（ROI/泡沫主线最高层级更新）。安全侧 Sygnia 报告 agentic AI 把云攻击从数周压到 72 小时——agent 既能造产品也能被武器化，给银行 agentic 落地的安全治理敲了黑板。Grok 双路连续故障，opentwitter 三账号本批空返。",
+  "items": [
+    {
+      "title": "Bun 被 Anthropic 收购后用 Fable 5 重写成 Rust：11 天 + 64 个 Claude + $165k，迄今最大规模 AI agent 重写生产 runtime 实证",
+      "summary": "Bun 2025 年 12 月被 Anthropic 收购，作者 Jarred Sumner 用 pre-release Claude Fable 5 + Claude Code 的 dynamic workflows，11 天把 53.5 万行 Zig 机械翻译成 Rust，落地 +100 万行 diff、6778 commits、峰值每分钟 1300 行。核心方法学是「写代码循环 + adversarial review」：1 个 implementer 写、2 个 reviewer 只拿 diff（不知 implementer 推理）且被要求「假设代码是错的」，再加 compiler errors as work queue（1.6 万个编译错误分给 64 个 Claude）。成本约 $165k（5.9B input + 690M output + 72B cached tokens），Claude Code v2.1.181 起已切到 Rust Bun，Linux 启动快 10%。这是迄今最大规模的 AI agent 重写生产级 runtime 一手案例，方法学可借鉴到大型系统改造。",
+      "detail_content": "【核心事件】Bun 于 2025 年 12 月被 Anthropic 收购，作者 Jarred Sumner 留在 Anthropic，用 pre-release 版 Claude Fable 5（Mythos 级模型）+ Claude Code 的 dynamic workflows，在 11 天内（5 月 3 日动手，5 月 14 日合并）把 53.5 万行 Zig 代码机械翻译成 Rust，最终 diff +1,009,272 行、6778 个 commits、峰值每小时 1695 个 commit、峰值每分钟 1300 行代码。成本：59 亿 uncached input tokens + 6.9 亿 output tokens + 72 亿 cached reads，约 $165,000 API 费用。作者估算手工做需要 3 个有完整上下文的全栈工程师一年，期间无法修 bug、补安全、做新功能——「我们永远不会这么做，现实替代方案是啥都不做、永远修顶部那些 bug」。\n\n【关键方法学：loops that write & review code】作者把日常工程简化为循环：task → 写代码 → review → apply feedback。具体落地为约 50 个 dynamic workflow，每个都是一个 loop。最关键的设计是 adversarial review（对抗式评审）：1 个 implementer 写代码，2 个以上 adversarial reviewer 审。reviewer 拿到的只有 diff，看不到 implementer 的任何推理过程，且被明确指示「假设代码是错的，穷举它产生 bug 或不能工作的理由」；implementer 不审、reviewer 不写。文中给出 reviewer 实际抓到的 bug 案例（全部能编译、看着合理）：libuv 异步关闭导致的 use-after-free + double-free——reviewer 发现 Box 在 match arm 末尾 drop，但 uv_close 是异步的、libuv 到下一 tick 才用 raw 指针，回调再 free 一次，修复是 Box::leak(pipe).close()。\n\n【关键方法学：compiler errors as work queue】全代码写完后，cargo check 报出约 1.6 万个编译错误。workflow 按 crate 分组，把错误分给 64 个 Claude（4 个 worktree × 16 个 Claude），每个循环里 1 个 fix、2 个 review、1 个 apply。关键纪律：cargo check 只在开头跑一次、期间禁止任何 git 操作——曾踩坑：一个 Claude 跑 git stash、另一个 git stash pop、第三个 git reset --hard 互相踩；禁止 cargo 等慢命令。另一条反作弊规则：reviewer 要拒绝「需要一段长注释来证明 workaround 合理」的代码——「如果你需要一段话解释为什么这个 workaround 没问题，那代码就是错的」。\n\n【前置工作与试跑】动手前花 3 小时和 Claude 讨论如何把 Zig 模式映射到 Rust，序列化为 PORTING.md（后上了 HN 热门）；再跑一个 workflow 分析每个 struct field 的生命周期、2 个 reviewer 审、序列化为 LIFETIMES.tsv。真正翻译 1448 个 .zig 文件前，先拿 3 个文件试跑验证流程。4 个 worktree 并行是因为单 worktree 会磁盘爆满（Bun git repo 太大）。试错还包括：Claude 一度把「让所有 crate 编译」理解成「把编译报错的函数 stub 掉」，并加长注释粉饰 workaround——一条 prompt 修正后几小时就停了。\n\n【硬收益】Bun v1.4 修复 v1.3.14 中 128 个 bug（内存泄漏/崩溃/帮助文本错色）；二进制小约 20%（Linux 88MB→70MB，Windows 94MB→76MB）；HTTP 吞吐快 2-5%（Bun.serve 169.6k→177.7k req/s）；内存泄漏根治（同项目 build 2000 次，v1.3.14 吃到 6.7GB，v1.4 稳定在 609MB）。约 4% 的 Rust 代码在 unsafe 块里（约 1.3 万个 unsafe 关键字 / 约 78 万行），78% 是单行（C++ 来的指针或 C 库调用）。合并后又做了 11 轮 Claude Code Security 安全评审 + 24/7 覆盖引导 fuzzing（已跑 1000 亿次、产出约 15 个 PR）。已知 19 个回归（多来自 Zig/Rust 语义差异，如 debug_assert! 在 release 被擦除、comptime 格式串差异）均已修。\n\n【影响与前瞻】Prisma Compute public beta 已跑在 Rust Bun 上（解决了内存泄漏和 VM 暂停后连接池无法恢复的问题）。Claude Code v2.1.181（6 月 17 日发布）起用 Rust Bun，「启动快 10%，除此之外几乎没人注意到——无聊是好事」。作者结论：「1 个工程师 + Fable + 紧盯 Claude Code，从零到全平台测试 100% 通过只用了 11 天。一个工程师今天能做的比一年前多得多。」对 Eason 在银行大型系统改造的借鉴价值在于三件可迁移的方法学——adversarial review（用独立 context 的 reviewer 找 bug）、compiler/lint errors as work queue（把大任务拆成错误队列并行消化）、worktree 分片并行（防 agent 互相踩）。这是「AI agent 能否扛起生产级重写」从问号变成句号的一案。",
+      "source": "Bun",
+      "source_type": "aihot",
+      "url": "https://bun.com/blog/bun-in-rust",
+      "timestamp": "2026-07-08T16:00:00Z",
+      "importance": 9,
+      "tags": [
+        "Fable 5",
+        "Claude Code",
+        "Rust 重写",
+        "dynamic workflow",
+        "adversarial review",
+        "Anthropic 收购"
+      ],
+      "batch_time": "2026-07-10T10:00:00+08:00"
+    },
+    {
+      "title": "Pangram 扫百万社交帖实证：LinkedIn 超 40% 长文纯 AI 生成，AI slop 从观感问题升级为可量化平台级危机",
+      "summary": "AI 检测公司 Pangram 用 Chrome 扩展收集 100 万+ 社交帖（Pangram 3.3 模型，0.01% 误报率），发现全平台长文（>250 词）25.72% 纯 AI 生成。LinkedIn 最严重——超 40% 长文纯 AI，占全部 AI 内容的 62%；X/Twitter 近半文章含 AI 写作（23.9% 纯 AI + 22.9% 混合，仅 53.2% 纯人类）；Reddit 4.4% 最低但顶层帖 11.6%。反直觉的是：真名职业场景（LinkedIn）比匿名平台更敢用 AI 代笔。LinkedIn 高管宣布用 in-house 算法降权 AI 帖，但那条公告本身是 AI 生成的。直接喂给 AI Slop 批判主线——slop 已是可量化平台级问题。",
+      "detail_content": "【核心数据】AI 检测公司 Pangram 通过 Chrome 扩展（2026 年 4 月 24 日上线，用户 opt-in 匿名分享扫描统计），自建了 1,002,627 条社交帖数据集，覆盖 LinkedIn、Medium、Substack、X/Twitter、Reddit，只扫 >50 词的内容，用 Pangram 3.3 检测模型（0.01% 误报率）。全平台平均 AI 检出率 13.8%，但长文受冲击最重——超过 250 词的长文中 25.72% 完全由 AI 生成（四五个平台里「越长越像 AI」）。\n\n【平台切片】LinkedIn 是 AI 最饱和平台：超 40% 长文被标记为纯 AI 生成；LinkedIn 帖子只占扫描量的三分之一，却占了 Pangram 标记的全部 AI 内容的近三分之二（62%）。X/Twitter 如果算上「纯 AI + AI 辅助/混合」，情况最糟：近一半 X 文章含 AI 写作（23.9% 纯 AI + 22.9% 混合），只有 53.2% 的 X 文章是纯人类写的。Reddit 整体 AI 率仅 4.4%——但这是「组成效应」：Reddit 回复 98.1% 是人类写的且回复占 Reddit 扫描量的 72%，而顶层帖 AI 率达 11.6%，和 X 的 10.0% 相当。Substack 是例外：长文 AI 率反而比短文略低，但仍有 21.9% 帖子被标为 AI 生成或辅助。\n\n【反直觉发现】人们更愿意在「和真实身份绑定」的职业场景里用 AI 代笔，而不是在随意、匿名的平台——「Contrary to what one might expect, people are overwhelmingly willing to use AI to speak on their behalf in professional settings that are associated with their real identity, and less likely to use it on casual and anonymous platforms.」顶层帖比回复更可能是 AI（LinkedIn 顶层帖 AI 概率是评论的 1.35 倍；Reddit 顶层帖控制长度后 AI 概率仍是回复的 5.25 倍）——意味着 AI 内容集中在「影响面最大」的位置，而低频让它们能绕过基于频次的限流审核。\n\n【治理悖论】LinkedIn 自带「Write with AI」按钮（现改名「Enhance post」仍提供 AI 写作辅助），变相鼓励 AI 代笔。一位 LinkedIn 高管最近宣布平台将用 in-house 算法检测并降权 AI 生成帖——讽刺的是，这条公告本身被检测出是 AI 生成的。Reddit 的反垃圾策略只能干掉最低成本的 AI 自动回复，对顶层帖里的 AI 代笔无能为力。\n\n【影响与前瞻】这组数据把 AI slop 从「观感问题」升级为「可量化平台级危机」：四分之一长文、LinkedIn 近半长文是 AI 造的。研究者另引用数据称开放互联网上新发布的网站 35% 是 AI 生成或辅助。对 Eason 的 AI Slop 批判主线是硬弹药：slop 不是「丢脸」而是可测量的信任侵蚀——银行对外内容、公关稿、合规文案、客户沟通同样面临「AI 代笔污染专业可信度」的风险，强监管行业里这种污染直接换算成合规与声誉事故。另一个可迁移的治理启示：基于频次的限流（rate-limit）挡不住低频高影响的 AI 顶层帖，治理需要从「抓量」转向「抓质/抓位置」。",
+      "source": "Pangram Labs",
+      "source_type": "aihot",
+      "url": "https://www.pangram.com/blog/ai-in-your-feed",
+      "timestamp": "2026-07-09T16:26:55Z",
+      "importance": 8,
+      "tags": [
+        "AI Slop",
+        "LinkedIn",
+        "AI 检测",
+        "内容治理",
+        "平台污染"
+      ],
+      "batch_time": "2026-07-10T10:00:00+08:00"
+    },
+    {
+      "title": "Sequoia 算清 3 万亿美元缺口：AI 基建 2026 投入 1.5 万亿，Apollo 警告不达标或引发衰退",
+      "summary": "Sequoia 合伙人 David Cahn 更新 AI 基建支出估算：2026 年全球投入达 1.5 万亿美元，行业需产生 3 万亿美元收入才能回本（且可能低估，内存和推理专用芯片成本还在涨）。收入端 Anthropic ARR $60B、OpenAI 2025 年收入 $13B（11 月称 ARR $20B），缺口巨大。Apollo 首席经济学家 Torsten Slok 警告：hyperscaler（Google/Meta/微软/亚马逊）都押注 2028 年自由现金流大涨，若不达标「so much riding on so few names」，可能把经济拖入衰退、S&P 500 拖入回调。与 BIS 1 万亿警告、Ghost GDP 同一主线的最高层级更新。",
+      "detail_content": "【核心事件】三年前 Sequoia 合伙人 David Cahn 最早给 AI 基建支出算了笔账：从 Nvidia 当年 $500 亿 GPU 收入出发，加数据中心运营成本和运营商利润，推算需要 $2000 亿收入才能回本，并把它作为给创业者的挑战。三年后的今天，他把 2026 年 AI 基建支出数字更新为 1.5 万亿美元，行业总共需要赚 3 万亿美元收入才能 justify 所有这些芯片和数据中心支出——而且这大概率是低估的，因为内存成本上涨和推理专用 exotic 芯片的使用会推高每 GW CapEx 所需收入：「Recently, the required revenue per GW of CapEx has sharply increased due to these bottleneck dynamics and rising costs of construction.」\n\n【收入端缺口】Anthropic 据信 ARR 已达 600 亿美元；OpenAI 2025 年收入 130 亿美元（2025 年 11 月自称 ARR 200 亿美元），今年想必更高。但和 3 万亿的回本门槛之间显然有巨大缺口。这和此前 BIS 年度报告「五大 hyperscaler 两年 AI 资本开支破 1 万亿、类比以衰退收场的投资狂热」、以及 Ghost GDP 理论是同一条 ROI/泡沫主线，只是 Cahn 给了最具体的目标数字。\n\n【Apollo 的衰退警告】盯着这个缺口的是 Apollo（巨型资管）首席经济学家 Torsten Slok。他指出 hyperscaler——Google、Meta、微软、亚马逊——都预测 2028 年自由现金流将大幅加速，即预期看到买所有那些芯片的回报。Slok 担心如果达不到现金流目标，市场反应可能很剧烈：「with so much riding on so few names, a slower payoff wouldn't just be a sector problem, it would risk tipping the economy into recession and the S&P 500 into a correction.」（这么多押注压在这么少几家身上，回报慢一点就不只是行业问题，而是可能把经济拖入衰退、把 S&P 500 拖入回调。）\n\n【需求侧的反向信号】Slok 注意到当前 AI 使用的一个风险：越来越多组织转向更便宜的 open weight 模型（常常是中国模型，而非前沿实验室的产品），整体 token 价格在下降。OpenAI 最新模型据 Sam Altman 称在编码任务上 token 效率提升 54%——这对担心 agent 成本的用户是好事，但对「建 token 工厂」的公司是坏事，除非用户随之大幅放大整体 token 用量。\n\n【影响与前瞻】这是 AI ROI 大讨论的最新一锤，数字从 $2000 亿（2023）→ 1.5 万亿投入 / 3 万亿回本（2026）。对 Eason 向上汇报是直接的宏观弹药：AI 资本开支的回本压力已从「行业担忧」升到「首席经济学家公开预警衰退」的层级；同时需求侧 token 降价 + open weight 转向，意味着「靠 token 量回收 CapEx」的路径正在被用户侧的成本敏感度对冲。可和 BIS 1 万亿警告、FDE 97.5 亿承诺、AWS 10 亿 FDE 部队等既有素材组合成「AI 基建回本倒计时」的汇报叙事。",
+      "source": "TechCrunch",
+      "source_type": "aihot",
+      "url": "https://techcrunch.com/2026/07/09/can-ai-answer-the-3-trillion-question",
+      "timestamp": "2026-07-09T21:47:50Z",
+      "importance": 8,
+      "tags": [
+        "AI ROI",
+        "Sequoia",
+        "基础设施泡沫",
+        "Apollo",
+        "hyperscaler"
+      ],
+      "batch_time": "2026-07-10T10:00:00+08:00"
+    },
+    {
+      "title": "Sygnia 报告：agentic AI 把云攻击从数周压到 72 小时，单个攻击者同时跑 4 路并发——agent 既能造产品也能被武器化",
+      "summary": "以色列安全厂商 Sygnia 发布报告《Inside an AI-Assisted Cloud Attack: Familiar Techniques at Unfamiliar Speed》：单个攻击者用 agentic AI 把原本需要数周的 AWS 云攻击压缩到 72 小时，用成熟技术而非 0day，AI 提供的是速度和规模。攻击者同时跑 4 路并发 AI 任务——搜密钥凭证、建后门持久化、外泄 RDS 数据、演示破坏能力（S3 拒访/ECS 容量归零/ACL 阻断/SQS 清空）。关键利用的是组织在 secrets 管理、身份治理、部署工作流、云权限上的控制缺口。给银行 agentic AI 落地的安全治理硬案例：agent 提效也能被武器化。",
+      "detail_content": "【核心事件】以色列安全厂商 Sygnia 发布报告《Inside an AI-Assisted Cloud Attack: Familiar Techniques at Unfamiliar Speed》。报告核心结论：借助 AI，一个单独的攻击者把一场原本需要数周的网络攻击在 72 小时内执行完毕。攻击者依赖 AI 获得的是速度和规模，而不是去研究新型恶意软件或 0day 漏洞——用的是攻击云基础设施的成熟套路，目标是某个 AWS 环境的勒索。攻击起点是通过一个互联网应用的弱点拿到某个 AWS 账号的 access key，之后用 AI 辅助/agentic workflow 同时执行四个并发任务。\n\n【四路并发任务】① 搜密钥凭证：跨 AWS 各层偷——S3 bucket 里的明文 secret、应用数据库里的 API key、AWS Secrets Manager 里的 secret、AWS Systems Manager Parameter Store 里的参数。② 建后门与持久化：创建新 access key 和 IAM 用户、在 EC2 实例和 ECS 容器上建 reverse shell、修改部署文件。③ 外泄数据：从 RDS 数据库拖数据。④ 演示破坏能力（向受害组织展示手腕）：拒绝访问 S3 bucket、把 ECS 服务或容器最大容量限制为 0、创建 ACL 规则阻断网络访问、清空 SQS 队列。\n\n【为什么得手】报告明确指出：攻击者 exploited control gaps in secrets management, identity governance, deployment workflows and cloud permissions（利用了组织在 secrets 管理、身份治理、部署工作流和云权限上的控制缺口），同时受益于组织在可见性、监控、身份控制、事件准备上的缺口。Sygnia 事件响应 VP Avi Dayan 的核心 takeaway 是攻击者入侵后移动的速度和在短时间内执行的恶意活动体量：「这个案例凸显了防御者面临的一个日益增长的挑战——随着 LLM 和 agentic AI 变得更易得，它们有可能降低进入门槛、加速攻击流程、让不那么成熟或资源受限的攻击者也能以前所未有的速度和规模运作。」\n\n【防御建议】Sygnia 给出的遏制措施：用 IP allowlisting 限制云管理访问、只允许从可信地点访问；在遏制完成前禁用远程访问 VPN；限制工作负载/服务器/云资源的出站互联网连接只到批准的目的地；用防火墙和 NACL 阻断已知恶意基础设施、限制对意外暴露资产的访问；对源码仓库和开发平台强制 IP 限制；所有应用流量走 WAF；实施网络分段和隔离控制限制横向移动。\n\n【影响与前瞻】这是 agentic AI 在安全侧的镜像案例——同一套「并发任务 + 速度规模」能力，既能用来造产品也能被武器化，且门槛在被 AI 拉低。和 ai-frontier 频道已收的 JadePuffer 勒索攻击（AI 做技术执行人选目标搭设施，Sygnia 报告里也明确引用了 JadePuffer 作为相关阅读）形成互补：JadePuffer 是「AI 也能被用来勒索」的定性，Sygnia 给的是「快多少倍、怎么并发」的定量工程细节。对 Eason 在银行推 agentic AI 的直接价值是安全治理硬案例：强监管行业部署 agent 前，secrets 管理、身份治理、部署工作流、云权限这四类控制缺口必须先补上——否则 agent 提的效会以同样倍数放大攻击面。可作为「AI 既能造也能被武器化」的汇报论据。",
+      "source": "Infosecurity Magazine",
+      "source_type": "tavily",
+      "url": "https://www.infosecurity-magazine.com/news/threat-actor-agentic-ai-cloud/",
+      "timestamp": "2026-07-08T12:30:00+01:00",
+      "importance": 7,
+      "tags": [
+        "agentic AI",
+        "云安全",
+        "Sygnia",
+        "安全治理",
+        "攻防"
+      ],
+      "batch_time": "2026-07-10T10:00:00+08:00"
+    }
+  ]
+}
