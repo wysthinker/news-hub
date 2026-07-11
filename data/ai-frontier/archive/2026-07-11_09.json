@@ -1,0 +1,84 @@
+{
+  "channel_id": "ai-frontier",
+  "channel_name": "AI 前沿",
+  "generated_at": "2026-07-11T09:00:00+08:00",
+  "digest": "GPT-5.6 大周后的第一个周末消息面明显清淡，Anthropic/OpenAI/DeepMind 三家官方都没有新发布——上周的 Sol/Terra/Luna、Cowork、J-space、Fable coding guide 仍在被消化。但有三条结构性暗线值得标记：①Apple 7/10 起诉 OpenAI 窃取商业机密，揭开了 OpenAI 自研硬件野心和巨头人才争夺的灰色地带，也是 Apple-OpenAI 合作关系的重大破裂；②GPT-5.6 同日（7/9）成为 Microsoft 365 Copilot 首选模型，直接对冲本周早些时候『微软用自研 MAI 替换 OpenAI』的叙事——微软真实策略是分层（成本敏感用 MAI、能力旗舰用 OpenAI），并非抛弃；③LMSYS 把 DeepSeek-V4 Flash 的 RL 训练首次端到端跑通在 AMD MI355X 上，训练端非英伟达化出现实质性破冰。另外 Claude Code 桌面版上了应用内浏览器，是 agentic coding『减少 unknowns』主线的小步推进。整体看，本周是从『模型能力发布』转向『产业格局重构』的一周。",
+  "items": [
+    {
+      "title": "Apple 起诉 OpenAI 窃取商业机密：指控其鼓励员工面试时带「真实零部件」来展示，关系破裂",
+      "summary": "7/10 Apple 在联邦法院起诉 OpenAI 及两名前苹果工程师，指控盗用商业机密。核心指控是 OpenAI 在招聘面试中鼓励苹果员工带『actual parts』真实零部件和新设备部件来展示，两名前员工跳槽后仍持续访问苹果保密文件。Apple 认为这些机密正被用于加速 OpenAI 自研 AI 硬件设备。这是两家合作关系的重大破裂——Apple 此前是 ChatGPT 在 iOS 上的核心集成伙伴。",
+      "detail_content": "【核心事件】7 月 10 日（周五），Apple 在美国联邦法院对 OpenAI 及两名前苹果工程师提起诉讼，指控盗用和滥用 Apple 的商业机密。诉讼由 Reuters、Washington Post、CNN 等主流媒体同步报道。\n\n【关键细节与引用】起诉书披露的最惊人细节是：OpenAI 在招聘 Apple 员工时，据称鼓励候选人把『actual parts』（真实零部件）——包括未发布设备的部件——带到面试现场展示。Courthouse News 引述诉状称 OpenAI 采取了『unlawful shortcuts』（非法捷径）。两名前苹果工程师被指跳槽到 OpenAI 后仍持续访问 Apple 的 confidential 文件。CNN 报道指出，Apple 认为这些窃取的机密被用于 OpenAI 尚未发布的 AI 硬件设备研发。\n\n【背景与上下文】这起诉讼的背景是 OpenAI 正大举进军硬件：公司已收购前 Apple 首席设计官 Jony Ive 的 io 硬件项目，公开目标是打造专用 ChatGPT 设备。而 Apple 与 OpenAI 此前是合作伙伴——iOS 18 集成 ChatGPT 是苹果 AI 战略的核心一环。诉讼标志着这段关系出现重大裂痕。值得注意的是，人才争夺在 AI 行业已成常态（Anthropic、Google、OpenAI 互相挖角），但 Apple 选择把招聘中的信息分享行为诉诸法律，把灰色地带推向公开对抗。\n\n【影响与前瞻】对 Eason 的判断价值：第一，它揭示了 OpenAI 的硬件野心不再只是传闻，已实质到 Apple 愿意为此撕破合作面子；第二，AI 巨头竞争正从『模型能力』外溢到『硬件 + 生态』全栈，2026 下半年的真正战场可能在设备而非 API；第三，对银行业 AI 推广的镜像启示——人才流动带来的 IP/机密风险在强监管行业更敏感，值得在 AI 合作协议里前置。短期内 OpenAI 与 Apple 的 iOS 集成是否会受波及是看点。",
+      "source": "Reuters",
+      "source_type": "tavily",
+      "url": "https://www.reuters.com/legal/litigation/apple-sues-openai-alleging-misappropriation-trade-secrets-court-records-show-2026-07-10/",
+      "timestamp": "2026-07-10T18:00:00Z",
+      "importance": 8,
+      "tags": [
+        "OpenAI",
+        "Apple",
+        "诉讼",
+        "商业机密",
+        "AI硬件",
+        "竞争格局"
+      ],
+      "batch_time": "2026-07-11T09:00:00+08:00"
+    },
+    {
+      "title": "GPT-5.6 成为 Microsoft 365 Copilot 首选模型，对冲「微软抛弃 OpenAI」叙事",
+      "summary": "7/9 微软官方宣布 GPT-5.6 系列成为 Microsoft 365 Copilot 的 preferred model，覆盖 Word、Excel、PowerPoint、Chat——Word 起草编辑所需 prompt 轮次更少，Excel 支持更深数据分析。这直接对冲了本周早些时候『微软为降本用自研 MAI 模型替换 OpenAI』的报道。微软真实策略浮现：成本敏感场景用 MAI，能力旗舰位仍用 OpenAI 最新模型，并非单方面抛弃。",
+      "detail_content": "【核心事件】7 月 9 日，OpenAI 与 Microsoft 同步官宣：GPT-5.6 系列模型即日起成为 Microsoft 365 Copilot 的 preferred model（首选/默认模型），覆盖 Word、Excel、PowerPoint、Chat 等核心应用。微软在 Tech Community 官方博客以『Available today』标题确认。\n\n【关键细节与引用】OpenAI 官方公告给出的具体场景：在 Word 中 GPT-5.6 让用户『draft, edit, and refine documents with fewer rounds of prompting』（用更少的 prompt 轮次完成起草、编辑、打磨）；在 Excel 中支持更深度的数据分析。这是 GPT-5.6 7/9 发布后拿下的第一个旗舰级企业落地。微软同时强调 GPT-5.6 家族（Sol/Terra/Luna 三档）会按场景分配。\n\n【背景与上下文】这条新闻的关键张力在于：就在两天前的 7/7，本频道刚收录『微软为降本在 Copilot 中用自研 MAI 模型替换 OpenAI 和 Anthropic 模型』（imp8）。两条新闻放在一起，微软的真实策略变得清晰——并非『抛弃 OpenAI』，而是分层调度：对成本敏感、可接受能力下限的内部负载用自研 MAI 模型压成本；对面向用户、需要旗舰能力的 Copilot 旗舰位，继续用 OpenAI 最新最强的模型。这种『能力层 + 成本层』双轨制是大型企业 AI 部署的典型范式。\n\n【影响与前瞻】对 Eason 向管理层汇报 AI 工具价值时的弹药：第一，GPT-5.6 发布当天即进微软旗舰产品默认位，说明 OpenAI 模型在企业市场仍有不可替代的能力溢价，『替换』论被夸大；第二，微软的双轨策略本身就是银行业可借鉴的 AI 部署架构——核心客户可见场景用最强模型，内部流程用降本模型，按 ROI 分层；第三，OpenAI-微软这对『最复杂合作伙伴』的关系在 GPT-5.6 周期被再次确认紧密，但成本分摊的张力会持续存在。",
+      "source": "OpenAI / Microsoft Tech Community",
+      "source_type": "tavily",
+      "url": "https://openai.com/index/gpt-5-6-preferred-model-microsoft-365-copilot/",
+      "timestamp": "2026-07-09T15:00:00Z",
+      "importance": 7,
+      "tags": [
+        "OpenAI",
+        "微软",
+        "GPT-5.6",
+        "Copilot",
+        "企业AI",
+        "模型策略"
+      ],
+      "batch_time": "2026-07-11T09:00:00+08:00"
+    },
+    {
+      "title": "DeepSeek-V4 Flash 的 RL 训练首次在 AMD MI355X 上端到端跑通：训练端非英伟达化破冰",
+      "summary": "LMSYS 7/10 发布博客，DeepSeek-V4 Flash 的强化学习训练通过 Miles 框架首次在 AMD Instinct MI355X GPU 上端到端完成。DeepSeek-V4 Flash 是 284B 参数的 MoE 模型，仅用完整 V4 约 10% 算力和 7% 显存。关键信号：此前 AMD 主要在推理端追赶 NVIDIA，训练端（尤其 RL）是 CUDA 护城河最深处——RL 训练跑通意味着非英伟达训练栈开始实质可用。",
+      "detail_content": "【核心事件】7 月 10 日，LMSYS（Chatbot Arena 团队）发布博客《Bringing DeepSeek-V4 Flash RL Training to AMD Instinct MI355X GPUs with Miles》，宣布 DeepSeek-V4 Flash 的强化学习（RL）训练首次在 AMD Instinct MI355X GPU 上完成端到端运行，底层用的是 Miles 训练框架。\n\n【关键细节与引用】DeepSeek-V4 Flash 是 DeepSeek-V4 的高效变体：284B 参数的 mixture-of-experts 架构，Flash 版本仅消耗完整 V4 约 10% 的算力和 7% 的显存，却能保持前沿级能力。RL 训练管线沿用 DeepSeek 团队标志性的 GRPO（Group Relative Policy Optimization）路线。AMD 官方技术文章同期指出 MI355X 在 DeepSeek V4 推理上『sets a new performance bar』。需要注意的是，社区也报告了软件栈成熟度问题——vLLM 的 ROCm 镜像在 MI350X 上跑 DeepSeek-V4-Flash 仍有兼容性 bug（GitHub Issue #42876），说明训练端虽破冰、生态仍未顺滑。\n\n【背景与上下文】这件事的产业意义在于『训练端』三个字。过去两年 AMD Instinct 系列（MI300X/MI355X）在推理端不断缩小与 NVIDIA H100/H200 的差距，Meta、Microsoft 等大厂都用 AMD 跑推理负载。但训练——尤其是 RL 后训练——是 CUDA 护城河最深的地方：cuDNN/NCCL 十多年积累、分布式训练优化、RL 工程化都高度依赖 NVIDIA 软件栈。RL 训练能在 AMD 上端到端跑通，意味着非英伟达训练栈从『demo』走向『可用』。结合上周 NVIDIA Kyber NVL144 延期到 2028 的背景（本频道 7/5 收录），算力供给侧的多元化正在加速。\n\n【影响与前瞻】对 Eason 的判断价值：第一，国产/非英伟达算力栈的可用性边界从推理扩展到 RL 训练，对国内银行业 AI 自主可控是实质性利好——训练侧不再完全卡在 NVIDIA；第二，DeepSeek 开源生态正在成为非英伟达硬件的事实软件层（类似 Android），这个『模型-硬件』联盟值得关注；第三，NVIDIA 的定价权可能在 2027 年松动，但短期内 CUDA 生态优势仍在，本次破冰更多是『可能性的证明』而非大规模迁移。算力成本曲线这是中长期变量。",
+      "source": "LMSYS Blog",
+      "source_type": "aihot",
+      "url": "https://x.com/lmsysorg/status/2075611039375430052",
+      "timestamp": "2026-07-10T16:00:00Z",
+      "importance": 7,
+      "tags": [
+        "DeepSeek",
+        "AMD",
+        "训练",
+        "强化学习",
+        "英伟达",
+        "算力",
+        "开源"
+      ],
+      "batch_time": "2026-07-11T09:00:00+08:00"
+    },
+    {
+      "title": "Claude Code 桌面版新增应用内浏览器：agent 可直接读文档、点网页，减少上下文切换",
+      "summary": "Claude Code 桌面版（v2.1.206，7/10 前后推送）新增内置浏览器，Claude 能在桌面端直接拉起文档、设计稿或任意网址并点击交互，不再需要把网页内容粘贴进来或通过 MCP 工具 fetch。这是 agentic coding『减少 unknowns』主线（呼应 7/6 Fable coding guide）在产品层的小步落地，进一步压缩人机协作中的信息搬运摩擦。",
+      "detail_content": "【核心事件】Claude Code 桌面应用近期推送的 v2.1.206 版本新增了应用内浏览器（in-app browser）。r/ClaudeAI 社区讨论确认：Claude 现在可以直接在桌面端『pull up docs, designs, or any website』，并能对网页进行阅读、点击、交互，而不仅是一次性抓取文本。\n\n【关键细节与引用】官方文档（code.claude.com/docs/en/desktop）列出的桌面版能力矩阵包括：并行会话 + Git 隔离、拖拽式 pane 布局、集成终端与文件编辑器、side chats。应用内浏览器是这条产品线的最新补强。此前 agent 要获取 web 信息，要么靠用户手动粘贴，要么通过 MCP fetch 类工具拿到纯文本——后者丢失了交互能力和动态渲染内容。内置浏览器补上了这个缺口，让 agent 能自主『看到并操作』网页。\n\n【背景与上下文】这件事放在本频道 7/6 收录的《Claude Fable agentic coding 实战指南》框架下特别合适——那份指南的核心方法论就是『找到你的 unknowns』（reduce unknowns）。浏览器集成本质上是给 agent 装上一个自主减少 unknowns 的通道：当它对某个 API 文档、某个设计稿、某个报错页面不确定时，可以自己去查而不是打断用户。这与同周 OpenAI 把 ChatGPT 与 Codex 合并成跨应用 agent 的方向（ChatGPT Work，7/9 收录）是同一个产品化趋势——agentic coding 正在从『终端里写代码』演进为『跨应用自主完成工作』。\n\n【影响与前瞻】对 Eason 日常使用 Claude Code 的直接价值：第一，做调研类、跨文档类任务时，可以让 Claude 自己去翻官方文档和 GitHub issue，减少手动喂上下文；第二，对团队推广 AI coding 是利好——桌面端 + 浏览器降低了非工程师使用 agent 的门槛，呼应 7/7 微软 Frontier Company 的企业部署逻辑；第三，能力上仍需观察：浏览器交互的可靠性、token 消耗、以及 Claude 在长 agentic 对话中『superhuman 但人跟不上』（alexalbert__ 近期原话）的体验问题。属于渐进式但方向正确的更新。",
+      "source": "Claude Code GitHub / Reddit",
+      "source_type": "aihot",
+      "url": "https://www.reddit.com/r/ClaudeAI/comments/1usx952/claude_code_on_desktop_now_has_an_inapp_browser/",
+      "timestamp": "2026-07-10T14:00:00Z",
+      "importance": 6,
+      "tags": [
+        "Anthropic",
+        "Claude Code",
+        "agentic coding",
+        "产品更新",
+        "桌面版"
+      ],
+      "batch_time": "2026-07-11T09:00:00+08:00"
+    }
+  ]
+}
