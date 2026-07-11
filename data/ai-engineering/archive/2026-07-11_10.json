@@ -1,0 +1,65 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-07-11T10:00:00+08:00",
+  "digest": "周六淡讯日，三道考题同时交卷——AI 工程化从『能不能做』进入『怎么真部署、谁被重构、怎么守住工程纪律』。Uber 用『Agentic Pods』交出迄今最完整的大厂内部 agent 部署方法论（最强工程师嵌入业务跟岗两周），但同一条新闻里自己 maxed out 全年 Claude Code 预算、COO 公开质疑 ROI，说明从『造出 agent』到『算得过来账』中间还隔着一道坎；GergelyOrosz 访谈 50+ 招聘经理画出工程师市场结构性 Catch-22，多名招聘者明确『宁要品味判断力、不要 prompt 库』，把本周斯坦福/加州/Anthropic 三组就业硬数据的微观体感补齐；Matt Pocock 开源『真工程师的 agent skills』则把反 vibe-coding 的工程纪律做成了可一键安装的工具。三块拼起来，仍是 7/8 主线『agentic AI 从能力 demo 转向工程经济性与可信度清算』的延续——只是清算的颗粒度越来越细。",
+  "items": [
+    {
+      "title": "Uber CTO 的「Agentic Pods」实验：把最强 AI 工程师嵌入 HR/财务/法务跟岗两周，造出真 agent",
+      "summary": "Uber CTO Praveen Neppalli Naga 把 30 名「最懂 AI 的工程师」派驻到财务、法务、HR 等业务部门，跟岗两周后为这些部门造出可用 AI agent，过去两个月跑了 16 个这样的 Pod。财务 pacing 报告从 2 天压到 10 分钟，150 个城市的资金分配从 15 小时压到 30 分钟。但同一条新闻里 Uber 透露今年春天已 maxed out 全年 Claude Code 预算，COO 公开承认「越来越难证明 AI 投入划算」——方法论和账本两面都摆上了台面。",
+      "detail_content": "【核心事件】Uber CTO Praveen Neppalli Naga 7 月初在 X 上公开了一套名为「Agentic Pods」的内部 AI 部署方法：从全公司抽调 30 名「最懂 AI 的工程师」（most AI-proficient engineers），把他们成建制地嵌入财务、法务、人力资源等非技术部门。每个 Pod 为期两周，工程师不做 PPT、不写文档，而是直接坐在业务人员旁边观察他们每天怎么干活，然后把那些「跨多个系统、大量手工操作」的活计重做成 AI agent。过去两个月 Uber 跑了 16 个这样的 Pod，并已组建专职团队要把这套模式规模化和做深。\n\n【关键细节与引用】这是迄今公开资料里最具体的大厂内部 agent 部署方法论，关键数字：财务 pacing 报告从「两天」压到「10 分钟」；覆盖 150 个城市的资金分配任务从「15 小时」压到「30 分钟」。Naga 给出最有工程含量的判断——「You can't automate them effectively by looking at process diagrams or documentation. You have to understand how the work actually gets done.」（看流程图和文档根本自动化不了这些活，你必须理解工作实际上是怎么完成的）。这句话直接戳破了「拿张流程图就能让 agent 干活」的幻想，和近期『agentic slop』翻车形成对照。但 Business Insider 同稿给出反方证据：Uber COO Andrew Macdonald 5 月在播客上说越来越难证明 AI 投入划算；Naga 本人对 The Information 透露 Uber 今年春天已把全年 Claude Code 预算打满；投入猛增却没带来等量的「有用」消费者功能。\n\n【背景与上下文】这条新闻同时坐在两条主线上。其一是 FDE（forward-deployed engineer）模式的组织化——之前本频道追踪过 OpenAI/Anthropic/AWS/微软争相组建 FDE 部队（AWS 10 亿、微软 25 亿 6000 人 Frontier），Uber Pod 的不同之处是把「前方部署」做进了自家非技术部门、由内部工程师而非外部 AI 厂商承担。其二是 AI ROI 的清算——从 BIS 万亿泡沫警告到 404 Media 揭露的『tokenpocalypse』大行限流，再到 Uber 自家『预算打满但消费者功能没跟上』，都指向同一个问题：把 agent 造出来容易，把账算过来难。\n\n【影响与前瞻】对 Eason 的银行业 AI 推广有四点直接启发：一，方法论可复用——「最强工程师嵌入业务跟岗」比『建个 AI 中台等业务来提需求』有效得多，银行风控/运营/客服/营销四类场景完全可套这个 Pod 模式；二，Naga 那句『理解工作实际上怎么完成』是向上汇报时拆解『AI 一周搞定 X』神话的有力论据；三，Uber 自己 maxed out Claude Code 预算 + COO 质疑 ROI，说明在强监管银行业做 AI 部署预算沟通时，要把『降本证据』和『投入节奏』讲清楚，否则会重演 Uber 式的内部信任滑坡；四，Pod 模式天然适合做『判断力增强而非替代』——agent 接手工操作，财务/法务人员保留判断和签字，这恰好是监管喜欢的 human-in-the-loop 形态。",
+      "source": "Business Insider",
+      "source_type": "tavily",
+      "url": "https://www.businessinsider.com/uber-cto-bets-on-agentic-pods-make-ai-more-efficient-2026-7",
+      "timestamp": "2026-07-09T15:24:02Z",
+      "importance": 9,
+      "tags": [
+        "Uber",
+        "Agentic Pods",
+        "AI部署方法论",
+        "ROI",
+        "FDE",
+        "银行业AI"
+      ],
+      "batch_time": "2026-07-11T10:00:00+08:00"
+    },
+    {
+      "title": "Pragmatic Engineer 画出招聘市场 Catch-22：企业找不到人、老兵拿不到面试，「品味与信任」打败「prompt 库」",
+      "summary": "GergelyOrosz 访谈 50+ 招聘经理与求职者，画出 2026 上半年工程师市场的结构性悖论：企业抱怨招不到资深人、资深人抱怨简历石沉大海，根因是 AI 求职信和简历制造海量噪音让 inbound 渠道基本失效。AI/ML/FDE 岗位「史上最火」、其他岗位冷淡，市场一刀切两半。多名招聘者明确表态：宁要「AI 落后但品味判断力强」的人，也不要「agent 配置复杂、prompt 库一堆」的人——把本周斯坦福/加州就业硬数据的微观体感补齐了。",
+      "detail_content": "【核心事件】Pragmatic Engineer《Tech jobs market in 2026》系列的终篇 part 3，GergelyOrosz 走访 50+ 招聘经理、工程师与工程负责人，得出一个数据看不见、但与人聊就扑面而来的判断：今天的工程师招聘市场最准确的形容词是「weird（诡异）」。最典型的悖论被命名为「Catch-22」——招聘经理抱怨资深/Staff+ 工程师和 EM「根本招不到」，而另一边，经验丰富、履历漂亮的工程师投出去的简历大面积石沉大海，两边互相找不到对方。\n\n【关键细节与引用】悖论的根因被归到 AI 制造的噪音和信任崩塌。多位招聘经理的原话：DuckBill Group CEO 说「每天收 1000 份 inbound，大概只有 2 份和岗位相关，我已经基本不再认真看 inbound」；某 Big Tech 工程总监说「一堆严重不合格的人淹没了招聘管道，inbound 这个渠道已经废了」。更狠的是信任问题——「CVs are high-quality, but the people behind them are not」（简历质量空前高，简历背后的人不是这么回事）：有人自称五年云架构师，被问到用过哪些架构模式时只会重复「daily standup、sprint planning、retrospective」。Cover letter 被判死亡（永远 AI 生成、千篇一律）。甚至出现大量『假候选人』——面试时对着 LLM 念答案、真人换人代面试、背景里有 AI 在跑，北美/欧洲远程岗尤其严重，招聘者靠『对话里的滞后感』来识别。市场一刀切成两半：AI/ML/FDE 岗位『史上最好市场』（一天 2-3 个主动 reach、L5 FDE 手握多个 offer），其他岗位冷淡。最具杀伤力的一句来自洛杉矶一位 seed 轮 Tech Lead：「I'd rather hire someone who is 'behind' on AI, but has great taste/judgment than someone with complex agent setups and prompt libraries」（我宁可招一个 AI 上落后但品味判断力强的人，也不要一个 agent 配置复杂、prompt 库一堆的人）。\n\n【背景与上下文】这条微观访谈是本周三组就业硬数据的『人话版』注脚：斯坦福+ADP 460 万样本证明 22-25 岁初级开发者就业暴跌 9-19%、41-49 岁反增 14%；加州 EDD 追踪器证明 AI 冲击不只伤新人、全年龄段高学历群体都在承压；Anthropic 6 月经济指数报告证明『算力跟着工资走』、重度委托者最乐观。GergelyOrosz 的访谈把宏观数据翻译成了招聘现场的真实体感——不是『AI 替代了谁』这么简单，而是『整个匹配机制正在被 AI 制造的噪音搞失灵』。和 7/8 本频道收录的『GergelyOrosz：AI 正在污染招聘市场、求职信几乎全是 AI 写』是同一作者同一系列，但那条只切了 cover letter 这个切片，本条给出的是完整的结构性图景和『品味 > prompt 库』这个新判断。\n\n【影响与前瞻】对 Eason 这种带科技团队、又要做银行 AI 推广的管理者，三层用处：一，招聘策略——inbound 渠道在 AI slop 冲击下基本失效，referral（内推/熟人网络）比以往任何时候都重要，这直接影响科技团队怎么搭招聘漏斗；二，考核与用人哲学——『品味判断力 > prompt 库』这句原话可以直接搬进银行 AI 推广时的考核设计，呼应之前定的『考核应指向判断力增长而非纯产出量』；三，向上汇报弹药——『假候选人代面试』『简历全 AI 写』这些案例能帮管理层理解为什么 AI 招聘工具本身也是 slop 重灾区，强监管行业用人更要守住『taste + trust』这条线。一个值得继续观察的前瞻：如果 inbound 招聘渠道因 AI 噪音而结构性失效，下一轮创新很可能发生在『可信人才验证』这一层。",
+      "source": "Pragmatic Engineer",
+      "source_type": "tavily",
+      "url": "https://newsletter.pragmaticengineer.com/p/tech-jobs-market-in-2026-part-3-hiring",
+      "timestamp": "2026-07-07T17:25:41Z",
+      "importance": 8,
+      "tags": [
+        "招聘市场",
+        "工程师分化",
+        "AI求职污染",
+        "FDE",
+        "判断力",
+        "Catch-22"
+      ],
+      "batch_time": "2026-07-11T10:00:00+08:00"
+    },
+    {
+      "title": "Matt Pocock 开源「真工程师的 Agent Skills」：反 vibe coding，把软件工程基本功做成可复用 skill",
+      "summary": "TypeScript 教育者 Matt Pocock 把自己 .claude 目录里每天在用的 agent skills 整理开源（npx skills@latest 一键安装），核心主张是「真工程，不是 vibe coding」。他针对 agent 的 4 大失败模式各给出对应 skill：需求错位 → /grill-me 反复盘问、agent 啰嗦 → 共建领域语言 CONTEXT.md、代码不 work → TDD 红绿重构、代码变泥球 → /improve-codebase-architecture。一句话总结：『软件工程基本功在 AI 时代比以往更重要』，与近期『Skill engineering 浮现为新学科』主线同频。",
+      "detail_content": "【核心事件】知名 TypeScript 教育者 Matt Pocock 把自己每天在用的 Claude/Codex agent skills 开源（github.com/mattpocock/skills，npx skills@latest add mattpocock/skills 一键安装）。这套 skills 明确对标 GSD、BMAD、Spec-Kit 等流程框架，理由是这些框架『接管了你的流程、拿走了控制权、流程里出了 bug 很难修』，而他要的是『小、易改、可组合、适配任何模型』的 skill。整套工具的核心立场写在 README 第一句：『My agent skills that I use every day to do real engineering - not vibe coding.』（我每天用来做真工程的 agent skills——不是 vibe coding）。\n\n【关键细节与引用】Pocock 把 agent 失败归纳成 4 大模式，每个都配一个 skill。其一，需求错位（misalignment）——『没有人能确切说清自己要什么』，解法是 /grill-me、/grill-with-docs，让 agent 在动手前先 relentlessly 盘问你，把决策树的每个分支都走通。其二，agent 啰嗦——agent 被丢进项目里只能边干边猜术语，于是 1 个词能说清的事用 20 个词，解法是共建一份领域语言文档 CONTEXT.md（『这可能是整个 repo 里最强的技巧』），变量函数文件命名因此一致、agent 也省 token。其三，代码不 work——没有反馈回路 agent 就是盲飞，解法是 /tdd 红绿重构、/diagnosing-bugs 调试循环。其四，代码变泥球（ball of mud）——agent 提速编码的同时也加速了软件熵增，解法是 /improve-codebase-architecture，每隔几天跑一次给架构『加深模块深度』。他还把 skill 分成 user-invoked（只能人手动触发、负责编排）和 model-invoked（agent 也可自动调用、承载可复用纪律）两类，user-invoked 之间禁止互相调用。整个 repo 的底层判断引用了《The Pragmatic Programmer》《领域驱动设计》《XP 解释》《A Philosophy of Software Design》——全是前 AI 时代的经典。\n\n【背景与上下文】这条和 7/8 本频道收录的『Skill engineering 浮现为新学科：给 agent 一套设计词汇表，loopmaxxing 时代人怎么握住方向盘』完全同频——skill 作为一种新工程产物正在快速成形，区别在于那条偏方法论、这条是可直接装上手的成品工具集。它也坐实了近期一条清晰的反 slop 主线：YC CEO『日更 3.7 万行』被扒皮成 agentic slop、Simon Willison 把判断力放权给 Fable、GergelyOrosz『重度 AI 用户说话越来越像 AI』——当 agent 让编码本身变便宜，真正的差异化重新落回到『需求澄清、领域建模、测试反馈、架构纪律』这些前 AI 时代就被验证过的工程基本功上。\n\n【影响与前瞻】对 Eason 两个直接用处。一，可上手试用——这套 skill 装到自己的 Claude Code 里立刻能用，/grill-me 和 CONTEXT.md 共建领域语言这两个技巧对银行复杂业务系统的 AI 协作特别值（银行业务术语本来就是 agent 啰嗦的高发区）。二，作为 AI 推广汇报的素材——Pocock 这套『反 vibe coding』框架是个现成的『组织怎么把 AI 编码从草莽引向工程化』样板，四类失败模式（需求错位、啰嗦、代码不 work、泥球）正好可以映射成银行内部 AI Coding 的治理抓手和考核维度，呼应反 slop、指向判断力增长的考核设计取向。",
+      "source": "GitHub / Matt Pocock",
+      "source_type": "tavily",
+      "url": "https://github.com/mattpocock/skills",
+      "timestamp": "2026-07-11T10:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Agent Skills",
+        "工程纪律",
+        "反vibe coding",
+        "TDD",
+        "开源",
+        "Skill Engineering"
+      ],
+      "batch_time": "2026-07-11T10:00:00+08:00"
+    }
+  ]
+}
