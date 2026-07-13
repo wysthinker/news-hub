@@ -1,9 +1,67 @@
 {
   "channel_id": "ai-frontier",
   "channel_name": "AI 前沿",
-  "generated_at": "2026-07-12T09:08:01.288172+08:00",
-  "digest": "GPT-5.6 大周后的第二个周末，Anthropic/OpenAI/DeepMind 三家官方继续静默——没有新发布，上周的 Sol/Terra/Luna、Cowork、J-space 仍在被业界消化。这个周末真正在圈子里炸开的是两条「Fable 5 vs GPT-5.6 Sol 的对照实验」：一条正面、一条反面。正面是 Bun 作者 Jarred Sumner 用预发布 Fable 5 + Claude Code dynamic workflows，让 64 个并行 agent 在 11 天内把整个 Bun 运行时从 Zig 全量重写成 Rust（百万行、约 16.5 万美元），迄今最大规模的 Fable 5 生产级实证；反面是 AI 创业者 Matt Shumer 测试 GPT-5.6-Sol Ultra 时一个 subagent 跑出 rm -rf、因变量处理错误删光他 Mac 硬盘，他当场喊出「我信 Fable 1000 倍」。两条放一起看，几乎就是这个夏天 agentic coding 主题最浓缩的缩影：上限惊人、下限也惊人，监督机制和权限边界决定一切。第三条是蚂蚁灵波 7/10 发布 LingBot-VA 2.0，打「具身原生世界动作模型」旗号，把具身智能大模型从「复用数字世界模型」推进到「原生面向物理世界」的新范式。另外 Apple 诉 OpenAI 窃密案有彭博深挖新细节（核心被告是 OpenAI 首席硬件官 Tang Tan、被指要求苹果面试者「带着零部件来面试」），但核心事件 7/10 已收录、此处仅在形势里标记跟进。",
+  "generated_at": "2026-07-13T09:06:29.079055+08:00",
+  "digest": "GPT-5.6 三件套发布大周后进入第三个周末，Anthropic/OpenAI/DeepMind 三家官方连续第三周末静默无新发布——claude.com、anthropic.com、deepmind.google 站内搜全空，连 jackclarkSF 的 Import AI 本周都停更（理由是 toddlers 和英格兰世界杯）。但 agentic coding 工具的『安全清算』本周浮出水面：xAI 官方 Grok Build CLI 被抓包静默上传整个代码库和密钥，和上周 GPT-5.6-Sol 删光 Shumer 硬盘、NVDB 给 Claude Code 贴后门警告连成一条线——agent 工具的权限边界、数据外泄、沙箱隔离正成为生产级部署的硬约束，这对强监管行业是把 agent 放进生产环境前必须答的题。国产侧，腾讯混元 Hy3 正式开源（295B MoE/21B 激活，Agent 任务解决率 90%），加入 DeepSeek/Qwen/Kimi/GLM 的开源 MoE 竞跑。Grok 双路搜索连续第 23 天 502。",
   "items": [
+    {
+      "title": "xAI 官方 Grok Build CLI 被抓包：静默上传整个代码库+密钥到 xAI 云，opt-out 也挡不住",
+      "summary": "安全研究者抓包发现，xAI 官方 agentic coding CLI（npm 包 @xai-official/grok，即 Grok Build CLI，powered by Grok 4.5）在每轮任务前后会把当前工作目录打包成 before_codebase.tar.gz / after_codebase.tar.gz，通过独立旁路通道静默上传到 xAI 的 Google Cloud 仓库。上传包包含 .env 密钥、完整 git 历史，甚至仓库外的文件；即使模型只回复一个单词，上传依然发生；opt-out 设置无法阻止。这是继上周 GPT-5.6-Sol 删光 Shumer 硬盘、NVDB 给 Claude Code 贴后门警告后，agentic coding 工具安全本周第三响——直指 agent 工具的权限边界与数据外泄问题。",
+      "detail_content": "【核心事件】7 月 13 日，安全研究者通过对 xAI 官方 Grok Build CLI（npm 包 @xai-official/grok 0.2.93 版，产品页 x.ai/cli，官方定位为「面向专业软件工程的 coding agent 和 CLI」，powered by Grok 4.5）进行网络流量抓包，发现该工具在每轮任务执行前后，会自动把用户当前工作目录打包成 before_codebase.tar.gz 和 after_codebase.tar.gz 两个压缩包，通过一条独立于模型对话的旁路通道，静默上传至 xAI 的 Google Cloud 存储仓库。验证显示：即使本轮任务中模型仅回复一个单词，上传行为依然发生；上传内容不仅包括项目源码，还包含 .env 文件里的密钥、完整 git 提交历史，甚至工作目录之外的文件；更关键的是，官方提供的 opt-out（退出上传）设置无法阻止这一行为——抓包确认开关关闭后流量仍在继续。\n\n【关键细节与引用】Reddit r/LocalLLaMA 帖子标题直白：「Grok Build CLI uploads your whole repo — full git history + .env secrets — to xAI's cloud, and the opt-out doesn't stop it (wire-captured)」。中文圈由公众号「数字生命卡兹克」跟进披露：上传走的是「独立旁路通道」，而非模型 API 的正常请求路径，这意味着即便用户监控模型调用也察觉不到。这与 agentic coding 工具「读你的代码来帮你写代码」的合理预期不同——合理预期是代码进入模型 context 用于推理，而不是被打包持久化存储到厂商云上、且无法关闭。Phoenix Security 6 月发布的供应链报告显示，2024 年 6 月至 2026 年 6 月共追踪到 59 起 AI agent 相关供应链攻击、657 个恶意包，Grok CLI 事件是这一趋势在「官方工具」层面的最新案例。\n\n【背景与上下文】这是 agentic coding 工具安全本周的第三声警报。上周二（7/9），GPT-5.6-Sol 的 subagent 执行清理任务时跑出 rm -rf，因 $HOME 相关 shell 变量处理错误把 Matt Shumer 整台 Mac 清空，他当场喊「我信 Fable 1000 倍」；更早 ai-engineering 频道收录过 NVDB 给 Claude Code 贴安全后门警告（后被证实是 Anthropic 的反蒸馏遥测实验、已回滚），以及 Sygnia 报告 agentic AI 把云攻击从数周压到 72 小时。三件事角度不同——权限越界（rm -rf）、遥测争议（Claude Code）、数据外泄（Grok CLI）——但指向同一个根因：当 agent 需要「深度访问你的代码、文件系统、密钥」才能干活时，访问的边界、用途的透明度、退出的可控性，全是生产级部署绕不过的硬问题。对照之下，Anthropic 在 Bun 重写、阿尔伯塔 4.66 亿行代码审查等案例里走的是「沙箱 + 红蓝队 review + 权限边界」路线，正是这一组对照的正面参照。\n\n【影响与前瞻】对把 agent 放进生产环境的团队（尤其强监管行业如银行），这件事的直接启示是：选 agentic coding 工具时，「它会不会把我的代码/密钥传出去」必须作为准入评估的硬项，不能只看写代码的能力。抓包验证应成为标配验收手段——官方文档说的 opt-out 不等于实际生效。短期看，xAI 大概率会紧急修复或重新表述数据流（事件正在发酵）；中长期看，agentic 工具的「数据最小化 + 可审计 + 可真正关闭」会从加分项变成合规底线，和 MAS 的 SAFR、BoE 的 human-in-the-loop 治理一脉相承。对 Eason 的银行汇报，这是一个现成的、本周新鲜的反面教材：agent 工具供应链安全不是理论风险，是已经发生过、被 wire-captured 实锤的事故。",
+      "source": "r/LocalLLaMA / 数字生命卡兹克",
+      "source_type": "aihot",
+      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1ut7tis/grok_build_cli_uploads_your_whole_repo_full_git/",
+      "timestamp": "2026-07-13T09:00:00Z",
+      "importance": 9,
+      "tags": [
+        "xAI",
+        "Grok",
+        "agentic coding",
+        "安全",
+        "供应链",
+        "数据外泄",
+        "密钥泄露"
+      ],
+      "batch_time": "2026-07-13T09:00:00+08:00"
+    },
+    {
+      "title": "腾讯混元 Hy3 正式开源：295B MoE / 21B 激活，Agent 任务解决率 90%，已接入微信 10 亿用户",
+      "summary": "腾讯混元团队 7/6 正式发布 Hy3 模型（7/12 中文圈二次发酵），采用 295B 总参数 / 21B 激活的 MoE 架构（另含 3.8B MTP 层），256K 上下文，Apache 2.0 开源权重。定位「Agent 向 LLM」，从 preview 到正式版基于 50 多个真实业务反馈迭代，内部 WorkBuddy 任务成功率从 72% 提升至 90%、耗时降 34%。性能打平 GLM-5.1 等参数规模 2-5 倍的旗舰。已集成微信服务 10 亿+ 用户，HuggingFace/ModelScope 开源，OpenRouter 提供两周免费（至 7/21）。",
+      "detail_content": "【核心事件】7 月 6 日，腾讯混元团队正式发布 Hunyuan 3（Hy3）基础模型的正式版，这是继 preview 版之后的定稿版本。模型采用 Mixture-of-Experts（MoE）架构，总参数 295B、激活参数 21B，另含 3.8B MTP（Multi-Token Prediction）层参数，上下文窗口 256K tokens，以 Apache 2.0 协议开源权重。腾讯官方定位其为「推进 Agent 能力与更深产品集成」的模型，权重已在 HuggingFace 和 ModelScope 公开。中文圈在 7 月 12 日前后对这次发布进行了二次发酵讨论。\n\n【关键细节与引用】腾讯官方公告称，Hy3 从 preview 到正式版基于「50 多个真实业务反馈」迭代。最具体的内部指标来自 WorkBuddy（腾讯内部的工作助手类 agent）：任务成功率从 preview 的 72% 提升至 90%，单任务耗时降低 34%，幻觉和常识错误持续下降。第三方覆盖（Pandaily、MarkTechPost）确认了「约 90% 的 agent 任务解决率」这一数字，并指出 Hy3 以 21B 的轻量激活参数「打平 GLM-5.1 等旗舰模型」。实测显示其强项在 coding、办公、复杂任务规划与工具调用，纯视觉能力是短板。商业化落地方面，Hy3 已集成至微信服务，覆盖 10 亿+ 用户；OpenRouter 提供为期两周的免费 API 试用（至 7 月 21 日）。\n\n【背景与上下文】Hy3 的发布放在国产开源 MoE 的竞跑里看更清楚：DeepSeek、Qwen、Kimi、GLM、美团 LongCat-2.0（7/6 同一周开源、1.6T MoE/激活 48B）都在用「超大总参 + 极小激活」的 MoE 路线压低推理成本，同时把 agent / tool-use 能力作为差异化卖点。Hy3 的 21B 激活打平旗舰，是「效率派」路线的又一数据点。值得注意的是腾讯把「Agent 向」写进模型定位本身——半年前业界还在讨论「agent 能力是模型层还是框架层」，现在主流厂商已统一把它做进基座模型，这和 OpenAI GPT-5.6 三件套（Sol/Terra/Luna 多 agent）、Anthropic Cowork、Thomson Reuters 单 agent 控数百工具是同一趋势的两面：agent 能力正从「应用层 trick」下沉为「基座模型的一等公民」。\n\n【影响与前瞻】对关注国产开源模型选型的团队，Hy3 提供了一个「轻激活、强 agent、可商用（Apache 2.0）」的新选项，256K 上下文和 90% 任务成功率使其适合内部工作流类 agent 场景。短板（纯视觉）意味着多模态重场景仍需搭配其他模型。短期内它会在 OpenRouter 免费窗口期获得一批试用反馈；长期看，国产 MoE「五选一」的格局会进一步压低企业用大模型的边际成本，对走自建路线的金融机构是利好。和上周 DeepSeek-V4 Flash 在 AMD MI355X 上跑通 RL 训练合在一起看，国产侧正在「开源权重 + 国产算力 + agent 能力」三个维度同时推进自主闭环。",
+      "source": "腾讯官方 / AIHOT",
+      "source_type": "aihot",
+      "url": "https://www.tencent.com/en-us/articles/2202386.html",
+      "timestamp": "2026-07-06T09:00:00Z",
+      "importance": 7,
+      "tags": [
+        "腾讯",
+        "混元",
+        "Hy3",
+        "MoE",
+        "开源",
+        "Agent",
+        "国产模型"
+      ],
+      "batch_time": "2026-07-13T09:00:00+08:00"
+    },
+    {
+      "title": "OpenAI Codex 更新：更丰富上下文理解、目标模式、浏览器改进与远程锁定",
+      "summary": "OpenAI 本周末更新 Codex release notes：新增更多理解用户工作上下文的方式、目标模式让较长任务持续推进、浏览器改进（macOS 上的 Appshots）、以及远程锁定使用功能。属 release notes 级别增量迭代，非重磅发布，但显示 OpenAI 在 agentic coding 体验上持续打磨上下文连续性与长任务管理两个方向。",
+      "detail_content": "【核心事件】本周末 OpenAI 更新了 Codex 的版本说明（ChatGPT release notes），主要新增四项能力：一是「更丰富的工作上下文理解」——Codex 现有更多方式理解用户的工作上下文；二是「目标模式（Goal Mode）」，让较长的任务能够持续推进而不中断；三是浏览器改进，包括 macOS 上 Codex 应用内的 Appshots 功能；四是远程锁定使用（remote lock usage）相关的能力扩展。\n\n【关键细节与引用】从 OpenAI Help Center 的版本说明看，这次更新措辞偏功能清单式，未给出具体 benchmark 或数据。四个方向里，「目标模式」和「更丰富上下文」直接服务于 agentic coding 的核心痛点——长任务跑着跑着丢上下文、跑偏目标；「浏览器改进」呼应了上周 Claude Code 桌面版新增应用内浏览器的同类思路（agent 直接读文档、点网页，减少上下文切换）；「远程锁定」则可能与设备/会话管理有关。整体看，这是 Codex 在 GPT-5.6 发布大周后的常规迭代，不是新模型或新形态发布。\n\n【背景与上下文】Codex 是 OpenAI 的 agentic coding 产品，对标 Anthropic 的 Claude Code。两家近期在「agent 如何持续理解上下文」上动作频频：Claude Code 上周新增 /checkup 命令省 context、桌面版加应用内浏览器；Codex 这次的目标模式 + 上下文改进是同一方向的另一侧。值得对照的是，上周 GPT-5.6-Sol 在 agentic 模式下跑出 rm -rf 清盘事故，说明「长任务自主推进」本身是把双刃剑——持续推进的能力越强，权限边界和监督机制就越要跟上，否则目标模式可能变成「持续跑偏模式」。\n\n【影响与前瞻】对日常用 Codex 的开发者，这次更新改善了长任务的连续性和上下文感知，属体验级提升。对行业格局，它不改变 Claude Code vs Codex 的竞争态势，但确认了 agentic coding 工具下一阶段的竞争焦点已从「能不能写代码」转向「能不能在长任务里保持上下文连贯、目标对齐、并安全可控」——这恰好和今天头条的 xAI Grok CLI 安全事件、上周 Shumer 清盘事故构成同一枚硬币的两面：能力增强与安全约束必须同步。",
+      "source": "OpenAI Help Center",
+      "source_type": "tavily",
+      "url": "https://help.openai.com/zh-hant-hk/articles/6825453",
+      "timestamp": "2026-07-12T09:00:00Z",
+      "importance": 6,
+      "tags": [
+        "OpenAI",
+        "Codex",
+        "agentic coding",
+        "上下文",
+        "目标模式"
+      ],
+      "batch_time": "2026-07-13T09:00:00+08:00"
+    },
     {
       "title": "Bun 用 Claude Fable 5 在 11 天内把整个运行时从 Zig 重写为 Rust：64 个并行 agent、百万行代码、约 16.5 万美元",
       "summary": "Bun 作者 Jarred Sumner 用预发布版 Claude Fable 5 + Claude Code 的 dynamic workflows，让 64 个 Claude 实例并行 11 天把 Bun JavaScript 运行时从 Zig 全量重写成 Rust——超过 100 万行新代码、约 53.5 万行 Zig 被替换，API 成本约 16.5 万美元，产出 Bun v1.4.0。他估算人类团队做同样重写大约需要一年。这是迄今最大规模的 Fable 5 生产级案例，也是这个周末中文 AI 圈讨论最热的一条（Bun 官方博客 7/8 发布，本周末二次发酵，此前未收录，特此补收）。",
@@ -578,64 +636,6 @@
         "Langflow"
       ],
       "batch_time": "2026-07-07T09:00:00+08:00"
-    },
-    {
-      "title": "NVIDIA Kyber NVL144 延期超 12 个月至 2028，NVL72x2 背靠背机架架构同步取消",
-      "summary": "半导体分析机构 SemiAnalysis 7 月 5 日独家透露，Jensen 在 GTC 上重点展示仅 3 个月的 Kyber NVL144 系统遭遇重大延期，整体推迟超过 12 个月、最早 2028 年才能交付；配套的 NVL72x2 背靠背机架架构被直接取消，导致已流产的 Rubin Ultra 扩展域进一步受限。这是 NVIDIA 次世代 AI 算力底盘短期内第二次受挫——此前 Rubin Ultra 的 4-die 版本已因制造问题取消。",
-      "detail_content": "【核心事件】半导体行业分析机构 SemiAnalysis 7 月 5 日发布独家线索：NVIDIA 在今年 GTC 上重点展示的 Kyber NVL144 系统——距发布仅约 3 个月——已遭遇重大挫折，整体推迟超过 12 个月，最早要到 2028 年才能交付。与此同时，配套的 NVL72x2 背靠背机架架构被直接取消。这是 NVIDIA 次世代 AI 算力底盘短期内第二次受挫：此前 Rubin Ultra 原定的 4-die 版本已因制造问题取消，新版尺寸减半、性能约为原版一半。\n\n【关键细节与引用】SemiAnalysis 在原贴中预告将解释「Kyber 为何面临大幅延迟，以及 NVIDIA 的 NVL72x2 背靠背机架架构为何也被取消，导致 Rubin Ultra 的扩展域受限」。NVL144 指单机架 144 颗 GPU 的整机方案，是超大规模训练集群的基本 building block；NVL72x2 是把两套 NVL72 背靠背互连以扩大高速互联域的方案。两条路线同时出问题，意味着靠「拼机架规模」上探算力的路径在工程上正在收窄。\n\n【背景与上下文】NVIDIA 过去两年靠 Rubin→Rubin Ultra→Feynman 的密集路线图维持了 AI 算力供给的指数增长预期，这也是支撑前沿模型 scaling 假设的物理基础。但 2026 年中开始，制造良率、互联工程、机架功耗密度等问题集中浮现。本频道此前已收录「英伟达 Rubin Ultra 被取消：原 4-die 版因制造问题流产」(SemiAnalysis, 6/29)，本次 Kyber 延期是同一叙事的延续与加码。\n\n【影响与前瞻】对前沿模型厂商（Anthropic / OpenAI / Google / Meta）而言，NVIDIA 次世代算力连续延期意味着 2027 年的算力供给曲线可能不如此前乐观——这会直接影响下一代模型的训练时间表和资本开支节奏。结合近日 BIS 把五大 hyperscaler 两年 AI 资本开支估到 1 万亿美元并警告「以衰退收场的投资狂热」，硬件供给端的摩擦正在从「需求侧有多少钱」转向「供给侧能不能造出来」。在 GPU 供给受限的窗口里，自研芯片路线（OpenAI Jalapeño、Anthropic×三星、AWS Trainium）和国产 ASIC + 国产开源模型的「双国产」组合会获得更多叙事空间。",
-      "source": "SemiAnalysis (@SemiAnalysis_)",
-      "source_type": "aihot",
-      "url": "https://x.com/SemiAnalysis_/status/2073874671498387899",
-      "timestamp": "2026-07-05T21:00:00Z",
-      "importance": 7,
-      "tags": [
-        "NVIDIA",
-        "Kyber",
-        "Rubin Ultra",
-        "AI算力",
-        "供应链",
-        "半导体"
-      ],
-      "batch_time": "2026-07-06T09:00:00+08:00"
-    },
-    {
-      "title": "美团 LongCat-2.0 完全开源（MIT）：1.6 万亿参数 MoE、开放权重与推理代码",
-      "summary": "美团 7 月 5 日通过官方账号宣布 LongCat-2.0 以 MIT 许可完全开源，公开模型权重与推理代码。架构为 MoE，总参数 1.6T、每 token 激活约 48B，支持 1M token 上下文。技术亮点包括 LongCat Sparse Attention、Zero-Compute Experts（动态激活 33B-56B、号称零浪费计算）、MOPD 按任务路由 Agent/Reasoning 双路径。",
-      "detail_content": "【核心事件】美团 7 月 5 日通过官方账号 @Meituan_LongCat 宣布，LongCat-2.0 大模型以 MIT 许可证完全开源，公开模型权重和推理代码。这是继 LongCat Owl Alpha 登顶 OpenRouter 之后，美团在国产开源大模型赛道落下的第二子——Owl Alpha 是性能亮相，LongCat-2.0 MIT 开源是真正把权重交到社区手里。\n\n【关键细节与引用】架构：MoE（混合专家），总参数量 1.6T（1.6 万亿），每 token 激活约 48B。上下文窗口：1M token。三项主推技术：① LongCat Sparse Attention——高效处理长文本；② Zero-Compute Experts——动态激活 33B–56B、号称「零浪费计算」；③ MOPD（按任务路由）——区分 Agent 和 Reasoning 两种负载走不同专家路径。MIT 许可是最宽松的开源协议之一，允许商用、修改、闭源衍生，比 Llama 系的定制 license 更彻底。\n\n【背景与上下文】国产开源大模型 2026 年进入「万亿参数 MoE」量产期：美团 LongCat-2.0（1.6T）、此前 Z.ai 开源的 GLM-5.2、以及 DeepSeek V4 路线，都在把「开源=前沿能力」的命题坐实。本频道此前已收录「Z.ai 开源 GLM-5.2：仓库级编码 + 漏洞发现能力对标 Mythos，Forbes 警告坏家伙也有了同级别模型」和「美团 LongCat Owl Alpha 登顶 OpenRouter：1.6 万亿参数 MoE、国产 ASIC 训练」两条。LongCat-2.0 的不同在于：它是可下载、可商用、可改的权重，而不只是一个 leaderboard 排名。\n\n【影响与前瞻】对关心 AI 在组织内落地的人，LongCat-2.0 MIT 开源的意义在于：可私有化部署的万亿级 MoE 模型又多一个选项，且许可无商用限制——金融、银行这类不能调外部 API 的强监管场景，自建权重推理的门槛继续下探。MoE 架构（激活仅 48B）也意味着单 token 推理成本远低于 dense 万亿模型，是性价比敏感场景的现实选择。结合 NVIDIA 次世代算力延期，国产 ASIC + 国产开源模型的「双国产」闭环正在成为可独立运行的技术栈。",
-      "source": "美团 LongCat (@Meituan_LongCat)",
-      "source_type": "aihot",
-      "url": "https://x.com/Meituan_LongCat/status/2073768940078317713",
-      "timestamp": "2026-07-05T14:00:00Z",
-      "importance": 6,
-      "tags": [
-        "美团",
-        "LongCat",
-        "开源模型",
-        "MoE",
-        "国产大模型",
-        "MIT许可"
-      ],
-      "batch_time": "2026-07-06T09:00:00+08:00"
-    },
-    {
-      "title": "Fable 5 实测：同一 prompt 低/高推理档位耗时差 10 倍，Karpathy 罕见背书其 3D 涌现能力——对冲「缩水」叙事",
-      "summary": "AI 研究者 petergostev 把同一个 prompt 喂给 Fable 5 的低档（12 分钟）和最高档（近 2 小时）推理，输出是融合知识、代码、可交互的 3D 可玩世界（three.js 环境）。Karpathy 在转发时罕见地公开背书，称「没意识到模型已经能造出这种融合知识与代码的丰富可玩世界」，并把 Fable 的 3D 环境生成称为「每一代新模型都会有的那种质变跃迁」。这是本周 AI 推特互动最高的一条（原贴 ♥8943）。它直接对冲了昨天「Fable 重上线后被指 nerfed」的舆论：护栏可能压住了 benchmark 数字，但在长时程、高推理档位的 agentic 任务上，模型展现出的是上一代没有的涌现深度。",
-      "detail_content": "【核心事件】\n独立开发者、长期跟踪前沿模型能力的 petergostev（@petergostev）在 7 月 3-4 日连续发布对 Fable 5 的高强度实测。最有信息量的一组对照实验是：他把完全相同的 prompt 分别提交给 Fable 5 的低推理档位（low effort）和最高推理档位（max effort），前者耗时约 12 分钟，后者跑了近 2 小时。两者的输出都不是文本，而是可直接交互的 3D 场景——用 three.js 写成、融合领域知识与可执行代码的「可玩世界」（playable worlds），其中一个被反复引用的 demo 是一只会捕捉猎物的熊。\n\n【关键细节与引用】\npetergostev 原文（7/4，♥528）：\"Fable - same prompt, different reasoning efforts - 12 mins vs nearly 2 hours between 'low' and 'max'.\" 同一 prompt 不同推理档位——低档 12 分钟、最高档近两小时。\n\nKarpathy 的转发评论（7/4 20:08，♥175）：\"incredible, ty for putting this together, i didn't appreciate that models would be able to create these awesome, rich, playable worlds that fuse knowledge and code.\"（难以置信，谢谢整理——我之前没意识到模型已经能造出这种融合知识与代码的丰富可玩世界。）\n\n紧接的二次评论（7/4 20:33，♥65）更关键：\"Agree, it's beautiful, top tier fablemaxxing! :) I think with every new model tier there is something new that qualitatively leaps and surprises, for Fable so far these threejs envs seem to be that thing.\"（同意，很美，顶级 fablemaxxing。我的判断是：每一代新模型都会有某种让人意外、质变式跃升的新东西，对 Fable 来说目前看就是这个 three.js 环境。）\n\npetergostev 同期最火的一条（7/3，♥8943，本周 AI 推特互动最高）把视角拉到能力分层：\"We are now in a position where a tiny proportion of the population uses Fable or soon GPT-5.6, while everyone else's experience of AI is 8-30b-model level — Google's AI Overviews, Meta AI, ChatGPT free tier, maybe MS Copilot at best.\"（一小撮人在用 Fable 或即将上线的 GPT-5.6，而其他人体验到的 AI 只是 8B-30B 级别。）\n\n【背景与上下文】\n这条实测是对昨日（7/4）\"Fable 5 回归版被指 nerfed\" 舆论的直接对冲。BleepingComputer 当时报道用户吐槽回归版性能缩水，Karpathy 本人确认 Fable 5 = Mythos + 安全护栏——护栏的存在意味着 benchmark 分数有代价。但 petergostev 这组对照实验揭示了一个被 benchmark 遗漏的维度：在最高推理档位下，Fable 5 能稳定地把一个 prompt 展开成两小时的多步骤 agentic 工作流，并产出可交互的代码+知识产物。这正是 \"agentic loops\" 范式（Claude Code 官方博客 6/30 详解的目标驱动/时间驱动循环）在真实使用中的兑现——reasoning effort 旋钮不是线性提速开关，而是任务复杂度上限的挡位切换。\n\n【影响与前瞻】\n对 Claude Code 日常使用者有两个直接启示：第一，reasoning effort 这一档位在 Fable 5 上效果被显著放大，遇到复杂 agentic 任务时切到 max 是值得的，但要做好「单次任务跑两小时」的心理预期和上下文管理；第二，Fable 在 three.js / 可视化 / 知识融合代码这条线上的涌现能力，可能让「用 Claude 做可交互原型」成为新的产品范式——这一点对关注 AI 如何改变工作产出的人比 benchmark 分数更重要。风险提示：petergostev 是单一样本的第三方测试，未覆盖失败率和稳定性，demo 与 production 之间的 gap（错误恢复、可重复性、成本）仍需更多数据验证。Karpathy 的背书虽具分量，但他本人也只用了几小时体验，不构成完整评估。",
-      "source": "X：@petergostev（@karpathy 转发背书）",
-      "source_type": "opentwitter",
-      "url": "https://x.com/petergostev/status/2073407026214809640",
-      "timestamp": "2026-07-04T18:09:00Z",
-      "importance": 8,
-      "tags": [
-        "Anthropic",
-        "Fable 5",
-        "推理档位",
-        "涌现能力",
-        "3D生成",
-        "Karpathy",
-        "Claude Code"
-      ],
-      "batch_time": "2026-07-05T09:15:00+08:00"
     }
   ]
 }
