@@ -1,0 +1,80 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-07-14T10:00:00+08:00",
+  "digest": "GPT-5.6 / Fable 5 能力跃升的余波里，本周工程对话的焦点从「AI 能干什么」明显转向「到底要花多少钱、怎么管住它」。一条 tokenizer 分析揭露 Anthropic 新分词器在代码上比 GPT 多吐 30%–73% 的 token、标价却不变——构成隐性涨价，正好解释了为什么有资深 agentic 工程师公开抱怨一个 spec review 就烧掉 500 美元、转头用回 GPT-5.6 Codex。回应这一成本与可控性焦虑的是两份方法论锚点：Lilian Weng 的《Harness Engineering》综述把「模型外的脚手架」定调为自我改进真正发生的地方，Snowflake 则把 Claude Code 的 loop 工程写成「done 是布尔检查、不是模型的意见」。比上次（7/8–7/11 的能力测评与 slop 清算）更进一步的信号是：业界开始把成本透明度和工程纪律当成一等公民，而不是发布会上的副歌。数据源：Tavily 五组全返回正常；Grok 双路连续第 25 天 502/403；AIHOT ai-products 类空、tip 类返回 3 条；opentwitter 七账号中 ashpreetbedi 有强一手料、steipete/RLanceMartin 多为回复、swyx/GergelyOrosz/simonw/catcathedral 返回空。",
+  "items": [
+    {
+      "title": "标价没涨 token 多了 30%：Claude 新 tokenizer 被扒出在代码上隐性涨价，跨厂商成本对比就此失真",
+      "summary": "一份 TypeScript 文件在 GPT-5.x 上是 681 个 token，到 Claude 最新 tokenizer 下变成 1178 个——相差 1.73 倍。Anthropic 换了新分词器、每个 token 的标价不变，但同一段代码实际产生的 token 多了约 30%，等于悄悄涨了价。Opus 4.6→4.8 标价同为 $5/$25，新 tokenizer 却让同代码 token 数涨约 32%；Sonnet 5 的 $2/$10 是促销价，8 月 31 日后恢复 $3/$15，届时同代码成本将比 Sonnet 4.6 高出约三成。跨厂商看，Claude 新 tokenizer 在代码上比 GPT 多产生 1.50x–1.73x 的 token，TypeScript 差距最大。",
+      "detail_content": "【核心事件】7 月 13 日，开发者工具站 playcode.io 发文用一组实测数据指出：前沿大模型的「每百万 token 标价」并不能反映真实成本，因为各家分词器（tokenizer）把同一段文本切成的 token 数量差很多，而 Anthropic 换上新 tokenizer 后并未调价，等于在标价不变的情况下让代码类输入的实际花费悄悄上涨。该文经 Hacker News 热门传播（buzzing.cc 做了中文翻译）。\n\n【关键细节与引用】文章给出最直观的一组对照：同一份 TypeScript 文件，在 GPT-5.x 上是 681 个 token，在 Claude 最新 tokenizer 下是 1178 个，相差约 1.73 倍。Anthropic 新 tokenizer 比旧版多产生约 30% 的 token，标价不变，构成隐性涨价。Claude Opus 4.6 与 Opus 4.8 标价同为 $5.00 / $25.00（每百万输入/输出 token），但新 tokenizer 使同一代码的 token 数增加约 32%。Claude Sonnet 5 的 $2.00 / $10.00 为促销价，2026 年 8 月 31 日后恢复 $3.00 / $15.00，届时相同代码成本将比 Sonnet 4.6 高出约 32%。跨厂商对比中，Claude 新 tokenizer 在代码上比 GPT 多产生 1.50x 至 1.73x 的 token，TypeScript 差距最大。同期 Krasa.ai 的独立分析也得出相近结论：Opus 4.7 相比 4.6 在代码和技术文档上存在 20%–47% 的隐性成本上涨。\n\n【背景与上下文】这条线索把过去两周弥漫的 Fable / GPT-5.6 谁更值的口水战拉回了硬数据层面。7 月 10 日前后 RLanceMartin 等人开始做性能 vs 成本的 eval 对比，7 月 12 日 agentic 工程师 ashpreetbedi 公开抱怨 Fable 5 一个 spec review 就烧掉 500 美元信用额度。tokenizer 差异正是这些贵钱的底层机制——模型可能没变贵，是你被切出了更多 token。对按 token 计费、按预算卡额度的方式部署 agent 的团队，这是个容易被报价页骗到的坑。\n\n【影响与前瞻】对要在银行里做 AI 工具价值汇报的人，这条的直接用途是：用真实 token 成本而非 sticker price 做 ROI 测算，尤其是代码与技术文档密集的场景，Claude 系实际单价可能比标价高三成。更深一层是供应商管理——当 tokenizer 可以被单方面变更、且变更不体现在价格表上，年度合同的 token 量必须按自己的真实语料建模，而不是照搬厂商的每百万 token 报价。8 月 31 日 Sonnet 5 促销到期是一个明确的时间节点，届时成本结构会再跳一档，需要提前重算预算。",
+      "source": "playcode.io（经 Hacker News 热门 / buzzing.cc 中文翻译传播）",
+      "source_type": "tavily",
+      "url": "https://playcode.io/blog/real-price-of-frontier-models",
+      "timestamp": "2026-07-13T21:50:30Z",
+      "importance": 9,
+      "tags": [
+        "Claude",
+        "GPT",
+        "tokenizer",
+        "API成本",
+        "隐性涨价"
+      ],
+      "batch_time": "2026-07-14T10:00:00+08:00"
+    },
+    {
+      "title": "agentic 工程师 ashpreetbedi 公开弃用 Fable 5：一个 spec review 烧掉 500 美元，转头用回 GPT-5.6 Codex",
+      "summary": "专注 agentic 软件工程方法论、被列为核心追踪 KOL 的 ashpreetbedi（♥995、5.7 万浏览）发推称 Fable 5 现在基本没法用——让它 review 一个 spec（不是实现，只是审阅），就把用量额度烧穿并被收了 500 美元信用额度。他表示 GPT-5.6 同样好用，而且每次打开 Codex 额度都被重置。这是一线重度用户因成本而非能力倒戈的罕见公开表态，与同周 tokenizer 隐性涨价的发现互为印证。",
+      "detail_content": "【核心事件】7 月 12 日，长期分享 agentic 软件工程方法论、被 Eason 列为核心追踪 KOL 的 ashpreetbedi 在 X 发推（♥995、转发 28、5.7 万浏览）公开表示 Fable 5 现在基本没法用，并已转回 GPT-5.6 Codex。理由不是能力不行，而是成本失控。\n\n【关键细节与引用】原推写道：「Fable 5 is practically unusable at this point. Ask it to review a spec, not implement — review, and it'll burn through its usage limits and charge $500 in credits. On the other hand, gpt-5.6 is equally as good and every time I open codex they've reset the limits.」要点有三个：任务是 review（审阅规格）而非实现，本应是轻量操作；一次就烧穿额度并扣了 500 美元；他判断 GPT-5.6 能力相当，且 Codex 的额度会重置、体验更可持续。\n\n【背景与上下文】这条和本周另一条硬数据互为印证——playcode.io 的 tokenizer 分析显示 Claude 新分词器在代码上比 GPT 多吐 30%–73% 的 token，标价不变。ashpreetbedi 烧掉的 500 美元，很可能部分就是被多切出来的 token 吃掉的。它也接上 7/11 GergelyOrosz「GPT-5.6 倒逼 Anthropic 不敢下架 Fable、定价战开打」那条主线，但视角从供给侧的市场博弈换到了需求侧的真实倒戈：不是 Anthropic 降不降价的问题，是重度用户已经用脚投票。ashpreetbedi 不是普通用户——他过去一个月在推 self-driving agent platform、auto-improvement loop 跑 282 次探针让 agent 快 20 倍，是真正在生产线压榨模型的人，他的成本体感有代表性。\n\n【影响与前瞻】对选型决策的意义：能力接近的头部模型之间，成本可持续性（额度策略、token 单价、tokenizer 效率）正在成为比 benchmark 更关键的决定因素。对在银行推 AI 工具的启示是——重度用户（写 agent、跑长 loop 的人）对成本极度敏感，统一只供一个厂商的方案在额度被烧穿时会直接停摆，多 provider 兜底加按真实 token 成本核算预算，比盯着标价更现实。这也是 Own the Context, Rent the Intelligence 思路的成本侧注脚：模型可以换，但你的编排层和成本监控得握在自己手里。",
+      "source": "x.com/ashpreetbedi",
+      "source_type": "opentwitter",
+      "url": "https://x.com/ashpreetbedi/status/2076404069082567117",
+      "timestamp": "2026-07-12T20:31:22Z",
+      "importance": 8,
+      "tags": [
+        "Fable 5",
+        "GPT-5.6",
+        "Claude Code",
+        "成本",
+        "模型选型"
+      ],
+      "batch_time": "2026-07-14T10:00:00+08:00"
+    },
+    {
+      "title": "Lilian Weng 发《Harness Engineering》综述：自我改进不靠模型改权重，靠模型外的脚手架",
+      "summary": "前 OpenAI 安全系统负责人、现 neolab 联创 Lilian Weng 7 月 4 日发表长文《Harness Engineering for Self-Improvement》，系统梳理三年间让 agent 优化自己脚手架的研究。核心论点：自我改进不会从模型重写自身权重开始，而是从包裹模型的 harness（编排、规划、记忆、工具调用那层）开始；即使很多 harness 改进最终被吸进模型本体，需要人指定目标和上下文这件事不会消失。本周 latent.space AINews 等把它当作 harness 工程化的参考锚点重新推介。",
+      "detail_content": "【核心事件】7 月 4 日，Lilian Weng 在个人博客 Lil'Log 发表长文《Harness Engineering for Self-Improvement》，把过去三年 agent 如何优化自身脚手架的散落研究做了一次系统综述。文章从 Yudkowsky（2008）的递归自我改进和 I. J. Good（1965）的超智能机器概念讲起，落到一个对工程界更友好的判断：真正能落地的自我改进，不发生在模型重写自己权重的那一刻，而发生在包裹模型的 harness 层。\n\n【关键细节与引用】所谓 harness，是包裹基础模型的那套系统——负责编排它如何规划、调用工具、读写记忆、与沙箱环境交互。Weng 的核心金句被 latent.space 等多处引用：「Even when many harness improvements get eventually internalized into core model, the need to specify goals and context will not disappear」（即便许多 harness 改进最终被吸进模型本体，需要人去指定目标和上下文这件事也不会消失）。文章梳理了从 ACE 论文到近期 Meta-Harnesses 的优化脉络，把 harness 工程定性为一门不会因为模型变强而消失的学科。\n\n【背景与上下文】这是本周 harness 主线拿到的一块重量级锚点。7 月 7 日 ai-engineering 收过 SGLang/千问把 agent 嵌进硬核产线并喊出 Harness 取代 Prompt Engineering，7 月 8 日 Paul Bakaus 等人提出 skill engineering，连 Greg Brockman 都在悄悄 endorsement agent/harness engineering。Weng 的不同在于——她是前 OpenAI 安全系统负责人、现任 neolab 联创，是少数既有学术声望又贴近前沿模型研发的人，她给 harness 工程背书，意味着这不再只是工程圈的自嗨，而是被严肃当作模型之外真正产生差异的地方。文章虽发于 7 月 4 日，本周因 latent.space AINews 的推介重新进入社区讨论。\n\n【影响与前瞻】对工程团队和银行 AI 落地的直接含义：别把全部筹码押在等下一个更强的模型上。能力差距会被模型迭代抹平，但你对 agent 的目标设定、上下文组织、工具治理——也就是你的 harness——是别人拿不走的资产，也是强监管行业里做可审计、可回滚的关键所在。这和 ashpreetbedi 本周另一条 Own the Context, Rent the Intelligence 是同一个方向的不同表述：模型是租来的智能，harness 和上下文才是你自己的护城河。",
+      "source": "lilianweng.github.io（Lil'Log）",
+      "source_type": "tavily",
+      "url": "https://lilianweng.github.io/posts/2026-07-04-harness-engineering",
+      "timestamp": "2026-07-04T00:00:00Z",
+      "importance": 8,
+      "tags": [
+        "harness engineering",
+        "agent",
+        "自我改进",
+        "Lilian Weng",
+        "方法论"
+      ],
+      "batch_time": "2026-07-14T10:00:00+08:00"
+    },
+    {
+      "title": "Snowflake 写 Loop Engineering in Claude Code：done 是布尔检查，不是模型的意见",
+      "summary": "Snowflake 工程博客发文《Close the Loop: Loop Engineering in Claude Code》，把 Claude Code 的 agentic loop 工程化成让系统一直跑到工作真正完成的结构，并定义完成必须是布尔检查——测试变绿、控制台干净、查询返回行、部署成功——而不是模型觉得看起来对了。文中用 Superpowers（计划/构建/验证主线 + 代码评审闸门）+ gstack（运行态 QA、设计、安全、发版）+ CoCo（Snowflake 数据与 AI 层）三件套覆盖一个真实应用的三条命脉：代码正确性、运行行为、数据与 AI。",
+      "detail_content": "【核心事件】Snowflake 的 Builders Blog（托管于 Medium）本周发文《Close the Loop: Loop Engineering in Claude Code》，把围绕 Claude Code 做 agentic 工程的方法论命名为 Loop Engineering——核心是让你工程化的不是某次代码生成，而是让系统一直跑到工作真正完成的那套循环本身。\n\n【关键细节与引用】文章给出一条最值得记住的定义：完成（done）必须是一个布尔检查——测试变绿、控制台干净、查询返回行、部署成功——而不是模型觉得看起来对了（never the model's opinion that something looks right）。为避免重复劳动，它把三套现成 skill 串起来：Superpowers 负责 plan/build/verify 的主干和代码评审闸门，gstack 负责运行态应用的 QA、设计、安全和发版，CoCo 负责 Snowflake 的数据与 AI 层。三者正好覆盖一个真实应用的三条命脉：代码正确性（Superpowers）、运行行为（gstack）、数据与 AI（CoCo）。\n\n【背景与上下文】这是本周 harness/loop 主线在怎么落地层面的一个具体样本。如果说 Lilian Weng 的综述是给 harness 工程立理论框架，Snowflake 这篇就是一家数据公司在 Claude Code 上把 loop 工程跑通的实操笔记——而且它的布尔完成原则正好呼应反 slop 立场：把验收标准从模型说行换成客观信号通过，是堵住 AI 一本正经胡说的一道闸门。它也接上 7 月初 Anthropic 官方博客讲 agentic loops（从回合制到目标驱动、时间驱动、主动式四种循环）的那条线，但从官方的有哪些 loop 推进到了企业怎么把 loop 工程化、谁来守哪道闸。\n\n【影响与前瞻】对在强监管行业部署 agent 的团队，这篇的可借鉴处是布尔完成加三段式责任划分这个骨架：把验收变成可机器判定的客观信号，把代码、运行态、数据三层的安全与 QA 责任分别挂到不同的 skill/团队上，避免一个 agent 黑箱全包。对准备向上汇报的材料，这是一个 AI 工程纪律已现雏形的现成案例——不是 demo 能跑，而是有可审计的完成标准和分层治理。",
+      "source": "Snowflake Builders Blog (Medium)",
+      "source_type": "tavily",
+      "url": "https://medium.com/snowflake/close-the-loop-loop-engineering-in-claude-code-0bd3f5e3c50e",
+      "timestamp": "2026-07-09T12:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Claude Code",
+        "loop engineering",
+        "Snowflake",
+        "agent验证",
+        "工程方法论"
+      ],
+      "batch_time": "2026-07-14T10:00:00+08:00"
+    }
+  ]
+}
