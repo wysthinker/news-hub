@@ -1,0 +1,66 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-07-18T10:00:00+08:00",
+  "digest": "GPT-5.6 大周后第一个完整工作周，AI 工程对话全面收敛到一个主题：『别再数 token，开始数节省下来的人时；把人留在判断该留的地方』。三条重磅方法论同框——Anthropic 首次公开自家百万行代码迁移 6 步法（Bun Zig→Rust 那套的『说明书』），Claude Code 之父 Boris Cherny 给企业 AI ROI 出了新答案（衡量人时而非 token burn），Pragmatic Engineer 请来『context engineering』命名者 Dex Horthy 用血泪教训警告『不读代码就上线，四个月内必然爆雷』。对 Eason 的银行 AI 汇报是连续第三周的硬弹药：模型层趋同后，真正的护城河和考核点都落回判断力、context 治理和工程纪律——tokenmaxxing 退潮，token smarter 上位。",
+  "items": [
+    {
+      "title": "Anthropic 首发自家百万行代码迁移 6 步法：Bun 把 Zig 全量重写成 Rust 的『说明书』公开了",
+      "summary": "Anthropic 工程博客发《How Anthropic runs large-scale code migrations with Claude Code》，把上周 Bun 百万行 Zig→Rust 那套打法整理成可复用的 6 步法。核心一句话：『把评审做成对抗式的，把验证做成机械式的』——人把时间花在最前面的 rulebook 和压力测试上，后面全是队列自动 burn down。还配了开源迁移 starter kit，是迄今最完整的 agentic 大规模重构落地指南。",
+      "detail_content": "【核心事件】7 月 16 日，Anthropic 在 claude.com/blog 发《How Anthropic runs large-scale code migrations with Claude Code》，把内部帮 Bun（Jarred 的 Zig→Rust 百万行重写）和另一例 Python→TypeScript 迁移（Mike）跑通的 agentic 迁移方法论整理成 6 步指南，并放出 generalized 的迁移 starter kit。博客明确：『这不是 Jarred 和 Mike 实际跑的脚本，而是把过程抽象成的模板。』\n\n【6 步法骨架】① 前置——先造一个『裁判（judge）』：把现有测试分类成『可跨语言外部调用』和『依赖内部实现』两类，前者改写成对原码和新码都能跑的断言，用对抗 agent 验证不弱化；再用故意写坏的代码确认裁判能抓到 bug。② 建 rulebook + 依赖图 + gap inventory：rulebook 必须先于 gap inventory，gap 由 rulebook 的默认覆盖不到的地方定义。③ 压力测试规则：用 3 个文件做『shakedown cruise』，一个 agent 按 rulebook 翻译、一个按『资深 Rust 工程师』翻译、一个用 diff 提炼新规则，然后扔掉所有产出——目的是改规则不是攒进度。④ 翻译：implement/review/fix 多 agent 循环，实现派给小模型、评审留给大模型，work queue 做成机械可恢复（『done = 输出文件存在于磁盘』）。⑤ 编译：注意编译器在循环里的位置（TS 编译器秒级→放循环内，cargo 分钟级→移出循环）。⑥ 行为对齐：build daemon 是唯一被允许重建二进制的进程，把最贵的操作串行化。\n\n【关键引用】『Don't focus on individual failures. Individual failures are the loop's job. Fixer agents burn those down. Your attention belongs on the patterns.』『Don't use the largest model for everything... Smaller models handle the high-volume implementation fan-out well; save your largest model for reviewers and for anything that writes rules other agents will follow.』『Front-load the human hours. The rulebook and the stress test are the most time-consuming. Everything after is mostly queues burning down.』『Make review adversarial and verification mechanical.』\n\n【硬结果】Bun 新 Rust 代码库：可检测的内存泄漏全修（一次 2000 次重复构建的 benchmark 内存从 6745MB 降到 609MB），二进制在 Linux/Windows 小 19%，跨语言优化让 HTTP serving 和 next build/tsc 等真实负载快 2-5%；代价是约 4% 的 Rust 代码落在 unsafe 块里（多为 C/C++ 边界的单行指针操作）。\n\n【影响与前瞻】这是 Anthropic 继 Cowork Fable 5、Cursor Fable 5 之后，本周第三篇把『模型公司自己怎么用 AI 干活』公开的工程博客，等于把 agentic 大规模重构从『Bun 一个孤例』升级成『有 starter kit 的标准作业』。对 Eason 的银行汇报价值：① 直接可借用的方法论——银行核心系统现代化/语言迁移（如老旧 Java/COBOL 模块）是典型『久拖不决的迁移』，博客结尾那句『Consider whether it's time to re-run the math of your long deferred migration』几乎是为你这种场景写的；② 『对抗式评审 + 机械式验证』和『front-load human hours』是对 AI slop 最硬的工程级反制——考核点应该落在 rulebook/压力测试/裁判设计这些判断密集环节，而不是文件翻译数量；③ starter kit 可作为团队试点的起点。与库内 Bun Rust 重写（7/13，imp9）是『案例』与『方法论』的关系，互补不重复。",
+      "source": "Anthropic (claude.com/blog)",
+      "source_type": "tavily",
+      "url": "https://claude.com/blog/ai-code-migration",
+      "timestamp": "2026-07-16T14:00:00Z",
+      "importance": 9,
+      "tags": [
+        "代码迁移",
+        "Claude Code",
+        "Anthropic",
+        "agentic coding",
+        "工程方法论",
+        "Bun",
+        "Rust"
+      ],
+      "batch_time": "2026-07-18T10:00:00+08:00"
+    },
+    {
+      "title": "Claude Code 之父 Boris Cherny 给企业 AI ROI 出新答案：『别数 token，数节省下来的人时』",
+      "summary": "Claude Code 负责人 Boris Cherny 在一系列 X 推文里抛出企业 AI 采用四步框架，第三步直指 ROI：『usage 衡量的是活动，不是回报』，真正该问的是『这任务公司本来会不会派人做？会的话要多少工程人时、值多少钱？那才是你的回报』。更大收益在维护和修复自动在后台跑、团队腾出手做『以前够不着的事』。这是 tokenmaxxing 退潮后，模型公司给『AI 怎么算账』拿出的最清晰答案。",
+      "detail_content": "【核心事件】7 月 17 日，Business Insider 报道 Anthropic Claude Code 负责人 Boris Cherny 周四在 X 上发了一系列推文，抛出企业 AI 采用的四步框架，第三步专门讲『采用之后怎么衡量回报』，直接挑战企业界当前主流的 token 消耗仪表盘式考核。\n\n【关键论点】Cherny 的原话：『Once your teams are bought in, how do you track it? Usage is worth watching (e.g., a dashboard), but it measures activity, not return.』他认为与其只盯 token burn，更该问的问题是：『公司本来会不会在这任务上投入工程人力？会的话，要多少、折成手动工程人时值多少钱？那才是你的回报。』下一步他更进一步：更大的回报『comes when fixing and maintaining happens in the background』，团队因此能专注于构建，这时公司才开始『doing things that weren't even in range before』（做以前根本够不着的事）。他之前在 Scale AI 的炉边谈话里也说过，公司担心 AI 的价值是对的，但回报可以有多种形式（如工程师更快地产出代码）。\n\n【行业共振】Cherny 这番话的背景是 2026 上半年主导 AI 圈的『tokenmaxxing』（最大化 token 消耗）潮流正在退潮，企业转向『怎么用同样的钱换更多价值』。Coinbase、Vercel 高管已公开分享降本策略（如用更便宜的中国模型）。同周大行一把手也在喊同样的话：摩根大通 CEO Jamie Dimon 周三告诉 CNBC，企业 AI 成本『going up rapidly』『我们当然会像对待任何其他资源一样理性对待它』；OpenAI CEO Sam Altman 说 AI ROI 是 Allen & Co. 太阳谷年会的热门话题，『人人都在问怎么减少支出或增加价值』。\n\n【对 Eason 的直接价值】这是迄今模型公司对『企业 AI ROI 怎么算』给出的最清晰、可直接引用的答案，且与你长期坚持的判断主线高度一致：① 考核设计——把 KPI 从『token 消耗量/采用率』转向『节省的工程人时 + 原本够不着的新增能力』，正中你『考核要指向判断力增长而非纯产出量』的立场；② 向上汇报弹药——可以直接引用 Cherny 原话 + Dimon『像对待任何资源一样理性』+ Altman『reduce spend or increase value』构成『模型公司 + 大行 CEO + OpenAI 三方共识』；③ 反 slop 切入点——『usage measures activity not return』这句话本身就是在拆穿『AI 采用率仪表盘』式的表面繁荣，与你的反 slop 立场同源。与库内 7/13《Anthropic 倒逼不开源》《tokenizer 隐性涨价》同属 token 经济学主线，但角度是『需求侧怎么重新定义回报』，互补不重复。",
+      "source": "Business Insider (via Boris Cherny X)",
+      "source_type": "tavily",
+      "url": "https://africa.businessinsider.com/news/claude-codes-creator-offers-a-better-way-to-measure-ai-success-than-token-burn/8sdlv0l",
+      "timestamp": "2026-07-17T07:09:00Z",
+      "importance": 9,
+      "tags": [
+        "AI ROI",
+        "Boris Cherny",
+        "Claude Code",
+        "企业 AI 考核",
+        "tokenmaxxing",
+        "token smarter"
+      ],
+      "batch_time": "2026-07-18T10:00:00+08:00"
+    },
+    {
+      "title": "Pragmatic Engineer 请来『context engineering』命名者 Dex Horthy：不读代码就上线，四个月内必然爆雷",
+      "summary": "Pragmatic Engineer 播客访谈 HumanLayer CEO Dex Horthy（他 2024 年首创『context engineering』一词），12 条干货里最重的是血泪教训：他 2025 年 7 月试过让模型写代码、人完全不审，四个月后整个系统推倒重写，生产炸了 Opus 4.1 都找不到根因（主键被错误路由到整个代码库）。他还判断『今天的 coding 模型本质上是把代码库越改越烂』，因为 SWE-bench 类基准奖励复现已知修复、测不出坏架构。",
+      "detail_content": "【核心事件】7 月 15 日，Pragmatic Engineer 发布播客《Context engineering with Dex Horthy》，Gergely Orosz 采访 HumanLayer 联合创始人兼 CEO Dex Horthy——他在 2024 年首创『context engineering』一词（后被 Shopify CEO Tobi Lütke 和 Andrej Karpathy 背书推广），并写了《12-Factor Agents》。访谈整理出 12 条核心观点。\n\n【血泪实证·不读代码的代价】第 2 条最硬：Dex 2025 年 7 月试过让模型写代码、人不审任何东西，四个月后团队关停并扔掉整个系统。生产环境崩了，『不管怎么 prompt Opus 4.1，模型都找不到根因』，团队花了好几天在意大利面条式代码里才发现主键被错误地路由到了整个代码库；修好后又花了三周重新上手一个『从没有人读过』的代码库。他判断：换成现在产出代码快得多的新模型，这个爆雷周期连四个月都不用。第 3 条他进一步推断：『今天的 coding 模型大概率是被训练成让代码库随时间变烂的』——因为优化目标是 SWE-bench 类基准，这类基准奖励在 Django 等代码库里复现已知修复，却测不出糟糕的架构决策（坏架构/坏设计的代价跑单元测试是评估不了的）。\n\n【context engineering 操作要点】① 找到『dumb zone（蠢区）』的起点：经验法则，context window 用得越少结果越好（attention 是二次方的），1M 模型他推到 300-400K，小模型停在 100K 左右；超过就开始干『删你 .env 文件』这种蠢事。② 频繁的有意压缩：把长而嘈杂的 context 压成 Markdown，开新 session 指向这份压缩 context；典型 workflow 是『一个 session 读大量代码出研究文档→下一个 session 把 ticket 变设计文档→再一个 session 拿两份文档出计划，人在设计文档和架构环节介入』。③ 『you're completely right!』或『you're right to push back』这类回复 = session 已被 trajectory-poisoned，该开新 session 了（模型是 autoregressive，会算出『下一条最可能的消息是再犯一次错』）。④ context window 里只有四件事重要：Size / 信息质量（一旦进 context 就被当成事实，错误会复合）/ 缺失信息（agent 会用猜测填空）/ Trajectory。⑤ slow loops：HumanLayer 团队用夜间自动化，早起收到 4 个 agent 开的 4 个 PR（聚焦代码质量改进），人仍逐个读完才 merge。\n\n【token harder vs token smarter】Dex 在一个叫『Hyper Engineering』的群聊里看到大家分享怎么榨干 Claude 订阅，他称之为『token harder』；另一极是『token smarter』——在保持控制的前提下从 AI 拿最大价值，更难做到。这是对本周 Boris Cherny『measure human hours not token burn』的完美呼应：tokenmaxxing 退潮、token smarter 上位。\n\n【三种 software factory 跑法，只有一种活下来】①『关灯』全 agentic 不 review、祈祷 AI 别造太多 slop——Dex 试过，失败；②读完 review 所有 AI 代码——降到人速，预期比 pre-AI 提升 30-50%；③找到杠杆但留人在环里：在设计/架构/关键决策上多投一小时能省四小时实现，让 agent 生成代码但不强求全审，预期比人手写快 2-3 倍。\n\n【对 Eason 的价值】这是本周对反 slop 立场最硬的实证支撑：① 『不读代码四个月爆雷』+『模型本质让代码库越改越烂』是可直接搬进银行汇报的反面教材——在强监管银行业，主键错误路由这种 bug 不是丢脸是事故；② context engineering 的 dumb zone/有意压缩/trajectory poisoning 是可落地的工程纪律，与 7/14 Lilian Weng《Harness Engineering》、Snowflake Loop Engineering 同属『把验收从模型说行转向客观信号』主线；③ 『三种 software factory 只活一种』给了 AI coding 推广的清晰定位——选第三种（杠杆 + 人 in loop），与 Gartner『裁员换 AI 零收益』、你『判断力增长』主线完全一致。与库内 7/14 Lilian Weng harness 综述是『理论综述』vs『命名者亲述操作』的关系，互补不重复。",
+      "source": "Pragmatic Engineer Newsletter",
+      "source_type": "tavily",
+      "url": "https://newsletter.pragmaticengineer.com/p/context-engineering-with-dex-horthy",
+      "timestamp": "2026-07-15T16:09:00Z",
+      "importance": 8,
+      "tags": [
+        "context engineering",
+        "Dex Horthy",
+        "Pragmatic Engineer",
+        "AI slop",
+        "loop engineering",
+        "token smarter"
+      ],
+      "batch_time": "2026-07-18T10:00:00+08:00"
+    }
+  ]
+}
