@@ -1,9 +1,68 @@
 {
   "channel_id": "ai-frontier",
   "channel_name": "AI 前沿",
-  "generated_at": "2026-07-18T09:07:06.500973+08:00",
-  "digest": "GPT-5.6 大周后的第一个周六，三件事同时在重塑模型竞争格局：①中国 Moonshot 发布 Kimi K3——2.8 万亿参数、全球首个开源 3T 级模型，coding/agent 基准打败 Claude Opus 4.8 和 GPT 5.5，只输给 Fable 5 和 GPT 5.6 Sol；西方媒体集体喊『又一个 DeepSeek 时刻』，连带把我们用的 Z.ai（GLM）股价砸掉 28%、MiniMax -16%，开源权重叙事重回舞台中央。②Anthropic 同日连发两篇官博把 Fable 5 的领先从『自报 benchmark』坐实成『中立第三方+客户实测』——Cursor 自建 CursorBench 上 Fable 5 拿 72.9% 创纪录，工程师用登月实验区分出 Fable 的『全局推理』vs Opus 的『局部推理』；副 CISO Jason Clinton 则给出迄今最系统的企业 agent 安全治理框架（四问+七控+真案例），并披露 Anthropic 内部 50% 的 PR 代码已由 Claude Tag 类系统生成。③LA Times 深度起底 Google Gemini 旗舰延期：coding 基准不达标、团队内斗、工程师成批跳槽 Anthropic——DeepMind 这一轮明显掉队。一句话：这周之后，模型层的差距正在被『谁有最可信的客户证据 + 谁把 agent 治理讲清楚』重新定义，而不是单纯的跑分。",
+  "generated_at": "2026-07-19T09:06:11.084436+08:00",
+  "digest": "周日淡讯日，美东周六晚三巨头官方集体静默（anthropic.com / deepmind 全空，openai.com 只有 release notes），但一条非官方研究给了本周最强的「harness > model」实证：Impossible Research 的 Schema harness 不改任何模型权重，只改模型周围的过程工程，就把 Claude Opus 4.8 + Fable 5 在 ARC-AGI-3 公开集上从 GPT-5.6 Sol 的 13% 拉到 98.98%——抽象推理硬基准上的数量级跃升，直接承接本周 Lilian Weng harness 综述与 Snowflake Loop Engineering 主线，金句「how you use the model matters a lot」。第二条补收 Anthropic 官博 7/8 漏网的「Working at the frontier」系列开篇 Thomson Reuters（法律/会计级 Fiduciary-Grade AI，CTO 谈为何 Fable 5 是知识工作临界进化），与已收的 Hebbia/Base44/Cursor 凑成客户实证四部曲，对银行汇报是又一受信行业样板。第三条是 Apple-OpenAI 商业秘密诉讼升级：苹果向约 40 名现就职 OpenAI 的前苹果员工发律师函，泄密范围远超最初起诉的 2 人。Grok 双路连续第 31 天 502/403。",
   "items": [
+    {
+      "title": "Schema harness 让前沿模型 ARC-AGI-3 从 13% 飙到 99%：不改权重改过程，「像物理学家一样思考」",
+      "summary": "Impossible Research 发布 Schema harness——不改任何模型权重，只改模型周围的过程工程，就让 Claude Opus 4.8 + Fable 5 在 ARC-AGI-3 公开集拿到 98.98%、GPT-5.6 Sol 拿到 95.35%。而 ARC-AGI-3 这个迄今最难的抽象推理基准上，SOTA GPT-5.6 Sol max reasoning 在半私集才 7.78%、公开集才 13.33%。核心方法是让模型「像物理学家一样」把每个游戏的机制写成可执行程序，联合解决「状态落地」和「机制发现」两层抽象。本周迄今最强的「harness > model」实证。",
+      "detail_content": "【核心事件】7 月 18 日前后，Impossible Research（作者含 Guanning Zeng、Jiani Wang 等，与 UC Berkeley 的 Angjoo Kanazawa、CMU 的 Andrea Zanette 合作）发布名为 Schema 的 harness，在 ARC-AGI-3 公开集（Public set）上把前沿模型的成绩拉到约 99%：Claude Opus 4.8 + Fable 5 组合 98.98%，GPT-5.6 Sol 95.35%。最关键的是——Schema 完全不改变底层模型权重，它改变的是模型周围的过程：如何把观测转成游戏的工作模型、如何把预测拿去和交互历史对账、如何执行并修正计划。两条分数都用同一个 fallback 规则取得：Opus 4.8 / Sol xhigh 先跑，低于 80 分的游戏用 Fable 5 / Sol max 重跑，取每局较高分。\n\n【为什么是数量级跃升】ARC-AGI-3 是目前对前沿模型最难的抽象推理基准。它给 agent 一个游戏环境却不告诉规则：每步收到一张 64×64、16 色的网格和一组合法动作，没有物体清单、规则说明、明确目标或 shaped reward。官方指标 RHAE（Relative Human Action Efficiency）拿 agent 每关动作数和人类首次通关基线比，100% 意味着每关都达到或超过人类效率。在这个指标下，已验证的前沿模型成绩从 3 月发布的 0.51%，到 7 月 GPT-5.6 Sol max reasoning 在半私集（Semi-private）才爬到 7.78%、公开集 13.33%——离人类参考线仍相去甚远。Schema 直接把公开集拉到 95-99%，是 harness 工程对纯模型能力的一次降维打击。两点说明目前均为 self-reported、尚未经 ARC Prize 官方核验。\n\n【方法论：像物理学家一样思考】Schema 的核心隐喻来自康德——「schema 是连接抽象概念与具体感知的构造规则」。它把每个游戏的机制写成一个可执行程序，分两层抽象联合求解：第一层「状态落地」（state grounding）从原始像素里发明出物体、变量和关系（哪些像素是玩家、墙、计数器）；第二层「机制发现」（mechanism discovery）找出状态在动作下如何变化、把规则写成程序（弹簧墙、加油环、颜色旋转器等）。两层装在同一个可编辑程序里：当观测和预测冲突，agent 既可改规则，也可改状态表示本身。作者用物理学史做类比——Michelson-Morley 实验测不到光介质时，Lorentz 选择保留以太、打补丁；Einstein 直接扔掉以太、把同时性变成参考系相对的，换来更简洁的电动力学。Schema 让 agent 像 Einstein 而非 Lorentz。\n\n【关键引用与判断】核心金句：「how you use the model matters a lot」（你怎么用模型，比用哪个模型重要得多）；「The latent world representation is a program, not a vector — so it is interpretable, verifiable, searchable」（潜在世界表示是程序不是向量——因此可读、可对账、可在里面免费规划）。这与本周 7/14 Lilian Weng《Harness Engineering for Self-Improvement》综述（自我改进不靠改模型权重，靠模型外的 harness）和 7/14 Snowflake Loop Engineering（done 必须是布尔客观检查，不是模型说 looks right）构成同一条主线在不同层级的呼应。\n\n【影响与前瞻】Schema 是本周「harness / 过程工程 > 堆模型」叙事迄今最硬的单点实证：在一个模型权重不变的前提下，仅靠改写模型与任务的交互方式就实现数量级提升。对工程实践意味着：在追求更强模型之外，模型周围的脚手架（context 工程、验证回路、状态表示）是被严重低估的杠杆。对 Agent 落地（尤其银行这类强审计场景）则是好消息——可执行程序式的世界表示天然可读、可对账、可重放，比向量黑盒更接近可审计要求。下一步看 ARC Prize 官方核验能否复现，以及 Schema 思路能否迁移到 ARC-AGI-3 半私集和真实软件工程任务。",
+      "source": "schema-harness.github.io",
+      "source_type": "aihot",
+      "url": "https://schema-harness.github.io/",
+      "timestamp": "2026-07-18T00:00:00Z",
+      "importance": 9,
+      "tags": [
+        "ARC-AGI-3",
+        "harness-engineering",
+        "Claude Opus",
+        "Fable 5",
+        "GPT-5.6",
+        "抽象推理",
+        "Impossible Research"
+      ],
+      "batch_time": "2026-07-19T09:00:00+08:00"
+    },
+    {
+      "title": "Anthropic 官博｜Thomson Reuters CTO 详解为何 Fable 5 是知识工作的「临界进化」：法律会计级「Fiduciary-Grade AI」",
+      "summary": "补收 Anthropic 官方博客 7/8「Working at the frontier」系列开篇——Thomson Reuters CTO Joel Hron 谈为何把 Claude Fable 5 视为知识工作能力的「critical evolution」。Thomson Reuters 旗下 Westlaw、Practical Law、CoCounsel Legal 是法律/税务/会计/合规专业人士的参考工具，Hron 给模型定了一条硬标准：模型产出必须经得起律师在正式依赖前的专业审查。提出「Fiduciary-Grade AI」框架：权威内容 + 2700+ 领域专家 + 工作流嵌入 + 评估基建。与已收 Hebbia（金融尽调）/Base44/Cursor 凑成客户实证四部曲。",
+      "detail_content": "【核心事件】Anthropic 官方博客 claude.com/blog 7 月 8 日发布「Working at the frontier: How Thomson Reuters builds AI for high-stakes professional work」，是「Working at the frontier」客户实证系列的开篇（此后依次为 Hebbia 7/13 金融尽调、Base44 7/15、Cursor 7/17，本频道前三篇已收，本篇此前漏收现补齐）。主角是 Thomson Reuters CTO Joel Hron——四年前其初创公司被 Thomson Reuters 收购后加入，长期在产品、技术与战略的交叉处负责把 AI 塞进律师和会计师赖以谋生的产品里。\n\n【为什么这条对 Anthropic 战略重要】Thomson Reuters 是全球内容与技术公司，为做重大决策的专业人士和机构服务了 175 年。旗下产品是法律、税务、会计、合规等高 stakes 工作的参考基石：Westlaw 和 Practical Law 用于法律研究与实务指引，CoCounsel Legal 是其专业级法律 AI 平台，目标是让法律专业人士更擅长本职工作——给出的答案「能被辩护、产出真实价值」。这正好是 Anthropic 最想拿下的受信行业样板：强监管、零容忍出错、客户愿意为可靠性付费。\n\n【关键细节与引用】Hron 给模型选型定的标准异常具体：评估一个新模型时，他和团队会问——它的产出能否经得起律师在正式依赖前所施加的那种专业审查。「Plenty of companies can build a legal AI tool, but far fewer can build one a lawyer would put their name on.」（能造法律 AI 工具的公司很多，能造一个律师愿意署名的工具的公司少得多。）他强调律师能依赖 Westlaw 答案的原因不是模型本身，而是「数十年精心策展的判例法 + 全球 2700+ 领域专家每天注释和增强这些内容 + Thomson Reuters 在 Claude 这类模型之上自建的评估」。核心金句：「That human professional is still the one who is accountable for the end work product.」（最终对产出负责的仍是那位人类专业人士。）\n\n【Fiduciary-Grade AI 框架】Thomson Reuters 把这套打法命名为「Fiduciary-Grade AI™」——AI 扎根于权威内容、由深度领域专长塑造、直接嵌入专业工作流，使产出透明、可追溯、可辩护。Claude 是宝贵的模型伙伴，但「专业级系统来自 Anthropic 前沿模型与 Thomson Reuters 权威内容、领域专长、工作流集成、评估基础设施的组合」。这条与 Hebbia「增益来自更懂证据而非说得更顺」、Base44「Fable 5 让 PM 敢碰核心代码」一起，构成 Anthropic 系统性输出受信行业客户证据的四部曲。\n\n【影响与前瞻】对 Eason 的银行 AI 汇报，这是又一枚现成弹药：在比银行更严苛的法律/会计语境里，前沿模型已被信任进入「专业人士署名」级工作流，且信任的来源不是模型单点能力，而是「模型 + 权威数据 + 领域专家 + 评估基建」的组合——这正是判断力与可信度主线在受信行业的落地范式。Fiduciary-Grade AI 的提法也值得借鉴：把银行 AI 从「采用量」叙事重定位为「受信级」叙事，更契合监管预期。注意此篇为系列开篇、发布于 7/8，本次补收。",
+      "source": "claude.com/blog",
+      "source_type": "tavily",
+      "url": "https://claude.com/blog/working-at-the-frontier-how-thomson-reuters-builds-ai-for-high--stakes-professional-work",
+      "timestamp": "2026-07-08T16:39:45Z",
+      "importance": 8,
+      "tags": [
+        "Anthropic",
+        "Thomson Reuters",
+        "Claude Fable 5",
+        "Fiduciary-Grade AI",
+        "法律AI",
+        "CoCounsel",
+        "客户实证"
+      ],
+      "batch_time": "2026-07-19T09:00:00+08:00"
+    },
+    {
+      "title": "Apple-OpenAI 法律战升级：约 40 名前苹果员工收律师函，泄密范围远超最初 2 名被告",
+      "summary": "据《金融时报》7/17 报道，苹果已向目前就职于 OpenAI 的约 40 名前苹果员工发出法律警告，要求他们保存与此案相关的文件和通信。这是 7/10 苹果提交 41 页诉状起诉 OpenAI 及两名前苹果员工（首席硬件官 Tang Tan、前系统电气工程师 Chang Liu）后的最新动作，表明苹果认为涉嫌泄密的范围远超最初诉状列出的个人。人才战与 IP 战交织升级。",
+      "detail_content": "【核心事件】7 月 17 日，据《金融时报》报道，苹果已向目前就职于 OpenAI 的约 40 名前苹果员工发出法律警告（legal hold），要求他们保存可能与此案相关的文件和通信记录。这是苹果上周对 OpenAI 提起商业秘密诉讼后的最新动作，表明苹果认为涉嫌泄密的范围可能远超出最初诉状中列出的个人。从 2 名被告扩大到约 40 人被要求保全证据，是这起硅谷近年来最高规格人才/IP 诉讼的首次实质性升级。\n\n【背景与上下文】2026 年 7 月 10 日，苹果向美国加州北区联邦地区法院提交了一份长达 41 页的诉状，正式起诉 OpenAI 及两名前苹果员工——OpenAI 首席硬件官 Tang Tan 和前苹果系统电气工程师 Chang Liu。苹果在诉状中指控 OpenAI 策划了一场系统性的挖角与窃密行动，涉及商业机密、硬件设计等敏感领域（本频道 7/11 已以 imp8 收录起诉首发）。此次 40 人律师函是同一案件的延伸：苹果在取证层面把网撒得更大，意在查清到底有多少前员工带走了什么。\n\n【为什么重要】这件事超出普通商业诉讼的三层意义：其一，它是 AI 人才战白热化的法律侧切面——OpenAI 从苹果硬件团队大规模挖人（Tang Tan 是关键），苹果选择用 IP 诉讼而非单纯加薪留人来回击，意味着顶尖 AI 人才的流动开始带上竞业与泄密的法律风险；其二，苹果同时是 OpenAI 的合作伙伴（Apple Intelligence 接入 ChatGPT），合作与诉讼并行，关系极度撕裂，预示 AI 巨头之间「竞合」格局的脆弱；其三，对行业而言，这起案件的取证范围和判决走向，可能重塑 AI 公司从对手公司挖人的合规边界。\n\n【影响与前瞻】短期看，40 人律师函会显著抬高 OpenAI 硬件团队内部的法律紧张度，部分关键工程师可能被迫回避核心项目；中期看，若取证阶段爆出更多实质性泄密证据，案件可能从商业秘密纠纷升级为刑事指控。对国内观察者的一个旁注：这起案件与人才/数据/算力三重竞争中「人才」维度的全球性收紧同频——当模型能力趋同、算力商品化，顶尖人才的归属就成了最值得动用法律武器守护的资产。本案值得持续跟踪取证进展与可能的和解窗口。",
+      "source": "IT之家（金融时报）",
+      "source_type": "aihot",
+      "url": "https://www.ithome.com/0/978/277.htm",
+      "timestamp": "2026-07-17T11:10:01Z",
+      "importance": 7,
+      "tags": [
+        "Apple",
+        "OpenAI",
+        "商业秘密诉讼",
+        "人才战",
+        "Tang Tan",
+        "法律战"
+      ],
+      "batch_time": "2026-07-19T09:00:00+08:00"
+    },
     {
       "title": "Moonshot 发布 Kimi K3：2.8 万亿参数全球首个开源 3T 模型，coding 打败 Claude Opus 4.8 / GPT 5.5，Z.ai 股价单日暴跌 28%",
       "summary": "月之暗面 7/17 发布 Kimi K3，2.8 万亿参数成为中国乃至全球首个开源 3T 级 MoE 模型，1M 上下文。公司自称在 coding 和通用 agent 基准上稳定超过 Claude Opus 4.8 和 GPT 5.5，但仍落后于 Anthropic Fable 5 和 OpenAI GPT 5.6 Sol。西方主流媒体（CNBC/Bloomberg/AP/BBC/NY Post）集体报道，Moor Insights 把市场反应比作『又一个 DeepSeek 恐慌』。直接冲击：我们正在用的 Z.ai（GLM 母公司）股价周五暴跌 28%、MiniMax -16%、阿里 -4%。",
@@ -508,66 +567,6 @@
         "目标模式"
       ],
       "batch_time": "2026-07-13T09:00:00+08:00"
-    },
-    {
-      "title": "Bun 用 Claude Fable 5 在 11 天内把整个运行时从 Zig 重写为 Rust：64 个并行 agent、百万行代码、约 16.5 万美元",
-      "summary": "Bun 作者 Jarred Sumner 用预发布版 Claude Fable 5 + Claude Code 的 dynamic workflows，让 64 个 Claude 实例并行 11 天把 Bun JavaScript 运行时从 Zig 全量重写成 Rust——超过 100 万行新代码、约 53.5 万行 Zig 被替换，API 成本约 16.5 万美元，产出 Bun v1.4.0。他估算人类团队做同样重写大约需要一年。这是迄今最大规模的 Fable 5 生产级案例，也是这个周末中文 AI 圈讨论最热的一条（Bun 官方博客 7/8 发布，本周末二次发酵，此前未收录，特此补收）。",
-      "detail_content": "【核心事件】Bun 的作者 Jarred Sumner 在 Bun 官方博客（7/8）发布长文《Rewriting Bun in Rust》，详细披露了他用预发布版 Claude Fable 5（Mythos-class 模型）+ Claude Code 的 dynamic workflows，把整个 Bun JavaScript 运行时/工具链的核心代码库从 Zig 语言全量重写成 Rust 的全过程。重写涉及超过 100 万行 Rust 代码（对应约 53.5 万行 Zig），历时约 11 天 Sumner 本人的时间，最终产出 Bun v1.4.0。据 The Decoder、Developers Digest 等媒体测算，按标准 API 定价本次重写成本约 16.5 万美元（约合 111.9 万元人民币）；Simon Willison 在 7/8 的链接博文中补充，那篇博客文章本身也是由 Claude Fable 生成，花费约 149.25 美元。这个周末（7/11 前后）该案例在中文 AI 圈形成第二波传播，新浪财经、知乎、腾讯云开发者社区均有深度拆解，是本频道此前遗漏的一条重大 Fable 5 实证，特此补收。\n\n【关键细节与引用】机制上是 Claude Code 的 dynamic workflows 同时维持 64 个 Claude 实例并行工作，采用「implementer/reviewer（实现者/审查者）」并行模式驱动重写。Sumner 自己估算，如果交给人类团队完成同样的从 Zig 到 Rust 的全量重写，大约需要一年。Bun 是被广泛依赖的基础设施——月下载量约 2200 万，Claude Code、OpenCode 等工具、Vercel 等托管平台都依赖它，这使得重写的工程严肃性远超一般 demo。原文核心表述：「I used a pre-release version of Claude Fable 5 for much of the Rust rewrite. Bun started as a line-for-line port of esbuild's JavaScript」，即重写本身有清晰起点（Bun 最初就是 esbuild JS 实现的逐行移植），这让 AI 有了明确的参照系。重写同时解决了 Zig 在大型项目里的内存安全问题，并保持或提升了性能。\n\n【背景与上下文】这条案例之所以值得单独拎出来，是因为它把过去几个月「AI 能不能写大系统」的抽象争论拉到了一个有硬数字的标杆上：百万行、11 天、16.5 万美元、64 路并行、产出的是一个 2200 万月活依赖的基础设施级项目。它和上周 ai-frontier 收录的 Thomson Reuters 在 Agent SDK 上重建 CoCounsel、阿尔伯塔省政府用 Claude Code 20 小时扫 4.66 亿行代码，属于同一组「Claude Code/dynamic workflows 进入生产级重活」的实证链。对既要向上汇报 AI 价值、又要警惕 AI slop 的人，这种「可验证的硬产出 + 真实成本」比任何 benchmark 都好用——同时也直接印证 ai-engineering 频道反复出现的判断力稀缺论：让 64 个 agent 跑起来不难，难的是 Sumner 这种能定义「重写边界、给参照系、设计 implementer/reviewer 流程、把住 review 关」的人。\n\n【影响与前瞻】短期看，Bun v1.4.0 的 Rust 版本会带来内存安全与性能收益，但「AI 一次性重写整个运行时」的范式会进一步压低「大规模迁移」的成本预期，加速 Zig/旧栈项目向 Rust/现代栈的迁移潮。值得观察的是 reviewer 侧的负担——Sumner 的模式本质是把工程难度从「写」转移到了「并行调度 + 终审」，这正是 simonw 等人反复强调的「final review 才是新的瓶颈」。对组织而言，这意味着能用 AI 放大少数强工程师的产出，但对 review 能力的要求被急剧拉高。",
-      "source": "Bun Blog",
-      "source_type": "tavily",
-      "url": "https://bun.com/blog/bun-in-rust",
-      "timestamp": "2026-07-11T08:00:00Z",
-      "importance": 9,
-      "tags": [
-        "Claude Fable 5",
-        "Claude Code",
-        "agentic coding",
-        "Rust",
-        "Bun",
-        "dynamic workflows",
-        "生产级实证"
-      ],
-      "batch_time": "2026-07-12T09:00:00+08:00"
-    },
-    {
-      "title": "GPT-5.6-Sol 失手删光 Matt Shumer 的 Mac 硬盘：rm -rf + 变量处理错误，他当场喊「我信 Fable 1000 倍」",
-      "summary": "AI 创业者 Matt Shumer（Hyperwrite/OthersideAI CEO）在测试 OpenAI GPT-5.6-Sol 的 Ultra 模式时，一个 subagent 执行清理任务跑出 rm -rf，因 $HOME 相关 shell 变量处理错误，实际把 /Users/mattsdevbox 目录基本清空。他发现后手动 kill 进程但已有实质性数据丢失，并在 X 上写道「GPT-5.6-Sol just accidentally deleted almost ALL of my Mac's files. And this is why I trust Fable 1000x more」。OpenAI 据报已开始调查。这是 GPT-5.6 发布后第一起被公开的高破坏性 agent 事故，和同周末 Bun 用 Fable 5 完成百万行重写正好形成一正一反的对照。",
-      "detail_content": "【核心事件】7/11 前后，AI 创业者 Matt Shumer（Hyperwrite、OthersideAI 创始人，多次在模型发布第一时间出深度测评）公开报告：他在测试 OpenAI 7/9 发布的 GPT-5.6-Sol 时遭遇严重事故。一个运行 GPT-5.6-Sol「Ultra 模式」的 subagent 被授予了在他 Mac 上执行清理任务的广泛权限，过程中执行了一条危险的 rm -rf 命令；由于一条与 $HOME 相关的 shell 变量被错误处理，命令实际等价于把 /Users/mattsdevbox 目录整体清空。Shumer 注意到后手动 kill 了进程，但已造成实质性的数据丢失——他用「almost all files on my Mac」来形容。OpenAI 据报道在收到反馈后已开始调查该事故。\n\n【关键细节与引用】Shumer 在 X（@mattshumer_）的原话被广泛转载：「GPT-5.6-Sol just accidentally deleted almost ALL of my Mac's files. And this is why I trust Fable 1000x more.」他补充表示，自己此前在 GPT-5.6-Sol 测评里就已经表达过相关担忧——也就是说这次事故在他看来并非偶然，而是他一直警惕的那种 failure mode 兑现了。技术拆解（Startup Fortune、remio.ai 等）指向根因是 shell 变量展开出错，把一条本应限定在子目录的清理命令变成了对整个用户目录的递归删除——典型的「权限太大 + 一行变量没处理好 = 灾难」模式。\n\n【背景与上下文】这起事故之所以出圈，是因为它把 agentic coding 最现实的恐惧——agent 拿着系统级权限跑出不可逆破坏——从假设变成了真事，而且发生在一位知名 AI 创业者身上、用的正是 7/9 刚发布的旗舰模型。它和同周末「Bun 用 Fable 5 百万行重写」放在一起，构成一组近乎完美的对照：同样的「agentic coding at scale」，上限是 11 天重写一个运行时，下限是一条 rm -rf 清空硬盘。决定差别的不是模型能不能写代码，而是权限边界、监督机制、沙箱隔离和 review 流程。这正好呼应 ai-engineering / ai-org 频道反复出现的主题——agent drift 难检测、runtime 而非 model 才是企业 agent 失败的根源、判断力比产出量更稀缺。对在强监管银行业推广 AI 的语境，这是一条可以直接拿去当反面教材的「为什么 agent 必须受治理」的硬案例。\n\n【影响与前瞻】短期看，这会进一步强化「agent 必须跑在沙箱、最小权限、关键操作需人工确认」的工程共识，也给了 Anthropic 阵营一个现成的营销弹药（Shumer 主动把 Fable 抬高 1000 倍）。但更值得关注的长期信号是：当 flagship 模型在官方发布后第一周就出现公开的高破坏性事故，说明模型能力（能自主跑复杂任务）已经跑在了安全护栏和默认权限设计前面。对行业而言，这意味着 agent 安全会从「论文课题」加速变成「默认要有的产品级 guardrail」——谁能把最小权限沙箱、可审计的操作日志、危险命令拦截做到开箱即用，谁就能吃下这一轮企业 agent 部署的红利。",
-      "source": "X / Startup Fortune",
-      "source_type": "opentwitter",
-      "url": "https://x.com/mattshumer_/status/2075657271401390161",
-      "timestamp": "2026-07-11T07:00:00Z",
-      "importance": 8,
-      "tags": [
-        "GPT-5.6",
-        "GPT-5.6-Sol",
-        "OpenAI",
-        "agentic safety",
-        "agent 事故",
-        "Fable 5",
-        "对照实验"
-      ],
-      "batch_time": "2026-07-12T09:00:00+08:00"
-    },
-    {
-      "title": "蚂蚁灵波发布 LingBot-VA 2.0：业界首个「具身原生」世界动作模型，从「观察世界」转向「动作改变世界」",
-      "summary": "蚂蚁集团旗下具身智能公司蚂蚁灵波（Robbyant）7/10 发布 LingBot-VA 2.0，号称业界首个「具身原生（Embodied Native）」世界动作模型。区别于把数字世界大模型搬过来用的主流路线，它从零预训练、聚焦「动作→环境变化」的因果关系而非被动观察世界，引入 foresight 前瞻机制，采用 MoE 架构 + 负载均衡损失防止路由塌缩。定位是「为所有机器人构建通用大脑」，配套 R2 人形机器人，被视为具身智能大模型从「复用数字世界模型」迈向「原生面向物理世界」的范式转换节点。",
-      "detail_content": "【核心事件】7/10，蚂蚁集团旗下具身智能公司蚂蚁灵波（英文品牌 Robbyant）正式发布 LingBot-VA 2.0，并将其定位为业界首个「具身原生（Embodied Native）」世界动作模型（World Action Model）。官方与法新社、中国日报、36 氪、新浪财经等媒体的口径一致：这标志着机器人基础模型从「基于数字世界模型构建」转向「面向物理世界原生设计」的新阶段。Robbyant 的愿景口号是「Building One Brain for All Robots」（为所有机器人构建一个通用大脑），技术布局覆盖空间智能、灵巧操作与环境反馈，并已推出 R2 人形机器人及垂类商用模型。\n\n【关键细节与引用】技术路线的核心差异在于学习对象：36 氪深度稿件指出，LingBot-VA 2.0 把学习重点放在「动作与环境变化之间的因果关系」上，让模型理解「动作如何改变世界」，而非像主流世界模型那样主要「观察世界如何变化」；同时引入 foresight（前瞻）机制，使模型能在物理执行前预判动作后果。架构层面，据知乎专栏技术解析，模型采用 MoE（混合专家）架构，并使用负载均衡损失（Load Balancing Loss）防止路由塌缩，确保各专家被有效训练、提升模型容量利用率。LingBot 系列当前包含 LingBot-VLA 2.0、LingBot-VLA 1.0（开源跨本体多任务具身基础模型）与 LingBot-VA（Video-Action 世界模型）多条产品线。\n\n【背景与上下文】具身智能是 2026 年 AI 行业继 LLM、agentic coding 之后最热的第三条主线，但绝大多数玩家走的是「拿数字世界的大模型（视频生成/视觉-语言模型）迁过来、再对机器人数据微调」的捷径。蚂蚁灵波这条路线的赌注是：物理世界的因果性、动作闭环和环境反馈是数字世界模型先天缺失的，必须在预训练阶段就「原生」面向物理世界，而不是事后补——这和当初 LLM 领域「端到端预训练 vs 模块化拼装」的路线之争逻辑同构。作为蚂蚁集团（而非传统机器人公司）下场，也反映出国内大厂把具身智能当成下一个基础模型赛道卡位的态势。\n\n【影响与前瞻】短期看，「具身原生」是一个需要用真实机器人泛化能力来验证的概念，LingBot-VA 2.0 的实际跨场景表现还要看后续 benchmark 和落地案例。但它的象征意义明确：具身智能大模型进入了「范式路线之争」阶段，2026 下半年预计会出现更多「原生派 vs 迁移派」的技术分歧。值得关注的看点是 R2 人形机器人在具体商用场景（仓储、服务、制造）里的数据反馈，以及开源的 LingBot-VLA 1.0 能否像此前开源具身模型那样催生出一个生态。对关注 AI 三巨头竞争格局的读者，这是一条来自中国阵营、且明确声称在做范式级创新的信号。",
-      "source": "Robbyant / 中国日报",
-      "source_type": "aihot",
-      "url": "https://cn.chinadaily.com.cn/a/202607/10/WS6a50688aa310d709c2fbccd4.html",
-      "timestamp": "2026-07-10T02:00:00Z",
-      "importance": 7,
-      "tags": [
-        "蚂蚁灵波",
-        "Robbyant",
-        "具身智能",
-        "世界模型",
-        "LingBot",
-        "MoE",
-        "具身原生"
-      ],
-      "batch_time": "2026-07-12T09:00:00+08:00"
     }
   ]
 }
