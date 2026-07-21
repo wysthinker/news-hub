@@ -1,9 +1,81 @@
 {
   "channel_id": "ai-engineering",
   "channel_name": "AI 工程实战",
-  "generated_at": "2026-07-20T10:09:46.748012+08:00",
-  "digest": "GPT-5.6 大周后第一个完整周末，AI engineering 频道迎来自反最强的一期：一线咨询顾问 Nik Suresh 用 6000 字长文把过去一年半看到的 100% AI 项目失败率、token leaderboard 内卷、demo 操纵决策的全貌写出来，是迄今对「AI slop 渗透决策层」最犀利的一手证词，直接对接你反 slop / 判断力稀缺的主线。同周安全侧爆出中国 actor 把 Claude Code 和 DeepSeek 拼成「外脑规划 + agentic 执行」的攻击流水线（Hunt.io 抓到 13 港服务器 2431 文件），把 agentic 安全系列推到「国家级 APT 武器化」级别。两条暗线同步收敛：latent.space 用 AIEWF 2026 五大趋势把本周散落的 loop / FDE / skill engineering / software factory 一次性系统化（Anthropic「models are grown not designed」+ Garry Tan「雇工程师维护 skills」+ Tyler Brown「autonomy without structure = slop」），ashpreetbedi 开源 75 个 labs 训练数据 agent 代码把 agentic SE 推进到训练数据侧。压轴是 Flask 作者 Armin Ronacher 的工程哲学——摩擦本身是共同语言的一部分，不是全部是浪费。对银行汇报：Nik Suresh 长文是反 slop 最现成的核武器，AIEWF 五趋势是给管理层画 AI engineering 地图。",
+  "generated_at": "2026-07-21T10:23:28.243699+08:00",
+  "digest": "本周 AI 工程的主线很清晰：从「单个 agent 能干什么」转向「一群 agent 怎么协调、怎么算经济账、怎么自我验证」。Cursor 发布迄今最系统的 agent swarm 方法论长文——Planner/Worker 分工 + 自建「每秒千次 commit」的 VCS + 五种群体失败模式命名（split-brain、ossification 等）+ 多重 review lenses + agent 自维护的 Field Guide；最硬的是模型经济学：同样质量，Opus 4.8 当 planner + Composer 2.5 当 worker 花 $1,339，GPT-5.5 独干烧 $10,565，差 8 倍——「真正需要前沿智能的时刻很少」是迄今 smart routing / tokenmaxxing 退潮主线最强的工程背书（脚注还埋了 GPT-5.6 Sol 因失控螺旋被退回的又一不稳定证据）。simonw 动手验证 Bun 的 Rust 重写已悄悄进 Claude Code 生产（数百万设备、Linux 启动快 10%、二进制里 strings 出 563 个 .rs 文件），「AI 写的代码进生产基础设施」证据链闭环。Natural 拿 3000 万美元 A 轮要从底层重造「为 AI agent 设计的支付轨道」正面对标 Stripe——现有信用卡/ACH 都是人授权交易，跟不上自主 agent，agent 经济基础设施层开始成型。ashpreetbedi 发 Agno Environments 把「agent 自我验证 + 训练数据生成」产品化（定位「RL for agents 第一步」），与 Cursor swarm 的 review lenses 同频——agent 系统进生产必须有内置的「做完—检查—改进」闭环。注：Ludicity 那篇反 slop 长文（100% 项目失败率、token 排行榜造假）7/18 已收录，本周 simonw 二次转发不再重复；OpenAI CFO 记分卡、Boris Cherny ROI 框架、The Atlantic 工程灾难、VentureBeat 评估差、Bun 迁移6步法等上周已密集收录，本周均跳过。",
   "items": [
+    {
+      "title": "Cursor 发迄今最系统 agent swarm 方法论：Planner/Worker 分工 + 每秒千次 commit VCS，模型经济学揭示 Opus 规划 + Composer 执行省 8 倍",
+      "summary": "Cursor 把「agent 群体协作」从经验性试错升级成可工程化系统：新 swarm 从零用 Rust 复现完整 SQLite，Grok 4.5 配置 4 小时通过 80% 测试、所有四种配置最终 100% 通过。真正震撼的是模型经济学——同样质量，Opus 4.8 当 planner + Composer 2.5 当 worker 只花 $1,339，GPT-5.5 单模型独干烧 $10,565，差 8 倍。核心洞见：大型任务里真正需要前沿智能的时刻很少，planner 把模糊性压成明确指令后，便宜模型照做就行。脚注埋雷：GPT-5.6 Sol 因「对字面措辞敏感、出现其他模型没有的失控螺旋」被退回 GPT-5.5。",
+      "detail_content": "【核心事件】7 月 20 日，Cursor 发布长文《Agent swarms and the new model economics》，把今年早些时候「群体 agent 从零搭浏览器」的实验性工作，升级成一套可被刻意工程化的 swarm 架构。验证方式是让新旧两套 swarm 在同样模型、同样时间预算下，从零用 Rust 复现完整 SQLite（835 页官方文档，扣留源码、测试套件、二进制和联网），用 SQLite 项目的 sqllogictest（百万级已知正确答案的查询）打分。新 swarm 在每一种模型配置下都优于旧 swarm：Grok 4.5 配置 4 小时达到 80%，旧 swarm 在第二小时前就因失控被叫停；所有四种新配置最终都 100% 通过测试套件。\n\n【关键细节与引用】swarm 只有两种角色——Planner（用最聪明模型，把目标递归拆成任务树）和 Worker（用更快更便宜的模型，执行叶子任务）。Cursor 自建了一套版本控制系统，commit 吞吐从旧 swarm Git 上「每小时 1000 次」提升到「每秒 1000 次」。文章系统命名了 5 种「人类团队不会遇到但 swarm 会」的失败模式并逐一给解法：split-brain（两个 planner 各自在代码库不同部分实现同一概念，要求 planner 自己做设计决策且确保没有两个子树决定同一问题）、planner contention（两个 planner 抢同一文件，让 agent 把决策写进共享设计文档、代码用编译期反向引用指回文档）、merge conflicts（worker 不擅长合并，引入中立第三方 agent 仲裁）、megafiles（热门文件膨胀到阻塞 diff/merge，worker 可标记、阻塞新 commit 让外部 agent 拆分）、ossification（agent 学会不碰核心代码，于是「许可故意破坏」——agent 可越界打补丁并留言，编译器把变更传播全系统，其他 agent 撞到报错时读留言自行适配）。另有两大机制：多重 review lenses（没有单一视角能抓住所有错误，但去相关的视角会叠加，就像自动驾驶在没有任一完美组件下达到超人类可靠性）；Field Guide（一个完全由 agent 自己 curate 的共享上下文文件夹，index.md 自动注入每个 agent，逻辑是「模型权重是冻结的，所以恰恰是意外遭遇才值得记录，好让下一个 agent 轨迹更短」）。\n\n【背景与上下文】最硬的数据在 Model economics 一节：四种配置产出相似质量，成本从 Opus 4.8 混合的 $1,339 到 GPT-5.5 独干的 $10,565。token 结构上 worker 承担 69% 以上，但 dollar 上 planner 占大头（planner token 更贵）——Opus 当 planner 只产少量 token 却占约三分之二成本，Composer 当 worker 用绝大多数 token 只占三分之一。文章点出关键：一个大型任务里真正需要前沿智能的时刻很少——最初分解、设计决策、某些权衡；一旦前沿 planner 把模糊性压成详细明确的指令，更便宜的模型只要照着做。最极端对比：GPT-5.5 一个人干，光 worker 就烧 $9,373；Opus 4.8 规划 + Composer 2.5 执行，整个 worker 舰队只花 $411。反直觉细节：Fable 5 当 planner 比 Opus 4.8 便宜（尽管单价 2 倍，因为用了少得多的 planning token），但 Fable 配置的 worker 用了数倍 token，整体反而更贵——planner 省的钱被 worker 的啰嗦吃掉。脚注里还有一颗雷：原本想把 GPT-5.6 Sol 作为前沿配置，但「新模型对字面和强调措辞比其他测试模型更敏感，出现了其他模型都没产生的失控螺旋」，没时间调 prompt 只能退回 GPT-5.5——这跟上周 GPT-5.6-Sol 删光用户硬盘事故是同一个模型的不稳定信号。\n\n【影响与前瞻】文章用 Coase 定理（企业为什么存在——协调成本增长快于工作本身，所以组织分层而非全员互聊）类比 swarm 分层，并把 swarm 类比成编译器：编译器把源码经中间步骤翻译成机器码，swarm 对 intent 做类似的事；区别是编译器每步保义，swarm 每步都是概率性的——这篇文章描述的一切都是为了缩小那个 gap。金句收尾：在这个实验里稀缺的，以及我们预期未来软件工程里会持续稀缺的，是对 intent 的正确描述。对银行业 AI 落地的直接启示：(1) 模型选型不该按「一个模型扛所有」，而该按 planner/worker 角色分层，这是迄今 smart routing / tokenmaxxing 退潮主线最硬的工程实证，也是年度模型成本测算可直接引用的数字；(2) specs as prompts 意味着写好需求/spec 的能力升值、写代码能力贬值，正中判断力考核主线；(3) agent 自我治理机制（review lenses、Field Guide、故意破坏许可）是 multi-agent 进生产的前置条件，给银行 agentic 部署的治理设计提供了可直接借鉴的工程蓝图。代码库已开源：github.com/cursor/minisqlite。",
+      "source": "Cursor Blog (Wilson Lin)",
+      "source_type": "tavily",
+      "url": "https://cursor.com/blog/agent-swarm-model-economics",
+      "timestamp": "2026-07-20T12:00:00Z",
+      "importance": 9,
+      "tags": [
+        "Cursor",
+        "Agent Swarm",
+        "模型经济学",
+        "Planner-Worker",
+        "agentic coding"
+      ],
+      "batch_time": "2026-07-21T10:00:00+08:00"
+    },
+    {
+      "title": "simonw 动手验证 Bun 的 Rust 重写已悄悄进 Claude Code 生产：数百万设备在跑、Linux 启动快 10%、563 个 .rs 文件",
+      "summary": "Simon Willison 7 月 19 日自己动手验证 Bun 作者 Jarred Sumner「Claude Code 已在用 Rust 版 Bun」的说法——在本地 claude 二进制里 strings 出 563 个 Rust 源文件，确认 Claude Code v2.1.181（6 月 17 日起）已在数百万设备上跑 Rust 版 Bun v1.4.0（当时是未发布 preview）。Jarred Sumner 说得对：boring is good——Linux 启动快 10%，其他几乎没人察觉。这是「AI 写的代码进生产基础设施」从 demo 到证据链闭环的关键一环。",
+      "detail_content": "【核心事件】继 7 月初「Bun 用 Fable 5 + 64 个并行 Claude 把运行时从 Zig 全量重写成 Rust」案例引发关注后，Bun 作者 Jarred Sumner 在《Rewriting Bun in Rust》里随口提了一句：Claude Code v2.1.181（6 月 17 日发布）及之后版本使用 Rust 版 Bun，Linux 启动快了 10%，除此之外几乎没人注意到，无聊是好事（boring is good）。Simon Willison 7 月 19 日决定自己动手验证——毕竟这意味着一个 AI 协助重写的运行时已经悄悄进了 Anthropic 旗舰 coding agent 的生产部署。\n\n【关键细节与引用】simonw 给出两条可复现的验证命令。第一条：strings ~/.local/bin/claude 加 grep Bun v1，在他机器上返回 Bun v1.4.0 (macOS arm64)——而 GitHub 上 Bun 最新正式发布是 5 月 12 日的 v1.3.14，v1.4.0 这个版本号说明 Anthropic 在用一个尚未发布的 preview。第二条：strings ~/.local/bin/claude 加 grep src/*.rs 正则，列出 563 个 Rust 源文件名，开头是 src/runtime/bake/dev_server/mod.rs、src/runtime/bake/production.rs、src/bundler/bundle_v2.rs。simonw 评论：看起来 Bun in Rust 确实在数百万不同设备上跑生产，就像 Jarred 说的，boring is good。他还补了 Ajan Raj 发现的更干净验证法：写个 console.log(Bun.version) 的 ts 文件，用 BUN_OPTIONS 加 --preload 让 Claude Code 自带的 Bun 执行，直接打印 1.4.0。关键时间线：5 月 17 日的 commit 把 package.json 版本号更新到 1.4.0，此后没改过也没进入 canary 之外的正式发布——直到本文更新提到 Rust 版已作为 Bun canary 发布（bun upgrade --canary 可装）。\n\n【背景与上下文】这件事的意义比「一个工具换了内部 runtime」大。Bun Rust 重写是迄今最被引用的「AI agent 协助大型生产代码库重写」案例（53.5 万行 Zig 到百万行 Rust，Fable 5 主导，adversarial review，$165k），而 simonw 这次独立验证坐实了：重写产物不只是 demo，已经嵌进 Claude Code 这个全球开发者天天用的 agent，在数百万设备上 silent running，Linux 启动还快了 10%。这是「AI 写的代码进生产基础设施」从口号到证据链闭环的关键一环——而且是「几乎没人察觉」式地进的，恰恰说明质量稳定。\n\n【影响与前瞻】对银行核心系统现代化的直接启示：(1) simonw 的验证方法（strings 二进制加 grep）本身就是一份「如何审计 AI 写进生产的东西」的轻量 playbook，审计/风控可借鉴；(2) boring is good 是对 AI 重写价值的最好衡量标准——不是看 demo 多炫，而是看「换了之后没人察觉」的静默质量，这正呼应反 slop 立场；(3) 时间线倒推：5 月 17 日 commit、6 月 17 日进 Claude Code、7 月公开，说明大厂内部 AI 辅助重写的实际节奏比对外披露早 1-2 个月，行业实际渗透比新闻看到的更深。",
+      "source": "Simon Willison's Weblog",
+      "source_type": "tavily",
+      "url": "https://simonwillison.net/2026/Jul/19/",
+      "timestamp": "2026-07-19T03:54:00Z",
+      "importance": 7,
+      "tags": [
+        "simonw",
+        "Bun",
+        "Rust",
+        "Claude Code",
+        "生产验证"
+      ],
+      "batch_time": "2026-07-21T10:00:00+08:00"
+    },
+    {
+      "title": "Natural 拿 3000 万美元 A 轮要从底层重造「为 AI agent 设计的支付轨道」，正面对标 Stripe",
+      "summary": "成立一年的 Natural 完成 3000 万美元 A 轮（Forerunner 领投，总融资 4000 万），定位「agent 编排层」，让 AI agent 能自主移动和存储资金——代客户自主付供应商、收款、与其他 agent 交易。核心判断：现有支付轨道（信用卡、ACH）都是为「人授权交易」设计的，跟不上能自主执行的 agent；当交易以计算机速度发生，「全球支付笔数可能是今天的几百到几千倍」。团队来自 Stripe、Ramp、Square，正面对标也在重做 agent 支付的 Stripe。",
+      "detail_content": "【核心事件】7 月 20 日，TechCrunch 报道成立仅一年的初创 Natural 完成 3000 万美元 A 轮，由 Forerunner（专注消费体验与商业未来的 VC，创始人 Kirsten Green 领投）领投，总融资达 4000 万美元。Natural 把自己定位为「agent 编排层」，让 AI agent 能自主移动和存储资金——代客户自主付供应商、收款、与其他 agent 或人类交易。CEO Kahlil Lalji（前 Ivalla 联创，Ivella 2023 年被 Earnin 收购）说：agentic payments 注定是这个空间里结构性最重要的问题。\n\n【关键细节与引用】问题定义清晰：今天的金融部门依赖金融轨道——在银行、企业、消费者之间移动资金和信息的基础设施；但这些轨道是为人类发起的交易建的，不是为自主 AI agent 建的，比如信用卡和 ACH 依赖人类授权交易，这拖慢了为自主工作而设计的 agent。Lalji 的规模赌注：世界上发生的支付笔数，可能是今天支付笔数的两到三到四个数量级——因为交易会以计算机速度而非人类速度发生。Natural 不只做「帮 agent 代付」，还要重造支付基础设施，包括争议交易（disputed transactions）怎么处理。竞争格局：Stripe 是主要对手（也在重新设计 agent 支付轨道），Skyfire Systems 等初创用美元稳定币做 agent 支付骨架；Natural 计划同时纳入稳定币和传统银行支付。团队含前 Stripe、Ramp、Square 资深员工。Lalji 承认被金融业烫过（ZIRP 时代结束），但一直绕回这个问题。\n\n【背景与上下文】这条信号要在两条主线里看：(1) agent 经济的基础设施层正在成型——上周 Visa 推 AI Financial Assistant 白标 SDK（发卡行嵌对话式财务指导）、Backbase 收 Kasisto，加上 Natural，agent 与金钱的接口正从「给人用的支付」转向「给 agent 用的支付」；(2) Stripe 本周另一条新闻是联手 Advent 以 530 亿美元竞购 PayPal——支付巨头一边整合一边防 agent 原生颠覆者。\n\n【影响与前瞻】对银行业的双面启示：(1) 风险面——如果 agent 支付轨道被 Natural/Skyfire 这类新玩家定义，银行可能在 agent 经济里被管道化，就像早期互联网银行被 fintech 前置；(2) 机会面——「agent 自主交易」的合规、限额、争议处理、反欺诈，是银行最该也最有资格介入的层（强监管加信任加资金能力），Natural 也要接传统银行支付说明绕不开。给汇报的角度：agent 经济不是远期话题，基础设施融资已在发生，银行现在就该回答「当客户授权的 agent 要自主完成一笔支付，我们的账户体系、风控、合规拿什么接」。",
+      "source": "TechCrunch",
+      "source_type": "tavily",
+      "url": "https://techcrunch.com/2026/07/20/natural-raises-30m-to-reinvent-payments-for-ai-agents-and-take-on-stripe/",
+      "timestamp": "2026-07-20T19:11:25Z",
+      "importance": 7,
+      "tags": [
+        "Natural",
+        "agentic payments",
+        "Stripe",
+        "agent 经济",
+        "支付基础设施"
+      ],
+      "batch_time": "2026-07-21T10:00:00+08:00"
+    },
+    {
+      "title": "ashpreetbedi 发 Agno Environments：把「agent 自我验证 + 训练数据生成」产品化，定位「迈向 RL for agents 第一步」",
+      "summary": "ashpreetbedi 7 月 20 日发布 Agno Environments，是 Agno 平台最受欢迎功能的第一部分，核心是 verification（验证）+ data generation（数据生成）。这是他上周「自驾式 agent 基础设施 L1-L5」的延续——让 agent 能自我验证、产出可用于训练的数据，把「improve-agent overnight 跑 282 次模拟」的能力产品化。与本周 Cursor swarm 的 review lenses 同频：agent 系统进生产必须有内置「做完—检查—改进」闭环。",
+      "detail_content": "【核心事件】7 月 20 日，Agno（ashpreetbedi 创办的 agent 平台公司）发布 Agno Environments，ashpreetbedi 推文（♥122）定位为「迈向 agent 强化学习第一步（first step towards RL for agents）」，是平台最受欢迎功能的第一部分，核心是 verification（验证）和 data generation（数据生成）。这延续了他一周前的「自驾式 Agent 基础设施 L1-L5」分级框架——其中 improve-agent overnight 跑 282 次模拟提速 20 倍、review-and-improve 捕获仓库级漂移等能力的产品化落地。\n\n【关键细节与引用】从推文和近期脉络看，Environments 解决的是 agent 系统最缺的一环：怎么让 agent 自己知道「做对了没有」（verification），并把跑出来的轨迹变成可用的训练/改进数据（data generation）。这跟 ashpreetbedi 持续推动的方法论一致——他 7 月 18 日开源的 75 个 labs 用 agent 做训练数据的代码（♥614，本频道已收录）覆盖 labeling、DPO juries、rejection sampling、step-level rewards，Environments 是把这些 lab 级能力做进平台。他把这条线叫「迈向 RL for agents 的第一步」，潜台词是：agent 要从「单次任务执行」进化到「基于反馈持续自我强化」，前提是先有可靠的 verification 闭环。\n\n【背景与上下文】本周 agent 自我验证/自我纠错主题多源共振：Cursor swarm 头条的「多重 review lenses + Field Guide」、Anthropic 7 月初的 Managed Agents dreaming（agent 定时回顾 session 提取模式）、ashpreetbedi 这条 Environments——都指向同一个工程前沿：agent 系统要进生产，必须有内置的「做完—检查—改进」闭环，不能只靠人审。verification 是这条闭环的起点。ashpreetbedi 是编辑记忆里明确追踪的优先源（Agentic Software Engineering 方法论代表），这条是他平台能力线的最新坐标。\n\n【影响与前瞻】实操层面，Environments 把「让 agent overnight 跑几百次模拟自我改进」从论文/大厂内部能力变成平台功能，中型团队也能用。对银行 agentic 部署的启示：agent 上线前「自我验证」不是可选项是基础设施；考核 agent 该看「verification 通过率」而非「跑了几次」「烧了多少 token」。注意这条偏产品功能发布，技术细节待 ashpreetbedi 后续 part 2 展开，暂作能力线追踪。",
+      "source": "@ashpreetbedi (X)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/ashpreetbedi/status/2079258340966994276",
+      "timestamp": "2026-07-20T17:33:13Z",
+      "importance": 6,
+      "tags": [
+        "ashpreetbedi",
+        "Agno",
+        "agent 验证",
+        "RL for agents",
+        "self-driving agent"
+      ],
+      "batch_time": "2026-07-21T10:00:00+08:00"
+    },
     {
       "title": "一线咨询顾问 6000 字长文：100% AI 项目失败率，token leaderboard 逼工程师让 AI 自我循环看 Netflix",
       "summary": "Nik Suresh（Ludicity）基于一年半亲自跑销售 + 300 场跨行业访谈，给出迄今最犀利的 AI slop 一手证词：他团队观察到的企业 AI 项目 0% 成功率，高管没用过 ChatGPT 却给 20 亿美金公司写 AI 战略，token leaderboard 让被招来「优化系统」的工程师反向优化——让 LLM 自我 prompt 跑空循环刷指标然后看 Netflix，甚至 checkout 一份平行 Go 仓库让 AI 重写成 Zig 只为保住工作。Demo 是「mind-killer」：客户看到 chatbot 立即掏信用卡买下明知不能用的东西。高管们陷入互相持枪的 coordination problem——谁先说实话谁先被董事会开掉。",
@@ -515,78 +587,6 @@
         "开源模型"
       ],
       "batch_time": "2026-07-15T10:00:00+08:00"
-    },
-    {
-      "title": "标价没涨 token 多了 30%：Claude 新 tokenizer 被扒出在代码上隐性涨价，跨厂商成本对比就此失真",
-      "summary": "一份 TypeScript 文件在 GPT-5.x 上是 681 个 token，到 Claude 最新 tokenizer 下变成 1178 个——相差 1.73 倍。Anthropic 换了新分词器、每个 token 的标价不变，但同一段代码实际产生的 token 多了约 30%，等于悄悄涨了价。Opus 4.6→4.8 标价同为 $5/$25，新 tokenizer 却让同代码 token 数涨约 32%；Sonnet 5 的 $2/$10 是促销价，8 月 31 日后恢复 $3/$15，届时同代码成本将比 Sonnet 4.6 高出约三成。跨厂商看，Claude 新 tokenizer 在代码上比 GPT 多产生 1.50x–1.73x 的 token，TypeScript 差距最大。",
-      "detail_content": "【核心事件】7 月 13 日，开发者工具站 playcode.io 发文用一组实测数据指出：前沿大模型的「每百万 token 标价」并不能反映真实成本，因为各家分词器（tokenizer）把同一段文本切成的 token 数量差很多，而 Anthropic 换上新 tokenizer 后并未调价，等于在标价不变的情况下让代码类输入的实际花费悄悄上涨。该文经 Hacker News 热门传播（buzzing.cc 做了中文翻译）。\n\n【关键细节与引用】文章给出最直观的一组对照：同一份 TypeScript 文件，在 GPT-5.x 上是 681 个 token，在 Claude 最新 tokenizer 下是 1178 个，相差约 1.73 倍。Anthropic 新 tokenizer 比旧版多产生约 30% 的 token，标价不变，构成隐性涨价。Claude Opus 4.6 与 Opus 4.8 标价同为 $5.00 / $25.00（每百万输入/输出 token），但新 tokenizer 使同一代码的 token 数增加约 32%。Claude Sonnet 5 的 $2.00 / $10.00 为促销价，2026 年 8 月 31 日后恢复 $3.00 / $15.00，届时相同代码成本将比 Sonnet 4.6 高出约 32%。跨厂商对比中，Claude 新 tokenizer 在代码上比 GPT 多产生 1.50x 至 1.73x 的 token，TypeScript 差距最大。同期 Krasa.ai 的独立分析也得出相近结论：Opus 4.7 相比 4.6 在代码和技术文档上存在 20%–47% 的隐性成本上涨。\n\n【背景与上下文】这条线索把过去两周弥漫的 Fable / GPT-5.6 谁更值的口水战拉回了硬数据层面。7 月 10 日前后 RLanceMartin 等人开始做性能 vs 成本的 eval 对比，7 月 12 日 agentic 工程师 ashpreetbedi 公开抱怨 Fable 5 一个 spec review 就烧掉 500 美元信用额度。tokenizer 差异正是这些贵钱的底层机制——模型可能没变贵，是你被切出了更多 token。对按 token 计费、按预算卡额度的方式部署 agent 的团队，这是个容易被报价页骗到的坑。\n\n【影响与前瞻】对要在银行里做 AI 工具价值汇报的人，这条的直接用途是：用真实 token 成本而非 sticker price 做 ROI 测算，尤其是代码与技术文档密集的场景，Claude 系实际单价可能比标价高三成。更深一层是供应商管理——当 tokenizer 可以被单方面变更、且变更不体现在价格表上，年度合同的 token 量必须按自己的真实语料建模，而不是照搬厂商的每百万 token 报价。8 月 31 日 Sonnet 5 促销到期是一个明确的时间节点，届时成本结构会再跳一档，需要提前重算预算。",
-      "source": "playcode.io（经 Hacker News 热门 / buzzing.cc 中文翻译传播）",
-      "source_type": "tavily",
-      "url": "https://playcode.io/blog/real-price-of-frontier-models",
-      "timestamp": "2026-07-13T21:50:30Z",
-      "importance": 9,
-      "tags": [
-        "Claude",
-        "GPT",
-        "tokenizer",
-        "API成本",
-        "隐性涨价"
-      ],
-      "batch_time": "2026-07-14T10:00:00+08:00"
-    },
-    {
-      "title": "agentic 工程师 ashpreetbedi 公开弃用 Fable 5：一个 spec review 烧掉 500 美元，转头用回 GPT-5.6 Codex",
-      "summary": "专注 agentic 软件工程方法论、被列为核心追踪 KOL 的 ashpreetbedi（♥995、5.7 万浏览）发推称 Fable 5 现在基本没法用——让它 review 一个 spec（不是实现，只是审阅），就把用量额度烧穿并被收了 500 美元信用额度。他表示 GPT-5.6 同样好用，而且每次打开 Codex 额度都被重置。这是一线重度用户因成本而非能力倒戈的罕见公开表态，与同周 tokenizer 隐性涨价的发现互为印证。",
-      "detail_content": "【核心事件】7 月 12 日，长期分享 agentic 软件工程方法论、被 Eason 列为核心追踪 KOL 的 ashpreetbedi 在 X 发推（♥995、转发 28、5.7 万浏览）公开表示 Fable 5 现在基本没法用，并已转回 GPT-5.6 Codex。理由不是能力不行，而是成本失控。\n\n【关键细节与引用】原推写道：「Fable 5 is practically unusable at this point. Ask it to review a spec, not implement — review, and it'll burn through its usage limits and charge $500 in credits. On the other hand, gpt-5.6 is equally as good and every time I open codex they've reset the limits.」要点有三个：任务是 review（审阅规格）而非实现，本应是轻量操作；一次就烧穿额度并扣了 500 美元；他判断 GPT-5.6 能力相当，且 Codex 的额度会重置、体验更可持续。\n\n【背景与上下文】这条和本周另一条硬数据互为印证——playcode.io 的 tokenizer 分析显示 Claude 新分词器在代码上比 GPT 多吐 30%–73% 的 token，标价不变。ashpreetbedi 烧掉的 500 美元，很可能部分就是被多切出来的 token 吃掉的。它也接上 7/11 GergelyOrosz「GPT-5.6 倒逼 Anthropic 不敢下架 Fable、定价战开打」那条主线，但视角从供给侧的市场博弈换到了需求侧的真实倒戈：不是 Anthropic 降不降价的问题，是重度用户已经用脚投票。ashpreetbedi 不是普通用户——他过去一个月在推 self-driving agent platform、auto-improvement loop 跑 282 次探针让 agent 快 20 倍，是真正在生产线压榨模型的人，他的成本体感有代表性。\n\n【影响与前瞻】对选型决策的意义：能力接近的头部模型之间，成本可持续性（额度策略、token 单价、tokenizer 效率）正在成为比 benchmark 更关键的决定因素。对在银行推 AI 工具的启示是——重度用户（写 agent、跑长 loop 的人）对成本极度敏感，统一只供一个厂商的方案在额度被烧穿时会直接停摆，多 provider 兜底加按真实 token 成本核算预算，比盯着标价更现实。这也是 Own the Context, Rent the Intelligence 思路的成本侧注脚：模型可以换，但你的编排层和成本监控得握在自己手里。",
-      "source": "x.com/ashpreetbedi",
-      "source_type": "opentwitter",
-      "url": "https://x.com/ashpreetbedi/status/2076404069082567117",
-      "timestamp": "2026-07-12T20:31:22Z",
-      "importance": 8,
-      "tags": [
-        "Fable 5",
-        "GPT-5.6",
-        "Claude Code",
-        "成本",
-        "模型选型"
-      ],
-      "batch_time": "2026-07-14T10:00:00+08:00"
-    },
-    {
-      "title": "Lilian Weng 发《Harness Engineering》综述：自我改进不靠模型改权重，靠模型外的脚手架",
-      "summary": "前 OpenAI 安全系统负责人、现 neolab 联创 Lilian Weng 7 月 4 日发表长文《Harness Engineering for Self-Improvement》，系统梳理三年间让 agent 优化自己脚手架的研究。核心论点：自我改进不会从模型重写自身权重开始，而是从包裹模型的 harness（编排、规划、记忆、工具调用那层）开始；即使很多 harness 改进最终被吸进模型本体，需要人指定目标和上下文这件事不会消失。本周 latent.space AINews 等把它当作 harness 工程化的参考锚点重新推介。",
-      "detail_content": "【核心事件】7 月 4 日，Lilian Weng 在个人博客 Lil'Log 发表长文《Harness Engineering for Self-Improvement》，把过去三年 agent 如何优化自身脚手架的散落研究做了一次系统综述。文章从 Yudkowsky（2008）的递归自我改进和 I. J. Good（1965）的超智能机器概念讲起，落到一个对工程界更友好的判断：真正能落地的自我改进，不发生在模型重写自己权重的那一刻，而发生在包裹模型的 harness 层。\n\n【关键细节与引用】所谓 harness，是包裹基础模型的那套系统——负责编排它如何规划、调用工具、读写记忆、与沙箱环境交互。Weng 的核心金句被 latent.space 等多处引用：「Even when many harness improvements get eventually internalized into core model, the need to specify goals and context will not disappear」（即便许多 harness 改进最终被吸进模型本体，需要人去指定目标和上下文这件事也不会消失）。文章梳理了从 ACE 论文到近期 Meta-Harnesses 的优化脉络，把 harness 工程定性为一门不会因为模型变强而消失的学科。\n\n【背景与上下文】这是本周 harness 主线拿到的一块重量级锚点。7 月 7 日 ai-engineering 收过 SGLang/千问把 agent 嵌进硬核产线并喊出 Harness 取代 Prompt Engineering，7 月 8 日 Paul Bakaus 等人提出 skill engineering，连 Greg Brockman 都在悄悄 endorsement agent/harness engineering。Weng 的不同在于——她是前 OpenAI 安全系统负责人、现任 neolab 联创，是少数既有学术声望又贴近前沿模型研发的人，她给 harness 工程背书，意味着这不再只是工程圈的自嗨，而是被严肃当作模型之外真正产生差异的地方。文章虽发于 7 月 4 日，本周因 latent.space AINews 的推介重新进入社区讨论。\n\n【影响与前瞻】对工程团队和银行 AI 落地的直接含义：别把全部筹码押在等下一个更强的模型上。能力差距会被模型迭代抹平，但你对 agent 的目标设定、上下文组织、工具治理——也就是你的 harness——是别人拿不走的资产，也是强监管行业里做可审计、可回滚的关键所在。这和 ashpreetbedi 本周另一条 Own the Context, Rent the Intelligence 是同一个方向的不同表述：模型是租来的智能，harness 和上下文才是你自己的护城河。",
-      "source": "lilianweng.github.io（Lil'Log）",
-      "source_type": "tavily",
-      "url": "https://lilianweng.github.io/posts/2026-07-04-harness-engineering",
-      "timestamp": "2026-07-04T00:00:00Z",
-      "importance": 8,
-      "tags": [
-        "harness engineering",
-        "agent",
-        "自我改进",
-        "Lilian Weng",
-        "方法论"
-      ],
-      "batch_time": "2026-07-14T10:00:00+08:00"
-    },
-    {
-      "title": "Snowflake 写 Loop Engineering in Claude Code：done 是布尔检查，不是模型的意见",
-      "summary": "Snowflake 工程博客发文《Close the Loop: Loop Engineering in Claude Code》，把 Claude Code 的 agentic loop 工程化成让系统一直跑到工作真正完成的结构，并定义完成必须是布尔检查——测试变绿、控制台干净、查询返回行、部署成功——而不是模型觉得看起来对了。文中用 Superpowers（计划/构建/验证主线 + 代码评审闸门）+ gstack（运行态 QA、设计、安全、发版）+ CoCo（Snowflake 数据与 AI 层）三件套覆盖一个真实应用的三条命脉：代码正确性、运行行为、数据与 AI。",
-      "detail_content": "【核心事件】Snowflake 的 Builders Blog（托管于 Medium）本周发文《Close the Loop: Loop Engineering in Claude Code》，把围绕 Claude Code 做 agentic 工程的方法论命名为 Loop Engineering——核心是让你工程化的不是某次代码生成，而是让系统一直跑到工作真正完成的那套循环本身。\n\n【关键细节与引用】文章给出一条最值得记住的定义：完成（done）必须是一个布尔检查——测试变绿、控制台干净、查询返回行、部署成功——而不是模型觉得看起来对了（never the model's opinion that something looks right）。为避免重复劳动，它把三套现成 skill 串起来：Superpowers 负责 plan/build/verify 的主干和代码评审闸门，gstack 负责运行态应用的 QA、设计、安全和发版，CoCo 负责 Snowflake 的数据与 AI 层。三者正好覆盖一个真实应用的三条命脉：代码正确性（Superpowers）、运行行为（gstack）、数据与 AI（CoCo）。\n\n【背景与上下文】这是本周 harness/loop 主线在怎么落地层面的一个具体样本。如果说 Lilian Weng 的综述是给 harness 工程立理论框架，Snowflake 这篇就是一家数据公司在 Claude Code 上把 loop 工程跑通的实操笔记——而且它的布尔完成原则正好呼应反 slop 立场：把验收标准从模型说行换成客观信号通过，是堵住 AI 一本正经胡说的一道闸门。它也接上 7 月初 Anthropic 官方博客讲 agentic loops（从回合制到目标驱动、时间驱动、主动式四种循环）的那条线，但从官方的有哪些 loop 推进到了企业怎么把 loop 工程化、谁来守哪道闸。\n\n【影响与前瞻】对在强监管行业部署 agent 的团队，这篇的可借鉴处是布尔完成加三段式责任划分这个骨架：把验收变成可机器判定的客观信号，把代码、运行态、数据三层的安全与 QA 责任分别挂到不同的 skill/团队上，避免一个 agent 黑箱全包。对准备向上汇报的材料，这是一个 AI 工程纪律已现雏形的现成案例——不是 demo 能跑，而是有可审计的完成标准和分层治理。",
-      "source": "Snowflake Builders Blog (Medium)",
-      "source_type": "tavily",
-      "url": "https://medium.com/snowflake/close-the-loop-loop-engineering-in-claude-code-0bd3f5e3c50e",
-      "timestamp": "2026-07-09T12:00:00Z",
-      "importance": 7,
-      "tags": [
-        "Claude Code",
-        "loop engineering",
-        "Snowflake",
-        "agent验证",
-        "工程方法论"
-      ],
-      "batch_time": "2026-07-14T10:00:00+08:00"
     }
   ]
 }
