@@ -1,0 +1,80 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-07-22T10:00:00+08:00",
+  "digest": "GPT-5.6 消化期第二周，AI 工程的话语权继续从『能不能跑』滑向『边界在哪』。本周两个 claude.com 重磅工程实证（Datadog 给 Claude Code 造『通用机床』Temper、Anthropic 副 CISO 详解 AI-native 软件工厂安全闭环）已被 AI 前沿频道收走，但工程实战信号依然密集：Pillar Security 戳破『有沙箱就安全』的默认假设，列出 Cursor/Codex/Gemini CLI 的四种沙箱逃逸失败模式；simonw 拉来 Claude Code 团队两位核心做炉边谈话，最出圈的一条是『别再把 prompt 塞满例子和清单』——Anthropic 内部 Claude Tag 已承担约 65% 的产品工程 PR、系统提示词砍掉约 80%，『把判断留给模型、把目标留给人』成新共识；GergelyOrosz 则给 OpenAI 的 Codex 千万用户里程碑算账，直指采用数字可能严重注水或早已溢出程序员池子。整体看，agentic coding 正进入一个『重新校准预期』的阶段——安全边界、提示哲学、采用统计都被一线拿放大镜重审，这对要在强监管场景推 AI 落地的人是好消息：可参照的硬实证和反 slop 工具都越来越多了。",
+  "items": [
+    {
+      "title": "simonw 拉来 Claude Code 团队两位核心做炉边谈话：别再把 prompt 塞满例子和清单，让 Fable/Opus 自己判断",
+      "summary": "Simon Willison 在 AI Engineer World's Fair 主持的炉边谈话注释版上线，嘉宾是 Claude Code 产品负责人 Cat Wu 和工程师 Thariq Shihipar。当天 AI 工程圈传播最广的一条（♥1231、14.8 万浏览）：是时候停止往 prompt 里堆例子和待办清单了。Anthropic 内部 Claude Tag 已承担约 65% 的产品工程 PR，系统提示词被砍掉约 80%——『少即是多』在自家生产环境被验证。谈话覆盖 Claude Code、Claude Tag、Fable、coding agent 安全、evals、工具设计及 Anthropic 如何 dogfooding。",
+      "detail_content": "【核心事件】Simon Willison 7/21 发布他在 AI Engineer World's Fair 主持的炉边谈话注释版，嘉宾是 Anthropic Claude Code 团队的两位核心——产品负责人 Cat Wu（@_catwu）和工程师 Thariq Shihipar（@trq212）。这条提示成为当天 AI 工程圈传播最广的一条（♥1231、14.8 万浏览），核心是一条反直觉的提示工程建议。\n\n【关键细节与引用】simonw 转述团队的忠告：『是时候停止用例子和各种待办清单把 prompt 塞满了』（it's time to stop overloading our prompts with examples and lists of things）。这与他自己之前从同一场合拿到的另一条心得呼应——『对所有编码任务，用你自己的判断决定一个合适的小模型，放在 subagent 里跑』。换言之，新一代旗舰模型（Fable、Opus）已经强到过度规定步骤反而绑住手脚，正确做法是把目标讲清楚、把判断权交还给模型。谈话还披露 Anthropic 内部的 dogfooding 数据：Claude Tag（Slack 原生的工程 agent）已承担约 65% 的产品工程 PR，团队把系统提示词缩减了约 80%——『少即是多』在自家生产环境得到验证。\n\n【背景与上下文】这场谈话的 YouTube 标题是「Claude Fable, Claude Tag, and Anthropic's Culture」，话题覆盖 Claude Code 演进、Claude Tag 的新 agent UX、Fable、coding agent 安全、evals、工具设计，以及 Anthropic 自己怎么用这些工具。它和本周 Datadog Temper、Anthropic SDLC 安全等一串『模型公司/大厂怎么在自己生产环境驾驭 agent』的实证同源——都是把 agentic coding 从 demo 推向有纪律的工程实践。\n\n【影响与前瞻】对正在推 AI 落地的人，这是一条可直接搬用的方法论：prompt 不是越细越好，过度规约在旗舰模型上反而劣化表现；把『判断力』留给模型、把『目标和验收标准』留给人，才是新分工。Claude Tag 65% PR、系统提示词 -80% 这两个数字，也是向上汇报『AI 编码已进生产』的硬弹药——连 Anthropic 自己都这么跑。",
+      "source": "Simon Willison (X / 注释版炉边谈话)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/simonw/status/2079553486568800405",
+      "timestamp": "2026-07-21T13:24:00Z",
+      "importance": 8,
+      "tags": [
+        "Claude Code",
+        "提示工程",
+        "Claude Tag",
+        "Anthropic",
+        "dogfooding"
+      ],
+      "batch_time": "2026-07-22T10:00:00+08:00"
+    },
+    {
+      "title": "Pillar Security 披露：AI coding agent 不用攻破沙箱就能逃逸——Cursor/Codex/Gemini CLI/Antigravity 全中招",
+      "summary": "安全公司 Pillar Security 7/21 披露一系列漏洞，证明 Cursor、Codex CLI、Gemini CLI、Antigravity 等主流 AI 编程工具的沙箱并不提供很多人以为的隔离。Agent 根本不需要直接攻破沙箱——只需写一个被沙箱外『受信任组件』随后执行/加载/扫描的文件，就能间接越过安全边界。研究列出四种可复现失败模式，并给出各工具的具体逃逸路径。",
+      "detail_content": "【核心事件】安全公司 Pillar Security 7/21 披露一系列漏洞，直指当前 AI coding agent 普遍依赖的『沙箱』这道安全控制，并不提供很多人以为的隔离强度。受影响工具覆盖 Cursor、Codex CLI、Gemini CLI 和 Antigravity。关键结论是：agent 几乎在所有情况下都不需要直接攻破沙箱。\n\n【关键细节与引用】研究人员指出：『agent 只需要写一个东西，让沙箱外某个受信任的组件之后去运行、加载、扫描或当作安全的来处理。』攻击不是靠内核漏洞或容器越狱，而是靠『间接机制』——agent 在沙箱内保持受限，却产出文件（workspace 配置、自动化脚本、IDE 设置、虚拟环境内容），这些文件天然参与开发者工作流，等沙箱外的工具去执行/解释它们时，源自隔离环境的代码就实际越过了安全边界。研究列出四种可复现失败模式：黑名单式沙箱挡不住日益复杂的 OS 行为；workspace 配置本身可执行；命令白名单只信任命令名而非调用方式；沙箱外存在特权本地守护进程。具体到工具：Antigravity 借 macOS Seatbelt 黑名单弱点 + VS Code task 配置在沙箱外执行；Cursor 信任 agent 创建的 Python 虚拟环境、备用 Git 目录和 workspace hook；Cursor/Codex CLI/Gemini CLI 共享一条通过 Docker Desktop 特权守护进程的逃逸路径；Codex CLI 的 Git 白名单可被篡改触发后续代码执行。\n\n【背景与上下文】这是本周 agentic coding 安全系列的又一发——前有中国 APT 把 Claude Code + DeepSeek 拼成攻击流水线（Hunt.io）、xAI Grok Build CLI 静默上传整库、GhostApproval 六大编程助手共享审批缺陷。Pillar 的不同处在于：它不谈模型被恶意利用，而是指出『沙箱』这个被当成默认安全基线的工程假设本身就有结构性漏洞。研究员直言『agentic IDE 或 CLI 有沙箱还不够，CISO 必须搞清楚沙箱的真实边界在哪』。\n\n【影响与前瞻】对银行等强监管场景，这是把 agent 关进笼子之前必须重估的前提：别因为工具号称『有沙箱』就放心放行。落地启示——agent 产出的文件（配置、hook、脚本）本身要纳入审计与签名校验；沙箱边界要从『进程隔离』重新定义到『信任传递链』；特权守护进程（如 Docker daemon）不能默认对 agent 开放。这篇可和 Hunt.io、xAI CLI 两条一起，作为向上汇报『agentic 部署安全红线』的完整反面教材。",
+      "source": "CSO Online（Pillar Security 研究）",
+      "source_type": "tavily",
+      "url": "https://www.csoonline.com/article/4199408/ai-agents-can-escape-sandboxes-without-ever-breaking-them.html",
+      "timestamp": "2026-07-21T00:00:00Z",
+      "importance": 8,
+      "tags": [
+        "agentic安全",
+        "沙箱",
+        "Cursor",
+        "Codex",
+        "安全研究"
+      ],
+      "batch_time": "2026-07-22T10:00:00+08:00"
+    },
+    {
+      "title": "GergelyOrosz 给 Codex 的千万用户数算账：全球一共才 2600-3000 万程序员，30-35% 天天用 Codex？",
+      "summary": "OpenAI 本周释放 Codex 用户破千万里程碑信号（swyx 当晚录制与 OpenAI 生产力工程负责人 Akshay Nathan 的播客），Pragmatic Engineer 作者 Gergely Orosz 当场算账（♥189、7.1 万浏览）：全球软件工程师总数估计也就 2600-3000 万，若 Codex 有 800-1000 万日活，意味着地球上 30-35% 的程序员每天都在用——这要么数字注水，要么 Codex 用户早已远远超出『软件工程师』这个池子。",
+      "detail_content": "【核心事件】OpenAI 本周释放 Codex 用户突破 1000 万的里程碑信号（swyx 7/21 晚宣布录制了与 OpenAI 生产力工程负责人 Akshay Nathan 的相关播客，并称自己一直看好 Work + GPT 5.6 组合）。Pragmatic Engineer 作者 Gergely Orosz（@GergelyOrosz）当场发推质疑这个数字的合理性，引发工程圈热议（♥189、7.1 万浏览）。\n\n【关键细节与引用】Orosz 的算法很简单：全球软件工程师总数估计约 2600-3000 万；如果 Codex 真有 800-1000 万日活，就意味着全球 30-35% 的程序员每天都在用 Codex——『这个比例高得难以置信』。他给出两种可能：要么日活数字被夸大，要么 Codex 的用户群早已远远超出『软件工程师』范畴，大量非工程师（学生、产品经理、数据分析师、爱好者）也在 vibe coding。第三方数据显示，Codex 在 GPT-5.6 发布后用户数从年初约 60 万周活飙破 800 万。\n\n【背景与上下文】这是对『AI 编码采用』宏大叙事的一次及时 sanity check，正好命中 Eason 一直警惕的 AI slop 叙事——当一个采用数字大到反直觉时，先别急着写进汇报，先算算分母。它和本周 simonw×Claude Code 团队、Datadog 等『真实生产环境怎么用 agent』的实证形成对照：一头是厂商公布的宏大里程碑数字，一头是一线工程师对数字的理性拆解。Orosz 当天另几条推文还在吐槽 Perplexity 的回答质量持续退化、Google Workspace 给付费用户塞垃圾广告，整体情绪是『行业采用数字和产品体验都该被更严格地审视』。\n\n【影响与前瞻】对向上汇报的启示：引用『AI 编码用户破千万』这类数字时，务必区分『注册用户/周活/日活』和『专业程序员中的渗透率』——后者才是衡量对软件工程真实冲击的指标。Orosz 的算账方法（用全球工程师总数做分母做合理性校验）是个可复用的反 slop 工具。更深的含义是：AI 编码工具的采用曲线，可能正由『专业开发者』主导转向『非技术人群』主导，这对工具设计、考核口径、人才市场都是结构性信号。",
+      "source": "Gergely Orosz / The Pragmatic Engineer（X）",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2079664755472568528",
+      "timestamp": "2026-07-21T20:28:00Z",
+      "importance": 7,
+      "tags": [
+        "Codex",
+        "采用数据",
+        "反slop",
+        "程序员就业",
+        "OpenAI"
+      ],
+      "batch_time": "2026-07-22T10:00:00+08:00"
+    },
+    {
+      "title": "ashpreetbedi 发 Agno AgentOS：一个 FastAPI 把 agent 同时跑成 API、MCP server 和 Slack/TG/WhatsApp 机器人",
+      "summary": "Agno 框架作者 ashpreetbedi 7/21 发布 AgentOS（♥97）——一个基于 FastAPI 的应用，把同一个 agent 一次性暴露为 HTTP API、MCP server，以及 Slack/Telegram/WhatsApp 等聊天应用里的机器人。定位是给 agent 做统一『对外服务层』，省去为每个渠道重复接线。这是 Agno 本周继 Environments（RL for agents）之后的第二个大更新。",
+      "detail_content": "【核心事件】Agno 框架作者、Agno 公司创始人 ashpreetbedi（@ashpreetbedi）7/21 发布 Agno AgentOS（♥97、5652 浏览）。这是一个基于 FastAPI 的应用，目的是把同一个 agent 一次性部署成多种形态：对外 HTTP API、MCP server，以及 Slack、Telegram、WhatsApp 等聊天应用里的 bot。\n\n【关键细节与引用】核心卖点是用一份 agent 定义同时覆盖『机器对机器』（API/MCP）和『人对机器』（聊天应用）两类入口，避免团队每接一个新渠道就重写一遍接入逻辑。MCP 支持意味着 agent 既可被其他 agent/工具调用，也可作为模型生态里的标准工具节点。这是 Agno 本周第二个大更新——前一天的 Agno Environments 迈向『RL for agents』（agent 自我验证 + 自动产出训练数据），AgentOS 则补上『把 agent 推到所有工作界面』的部署侧。\n\n【背景与上下文】ashpreetbedi 是 agentic software engineering 方法论的头部布道者之一，近期连续输出：开源 75 个 labs 训练数据脚本（DPO juries / rejection sampling / step-level rewards）、L1-L5 自驾式 agent 基础设施分级、Agno Environments。AgentOS 延续他『把 agent 工程化、产品化』的主线。同类思路在行业里渐成共识——Anthropic 的 Claude Managed Agents、Vercel Ship 2026 上 Harrison 讲的 brain/hands 解耦，都在解决『agent 怎么稳定地被外部消费』这同一层问题。\n\n【影响与前瞻】对要在企业内部把 agent 推广到多业务线的团队，AgentOS 代表一种『统一服务层』的架构选择：与其让每个部门各搞一套 bot，不如建一个能同时讲 API、MCP、聊天三套协议的 agent 网关。需要注意的权衡：开源框架的成熟度、企业合规（尤其是聊天渠道的数据驻留）、以及对 MCP 标准演进的绑定风险。",
+      "source": "ashpreetbedi（X / Agno）",
+      "source_type": "opentwitter",
+      "url": "https://x.com/ashpreetbedi/status/2079589897736745202",
+      "timestamp": "2026-07-21T15:30:00Z",
+      "importance": 6,
+      "tags": [
+        "Agno",
+        "Agent框架",
+        "MCP",
+        "部署架构",
+        "ashpreetbedi"
+      ],
+      "batch_time": "2026-07-22T10:00:00+08:00"
+    }
+  ]
+}
