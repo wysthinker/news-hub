@@ -1,0 +1,98 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-07-24T10:00:00+08:00",
+  "digest": "本周 ai-engineering 的主线从「工程圈共识」扩散到「治理层」：北京 7/23 把 Harness Engineering（驾驭层工程）和 Token 效率正式写进政府产业文件——这是 Lilian Weng《Harness Engineering》、Anthropic 百万行迁移 6 步法、Pragmatic Engineer「循环工程」这条长达三周的工程主线，第一次拿到官方背书。同期出现两个对 Eason 银行本职直接有用的硬货：一是 Stephen Follows 6000 字长文把 agentic AI 对 open web 的外部性写成迄今最完整的灾难案例（TheNumbers.com 被 90% AI 流量+预测市场攻击打垮，Cloudflare 数据：Anthropic 爬 3.8 万页/访客 vs Google 5 页），是 agent 上线风险面最硬的反面教材；二是昆仑万维方汉在 WAIC 公开喊「Tokenmaxing 已经失败」，与 OpenAI CFO 记分卡、Boris Cherny 算账、tokenizer 隐性涨价完成闭环——行业从「烧 token 冲量」转向「算 token ROI」。工程能力边界继续外扩：Claude Code 集成 iOS Simulator 把 agentic coding 推进到移动原生开发。GergelyOrosz 抓到一条工程管理洞察：AI 时代 PRD 两极分化，快增长公司因年轻 PM 注意力 span 抛弃，Anthropic 反而坚持，因为「做对的事比做事更重要」。整体看，淡讯日延续，但政策落地+外部性清算+算账共识三条线都有新货。",
+  "items": [
+    {
+      "title": "30 年电影数据权威站 TheNumbers.com 被 agentic AI 流量压垮：90% 流量是 bot，被迫推倒重建",
+      "summary": "电影业最权威的票房数据库 TheNumbers.com（78396 部电影、236176 人物、年访 800 万+）2026 年 3 月 5 日突然宕机一周多，回来只剩骨架版。创始人 Bruce Nash 透露：现在只有 10% 流量来自人类浏览，90% 是 AI 爬虫和 agentic AI，团队曾把 90% 工程时间花在保命上。日志还显示有人长期探测后门，动机很可能来自 Polymarket 票房预测市场——抢先拿到数据就能 front-run 交易。Cloudflare 数据：Google 每带来 1 个访客爬 5 页，OpenAI 爬 1000 页，Anthropic 爬 38000 页。这是 agentic AI 对 open web 外部性的首个完整灾难叙事。",
+      "detail_content": "【核心事件】Stephen Follows（电影业数据分析师）7/22 发表长文，采访了 TheNumbers.com 创始人 Bruce Nash。这家 1997 年从 Geocities 起家、手工核对数据 30 年的老站，是记者、学者、电影人、吉尼斯世界纪录乃至 Polymarket 预测市场公认的票房「终极真相来源」。2026 年 3 月 5 日凌晨服务器崩溃，宕机一周多后，3 月 13 日只以骨架版回归——历史图表、单部电影页面、最受欢迎的 Report Builder 全部下线，至今仍在逐步重建。\n\n【关键细节与引用】Bruce Nash 给出几组刺眼的数据。流量结构：「只有 10% 的流量来自人类浏览，其余全是 AI bot 和自动化流量」。工程成本：「约 90% 的时间花在保住现有站点运行上，只能用零碎时间开发新系统」。两波冲击：第一波 2024 年 AI 训练爬虫加入搜索引擎爬虫，「AI 爬虫比搜索引擎行为更粗暴」；第二波 2025 年 12 月起更猛烈，「我把它归因于 agentic AI：既包括响应 prompt 去抓站的 agent，也包括现在人人都能写抓站 agent」。Cloudflare 的跨平台数据更直观（对数坐标）：Google 每带来 1 个访客爬 5 页，OpenAI 爬 1000 页，Anthropic 爬 38000 页。攻击动机方面，Polymarket 周票房预测市场直接引用 TheNumbers 页面作为结算依据，任何时点都有约几百万美元敞口——「能比别人先看到数据，每周都有显著套利边缘」。\n\n【背景与上下文】这不是孤例。文中罗列一串受害者：Read the Docs 单个爬虫一月下载 73TB 压缩 HTML、带宽费超 5000 美元；iFixit 一天被 Anthropic 爬虫打百万次；Triplegangers（7 人公司）被 OpenAI bot 在营业时间 DDoS；SourceHut 创始人报告每周 20-100% 时间在打爬虫；LWN 编辑称来自「数百万 IP」的爬虫「就是一场 DDoS」；GNOME 测得 97% 流量是 bot；某大学图书馆 48 小时封了 16000 个 IP。Wikipedia 基金会数据：bot 占 35% 页面浏览却占 65% 最贵流量，半年后人类访问同比再跌 8%（答案被 AI 摘要走）。Anthropic 自己 2025 年 11 月报告承认，首例有文档的 AI 编排网络间谍行动中，AI 完成了 80-90% 的攻击工作，人类只在每次行动 4-6 个决策点介入。\n\n【影响与前瞻】文章结论三条：预测市场让任何数据都能变现、AI 订阅让任何人都能发起复杂攻击、open web 在大规模 agent 蜂群面前极其脆弱。Cloudflare 应对：从 9 月 15 日起，其客户的广告支持页面将默认屏蔽未付费的「mixed-use」爬虫，并推出 pay-per-use（内容出现在 AI 答案里就付费）。对 Eason 银行本职：这是 agentic coding 红利的 B 面——agent 对外部基础设施的冲击、攻击门槛崩塌、数据资产被套利，都是 agent 上线必须算进的风险账；反 slop 不是丢脸是事故的主张，在这里有了最硬的现实注脚。",
+      "source": "Stephen Follows 博客 / Hacker News 热门",
+      "source_type": "aihot",
+      "url": "https://stephenfollows.com/p/what-just-happened-to-thenumberscom-should-worry-us-all",
+      "timestamp": "2026-07-22T22:38:12+08:00",
+      "importance": 9,
+      "tags": [
+        "agentic AI",
+        "open web",
+        "爬虫治理",
+        "安全",
+        "外部性"
+      ],
+      "batch_time": "2026-07-24T10:00:00+08:00"
+    },
+    {
+      "title": "北京 7/23 出台智能体十条：首次把「驾驭层工程 Harness Engineering」+ Token 效率写入政府文件",
+      "summary": "北京市发改委等单位 7/23 发布《北京市关于支持智能体引领发展的若干措施》共 10 条，第二条明确「支持实施驾驭层工程（Harness Engineering）」，第三条专门讲「提升 Token 效率、鼓励发展 Token 经济」、培育算力券。这是本频道追踪三周的工程主线——Lilian Weng 综述、Anthropic 百万行迁移 6 步法、Pragmatic Engineer 循环工程——第一次从工程圈共识升级为政府产业政策。同期国家数据局披露中国日均 Token 调用从 2024 年初 1000 亿涨到 2026 年 3 月 140 万亿，两年千倍。",
+      "detail_content": "【核心事件】7 月 23 日北京市人民政府新闻办公室举行新闻发布会，正式发布《北京市关于支持智能体引领发展的若干措施》，由北京市发改委等单位联合印发，共 10 条政策措施。官方原文已在 beijing.gov.cn 公开。这是迄今地方政府层面最系统的一份智能体产业政策，也是首次把多个源自一线 AI 工程实践的概念写进正式文件。\n\n【关键细节与引用】10 条措施里和本频道主线直接相关的两条。第二条「强化智能体底层共性技术攻关」原文：支持实施「驾驭层工程（Harness Engineering）」，持续完善中间层软件栈，研发适配智能体开发的关键算子、框架，推动与自主大模型适配调优——等于官方给「模型之外那层脚手架」定性为产业基础设施。第三条「提升 Token 效率，鼓励发展 Token 经济」原文：研发专用推理芯片、通过异构协同/存算协同/智能调度降低推理成本、加快推理缓存复用和智能任务路由等应用层效率优化、全链路提高 Token 效率、培育 Token 即服务和智能体即服务等新模式、鼓励发展算力券。第四条推动智能体嵌入智能手机、智能眼镜、智能汽车等终端。\n\n【背景与上下文】这条政策几乎是本频道过去三周工程主线的官方合集。7/4 Lilian Weng《Harness Engineering for Self-Improvement》系统梳理三年 agent 优化自身脚手架研究，金句「即便 harness 改进被吸进模型本体，人指定的目标和上下文不会消失」；7/16 Anthropic《How to run large-scale code migrations》把 Bun 百万行 Zig→Rust 整理成 6 步法并开源 starter kit；7/17 Pragmatic Engineer 给「循环工程（Loop Engineering）」命名。北京新政把这套工程共识直接背书为产业准入标准，意味着 harness/Token 效率正在从「最佳实践」变成「合规基线」。国家数据局同期数据：中国日均 Token 调用 2024 年初 1000 亿 → 2025 年底 100 万亿 → 2026 年 3 月突破 140 万亿，两年千倍，银行业是主推手之一。\n\n【影响与前瞻】对 Eason 银行本职是现成的向上汇报弹药：harness engineering、Token 效率、价值计费（算力券本质是按效果补贴）已经从工程圈共识变成地方政府产业政策，推广 AI 时讲「采用量」不如讲「驾驭层成熟度和 Token ROI」。政策同时把「中间层软件栈」和「推理成本」点名，预示下一波监管/补贴会落在 agent 编排层和单位 Token 产出上，正好和微众「日均 Token 破 200 亿、单位 Token 产出价值是分水岭」的内部叙事对接。",
+      "source": "北京市人民政府 / 北京市发改委",
+      "source_type": "web",
+      "url": "https://www.beijing.gov.cn/zhengce/zhengcefagui/202607/t20260723_4781085.html",
+      "timestamp": "2026-07-23T10:00:00+08:00",
+      "importance": 8,
+      "tags": [
+        "Harness Engineering",
+        "政策",
+        "Token经济",
+        "算力券",
+        "智能体"
+      ],
+      "batch_time": "2026-07-24T10:00:00+08:00"
+    },
+    {
+      "title": "昆仑万维方汉在 WAIC 公开喊「Tokenmaxing 已经失败」：堆 Token 堆不出 AI 原生组织，模型才是立足之本",
+      "summary": "昆仑万维董事长兼 CEO 方汉在 WAIC 论坛表示，「Tokenmaxing 已经失败」——把 Token 消耗本身当作能力增长、产品价值和组织转型结果的简单叙事已经失效，真正推动 Token 需求的是模型能力本身的提升。他强调模型能力要依赖 Claude Code 等 Coding Agent 建立的工程框架才能转化为生产力，并警示 AI 编程带来的技术债。这是国内厂商立场首次与 OpenAI CFO 记分卡、Boris Cherny 算账形成共振。",
+      "detail_content": "【核心事件】昆仑万维董事长兼 CEO 方汉在 2026 世界人工智能大会（WAIC）专场论坛上发言，核心观点被多家媒体（ZAKER、东方财富、同花顺、中经网）7 月下旬转载。他把当下行业最流行的「堆 Token」叙事直接判了死刑：「所谓 Tokenmaxing 已经失败，更准确的说法是——把 Token 消耗本身当作能力增长、产品价值和组织转型结果的简单叙事已经失效」。\n\n【关键细节与引用】方汉的论证链条：真正推动 Token 需求的，是模型能力本身的提升；模型能力要转化成生产力，必须依赖 Claude Code 等 Coding Agent 建立的工程框架；因此模型与算力才是 AI 公司长期立足之本，单纯堆 Token 消耗量无法衡量价值。他同步披露昆仑万维仍在持续训练模型，并将发布音乐、具身世界和游戏世界模型，宣布 2026 年为「世界模型元年」，判断 AI 将从内容生成走向对物理世界的理解与交互。他还专门警示 AI 编程带来的技术债问题。\n\n【背景与上下文】方汉这番话不是孤立表态，而是把本频道两周来的「算账」主线补上了国内厂商立场那一块。7/14 OpenAI CFO 出官方记分卡「别数 Token，数有用智能每美元」；7/17 Claude Code 之父 Boris Cherny 给企业 AI ROI 出四步框架，金句「Usage measures activity not return」，真正该问的是「公司本来会不会派人做、值多少工程人时」；同日 tokenizer 隐性涨价被量化（同一段代码 Claude 新分词器比 GPT 多吐 30%+ token）。方汉作为仍在重投训练的模型厂商 CEO 公开承认堆 Token 无效，比应用层公司的劝退更有分量——供给侧自己否定了冲量叙事。\n\n【影响与前瞻】和北京新政同框看，治理层（政策要 Token 效率）+ 供给侧（厂商喊 Tokenmaxing 失败）+ 应用层（CFO/工程师算 ROI）三层同周收口，意味着「按 Token 消耗量考核 AI 采用度」的窗口正在关闭。对 Eason 推 AI 考核改革：判断力增长 > 产出量这把尺子，现在有了官方政策、模型厂商、海外工程一线三重背书。方汉提到的「技术债」也呼应本频道反复出现的反 slop 验收主线——AI 写得快不等于系统不烂。",
+      "source": "昆仑万维（WAIC 论坛）/ ZAKER",
+      "source_type": "aihot",
+      "url": "https://app.myzaker.com/news/article.php?pk=6a61ff998e9f092460162b33",
+      "timestamp": "2026-07-23T11:20:00+08:00",
+      "importance": 7,
+      "tags": [
+        "Tokenmaxing",
+        "算账",
+        "Coding Agent",
+        "技术债",
+        "模型"
+      ],
+      "batch_time": "2026-07-24T10:00:00+08:00"
+    },
+    {
+      "title": "Claude Code 桌面版集成 iOS Simulator：agentic coding 推进到原生移动开发，评论里非程序员已能上架 App Store",
+      "summary": "Anthropic 7/21 宣布 Claude Code 桌面版（公测）可直接驱动苹果 iOS Simulator——构建、运行、查看、迭代 iOS 应用全程自主，Claude 能实时观察模拟器并与之交互。关键工程细节：不依赖 computer use，直接访问模拟器，绕过 macOS 辅助功能和屏幕录制权限。MacRumors 评论区出现真实案例：生命科学背景非程序员用 AI 写出过去几周都调不通的程序、非开发者上个月刚把 App 上架 App Store。",
+      "detail_content": "【核心事件】Anthropic 7 月 21 日宣布，Claude Code 桌面版更新支持苹果 iOS Simulator（公测）。被指示 build、run 或 check 一个 app 时，Claude Code 能在 iOS Simulator 面板里打开开发中的应用、实时观察它运行、与它交互，然后一直迭代到项目完成；开发者可以同时在 Claude 工作时继续使用模拟器。功能仅限 macOS 上 Claude Code Desktop 的本地会话，需安装带 iOS 平台的 Xcode。\n\n【关键细节与引用】最值得注意的工程取舍是它不依赖 computer use（让 Claude 像人一样控制屏幕的那套机制），而是直接驱动模拟器，因此不需要 computer use 必须的 macOS 辅助功能和屏幕录制权限——这是 brain/hands 分离思想在移动端的延伸：模型不必「看屏幕点按钮」，直接拿到底层访问权。隐私上，Claude 对模拟器设备的截图会发给 Anthropic 并按标准会话保留设置保留，官方建议不要在 Claude 使用的设备上登录真实账号。\n\n【背景与上下文】这把 agentic coding 的能力边界从终端/网页推到了原生移动开发，是 7 月以来 Claude Code 能力外扩的又一站（前有 7/11 桌面版 v2.1.206 内置浏览器减少 unknowns）。更生动的注脚在 MacRumors 评论区：用户 CalMin（生命科学背景，只在夜校学过一点 Python，过去写个数据转换脚本要调几周）说现在用 AI 能「写出以前做梦都想不到的、真正有用的程序」；用户 Bearxor 回「你笑，但我上个月把一个 app 上架了 App Store，我绝对不是开发者」。同期 Medium 上 dimillian《The State of Agentic iOS Engineering in 2026》也讨论 Claude Code/Codex 让终端 app 重新变酷。\n\n【影响与前瞻】对「非程序员用 AI 造产品」这条主线是又一块硬证据：移动原生开发的门槛正在被搬掉，App Store 会迎来一波「vibe coded」应用。但评论区 Luftkopf 的反驳同样值得记：当好坏 app 都靠 AI 生成、创作者自己都不一定懂代码，消费者很难分辨一个应用是精心打造的还是漏洞百出的 slop——这正是反 slop 验收要从 web/后端延伸到移动端的信号。对银行业：移动端 agentic coding 也能复用到银行 App 迭代，但合规上「截图上送 + 不要登真账号」是必须写进基线的红线。",
+      "source": "MacRumors",
+      "source_type": "tavily",
+      "url": "https://www.macrumors.com/2026/07/21/claude-code-ios-simulator/",
+      "timestamp": "2026-07-22T07:46:35+08:00",
+      "importance": 7,
+      "tags": [
+        "Claude Code",
+        "iOS Simulator",
+        "agentic coding",
+        "非程序员",
+        "移动开发"
+      ],
+      "batch_time": "2026-07-24T10:00:00+08:00"
+    },
+    {
+      "title": "GergelyOrosz 抓到 AI 时代工程管理裂痕：快增长公司抛弃 PRD，Anthropic 反而坚持——「做对的事比做事更重要」",
+      "summary": "GergelyOrosz 7/23 连发两条推文揭示 PRD 在 AI 时代的两极分化。一位朋友反映所在快增长后期创业公司没人写 PRD，因为 Head of Product 和多数 PM 都是 25 岁、连 1 页文档都没耐心读完。但 GergelyOrosz 深访 Anthropic 后发现：这家史上最快增长的 AI 公司内部仍然写 PRD，因为「当做对的事比做事更重要时，PRD 有价值」。这是「AI 改变工作方式」主线里一个微妙的管理信号。",
+      "detail_content": "【核心事件】GergelyOrosz（Pragmatic Engineer 作者）7 月 23 日在 X 连发两条推文，记录了 PRD（产品需求文档）在 AI 时代截然相反的两种命运。第一条转述一位朋友加入某快增长后期创业公司的观察：「我一开始纳闷这里为什么没人写 PRD，后来意识到 Head of Product 和大多数 PM 都是 25 岁，连一页文档都没耐心读完，三个 bullet 之后就把你丢了」。第二条反转：在与 Anthropic 员工深谈后他发现，这家「史上最快增长的 AI 公司（可能也是史上最快增长的公司）」内部仍然坚持写 PRD。\n\n【关键细节与引用】GergelyOrosz 给出的判断是金句级的：「Turns out these are valuable. When building the right thing is more important than building the thing」（事实证明 PRD 很有价值。当「做对的事」比「做事」更重要的时候）。他把 PRD 的存废和公司所处的阶段挂钩：靠 AI 提速的快增长团队倾向于砍掉一切拖慢节奏的文档化动作，但真正在复杂约束下做前沿产品（如 Anthropic）的团队反而更需要 PRD 来锁定「到底该做什么」。\n\n【背景与上下文】这条观察精准踩在本频道「AI 改变工程师工作方式」主线上，且和几条既有线索咬合。7/16 Armin Ronacher（Flask 作者）讲「摩擦是软件项目共同语言的一部分，AI 消除摩擦时别把理解也消掉」——PRD 正是那种看起来是摩擦、实则是共享理解的载体；7/17 Pragmatic Engineer 给「循环工程」命名时，Claude Code 之父 Boris Cherny 说「我不再 prompt，我的工作是写循环」，强调的是人在更高抽象层做判断——PRD 就是这个更高抽象层的产物之一。GergelyOrosz 同日另一条提到 OpenAI 在自家文档站大量用 AI 写作、并提示「要带着利益相关的视角看」，呼应反 slop 主线：当文档本身都可能是 AI slop，人写的、经过判断的 PRD 反成稀缺品。\n\n【影响与前瞻】对 Eason 的工程管理本职是个清醒的反共识：AI 让「写代码」变便宜，恰恰让「想清楚做什么」变贵——所以考核工程师不该只看产出量，而要看有没有把判断沉淀成可被评审的文档（PRD/设计/验收标准）。Anthropic 的做法可借鉴：越是用 AI 提速，越要在「做对的事」这一层保留人类判断和书面化。否则团队会被年轻 PM 的注意力 span 和 AI 的产出速度裹挟，把 slop 当交付。",
+      "source": "@GergelyOrosz (X)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2080389718462648405",
+      "timestamp": "2026-07-24T04:28:55+08:00",
+      "importance": 7,
+      "tags": [
+        "PRD",
+        "工程管理",
+        "Anthropic",
+        "判断力",
+        "反 slop"
+      ],
+      "batch_time": "2026-07-24T10:00:00+08:00"
+    }
+  ]
+}
