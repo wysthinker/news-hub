@@ -1,0 +1,71 @@
+{
+  "channel_id": "ai-frontier",
+  "channel_name": "AI 前沿",
+  "generated_at": "2026-07-28T09:00:00+08:00",
+  "digest": "GPT-5.6/Fable/Opus 5 三巨头模型测评消化期第七周，本周新鲜权威集中在两条主线：① open-weights 政策辩论完成「三波」闭环——上周 25 家公司联署公开信支持开放权重（库内已收）→ 本周 Dario Amodei 亲自发长文回应澄清 Anthropic 从未主张禁令、重申反芯片反蒸馏强制安全测试三措施、对联署信部分同意部分反对 → 同日 NVIDIA 牵头 40+ 巨头成立 Open Secure AI Alliance 把「开源=防御资产」推成行业共识并引用 Hugging Face 用自托管 GLM 5.2 取证的事件做实证，SpaceXAI 宣布将开源 Grok 权重。三波叠加后 AI 安全从「开 vs 闭」意识形态之争实质转向「闭源前沿做能力底座+开源 harness 做可审计防御层」混合范式。② Google 侧 Similarweb 数据显示 AI Overviews 搜索出现率一年 15%→43%、AI Mode 月访问翻倍至 2.79 亿，搜索从 gateway 变 destination 的范式转移进入量化兑现期。三巨头官方工程博客本周静默（claude.com/deepmind/openai 无新工程博），权重从模型发布挪到政策+产品数据两条暗线。⚠️ 本周拦截两起旧闻顶上：Anthropic Series H（5/28 旧融资）与 Fable 5/Mythos 5 恢复访问（7/1 旧事件，库内 7/25 已覆盖）均超窗口砍。Grok 双路连续第 37 天 502/403 故障；opentwitter 9 KOL 继续沉浸消化期无强一手原创、互动数全 0（6551 bug 持续）。",
+  "items": [
+    {
+      "title": "Dario Amodei 亲自发文澄清 open-weights 立场：Anthropic 从未主张禁令，真正该做的是断芯片、反蒸馏、强制安全测试",
+      "summary": "针对上周 25 家公司联署公开信支持 open-weights 模型、并有人指责 Anthropic 想借禁令保护生意，CEO Dario Amodei 发长文逐条回应。他明确表态「Anthropic 从未主张禁止 open-weights 模型」，称全面禁令是「保护主义」、解决不了他真正担心的两个噩梦场景：①威权政府（不只 CCP）建更强模型获永久军事优势或深度镇压；②网络/生物攻击+对齐问题。他重申一直支持的三项措施：对华禁售先进芯片并打击走私、打击工业级蒸馏、所有足够强模型（不分开闭、不分国别）强制安全测试。对联署信他部分同意（开放访问/竞争/客户控制）部分反对（开放权重未必让防御方占优，生物武器存在强攻防不对称）。",
+      "detail_content": "【核心事件】过去几天围绕中国开源权重模型的争议升温——有报道称部分美国官员正考虑禁止美国企业使用中国 open-weights 模型，25 家科技公司随即联署公开信支持 open-weights（库内 7/25 已收录 CNBC 报道，含英伟达/微软/Meta/Palantir/Dell/IBM 及黄仁勋首条 X 推转发），有人指控 Anthropic 想借禁令保护自家生意。Dario Amodei 在 anthropic.com/news 亲自发文《Our position on open-weights models》逐条澄清，开篇即定调：『读过我最早期写作的人都该知道，我不认为这类禁令是有用的措施，但我在此明确声明以消除任何疑虑——Anthropic 从未主张禁止 open-weights 模型』。他追溯自己六个月前在《The Adolescence of Technology》一文已阐述同样立场，多年未变。\n\n【两个真正的噩梦场景】Dario 把「保护主义禁令」与他真正担心的两件事明确切割。首要担忧：威权政府（虽未单指 CCP 但点名 CCP 是最具能力威胁）建出比美国更强的模型，用于获取永久军事优势或对国民实施极深度镇压——他引用 Vance 去年在巴黎的发言和美国情报界 2026 年度威胁评估佐证。关键论点是『这些模型是否以 open weights 发布根本不重要，最危险的模型很可能是秘密训练、只交给解放军用于无人机、只交给国安部用于监控的』，禁美国企业用中国开源模型对此毫无作用。次要担忧：强力模型被滥用做网络/生物攻击且存在对齐问题——open-weights 因难以加护栏、难监控、权重一旦发布不可撤回，确实比闭源风险更高，但禁止美国企业使用对降低此风险毫无帮助，因为『坏 actor 不会是合法的美国企业』，禁令只会保护美国 AI 公司免于竞争，而那从来不是他的目标。\n\n【一直支持的三项措施】Dario 重申他和 Anthropic 长期主张的三件事：①不向中国出售先进芯片和芯片制造设备，并打击猖獗的走私与变通渠道——这是阻断威胁一最直接高效的方法，因中国国内产能有限、受 scaling law 约束，没有美国芯片就训不出比美国更强的模型；②打击工业级蒸馏——蒸馏比从头训练省算力得多，让中国能用更少芯片训出更好模型、部分规避芯片禁令，虽不能让中国追平美国前沿但能将其拉到美国前沿几个月之内，他指出许多蒸馏操作确实以 open weights 发布，但『open weights 远不如这些操作背后是威权国家试图追赶前沿这一事实重要』；③所有足够强的模型（无论开闭、无论哪国）必须经过强制安全测试——他称赞 Trump 政府近期朝这方向的动作，并提到 Anthropic 近期关于 modular training 的研究显示 open-weights 安全性有可能改善，强调测试必须全球化、连 CCP 都需要上车（在防 AI 生物武器上中国也有利益交集）。\n\n【对联署信的部分同意与部分反对】Dario 对 25 家公司联署信表态克制：同意 open weights 扩大 AI 经济参与、至少在某些场景加强竞争、给客户更多控制权，蒸馏问题应通过针对性法律和商业框架解决。但他明确反对信中两个论断——其一『open-weights 模型必然让开发 safeguards 更容易』，其二『广泛的能力访问必然让防御方比攻击方更受益』。他以生物武器为例：足够强的模型可能用常见材料快速武器化 pandemic 级病毒，而防御这类 agent 即使在最好情况下也是多年期运营任务（如 Operation Warp Speed 所示），存在强攻防不对称——这类问题应靠严格的发布前测试经验性回答，而非预先假设。\n\n【对 Eason 的价值】这是迄今对「Anthropic 是否在搞监管俘获」最直接最完整的官方回应，可作为判断 AI 监管政策走向的一手锚点。对银行业 AI 采购的启示：① open-weights vs closed 的政策博弈尚未定论，但「强制安全测试所有强模型」正成为跨党派跨行业共识，银行选型时把「是否通过独立安全测试」纳入供应商尽调是前瞻动作；② Dario 把蒸馏单独点名定性为「需打击的工业级操作」，直接影响是否采用疑似蒸馏自前沿模型的中国开源模型（呼应库内 7/25 Kimi K3 cyber 短板条——英国 AISI+美 CASI 实测其模式吻合蒸馏指控）的政策风险判断。",
+      "source": "Anthropic",
+      "source_type": "tavily",
+      "url": "https://www.anthropic.com/news/position-open-weights-models",
+      "timestamp": "2026-07-28T00:00:00Z",
+      "importance": 9,
+      "tags": [
+        "Anthropic",
+        "Dario Amodei",
+        "open-weights",
+        "政策",
+        "监管",
+        "蒸馏",
+        "芯片管制",
+        "安全测试"
+      ],
+      "batch_time": "2026-07-28T09:00:00+08:00"
+    },
+    {
+      "title": "NVIDIA 牵头 40+ 巨头成立 Open Secure AI Alliance：把「开源=防御资产」写成行业共识，SpaceXAI 宣布将开源 Grok 权重",
+      "summary": "NVIDIA 联合 Microsoft、Cloudflare、Hugging Face、IBM、Palantir、Cognition、SpaceXAI、Thinking Machines Lab 等 40+ 创始伙伴成立 Open Secure AI Alliance，使命是用开源模型、harness 和工具构建可审查、可定制的 AI 安全防御体系。联盟直接引用近期 Hugging Face 安全事件（HF 用自托管 open-weight GLM 5.2 分析 17000+ 动作遏制入侵）作为「防御方需要开源前沿工具」的最强实证——几乎是对 Dario 同日「open-weights 风险更高」论断的直接反驳。NVIDIA 开源 NOOA（Object-Oriented Agent）研究框架，SpaceXAI 开源 Grok Build coding agent 并计划开源 Grok 模型权重，Microsoft 贡献 MDASH 多模型扫描 harness，Hugging Face 把 Safetensors 献给 PyTorch Foundation。",
+      "detail_content": "【核心事件】7/27 NVIDIA 在官方博客宣布，联合 40+ 行业巨头成立 Open Secure AI Alliance（开放安全 AI 联盟），创始伙伴横跨云计算、网络安全、企业软件、开源基金会与 AI 研究：Adobe、Cadence、Capital One、Cisco、Cloudflare、Cognition、CrowdStrike、Databricks、Dell、DoorDash、Elastic、HPE、Hugging Face、IBM、LangChain、Linux Foundation、Microsoft、NAVER、NetApp、Nous Research、OpenClaw、Palantir、Palo Alto Networks、Red Hat、Reflection AI、Salesforce、SAP、ServiceNow、Siemens、SK Telecom、Snowflake、SpaceXAI、Synopsys、Thinking Machines Lab、TrendAI 等。联盟明确以 Linux Foundation 的 Akprites initiative 和 OpenSSF 社区工作为基础。\n\n【核心论点与对 Dario 的暗线反驳】联盟把「开源=防御资产」的叙事推到行业共识高度：美国及其伙伴在 AI 安全上面临一个选择——防御能力要么藏在少数不透明系统里，要么建在「任何防御方都能研究、改造、部署的开放模型、harness 和工具」之上。文章直接点名近期 Hugging Face 安全事件作为最强实证：当闭源 AI 工具无法区分攻击者和防御者、挡住了关键取证分析时，Hugging Face 是靠自托管 open-weight GLM 5.2 模型在自己的基础设施上分析超过 17000 个动作才遏制了入侵（库内 7/23 已收录此事件）。联盟定调：『当防御方无法在自己基础设施上检查、改造、运行先进 AI 时，他们的响应能力恰好在速度最关键的时刻被束缚』——这与 Dario 同日发文「open-weights 因难加护栏风险更高」形成微妙对立，构成 open-weights 辩论「安全风险 vs 防御能力」两极。\n\n【具体开源贡献】NVIDIA 开源新项目 NOOA（NVIDIA Labs Object-Oriented Agent），定位为让 harness 更好地与模型集成、使 agent 行为更易测试/追踪/审计/治理的研究框架——这与本频道长期追踪的 harness engineering 主线（Lilian Weng 7/4 综述、北京 7/23 智能体十条、Anthropic 6 步法）同源。SpaceXAI 宣布已开源 Grok Build 终端 coding agent，并计划开源 Grok 系列模型权重——这是 xAI 首次明确表态要开源旗舰模型权重，在 Dario「反蒸馏」立场和上周 25 家联署信的语境下政策意义重大。Microsoft 贡献 MDASH 多模型 agentic 扫描 harness，编排专门 AI agent 去发现、辩论、证明可利用漏洞。Hugging Face 把 Safetensors（保证不触发远程代码执行的模型权重安全存储格式）献给 PyTorch Foundation。HPE 贡献 SPIFFE/SPIRE 零信任身份框架标准，IBM/Red Hat 的 Lightwell 给开源供应链加数字签名补丁。\n\n【对政策制定者的呼吁】联盟明确喊话监管者：在 AI 安全政策中应把 open 模型、harness 和安全工具识别为「防御资产」而非「责任」，对 open 前沿 AI 系统的全面限制会削弱防御能力、把权力和脆弱性集中在少数闭源供应商手里。呼吁政府和企业投资共享的 AI 防御基础设施——数据集、评估框架、攻击模拟器、红队工具，正如过去几代人投资开源软件那样。\n\n【对 Eason 的价值】这是本周 open-weights 政策辩论第三波：25 家公司联署信（库内 7/25）→ Dario 回应（见上一条）→ NVIDIA 牵头成立联盟把行业立场组织化。三波叠加后，AI 安全从「开 vs 闭」的意识形态之争，实质转向「闭源前沿模型做能力底座 + 开源 harness/工具做可审计防御层」的混合范式——这与 Anthropic 7/21 SDLC 博客、库内 Pillar/Hunt.io/GhostApproval 的 agent 安全暗线完全同向。对银行业 AI 治理的启示：agent 安全是 agentic 部署的最大障碍，而在自己基础设施上跑可审计的开源安全工具，是金融业「自主可控」路线的天然契合点。",
+      "source": "NVIDIA Blog",
+      "source_type": "aihot",
+      "url": "https://blogs.nvidia.com/blog/open-secure-ai-alliance/",
+      "timestamp": "2026-07-27T09:00:07Z",
+      "importance": 8,
+      "tags": [
+        "NVIDIA",
+        "open-weights",
+        "AI 安全",
+        "开源",
+        "Hugging Face",
+        "SpaceXAI",
+        "Grok",
+        "agent 安全",
+        "联盟"
+      ],
+      "batch_time": "2026-07-28T09:00:00+08:00"
+    },
+    {
+      "title": "Similarweb：Google AI Overviews 搜索出现率一年从 15% 升到 43%，AI Mode 月访问翻倍至 2.79 亿，搜索从 gateway 变 destination",
+      "summary": "Similarweb 最新报告显示，Google AI Overviews 在搜索结果中的出现率一年内从 15% 升至 43%，AI Mode 月访问量从 2025 年 6 月的 1.26 亿增至 2026 年 5 月的 2.79 亿——AI 生成答案正快速成为用户获取信息的默认方式。用户搜索查询明显变长，从短关键词转向更自然的对话式查询。出版商侧则是灾难：AI 引用很少带来点击，Cloudflare 已推出工具让出版商屏蔽 AI 爬虫除非付费。ChatGPT 桌面端仅 6.8% 查询带引用，但 5/7 更新后 referral 落地网页比例从 25% 升到近 60%。",
+      "detail_content": "【核心数据】市场情报公司 Similarweb 发布生成式搜索格局分析：Google AI Overviews 在搜索结果中的出现率，一年内从 15% 跃升至 43%；Google AI Mode（更对话化的深度 AI 搜索）月访问量从 2025 年 6 月的 1.26 亿次增至 2026 年 5 月的 2.79 亿次，翻倍有余。TechCrunch 7/27 据此定调：『AI 搜索正快速成为默认，无论用户喜不喜欢』。\n\n【搜索行为的结构性转移】Similarweb 数据揭示两个深层变化。其一，Google 从「提供蓝色链接列表供点击」的工具，正变成「自己就是目的地」——它从被索引的网站里 sourcing 答案，直接在自家平台完成信息交付。其二，用户搜索查询的平均长度在过去一年明显上升，意味着人们正用更长、更自然的对话式查询替代短关键词——这是搜索交互范式从「检索」转向「提问」的量化证据。Google 因此增加了用户在自家平台的停留时间，而非把流量导向外部网站。\n\n【对出版商的冲击与反击】AI 引用很少带来点击，对新闻出版商尤其毁灭性——Similarweb 去年已专题报道过这一趋势。技术基础设施公司 Cloudflare 顺势推出工具，允许出版商屏蔽 AI 爬虫，除非 AI 公司通过其 marketplace 付费获取内容访问权——这是内容方对 AI 搜索默认化的第一波制度化反击。AI 引用数量本身在增长（含引用的 AI 回应过去一年增长五倍以上），但 ChatGPT 美国桌面端截至 2026 年 5 月仅 6.8% 查询带引用（旅游、零售、体育类查询引用率更高）。\n\n【ChatGPT 侧的一线希望】对出版商而言唯一的好消息来自 ChatGPT：5 月 7 日的一次搜索更新后，美国桌面端 referral 落地网页的比例从 2026 年 3 月的 25% 升至 5 月 30 日的近 60%——说明当 AI 搜索结果里蓝色链接更突出时，用户确实会点击。这表明 AI 搜索的「零点击」宿命并非必然，产品设计选择（是否突出引用链接）显著影响流量分配。\n\n【背景与对 Eason 的价值】这是 Google 作为三巨头之一在本周消化期罕见的产品侧硬数据，与库内 7/23 Alphabet Q2 财报（Gemini 月活 9.5 亿、云业务史上最强、订单储备 4620 亿）相互印证——Google 正把 Gemini 全面注入搜索漏斗。对银行业与 Eason 的启示：① 信息分发范式正从「搜索→官网」转向「AI 答案直接交付」，银行内容营销、SEO 投入、品牌信息架构都需重新评估——若 AI Overviews 在 43% 搜索中直接给答案，传统「排到搜索结果第一页」的 ROI 在缩水；② AI 搜索默认化也放大信息可信度问题（AI slop 直接进入用户认知），呼应 Eason 对 AI slop 现象的批判立场——在金融场景，错误答案不是丢脸是事故，金融机构主动优化在 AI 搜索中的「被正确引用」能力将成新课题。",
+      "source": "TechCrunch",
+      "source_type": "aihot",
+      "url": "https://techcrunch.com/2026/07/27/googles-ai-search-is-rapidly-becoming-the-default-new-data-shows",
+      "timestamp": "2026-07-27T15:57:12Z",
+      "importance": 7,
+      "tags": [
+        "Google",
+        "AI Overviews",
+        "AI 搜索",
+        "Similarweb",
+        "ChatGPT",
+        "出版商",
+        "搜索范式"
+      ],
+      "batch_time": "2026-07-28T09:00:00+08:00"
+    }
+  ]
+}
