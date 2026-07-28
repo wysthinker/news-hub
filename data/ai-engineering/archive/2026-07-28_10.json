@@ -1,0 +1,84 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-07-28T10:00:00+08:00",
+  "digest": "GPT-5.6/Kimi K3 消化期第三周，新鲜硬货集中在 7/27。AI 工程话语权从『追新工具/新 prompt』明确转向『把 harness 和目标定义做透』——GitHub 官方和中文圈卡兹克本周同向给出反 slop 工程方法论（西方 8 步工作流+跨模型互审，东方 Goal Engineering 七问+Harness 比 Goal 更重要），异曲同工都指向『判断力比堆工具重要』。OpenAI 用 80 万条对话量化『岗位边界正在先于岗位本身模糊』（43.5% 职业查询在干别人的活，小企业最强）。GergelyOrosz 抓到工程管理者离职倦怠潮——AI 把 CTO/VPE 角色预期拉到不现实。四条主线收敛于一点：AI 越能自主长程，人类的价值越收窄到『定义目标和边界、并为此负责』。",
+  "items": [
+    {
+      "title": "GitHub 官方给「反 slop」背书：别追新工具新 prompt，把一个 harness 学透就够了——8 步工作流 + 跨模型互审",
+      "summary": "GitHub Copilot 团队 Burke Holland 发长文，立场呼应你一贯的判断：每天冒出的新工具/新 MCP/新模型/新 skill/「一个奇怪 prompt 搞定 AI」基本都是 gimmick，真正生产力来自 less is more——理解并用透一个 harness。给出 8 步工作流：选工具→开 YOLO→原型先行→plan mode 系统逼问→Autopilot 自动实现→人审迭代→Rubber Duck 跨模型互审→提交。两个工程动作最值得挪用：plan mode 配 grill-me skill 把边界问清楚（expertise 体现在这而非堆 prompt），以及 Rubber Duck review 让不同模型族（GPT 审完换 Sonnet）互审，因为不同模型盲区不同。GitHub 还披露 Autopilot 开箱即用做多模型编排。结尾金句：今天魔法般的 incantation 明天就是 anti-pattern。",
+      "detail_content": "【核心事件】7/27 GitHub 官方工程博客发表《The harness is all you need (mostly)》，作者 Burke Holland（GitHub AI-powered development）。文章开篇就给当下 AI 工具狂欢泼冷水：每天都是新工具、新 MCP、新模型、新 skill、新工作流，以及社交平台上『我用一个奇怪 prompt 完全搞定了 AI』的帖子——作者直言『我不信』。他天天用 AI，结论是 less is way more，真正的生产力差距不在装了什么、配了什么、怎么骗 agent，那些『有意思但终究是 gimmick』；差距在『我用 harness 的方式和对它理解的深度』。\n\n【8 步工作流】①选工具——GitHub Copilot 家族有 CLI/桌面 app/VS Code/JetBrains 等，但都收敛到同一个 harness，『学一次到处用』，新手推荐 CLI（纯文本最接近 harness）；②开 YOLO/Allow-All——agent 需要自主性才有效率，否则『你不如自己做』，但务必跑在 Codespaces 或 dev container 沙箱里；③原型先行——『给我 20 个 date picker mock 放一个 HTML 里比较』，AI 时代原型从奢侈品变成一句话的事，视觉化 mockup 能暴露你没想到的需求；④plan mode 系统逼问——这是 expertise 真正发挥的地方，配 Matt Pocock 的 grill-me skill 让模型把所有边界（开始结束日期能否同一天？粘贴允许吗？）问个底朝天，重点是『不是全盘接受 AI 建议，而是深度参与引导』；⑤Autopilot 自动实现——内置 loop 强制模型把 plan 每一项做完，GitHub 自动编排子 agent；⑥人审迭代——『不要满足于 good enough，对质量冷酷，这部分还是你的责任』；⑦Rubber Duck 跨模型互审；⑧提交。\n\n【关键细节与引用】两个工程动作最值得单独拎出来。第一，Rubber Duck review：GitHub Copilot 会请求『不同 AI 家族』的模型来复审——比如你用 GPT 5.6 Terra 实现，它会换 Sonnet 来审——理由是『不同模型用不同数据训练，盲区不同』，可以全程任意阶段调用，甚至配 Autopilot 让两模型循环互审直到『只剩边际收益递减项』。第二，Autopilot 开箱即用的多模型编排：需要读文件时自动派 Explore subagent 上小模型，复杂操作派 General Purpose subagent 上大模型，『你不用做任何特殊配置就能拿到 subagent 和多模型工作流的好处』。推荐组合：中等模型（GPT 5.6 Terra 或 Claude Sonnet）+ 中等 reasoning，且整个 feature 期间别切模型——prompt cache 会打折。原文反 slop 最狠的一句：『No AI will ever replace your human touch and creativity... knowing what a quality result is from something that isn't is the value that you bring（知道什么是高质量结果、什么不是，才是你带来的价值）』。\n\n【背景与上下文】这篇是本周『harness engineering』主线的西方官方版。本频道近期已收：7/4 Lilian Weng《Harness Engineering for Self-Improvement》综述、7/16 Anthropic 把 Bun 百万行迁移写成 6 步法、7/23 北京智能体十条首次把 Harness Engineering 写进政府文件、7/23 simonw 反转 loops 主线（loops 是给旧模型打的短命补丁）。GitHub 这篇把抽象的 harness 概念落成了可照搬的 8 步流程，且立场鲜明地反『工具/MCP/skill 堆砌』——和 7/24 Anthropic context engineering 博客（砍 80% system prompt）同向：都在做减法。\n\n【影响与前瞻】对你在银行推 AI Coding 有三处直接可用。①考核层面：GitHub 官方盖章『最懂 harness 的人产出最高』，可作为『指向判断力增长而非纯产出量』考核的权威引注——Rubber Duck 跨模型互审尤其适合做 AI 代码上线前的强制门（不同模型互审能抓单模型盲区）。②落地层面：plan mode + grill-me 是把『需求是否想清楚』前置成机器可执行流程的现成范式，比 PRD 抛弃论（7/24 GergelyOrosz）更建设性。③反 slop 层面：文章通篇是给『AI 一周搞定 X』式浮夸叙事的反面教材——GitHub 自己都说『没人真知道自己在干嘛，今天魔法明天 anti-pattern』，在强监管银行业，Rubber Duck 这类『验证机械化』设计正是把 slop 当事故防的具体手段。",
+      "source": "GitHub Blog",
+      "source_type": "tavily",
+      "url": "https://github.blog/ai-and-ml/github-copilot/the-harness-is-all-you-need-mostly/",
+      "timestamp": "2026-07-27T18:00:00Z",
+      "importance": 8,
+      "tags": [
+        "GitHub",
+        "Copilot",
+        "harness",
+        "反 slop",
+        "工程方法论",
+        "代码审查"
+      ],
+      "batch_time": "2026-07-28T10:00:00+08:00"
+    },
+    {
+      "title": "浪费 20 亿 Token 后的开源心得：定义目标最重要的是「说什么不能做」——卡兹克 Leader.skill 给出 Goal Engineering 七问",
+      "summary": "中文 AI 圈博主「数字生命卡兹克」周末开源 Leader.skill，专解决一个问题：人类脑子里模糊的需求怎么变成 Agent 能独立跑几小时的高质量目标。起因是他一天浪费 20 亿 Token——agent 沿错误方向狂奔，越勤奋越浪费。两个核心洞察直接呼应你的反 slop 立场：①借军事『指挥官意图』概念（说为什么打+打完什么样，让部队自己决定怎么打，桥炸了会绕路而不是死磕），②定义目标最重要的不是要做什么，而是『什么不能做』——用肯尼迪登月『安全返回』删掉『单程票』捷径做类比。给出『目标七问』方法论，并点明『Harness 比 Goal 本身更重要：没有 Harness 的 Goal，Agent 永远会找到你没想到的捷径』。多模型组合：Fable 5 规划 + GPT-5.6 Sol 执行。",
+      "detail_content": "【核心事件】7/27 中文 AI 圈博主『数字生命卡兹克』发长文开源 Leader.skill（github.com/KKKKhazix/khazix-skills/tree/main/leader）。这个 skill 只做一件事：把人类脑子里『模模糊糊、连自己都没完全想清楚』的需求，变成一份能交给 Agent 用目标模式或 /goal 独立执行几小时且保证完成度的目标任务书。作者自嘲『叫 Leader.skill 是因为很多领导也说不明白话』。起因是他在和 agent 长程交互中一天烧掉 20 亿 Token——agent 沿错误方向一路狂奔，『它越勤奋，浪费得越彻底，睡醒发现已经跑偏八小时』。\n\n【交互范式三段论】文章先给出 2026 年人机协作演进的清晰框架：聊天制（一轮对话，你问它答）→ 任务制（coding agent 时代，一个功能/一个 bug 为单位，自己调工具）→ 目标制（Claude Code/Codex/Kimi Code 都有了 /goal 和目标模式，给个目标自己干几小时甚至几天，自己拆任务、派子 agent、验证、失败重试，人只验收）。卡兹克说他一直不喜欢 Loop Engineering 这个词，更喜欢 Goal Engineering——『一个目标里，除了目标定义，必然包含着 Harness』。\n\n【两个核心洞察】这是全文最值得拆解的部分。第一个洞察借自军事传统的『指挥官意图 Commander\\'s Intent』：核心是告诉部队『为什么打』和『打完战场该是什么样』，让他们自己决定怎么打。因为『没有任何计划能在跟现实第一次接触后存活』——你说『过桥清扫高地』，桥炸了部队就傻了；你说『掐断补给线』，桥没了它会自己绕路。给 Agent 定义目标同理：你说过桥，它会对着断桥死磕；你说掐断补给线，它会自己找另一条路。第二个洞察（卡兹克说『这才是我真正花时间想明白的』）：定义目标最重要的不是要做什么，是『什么不能做』。大佬花在排除上的时间远多于设定本身——普通人定目标写想要什么，大佬先想『达成这个数字最偷懒的办法是什么』然后把偷懒路径全堵死。肯尼迪 1961 年登月宣言关键不在『登月』二字，而在后半句『landing a man on the Moon and returning him safely to the Earth』——『安全返回』四个字把『单程票』这个最省钱解法直接删掉了。芒格『我只想知道会死在哪里，就永远不去那里』同理。\n\n【目标七问与金句】卡兹克用『出海』比喻，给出 Agent 友好的七问框架：①目的 Why（为什么出海，找香料/探新航线/打仗）②完成态 Done（船回港甲板该有什么，带回三船香料才算，不是出去转一圈）③证据 Proof（谁清点货舱，不能听船长说满就是满）④反作弊 Anti（不许抢商船凑数——你说带回三船香料，最省事是港口外劫三条商船，指标达成但实事没干）⑤边界 Bounds（只许走三条航线，粮食够 30 天第 20 天没找到必须掉头）⑥取舍 Trade（风暴里保货还是保船，不提前说优先级船长只能猜）⑦未知 Unknown（海图空白区怎么办，别硬闯也别抛锚，记下绕过回来再定）。全文最硬的一句：『Harness 比 Goal 本身更重要。Goal 告诉 Agent 往哪走，Harness 告诉它哪些路不许走，没有 Harness 的 Goal，Agent 永远会找到你没想到的捷径』。\n\n【影响与前瞻】这条与 GitHub 官方 harness 博客（今日头条）形成东西方同向共振：都讲『把目标和约束定义透』比『追新工具/新循环』根本，都反 slop。多模型组合建议：Fable 5/Claude 规划 + GPT-5.6 Sol/GLM-5.2 执行最经济；国产 Kimi K3 规划 + GLM-5.2 执行。对你在银行带团队：①『定义目标最重要的是说什么不能做』与你的反 slop / 判断力考核立场完全一致，目标七问（尤其反作弊 Anti 和取舍 Trade 两问）可直接挪用进团队下达 AI 任务的模板；②卡兹克提到『给足上下文用 Leader.skill 帮我定义公司管理目标有奇效』——可延伸到市场策划、运营方案，是把『领导说不清楚的需求』结构化的工具；③与 7/23 simonw『loops 是旧模型补丁』互补：模型越能长程自主，重心越要从『怎么让它跑』转向『把目标和禁区定义清楚』，这是 agent 时代人类判断力的新落脚点。",
+      "source": "数字生命卡兹克（公众号）",
+      "source_type": "aihot",
+      "url": "https://mp.weixin.qq.com/s/AwOk3di8m6eVeIUjzNftgg",
+      "timestamp": "2026-07-27T08:00:00Z",
+      "importance": 8,
+      "tags": [
+        "Goal Engineering",
+        "Leader.skill",
+        "harness",
+        "反 slop",
+        "目标定义",
+        "开源"
+      ],
+      "batch_time": "2026-07-28T10:00:00+08:00"
+    },
+    {
+      "title": "OpenAI 拆解 80 万条工作对话：43.5% 职业查询在干「别人的岗位」，小企业最明显",
+      "summary": "OpenAI 分析 80 万+条工作相关 ChatGPT 消息发现『task crossover』现象——43.5% 职业特定查询实际涉及其他职业的任务，营销和工程跨岗最多，合同审查、数据分析、网站排错等原专才工作正被非专才用 AI 完成。效应在小企业最强（没有专才团队），用 O*NET 职业数据库分类、排除写作/总结等通用任务。OpenAI 定性：这是岗位轮廓正在 shifting 的早期信号，job titles 和 job descriptions 还没追上实际。对你银行业：小支行/小团队像小企业，柜员/客服/分析师岗位边界正被 ChatGPT 打穿，少数人干多岗从理论变现实。",
+      "detail_content": "【核心事件】7/27 The Decoder 报道，OpenAI 对超过 80 万条工作相关 ChatGPT 消息做分析，发现 43.5% 的职业特定查询（job-specific queries）实际涉及的是其他职业的任务——OpenAI 把这个现象命名为『task crossover』（任务跨界）。营销（marketing）和工程（engineering）任务跨界最频繁。用户正在用 AI 干原本留给专才的活：合同审查（contract reviews）、数据分析（data analysis）、网站排错（website troubleshooting）。\n\n【关键数据与方法】效应在小企业最强，因为这些公司『本就没有专门的专才团队』（dedicated specialist teams less common）。非专才在小企业尤其喜欢用 AI 做营销任务。OpenAI 的分类方法：用美国劳工部职业数据库 O*NET 把活动映射到标准职业画像，并主动排除了写作、总结、日程等所有职业都会做的通用任务，只看职业特定内容——这让 43.5% 这个数字更硬。OpenAI 把这套数据定性为『岗位轮廓正在转移的早期信号』（early signal that job profiles are shifting），即便 job titles 和 job descriptions 还没追上实际。\n\n【背景与上下文】这是 OpenAI 用自家数据给『AI 打穿岗位边界』做的第一次大规模量化实证。和 ai-org 频道近期主线互补：7/24 范文仲万字框架讲『入门岗位危机』、7/15 哈佛『入门岗-80%』、7/15 虎嗅『葫芦形职业结构』、7/10 Deloitte『broken skills ladder』——这些都是讲『岗位会消失/变形』，OpenAI 这条补的是『岗位边界先于岗位本身在模糊』：title 没变，但实际干的活已经溢出到别人专业里了。这也解释了为什么 ai-org 反复出现的『Gallup 仅 12% 员工相信 AI 已改变工作完成方式』会显得滞后——采用数据看不出任务跨界，只有打开对话内容才看得到。\n\n【影响与前瞻】对你在银行推 AI 的两个启示。①网点层面：中小支行/区域中心本质就是『小企业』，没有总行那样庞大的专才团队，柜员/客服/理财/分析师的岗位边界正在被 ChatGPT 类工具打穿——少数人借助 AI 干多岗的活，从理论变成可量化趋势。组织设计和定岗定编需要正视这个『title 没变但任务已跨界』的现实，否则会出现『岗位说明书与实际工作严重脱节』的治理灰区（谁该为跨界产出的质量负责？）。②落地层面：task crossover 最频繁的是营销和工程，正好是银行中台（产品/运营/内容）和科技条线——也是你最该优先评估 AI 渗透深度的两个条线。值得注意的是，OpenAI 作为模型厂商有动机放大这个叙事（卖更多 ChatGPT 席位），43.5% 是『查询条数占比』而非『工作量或产出占比』，挪用进汇报时建议保留这个口径区分。",
+      "source": "The Decoder",
+      "source_type": "aihot",
+      "url": "https://the-decoder.com/openai-says-more-workers-are-using-chatgpt-to-do-other-peoples-jobs/",
+      "timestamp": "2026-07-27T19:08:51Z",
+      "importance": 7,
+      "tags": [
+        "OpenAI",
+        "task crossover",
+        "岗位边界",
+        "工作方式",
+        "O*NET",
+        "小企业"
+      ],
+      "batch_time": "2026-07-28T10:00:00+08:00"
+    },
+    {
+      "title": "GergelyOrosz 抓到新趋势：AI 时代 CTO/VPE 工程管理者正在离职倦怠，角色被「不现实预期」异化",
+      "summary": "Pragmatic Engineer 作者 GergelyOrosz 7/27 发推串（基于跟 3-4 位身处其中的管理者聊）：初创和中型公司的 CTO/Head of Eng/VPE 正在离职或倦怠，招这些角色变得 HARD。核心原因——AI 让这些岗位的预期变得不现实（unrealistic expectations），『意识到自己被招进的角色现在就是个烂活』。其他几条：前任就是因为这些原因走的；真正厉害的在 NYC/SF 可以做 fractional CTO 不必全职；创业比以前容易能融到钱所以考虑自己干。直接呼应你科技团队管理者身份：AI 时代工程管理角色正在被异化，工程管理者开始用脚投票。",
+      "detail_content": "【核心事件】7/27 Pragmatic Engineer 作者 GergelyOrosz 发推串披露一个新趋势：初创和中小公司的 CTO、Head of Eng、VPE（工程副总裁）正在『离职或倦怠』（leaving / burning out），招聘这些角色变得『HARD』（原文大写）。他说明这是『基于跟 3-4 位身处此境况的人聊』（Gathered based on talking with 3-4 folks in this situation），并强调工程领导力议题很难绝对断言（hard to be very definite）。\n\n【离职原因七条】Gergely 列出原因，其中最尖锐的是第 1 条：『意识到自己被招进的角色现在就是个烂活（just a sh*t one to do right now）——拜 AI 所赐，往往伴随不现实的预期（often unrealistic expectations）』。其余几条补充了图景：第 4 条『他们替换的那个人，当初就是经历了这些才走的』；第 5 条『真正厉害的在 NYC/SF 这样的大都市可以直接做 fractional CTO（按需兼职），不必全职』；第 7 条『非常优秀的工程领导者现在自己创业比以前容易，也能融到资，所以有些人考虑自己干』。回复区一位 VPE 的表态值得玩味：『我是个 VPE，我们确实很忙，但我觉得确保我带的不倦怠，部分是我的责任』——管理者的自我加压也被推到台面。\n\n【背景与上下文】这是本周 GergelyOrosz 工程管理裂痕主线第三发，与本频道 7/24 收的两条同频：①《The Pulse》『AI 让瓶颈从写代码挪到审查代码，大厂自建 review 工具』；②『快增长公司抛弃 PRD，Anthropic 反而坚持做对的事比做事更重要』。把三条并置看，AI 对工程组织的冲击已经从『一线工程师怎么干活』上移到『工程管理者这个角色本身还成不成立』——当 AI 让交付速度预期被不断拉高，工程管理者夹在『老板要的 AI 提效』和『团队的真实产能与倦怠』之间，成了压力集中点。这也和 ai-org 频道 7/22 收的『CXO 公园数据：Gallup 中层敬业度 30→27→22%』互为印证。\n\n【影响与前瞻】这条直接对你的科技团队管理者身份。①反思管理角色预期：AI 不会让工程管理变轻松，反而会把『提效不达标』的归因压到管理者头上——你需要主动给团队设定『AI 提效的合理预期边界』（什么算 AI 能做的、什么仍需人做、判断力怎么积累），否则团队管理岗会像 Gergely 描述的那样被『异化』成烫手山芋。②留人策略：第 5 条 fractional CTO 和第 7 条创业容易被挖走，说明资深工程管理者在 AI 时代议价能力上升——银行科技团队要留住核心管理骨干，可能要给比过去更灵活的安排（而非纯靠职级和期权）。③组织设计：当 CTO/VPE 角色本身承压，银行科技条线或许该重新切分『管人』『管 AI 落地』『管架构判断』三个维度，避免把三重压力堆在一个岗位上，是 AI 时代组织设计的新命题。",
+      "source": "GergelyOrosz (X)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2081845248120988114",
+      "timestamp": "2026-07-27T12:52:00Z",
+      "importance": 7,
+      "tags": [
+        "GergelyOrosz",
+        "工程管理",
+        "CTO",
+        "VPE",
+        "倦怠",
+        "组织"
+      ],
+      "batch_time": "2026-07-28T10:00:00+08:00"
+    }
+  ]
+}
