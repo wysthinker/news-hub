@@ -1,0 +1,45 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-07-29T10:00:00+08:00",
+  "digest": "本周 ai-engineering 继续沉浸 GPT-5.6/Fable/Opus 5 模型测评消化期，三巨头官方静默、工程硬新闻稀缺。真正有分量的是 Gergely Orosz 在 Pragmatic Engineer 7/28 发布的 Anthropic 深度内部报道（本频道 7/16 抓到的那条\"预告\"的正式落地版），以及 Claude Code 之父 Boris Cherny 同日在 Y Combinator 活动上对\"用户该怎么用 AI\"的最新表态。两条共同指向同一个正在成型的工程范式结论：AI 工程的核心能力正从\"写好 prompt\"迁移到\"设计好验证机制和自主性边界\"——Boris 把 verification 称为\"人们最没搞对的唯一最重要的事\"，PE 报道里 Anthropic 内部正在把 auto-merge 的 blast-radius 判断、infra 假设的代际重检都制度化。对银行 AI 落地，意味着考核与流程设计的重心应从\"产出量 / prompt 精致度\"挪向\"验证机制 + 自主性分级\"。其余信号多为产品公告（Codex 安全 CLI、Gemini Managed Agents 升级、Perplexity Windows 智能体等），归 ai-frontier，本频道砍。Grok 双路连续第 37+ 天 502/403；opentwitter 七位 KOL 互动数据持续全 0（6551 bug），内容多为 HF 沙箱事件后续评论与日常回复，无强一手工程原创。",
+  "items": [
+    {
+      "title": "Gergely 拿到 Anthropic 四位内部人独家：Managed Agents 花了 6 个月才上线，auto-merge 的判断权将交给\"另一个 Claude\"",
+      "summary": "Pragmatic Engineer 7/28 发布本频道迄今最深的 Anthropic 内部工程报道（本频道 7/16 抓到的那条只是预告）。Gergely Orosz 采访了 Jarred Sumner（Bun 创始人，现负责 Bun+Claude Code）、Thariq Shihipar（Claude Code 工程与教育）、David Hershey（Applied AI，对接 Cursor/Cognition/Perplexity 客户）四人，抖出一批一手细节：Claude Managed Agents 这个 agent infra 新 primitive 花了 Claude Platform 团队 6 个月才发布、中途推倒重做架构；PR 的 auto-merge 即将到来，Boris 的设想是\"再起一个 fresh context 的 Claude 判断这条 PR 是否 simple + low blast-radius，是就自动合\"；Claude Code 团队已删掉 80% 的 system prompt 因为\"模型变聪明了\"，并开始偏好 HTML 而非 Markdown 作为输出格式。对银行工程治理最有用的是两个可挪用的框架：blast-radius 自主性分级、以及\"每个新模型代际都要重检旧工程假设\"。",
+      "detail_content": "【核心事件】7 月 28 日，Pragmatic Engineer 主理人 Gergely Orosz 发布付费封面长文《How building software is changing at Anthropic》，这是本频道迄今拿到的一份最系统的 Anthropic 内部工程实践报道。本频道 7/16 曾抓到 Gergely 的一条\"预告\"（当时只笼统说 Anthropic 工程师\"做得更多更广、系统设计仍由人做、协调最值钱\"），这次的正式版补齐了所有硬细节。Gergely 这次采访到四位关键内部人：Jarred Sumner（Bun 原作者，现加入 Anthropic 同时负责 Bun 和 Claude Code）、Thariq Shihipar（横跨 Claude Code 工程与教育）、David Hershey（Applied AI 组织，角色类似销售工程师，直接对接 Cursor、Cognition、Perplexity 等大客户），以及工程师 Katelyn。透过他们，Gergely 拼出了\"最领先的 AI 实验室内部到底怎么造软件\"的近景图。\n\n【关键细节与引用】四个最值得带走的硬细节：① Claude Managed Agents 是 agent infra 层的一个新 primitive，但它\"是 Claude Platform 团队做过的最复杂项目之一，花了六个月才发布\"，而且\"infra 项目在中途仍然需要重新架构（re-architecting mid-way）才能做对\"——重做后各模块被拆成\"互不对彼此做假设\"的接口，并专门为凭证建了 vault 抽象，所有用凭证的调用都走一个带 session token 的 proxy。② PR 自动合并即将到来：目前所有质量门通过、AI code review 评论都解决、新代码补了测试之后，PR 仍是人工合，但 Boris 预告这很快会自动化，他给出的更进一步设想是——另一个全新上下文的 Claude 来判断这条 PR 是否简单且爆炸半径小，是就自动合并（auto-merge）。③ Claude Code 团队最近删掉了 80% 的 system prompt，理由是\"模型变聪明了\"。④ 一个被忽视的新洞察：Thariq 说自己已开始偏好 HTML 而非 Markdown 作为输出格式——HTML 是 Claude 比我们很多人预期都更擅长的一件事，HTML 能传达比 markdown 丰富得多的信息，HTML 文档更易读、更易分享。\n\n【背景与上下文】这篇报道最深刻的一句话来自 Thariq：agents 时代必须重新审视每一个曾经做出的工程假设，因为新模型代际会让旧假设直接失效。删 80% system prompt、从 Markdown 换 HTML，都是这种\"代际重检\"的具体例子。报道还披露了一个工程组织层面的变化：Anthropic 内部团队比 AI 之前更流动，但两披萨团队依然活着；Claude Code web 版的后端是用一次 spike（探针式验证）磨出来的——agent harness 里的 remote code execution 这个问题，团队选择先在 Claude Code 自己身上解决，再泛化给外部客户。Bun 的 Zig→Rust 百万行迁移则被再次确认为\"原本要一个小团队做一年的项目，11 天完成\"（本频道 7/16、7/18 已收该事件，此处是作者亲口复述作佐证）。\n\n【影响与前瞻】对 Eason 的银行 AI 工程治理，这篇报道给了两个可直接挪用的框架：其一是 blast-radius 自主性分级——auto-merge 的关键不是放权本身，而是用一个独立 context 的判断者把变更按\"爆炸半径\"分级，低风险全自动、高风险留人，这正是强监管行业把 agent 放进 CI/CD 的安全姿势；其二是代际假设重检——每换一代模型就要重跑一遍\"prompt 还要不要、输出格式要不要换、流程还要不要\"的账，否则会抱着上一代的补丁拖累这一代的能力。配合本频道 7/24 收的 Anthropic 官方 context engineering 方法论、7/24 PE 的 verify not review，本周 Anthropic 工程哲学的三块拼图（删冗余约束、验代替审、自主性分级）已经齐了。",
+      "source": "Pragmatic Engineer (Gergely Orosz)",
+      "source_type": "tavily",
+      "url": "https://newsletter.pragmaticengineer.com/p/inside-anthropic",
+      "timestamp": "2026-07-28T15:49:30Z",
+      "importance": 9,
+      "tags": [
+        "Anthropic",
+        "Claude Code",
+        "工程实践",
+        "Managed Agents",
+        "auto-merge",
+        "infra"
+      ],
+      "batch_time": "2026-07-29T10:00:00+08:00"
+    },
+    {
+      "title": "Claude Code 之父在 YC 公开表态：用户最常犯的一个错误是\"微操 AI\"，而真正该学会的是\"写验证\"不是\"写 prompt\"",
+      "summary": "Claude Code 负责人 Boris Cherny 在一场 Y Combinator 活动上把矛头对准用户的提问习惯：最常见的错误是给 AI 过于具体的指令（先做1再做2再做3、必须这样这样做），这反而阻碍模型自己找最优路径。他更进一步断言 prompt engineering 不是未来，未来属于给 AI 更多自主性；并把 verification（给 AI 验证和测试方法）称为人们唯一最没搞对的事。建议把 AI 当成同事对待、给它比你以为的更难的任务，并援引吴恩达的 lazy prompting（先用短而模糊的 prompt，不够再加）。livemint、ndtvprofit、Business Insider 三源转载，是 Claude Code 之父迄今对外最直接的使用哲学表态。",
+      "detail_content": "【核心事件】Anthropic Claude Code 负责人 Boris Cherny 在近期一场 Y Combinator 活动上做了一场关于怎么用 AI 的对开发者讲话，livemint（7/28 15:07 IST 首发）、ndtvprofit、Business Insider 三家在 7/27-28 集中转载。他给普通开发者点名的最常见错误非常具体——把 AI 微操得太死：人们给 AI 过于具体的指令，我要你做这件事，但必须用这种方式、这种步骤，必须先 1 后 2 后 3 后 4。他说这种一步步盯死的用法在六个月前还情有可原，但最新一代模型已经改变了这件事。\n\n【关键细节与引用】Boris 这次抛出的几个判断值得逐条记下：① prompt engineering 不是未来——未来不是把 prompt 写得更精致，而是给 AI 更多自主性让它自己完成任务。② 最硬的一句金句：人们最没搞对的、唯一最重要的事，是验证（verification）；正确做法是给 AI 一套测试和校验自身产出的方法，而不是堆越来越精致的 prompt。③ 别过度设计、别强求 AI 走人走的流程，而要像对待同事一样对它（treat it like a coworker），因为它现在已经到了那个智力水平。④ 给 AI 更难的任务（harder tasks）——比你以为它能做的更难的任务，因为每一代模型都能做上一代做不了的事。⑤ 他亲口复述了 Claude 用 11 天把整套生产代码库从一门语言重写到另一门语言的案例（工程师原本要一年以上，与本频道 7/16/7/18 收录的 Bun 迁移相互印证）。⑥ 他还援引了吴恩达去年提出的 lazy prompting：先用一个短而模糊的 prompt 看结果，不够再逐步加细节——有时偷懒、随手甩一个模糊 prompt 看会怎样，反而更快。\n\n【背景与上下文】这条讲话不是孤例，而是本频道近期一条清晰工程主线的人物级背书：7/21 的 Cat Wu + Thariq 炉边谈话已经说别再把 prompt 塞满例子和清单，让 Fable/Opus 用判断；7/24 Anthropic 官方 context engineering 方法论说砍掉 80% system prompt 反而无损失；7/24 Pragmatic Engineer 把新工程瓶颈命名为 verify not review。Boris 这次的贡献是把这条主线收成一句开发者能记住的话——verification 优先于 prompting。三源（尤其 livemint/ndtvprofit 这两家面向印度与新兴市场泛开发者圈的媒体）集中转载，说明别微操、学会写验证这个观点正在从头部实验室扩散到更广的开发者人群。\n\n【影响与前瞻】对 Eason 在银行内部推 AI Coding，Boris 这套表态是现成的反 slop 教育素材：一线最容易犯的错恰恰是微操——写大段步骤化 prompt 把 AI 当执行机器，结果既慢又脆，还把人的判断力耗在错误的环节。正确的迁移方向是把精力从写 prompt 挪到写验证：给 AI 可执行的测试、校验、回滚条件，让它在自主范围内跑，人守在验证和 blast-radius 分级这一层。这也和同日 PE 报道里 Anthropic 内部 auto-merge 靠独立 Claude 判断 blast-radius 的工程实践完全同构——内外一致指向同一个范式：prompt 越短越好，验证越硬越好，自主性按风险分级放权。考核设计上，与其衡量员工写了多少行 prompt / 产出了多少代码，不如衡量员工为 AI 设计了多少道可机械化执行的验证。",
+      "source": "LiveMint / NDTV Profit / Business Insider",
+      "source_type": "tavily",
+      "url": "https://www.livemint.com/technology/tech-news/claude-code-creator-says-most-users-are-making-one-mistake-with-ai-prompts-11785222871418.html",
+      "timestamp": "2026-07-28T09:37:00Z",
+      "importance": 7,
+      "tags": [
+        "Boris Cherny",
+        "Claude Code",
+        "prompt engineering",
+        "verification",
+        "使用哲学"
+      ],
+      "batch_time": "2026-07-29T10:00:00+08:00"
+    }
+  ]
+}
