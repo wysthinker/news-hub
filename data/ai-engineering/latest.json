@@ -1,9 +1,95 @@
 {
   "channel_id": "ai-engineering",
   "channel_name": "AI 工程实战",
-  "generated_at": "2026-07-30T10:19:06.025301+08:00",
-  "digest": "本周 agentic engineering 的「基础设施层」被密集定义：Ghostty 作者、HashiCorp 创始人 Mitchell Hashimoto 创办 Superlogical，从终端复用器起步要做比 OS 更高一层的 agentic 操作系统，是本周最重磅的工程新闻（Gergely 推文 ♥1276/15.8 万浏览）。配套信号有三：SemiAnalysis 用 3 个月真实 Claude Code/Codex 生产轨迹造出第一个贴近现实的 agentic coding 基准 AgentX（中位 ISL 14 万，远超业界常用的 8k/1k）；Pragmatic Engineer 请出形式化验证布道者 Hillel Wayne，讨论机器写大部分代码后「数学证明成刚需」的拐点；Gergely 另一条爆款点出 agent 正在杀死程序员的心流——并行更高效但那不是 flow。加上 Simon Willison 实测 MCP server 已能挂进 ChatGPT/Claude 普通聊天界面，MCP 从编程工具蔓延到消费级对话。整体看，讨论重心从「agent 能不能用」彻底转向「agent 在哪跑、怎么测、怎么证、人怎么与之共生」。对 Eason 银行 AI 转型：agentic 基础设施、可信验证、工程师体验三块都在快速成形，是向上汇报「agentic 工程已进入基建期」的硬素材。",
+  "generated_at": "2026-07-31T10:14:43.510148+08:00",
+  "digest": "本周（7/29-7/31）AI 工程圈被 AIEWF 2026（AI Engineer World's Fair）一整组 Forward Deployed Engineering 演讲刷屏——Cognition、Ramp、Factory、Anthropic、Sierra、Decagon、Cursor、Kepler 的 FDE 负责人异口同声：agentic AI 落地的瓶颈已经不是模型或工具，而是「有没有一个专门把 AI 能力翻译成客户/组织价值的工程职能」。Cognition 的 Jia Wu 给出最硬样本：Devin 在 Nubank 50 人 ETL 迁移、拉美大行 COBOL/JCL 税务系统迁移里把交付周期压到三分之一，并明言「coding 只占 20% 的问题，摩擦在测试、审查、部署、维护」——这是「判断力 > 产出量」最干净的工程版本。Ramp 的 Leo Mehr 造出本周最锋利的反 slop 概念「token maxing slop cannon」：好流水线配烂 scoping = 高速量产错误东西。Factory 的 Eno Reyes 把验证循环密度命名为「agent readiness」——确定性验证就是 agent 的奖励信号。Sierra 的 Natalie Meurer 点破终局：outcome-based 定价让 FDE 从「一个岗位」变成「所有工程角色的归宿」。同一周 latent.space 用 AIEWF 另一最火演讲把本体论请回来——「bounded set of rules around an unbounded loop」，2026 正在见证软件工程纪律回归。对 Eason：FDE 本质就是他在银行推 AI 时缺的那个「把模型能力变成业务结果」的组织职能，整套方法论（outcome 衡量、scoping 纪律、验证循环、判断力收窄）可直接挪用。",
   "items": [
+    {
+      "title": "Cognition 前线部署负责人讲透 agentic AI 企业落地：让 agent 有效是组织问题不是模型问题，coding 只占 20%",
+      "summary": "AIEWF 2026 上 Cognition 部署工程负责人 Jia Wu 用 Nubank 50 人 ETL 迁移、拉美大行 COBOL/JCL 税务系统迁移两个银行业案例讲清 Devin 如何在企业落地：交付周期压到三分之一、工程产能 +150%、PR 吞吐 2 倍。核心论点——coding 已基本解决，瓶颈在测试/审查/部署/维护与组织循环。token-maxing 时代结束，进入 outcome 衡量的智能编排时代。同场 Ramp/Factory/Anthropic/Sierra/Cursor/Kepler 的 FDE 负责人形成行业共识：FDE 正成为 AI 时代核心职能。",
+      "detail_content": "【核心事件】7 月底 AIEWF 2026（AI Engineer World's Fair）上，Cognition 部署工程负责人 Jia Wu 用 17 分钟讲清了 Devin 这个 AI 编程 agent 如何在企业真正落地，并给出迄今最具象的银行业迁移案例。他把 forward-deployed engineering（FDE，前线部署工程）定义为「产品域」与「问题域」的韦恩图交集最大化者——不是卖软件，也不是卖咨询，而是派工程师进客户现场，在共享平台上拼装出「结果」。\n\n两个具名银行案例是这次演讲最硬的部分。其一是拉美最大数字银行 Nubank：一个原本配 50 名工程师的 ETL 迁移项目，Cognition 让 Devin 自主执行，最终用原计划三分之一的时间完成。其二是「拉美最大银行之一」的税务识别系统迁移，涉及 COBOL 和 JCL（Job Control Language）这种 legacy 语言——这正是银行核心系统最常见的「工程师不愿碰」的活，Devin 用一半人力完成。第三个案例「Built」每周合并的 PR 数提高一个数量级，相当于每周产出 10+ 名工程师的量。\n\n【关键细节与引用】Jia Wu 给出三组量化指标：工程产能（人头等价）+150%（agent 当同事）、项目交付周期 -82%（约 5 倍加速）、每周合并 PR 数 2 倍。他强调这些不是 token 使用量指标，而是交付周期压缩和采纳率提升。\n\n最关键的判断是他对 SDLC 的拆解：「问题不是更快地写代码，那只是 20% 的问题。问题真正变成：怎么测试这些代码、怎么审查和部署这些代码、怎么在企业范围内维护这些代码。」他把 2024-2025 年的「token maxing」（用最小方向跑 agent、按使用量考核）定义为已结束的旧时代——「你纯粹在 token maxing，浪费 token、烧预算、拿不到任何实质结果」，受监管企业客户现在问的是「我们到底有没有拿到真实价值，还是只是在烧 token」。\n\n【背景与上下文】这场演讲不是孤例。同一个 AIEWF 舞台上，Ramp、Factory、Anthropic、Sierra、Decagon、Cursor、Kepler 的 FDE 负责人密集登台，形成本周最强的工程共识信号：FDE 正在成为 agentic AI 时代的核心组织职能。Anthropic 应用 AI 团队的 Kevin Bai（曾任 Palantir FDE 一号员工、Rippling FDE 创始人）给出决策框架——只有「把高技术复杂度产品卖给非技术买家」这一象限才需要 FDE，并用 Palantir 平均合同额 400 万美元（对比 ServiceNow 120 万、Workday 60 万）作为经济证据。Sierra 的 agent 工程负责人 Natalie Meurer（前 Palantir FDE）点破终局：当代码变便宜、软件定价滑向「按结果计费」，FDE 从一个岗位变成「所有工程角色的归宿」——「forward-deployed engineering 已死，long live forward-deployed engineering」。\n\nRamp 工程总监 Leo Mehr 贡献了本周最锋利的反 slop 概念——「token maxing slop cannon」：一条优秀的自动化流水线（写需求的 agent + 写 spec 的 agent + 写代码的 frontier model）如果配上糟糕的 scoping，就变成「高速量产错误东西的火炮」。他的两条原则「Always be scoping」和「Scale with tokens」必须同时练，并给出具体实证：Ramp 内部 #fde-requests Slack 频道接入 Notion agent 自动做多轮 scoping 对话，几周内节省了 FDE 团队约 20% 的 scoping 时间，延迟从数小时/数天压到秒级。他还讲了一个 scoping 失败的反面教材：两个 FDE 花几周学了 iOS 和 Android 给客户做报销功能，交付时客户才说「我们公司全员只用 iOS」——Android 工作全废，原因是从未验证客户到底需要哪个平台。Factory 联合创始人 Eno Reyes 则把验证循环密度命名为「agent readiness」——lint、类型检查、安全扫描、端到端测试这些确定性验证就是 agent 的奖励信号，「如果你的代码库没准备好被 agent 操作，你将看不到当今最强 AI 系统的任何成功」。Kepler 的 Vinoo Ganesh（Palantir 老兵，曾建 Project Frontline 培训了约 350 名 FDE）贡献了最生动的 hack 警告——他随手写的一个 Groovy 脚本「只是临时」解决数据保留问题，12 个月后这个脚本在一家 10 万人的客户上运行，他的 Palantir 花名成了 venu.groovy，员工还在他婚礼上穿印着这名字的 T 恤：「每一个 hack 都会上生产，最危险的话就是『这只是临时的』」。\n\n【影响与前瞻】对 Eason 这种在强监管银行推 AI 的科技管理者，这套方法论直接可用：第一，FDE 角色本质就是「把模型能力翻译成业务结果」的专门职能，是 AI 推广组织化最缺的那块拼图，银行业（非技术买家 + 高技术复杂度）恰好落在 Kevin Bai 框架里「必须做 FDE」的象限；第二，COBOL/JCL 迁移案例证明 agent 能啃银行最头疼的 legacy 核心，但前提是「agent readiness」——银行核心系统的验证循环基建（测试覆盖、类型检查、合规闸门）必须先补齐，否则 agent 会 stall；第三，「coding 只占 20%」和「token maxing slop cannon」是考核设计最有力论据——考核若只盯采用量/产出量，必然诱发 slop（参亚马逊 leaderboard 刷 token 前科与 Goodhart 定律），须指向 scoping 质量、验证循环密度、outcome 达成。Cursor 的 Pauline Brunet 补充了 ROI 三件套——每个 FDE 项目必须能回答「增收、降本、降险」之一，且必须先把成功标准写死（「从 3 小时压到 20 分钟，够不够？」）。Jia Wu 末尾点出 FDE 的三层招人画像（PM 背景 / 创始人型资深工程师 / 有客户技能的工程师），呼应了「判断力 + 业务理解」正在取代「纯编码速度」成为最稀缺工程能力——这正是 Eason 反复强调的「判断力增长」方向。",
+      "source": "AI Engineer（AIEWF 2026，BigGo Finance 实录）",
+      "source_type": "tavily",
+      "url": "https://finance.biggo.com/podcast/a5f316b781abb2dc",
+      "timestamp": "2026-07-29T00:00:00Z",
+      "importance": 9,
+      "tags": [
+        "FDE",
+        "前线部署工程",
+        "Cognition",
+        "Devin",
+        "银行业",
+        "COBOL迁移",
+        "组织方法论",
+        "outcome衡量",
+        "AIEWF",
+        "slop cannon"
+      ],
+      "batch_time": "2026-07-31T10:00:00+08:00"
+    },
+    {
+      "title": "Latent.Space：本体论（Ontology）在 AI agent 时代强势回归——「无界循环外加有界规则」，2026 软件工程纪律复辟",
+      "summary": "AIEWF 2026 最火视频之一，UC Berkeley 教授 Frank Coyle 重新向 AI 工程师介绍 ontology——LLM 擅长概率推理，但 agentic 系统需要「逻辑护栏」。Neo4j CEO Eifrem 提出三种本体论（业务/技术/执行轨迹）支撑「薄 agent + 智能共享语义层」。Coyle 把概率 agent + 本体论护栏命名为 neurosymbolic AI，金句「a bounded set of rules around an unbounded loop」。评论：2025 vibe coding 退潮后，2026 正在见证软件工程纪律（含语义网技术）的回归。",
+      "detail_content": "【核心事件】Latent.Space 7/30 长文（作者 Richard MacManus）报道 AIEWF 2026「最受关注的视频之一」——UC Berkeley 计算机教授 Frank Coyle（在 Berkeley 教生成式 AI 和 LLM 课程）一场 20 分钟演讲，把「ontology（本体论）」这个语义网时代的旧概念重新介绍给今天的 AI 工程师。核心论点：LLM 擅长概率推理，但要让 agentic 系统真正可靠，必须给它套上「逻辑护栏」，而本体论就是这套护栏。\n\nCoyle 把本体论简单定义为「data as graphs（数据即图）」——描述一个知识领域里类、属性、关系的结构。他指出这套东西从亚里士多德起就在 AI 史上反复出现，今天只是又一次轮回。Neo4j CEO Emil Eifrem 在同场 keynote 给出更企业化的版本：三种本体论支撑「smarter shared substrate」——业务本体（组织关键概念）、技术本体（企业所有数据资产的元数据）、执行轨迹（agent 运行时信号），让行业从「厚 agent + 人工接线数据源」转向「薄 agent 跑在智能语义层上」。\n\n【关键细节与引用】Coyle 强调一个被忽视的便宜之处：Schema.org、FOAF、Dublin Core 这些经典 web ontology 早已在 LLM 训练数据里，开发者直接 prompt 就能用，远胜从零造轮子——「这东西一直垫在我们已经在做的事底下，去利用这些已存在的东西」。他演示了一个 Claude agent loop 在工具跑完后用本体论校验 LLM 推理。他把这种概率 + 确定的混搭命名为「neurosymbolic AI（神经符号 AI）」——神经网络挂钩号 AI（规则系统、知识图谱）。最精炼的工程金句是他一张 slides 上的话：「a bounded set of rules around an unbounded loop（无界循环外加一圈有界规则）」——loop engineering（循环工程）本身可能失控跑飞，本体论就是把它圈住的边界。OpenLink Software 的 Kingsley Idehen（语义网老兵）正在搭「agent engineering stack」，含「agent with RDF memory」。\n\n【背景与上下文】作者把这次回归放进更大的叙事：2025 年 vibe coding 让人以为谁都能造软件，但随后「penny dropped」——这些软件要维护、不能崩。于是 2026 年出现软件工程纪律的回归，ontology 复活只是其中一环，与 harness engineering、verification、循环工程同频。维护痛点（本体论 1990s/2000s 语义网失败的原因）现在有新解法——开发者 Prasenjit Sarkar 提出「让 agent 在自己运行过程中维护本体论、遇到 edge case 就更新定义」，维护问题的性质因此改变。AIEWF 现场一个共识是：很多演讲者尚不愿全押「全自动 software factory」，强调必须有 guardrails 和 human-in-the-loop。\n\n【影响与前瞻】对 Eason 这种关注 agentic AI 工程化与反 slop 的管理者，这篇文章提供三件可挪用的武器：第一，「bounded rules around unbounded loop」是迄今对「harness/验证为什么重要」最精准的工程隐喻——agent 自主性越强，确定性边界工程（本体论、规则、验证）越要硬编码，这正是本周 Cognition/Ramp/Factory FDE 演讲的同一硬币背面；第二，银行业是本体论天然主场——强监管、强规则、强实体关系（客户/账户/交易/合同），知识图谱 + LLM 的 neurosymbolic 路线在反洗钱、信贷决策、合规审查场景比纯 LLM 更可控可审计；第三，Neo4j「薄 agent + 共享语义层」指向一个组织级架构选择——与其让每个 agent 各自接线数据源，不如先沉淀企业本体论作为公共基建，这跟「核心数据治理」主线一致。本体论维护痛点仍存，但「agent 自维护本体论」若跑通，会让 LLM 在企业核心系统的可信度上一台阶。",
+      "source": "Latent.Space",
+      "source_type": "tavily",
+      "url": "https://www.latent.space/p/ontologies-agentic-systems",
+      "timestamp": "2026-07-30T19:17:55+08:00",
+      "importance": 8,
+      "tags": [
+        "本体论",
+        "ontology",
+        "neurosymbolic",
+        "知识图谱",
+        "Neo4j",
+        "agent护栏",
+        "循环工程",
+        "AIEWF",
+        "软件工程纪律"
+      ],
+      "batch_time": "2026-07-31T10:00:00+08:00"
+    },
+    {
+      "title": "GitHub Copilot 应用推「堆叠会话」：一个仓库里把大重构拆成一串相互承接的 agent 任务，每个自动开 PR 防范围蔓延",
+      "summary": "GitHub 官博 7/30 推出 Copilot 应用的 stacked sessions（堆叠会话）：同一仓库里创建一系列相互承接的任务，每个会话基于前一个的成果继续，自动为每个会话创建对应 PR，避免范围蔓延。作者用一个十余年历史的个人项目演示——Plan 模式定前端现代化计划，再把 React-Bootstrap 替换拆成独立会话各自出 PR。GergelyOrosz 同日推科普「stacked diffs」概念，称这是 AI 时代工程师该补的基础课。",
+      "detail_content": "【核心事件】GitHub 工程博客 7/30 发文介绍 GitHub Copilot 应用新增的「stacked sessions（堆叠会话）」与 pull request 功能。核心机制：用户可以在同一个仓库里创建一系列相互承接的任务，每个会话基于前一个会话的成果继续工作，应用会自动为每个会话创建对应的 pull request，从而避免单次任务范围蔓延。\n\nGitHub 用作者自己的一个十余年历史个人项目做演示：先用 Plan 模式制定前端现代化计划，再通过堆叠会话把「替换 React-Bootstrap」这类工作拆分为多个独立会话，每个会话各自产出一个 PR。这本质上是把软件工程里成熟的「stacked PRs / stacked diffs」工作流（一次大改动拆成一系列小 PR，后一个基于前一个）自动化、agent 化了。\n\n【关键细节与引用】stacked diffs 本身不是新概念，但在 agentic coding 时代有了新必要性——agent 一次性改太多容易失控，拆成小步、每步独立可审、可回滚、可并行 review，是控制 agent 输出质量的关键纪律。Pragmatic Engineer 的 GergelyOrosz 同日（7/30）专门发推重提他三年前在 Pragmatic Engineer 写过的 stacked diffs 深度长文，称这是 AI 时代工程师必须补的基础工作流课——当 agent 量产 PR，stacked review 是让人审得过来的少数办法之一。\n\n【背景与上下文】这条产品更新落在 ai-engineering 主线里而非 ai-frontier，因为它把一个真实的 agentic 工作流范式（任务拆分 + 独立 PR + 防范围蔓延）固化进了产品。它与本周 AIEWF FDE 系列强调的「scoping 纪律」「agent readiness」同向——agent 越能干，越需要人定义任务边界和审查粒度。GitHub Copilot Workspace 此前的「晨会自动化」（汇总 Issues、排 PR 优先级）也是同一产品线的延伸。\n\n【影响与前瞻】对在银行推 agentic coding 的团队，stacked sessions 提供一个可立即落地的工程规范模板：强监管环境里，一个 agent PR 触碰太多模块 = 审查噩梦 + 合规风险，把大改动强制拆成堆叠小 PR（每 PR 独立测试、独立审查、独立回滚）是让 agent 产出可审计的最直接办法。GergelyOrosz 把它列为 AI 时代基础课，说明这正在从「高级工程师的技巧」变成「所有用 agent 的团队的默认纪律」。建议关注它的实际采纳曲线，以及能否与银行现有 code review + 合规闸门流程对接。",
+      "source": "GitHub Blog",
+      "source_type": "aihot",
+      "url": "https://github.blog/ai-and-ml/github-copilot/stacked-sessions-and-pull-requests-in-the-github-copilot-app",
+      "timestamp": "2026-07-30T17:30:24Z",
+      "importance": 7,
+      "tags": [
+        "GitHub Copilot",
+        "堆叠会话",
+        "stacked PR",
+        "agentic工作流",
+        "代码审查",
+        "范围蔓延",
+        "GergelyOrosz"
+      ],
+      "batch_time": "2026-07-31T10:00:00+08:00"
+    },
+    {
+      "title": "Token Saver：开源 MCP 扩展用本地混合 RAG 把 Claude 读 PDF 的 token 消耗砍掉 92%-99%，数据不出设备",
+      "summary": "MarkTechPost 7/30 报道，其 AI 团队发布 Token Saver——面向 Claude Desktop 的开源 MCP 扩展，用本地混合 RAG 在设备端检索 PDF，文件不上传，token 消耗降 92%-99%，无需 Python 或终端配置。是「token smarter 而非 token maxxing」主线的又一个具体工具样本，适合强数据隐私场景。",
+      "detail_content": "【核心事件】MarkTechPost AI 团队 7/30 发布一款面向 Claude Desktop 的开源 MCP 扩展「Token Saver」。它用本地混合 RAG（retrieval-augmented generation）在用户设备端直接检索 PDF 文档，文件不需要上传到云端或喂给模型完整内容，从而把处理 PDF 时的 token 消耗降低 92%-99%，同时保证数据隐私。安装不需要 Python 环境或终端配置，降低非技术用户的上手门槛。\n\n【关键细节与引用】技术路线是混合 RAG——先把 PDF 在本地做向量化与索引，Claude 提问时只把相关片段（而非整份文档）送进上下文。92%-99% 的降幅适用于典型长 PDF 问答场景。开源、自托管、数据不离设备是三个核心卖点。它本质上是把「context engineering」里「少即是多」的纪律（只给模型看必要的）做成了一个开箱即用的 MCP 工具。\n\n【背景与上下文】这条落在 ai-engineering 近一个月的「token smarter 而非 token maxxing」主线上——从 OpenAI CFO 的「有用智能每美元」记分卡、Claude Code 之父 Boris Cherny 的「usage measures activity not return」、到 claude-thermos 量化出的 22% 账单浪费、到本周 Cognition Jia Wu 宣判 token-maxing 时代结束。Token Saver 是这条主线又一个具体可用的成本工程工具，与 simonw 同日发布的 llm-chat-completions-server（本地暴露所有已装模型）一起，代表「把模型调用关到本地、把 context 收窄到必要」的工程化趋势。\n\n【影响与前瞻】对银行这类强数据隐私 + 强成本约束的场景，Token Saver 的「数据不离设备 + token 降一个数量级」双卖点有直接吸引力——大量内部 PDF（合同、审批文档、研报）可以在本地被 Claude 检索问答，既省 token 又满足合规不出域要求。但需注意两点：一是混合 RAG 在专业术语密集的金融文档上的检索精度需实测，二是 MCP 扩展本身进入企业工具链仍需走安全审计。作为「token smarter」主线的低成本实验样本值得先在非敏感场景试跑。",
+      "source": "MarkTechPost",
+      "source_type": "aihot",
+      "url": "https://www.marktechpost.com/2026/07/30/token-saver-an-open-source-mcp-extension-using-local-hybrid-rag",
+      "timestamp": "2026-07-30T07:43:29Z",
+      "importance": 7,
+      "tags": [
+        "Token Saver",
+        "MCP",
+        "本地RAG",
+        "成本工程",
+        "token效率",
+        "数据隐私",
+        "Claude Desktop",
+        "开源"
+      ],
+      "batch_time": "2026-07-31T10:00:00+08:00"
+    },
     {
       "title": "HashiCorp 创始人 Mitchell Hashimoto 创办 Superlogical：从终端复用器起步，要造「比操作系统更高一层」的 agentic OS",
       "summary": "Ghostty 作者、HashiCorp 创始人 Mitchell Hashimoto 7/29 官博宣布创办新公司 Superlogical，首款产品是终端复用器（terminal multiplexer），基于 libghostty 构建。Gergely Orosz 据此判断其真正目标是「比 OS 更高一层的 AI 原生 agentic 操作系统」——这条解读推文本周最热（♥1276、15.8 万浏览）。终端是当下 agentic coding 真正发生的场所，把复用器做成 agentic 底座，本质是补上「agent 在哪运行」这一层缺失的基础设施。",
@@ -397,96 +483,6 @@
         "软件经济学"
       ],
       "batch_time": "2026-07-25T10:00:00+08:00"
-    },
-    {
-      "title": "30 年电影数据权威站 TheNumbers.com 被 agentic AI 流量压垮：90% 流量是 bot，被迫推倒重建",
-      "summary": "电影业最权威的票房数据库 TheNumbers.com（78396 部电影、236176 人物、年访 800 万+）2026 年 3 月 5 日突然宕机一周多，回来只剩骨架版。创始人 Bruce Nash 透露：现在只有 10% 流量来自人类浏览，90% 是 AI 爬虫和 agentic AI，团队曾把 90% 工程时间花在保命上。日志还显示有人长期探测后门，动机很可能来自 Polymarket 票房预测市场——抢先拿到数据就能 front-run 交易。Cloudflare 数据：Google 每带来 1 个访客爬 5 页，OpenAI 爬 1000 页，Anthropic 爬 38000 页。这是 agentic AI 对 open web 外部性的首个完整灾难叙事。",
-      "detail_content": "【核心事件】Stephen Follows（电影业数据分析师）7/22 发表长文，采访了 TheNumbers.com 创始人 Bruce Nash。这家 1997 年从 Geocities 起家、手工核对数据 30 年的老站，是记者、学者、电影人、吉尼斯世界纪录乃至 Polymarket 预测市场公认的票房「终极真相来源」。2026 年 3 月 5 日凌晨服务器崩溃，宕机一周多后，3 月 13 日只以骨架版回归——历史图表、单部电影页面、最受欢迎的 Report Builder 全部下线，至今仍在逐步重建。\n\n【关键细节与引用】Bruce Nash 给出几组刺眼的数据。流量结构：「只有 10% 的流量来自人类浏览，其余全是 AI bot 和自动化流量」。工程成本：「约 90% 的时间花在保住现有站点运行上，只能用零碎时间开发新系统」。两波冲击：第一波 2024 年 AI 训练爬虫加入搜索引擎爬虫，「AI 爬虫比搜索引擎行为更粗暴」；第二波 2025 年 12 月起更猛烈，「我把它归因于 agentic AI：既包括响应 prompt 去抓站的 agent，也包括现在人人都能写抓站 agent」。Cloudflare 的跨平台数据更直观（对数坐标）：Google 每带来 1 个访客爬 5 页，OpenAI 爬 1000 页，Anthropic 爬 38000 页。攻击动机方面，Polymarket 周票房预测市场直接引用 TheNumbers 页面作为结算依据，任何时点都有约几百万美元敞口——「能比别人先看到数据，每周都有显著套利边缘」。\n\n【背景与上下文】这不是孤例。文中罗列一串受害者：Read the Docs 单个爬虫一月下载 73TB 压缩 HTML、带宽费超 5000 美元；iFixit 一天被 Anthropic 爬虫打百万次；Triplegangers（7 人公司）被 OpenAI bot 在营业时间 DDoS；SourceHut 创始人报告每周 20-100% 时间在打爬虫；LWN 编辑称来自「数百万 IP」的爬虫「就是一场 DDoS」；GNOME 测得 97% 流量是 bot；某大学图书馆 48 小时封了 16000 个 IP。Wikipedia 基金会数据：bot 占 35% 页面浏览却占 65% 最贵流量，半年后人类访问同比再跌 8%（答案被 AI 摘要走）。Anthropic 自己 2025 年 11 月报告承认，首例有文档的 AI 编排网络间谍行动中，AI 完成了 80-90% 的攻击工作，人类只在每次行动 4-6 个决策点介入。\n\n【影响与前瞻】文章结论三条：预测市场让任何数据都能变现、AI 订阅让任何人都能发起复杂攻击、open web 在大规模 agent 蜂群面前极其脆弱。Cloudflare 应对：从 9 月 15 日起，其客户的广告支持页面将默认屏蔽未付费的「mixed-use」爬虫，并推出 pay-per-use（内容出现在 AI 答案里就付费）。对 Eason 银行本职：这是 agentic coding 红利的 B 面——agent 对外部基础设施的冲击、攻击门槛崩塌、数据资产被套利，都是 agent 上线必须算进的风险账；反 slop 不是丢脸是事故的主张，在这里有了最硬的现实注脚。",
-      "source": "Stephen Follows 博客 / Hacker News 热门",
-      "source_type": "aihot",
-      "url": "https://stephenfollows.com/p/what-just-happened-to-thenumberscom-should-worry-us-all",
-      "timestamp": "2026-07-22T22:38:12+08:00",
-      "importance": 9,
-      "tags": [
-        "agentic AI",
-        "open web",
-        "爬虫治理",
-        "安全",
-        "外部性"
-      ],
-      "batch_time": "2026-07-24T10:00:00+08:00"
-    },
-    {
-      "title": "北京 7/23 出台智能体十条：首次把「驾驭层工程 Harness Engineering」+ Token 效率写入政府文件",
-      "summary": "北京市发改委等单位 7/23 发布《北京市关于支持智能体引领发展的若干措施》共 10 条，第二条明确「支持实施驾驭层工程（Harness Engineering）」，第三条专门讲「提升 Token 效率、鼓励发展 Token 经济」、培育算力券。这是本频道追踪三周的工程主线——Lilian Weng 综述、Anthropic 百万行迁移 6 步法、Pragmatic Engineer 循环工程——第一次从工程圈共识升级为政府产业政策。同期国家数据局披露中国日均 Token 调用从 2024 年初 1000 亿涨到 2026 年 3 月 140 万亿，两年千倍。",
-      "detail_content": "【核心事件】7 月 23 日北京市人民政府新闻办公室举行新闻发布会，正式发布《北京市关于支持智能体引领发展的若干措施》，由北京市发改委等单位联合印发，共 10 条政策措施。官方原文已在 beijing.gov.cn 公开。这是迄今地方政府层面最系统的一份智能体产业政策，也是首次把多个源自一线 AI 工程实践的概念写进正式文件。\n\n【关键细节与引用】10 条措施里和本频道主线直接相关的两条。第二条「强化智能体底层共性技术攻关」原文：支持实施「驾驭层工程（Harness Engineering）」，持续完善中间层软件栈，研发适配智能体开发的关键算子、框架，推动与自主大模型适配调优——等于官方给「模型之外那层脚手架」定性为产业基础设施。第三条「提升 Token 效率，鼓励发展 Token 经济」原文：研发专用推理芯片、通过异构协同/存算协同/智能调度降低推理成本、加快推理缓存复用和智能任务路由等应用层效率优化、全链路提高 Token 效率、培育 Token 即服务和智能体即服务等新模式、鼓励发展算力券。第四条推动智能体嵌入智能手机、智能眼镜、智能汽车等终端。\n\n【背景与上下文】这条政策几乎是本频道过去三周工程主线的官方合集。7/4 Lilian Weng《Harness Engineering for Self-Improvement》系统梳理三年 agent 优化自身脚手架研究，金句「即便 harness 改进被吸进模型本体，人指定的目标和上下文不会消失」；7/16 Anthropic《How to run large-scale code migrations》把 Bun 百万行 Zig→Rust 整理成 6 步法并开源 starter kit；7/17 Pragmatic Engineer 给「循环工程（Loop Engineering）」命名。北京新政把这套工程共识直接背书为产业准入标准，意味着 harness/Token 效率正在从「最佳实践」变成「合规基线」。国家数据局同期数据：中国日均 Token 调用 2024 年初 1000 亿 → 2025 年底 100 万亿 → 2026 年 3 月突破 140 万亿，两年千倍，银行业是主推手之一。\n\n【影响与前瞻】对 Eason 银行本职是现成的向上汇报弹药：harness engineering、Token 效率、价值计费（算力券本质是按效果补贴）已经从工程圈共识变成地方政府产业政策，推广 AI 时讲「采用量」不如讲「驾驭层成熟度和 Token ROI」。政策同时把「中间层软件栈」和「推理成本」点名，预示下一波监管/补贴会落在 agent 编排层和单位 Token 产出上，正好和微众「日均 Token 破 200 亿、单位 Token 产出价值是分水岭」的内部叙事对接。",
-      "source": "北京市人民政府 / 北京市发改委",
-      "source_type": "web",
-      "url": "https://www.beijing.gov.cn/zhengce/zhengcefagui/202607/t20260723_4781085.html",
-      "timestamp": "2026-07-23T10:00:00+08:00",
-      "importance": 8,
-      "tags": [
-        "Harness Engineering",
-        "政策",
-        "Token经济",
-        "算力券",
-        "智能体"
-      ],
-      "batch_time": "2026-07-24T10:00:00+08:00"
-    },
-    {
-      "title": "昆仑万维方汉在 WAIC 公开喊「Tokenmaxing 已经失败」：堆 Token 堆不出 AI 原生组织，模型才是立足之本",
-      "summary": "昆仑万维董事长兼 CEO 方汉在 WAIC 论坛表示，「Tokenmaxing 已经失败」——把 Token 消耗本身当作能力增长、产品价值和组织转型结果的简单叙事已经失效，真正推动 Token 需求的是模型能力本身的提升。他强调模型能力要依赖 Claude Code 等 Coding Agent 建立的工程框架才能转化为生产力，并警示 AI 编程带来的技术债。这是国内厂商立场首次与 OpenAI CFO 记分卡、Boris Cherny 算账形成共振。",
-      "detail_content": "【核心事件】昆仑万维董事长兼 CEO 方汉在 2026 世界人工智能大会（WAIC）专场论坛上发言，核心观点被多家媒体（ZAKER、东方财富、同花顺、中经网）7 月下旬转载。他把当下行业最流行的「堆 Token」叙事直接判了死刑：「所谓 Tokenmaxing 已经失败，更准确的说法是——把 Token 消耗本身当作能力增长、产品价值和组织转型结果的简单叙事已经失效」。\n\n【关键细节与引用】方汉的论证链条：真正推动 Token 需求的，是模型能力本身的提升；模型能力要转化成生产力，必须依赖 Claude Code 等 Coding Agent 建立的工程框架；因此模型与算力才是 AI 公司长期立足之本，单纯堆 Token 消耗量无法衡量价值。他同步披露昆仑万维仍在持续训练模型，并将发布音乐、具身世界和游戏世界模型，宣布 2026 年为「世界模型元年」，判断 AI 将从内容生成走向对物理世界的理解与交互。他还专门警示 AI 编程带来的技术债问题。\n\n【背景与上下文】方汉这番话不是孤立表态，而是把本频道两周来的「算账」主线补上了国内厂商立场那一块。7/14 OpenAI CFO 出官方记分卡「别数 Token，数有用智能每美元」；7/17 Claude Code 之父 Boris Cherny 给企业 AI ROI 出四步框架，金句「Usage measures activity not return」，真正该问的是「公司本来会不会派人做、值多少工程人时」；同日 tokenizer 隐性涨价被量化（同一段代码 Claude 新分词器比 GPT 多吐 30%+ token）。方汉作为仍在重投训练的模型厂商 CEO 公开承认堆 Token 无效，比应用层公司的劝退更有分量——供给侧自己否定了冲量叙事。\n\n【影响与前瞻】和北京新政同框看，治理层（政策要 Token 效率）+ 供给侧（厂商喊 Tokenmaxing 失败）+ 应用层（CFO/工程师算 ROI）三层同周收口，意味着「按 Token 消耗量考核 AI 采用度」的窗口正在关闭。对 Eason 推 AI 考核改革：判断力增长 > 产出量这把尺子，现在有了官方政策、模型厂商、海外工程一线三重背书。方汉提到的「技术债」也呼应本频道反复出现的反 slop 验收主线——AI 写得快不等于系统不烂。",
-      "source": "昆仑万维（WAIC 论坛）/ ZAKER",
-      "source_type": "aihot",
-      "url": "https://app.myzaker.com/news/article.php?pk=6a61ff998e9f092460162b33",
-      "timestamp": "2026-07-23T11:20:00+08:00",
-      "importance": 7,
-      "tags": [
-        "Tokenmaxing",
-        "算账",
-        "Coding Agent",
-        "技术债",
-        "模型"
-      ],
-      "batch_time": "2026-07-24T10:00:00+08:00"
-    },
-    {
-      "title": "Claude Code 桌面版集成 iOS Simulator：agentic coding 推进到原生移动开发，评论里非程序员已能上架 App Store",
-      "summary": "Anthropic 7/21 宣布 Claude Code 桌面版（公测）可直接驱动苹果 iOS Simulator——构建、运行、查看、迭代 iOS 应用全程自主，Claude 能实时观察模拟器并与之交互。关键工程细节：不依赖 computer use，直接访问模拟器，绕过 macOS 辅助功能和屏幕录制权限。MacRumors 评论区出现真实案例：生命科学背景非程序员用 AI 写出过去几周都调不通的程序、非开发者上个月刚把 App 上架 App Store。",
-      "detail_content": "【核心事件】Anthropic 7 月 21 日宣布，Claude Code 桌面版更新支持苹果 iOS Simulator（公测）。被指示 build、run 或 check 一个 app 时，Claude Code 能在 iOS Simulator 面板里打开开发中的应用、实时观察它运行、与它交互，然后一直迭代到项目完成；开发者可以同时在 Claude 工作时继续使用模拟器。功能仅限 macOS 上 Claude Code Desktop 的本地会话，需安装带 iOS 平台的 Xcode。\n\n【关键细节与引用】最值得注意的工程取舍是它不依赖 computer use（让 Claude 像人一样控制屏幕的那套机制），而是直接驱动模拟器，因此不需要 computer use 必须的 macOS 辅助功能和屏幕录制权限——这是 brain/hands 分离思想在移动端的延伸：模型不必「看屏幕点按钮」，直接拿到底层访问权。隐私上，Claude 对模拟器设备的截图会发给 Anthropic 并按标准会话保留设置保留，官方建议不要在 Claude 使用的设备上登录真实账号。\n\n【背景与上下文】这把 agentic coding 的能力边界从终端/网页推到了原生移动开发，是 7 月以来 Claude Code 能力外扩的又一站（前有 7/11 桌面版 v2.1.206 内置浏览器减少 unknowns）。更生动的注脚在 MacRumors 评论区：用户 CalMin（生命科学背景，只在夜校学过一点 Python，过去写个数据转换脚本要调几周）说现在用 AI 能「写出以前做梦都想不到的、真正有用的程序」；用户 Bearxor 回「你笑，但我上个月把一个 app 上架了 App Store，我绝对不是开发者」。同期 Medium 上 dimillian《The State of Agentic iOS Engineering in 2026》也讨论 Claude Code/Codex 让终端 app 重新变酷。\n\n【影响与前瞻】对「非程序员用 AI 造产品」这条主线是又一块硬证据：移动原生开发的门槛正在被搬掉，App Store 会迎来一波「vibe coded」应用。但评论区 Luftkopf 的反驳同样值得记：当好坏 app 都靠 AI 生成、创作者自己都不一定懂代码，消费者很难分辨一个应用是精心打造的还是漏洞百出的 slop——这正是反 slop 验收要从 web/后端延伸到移动端的信号。对银行业：移动端 agentic coding 也能复用到银行 App 迭代，但合规上「截图上送 + 不要登真账号」是必须写进基线的红线。",
-      "source": "MacRumors",
-      "source_type": "tavily",
-      "url": "https://www.macrumors.com/2026/07/21/claude-code-ios-simulator/",
-      "timestamp": "2026-07-22T07:46:35+08:00",
-      "importance": 7,
-      "tags": [
-        "Claude Code",
-        "iOS Simulator",
-        "agentic coding",
-        "非程序员",
-        "移动开发"
-      ],
-      "batch_time": "2026-07-24T10:00:00+08:00"
-    },
-    {
-      "title": "GergelyOrosz 抓到 AI 时代工程管理裂痕：快增长公司抛弃 PRD，Anthropic 反而坚持——「做对的事比做事更重要」",
-      "summary": "GergelyOrosz 7/23 连发两条推文揭示 PRD 在 AI 时代的两极分化。一位朋友反映所在快增长后期创业公司没人写 PRD，因为 Head of Product 和多数 PM 都是 25 岁、连 1 页文档都没耐心读完。但 GergelyOrosz 深访 Anthropic 后发现：这家史上最快增长的 AI 公司内部仍然写 PRD，因为「当做对的事比做事更重要时，PRD 有价值」。这是「AI 改变工作方式」主线里一个微妙的管理信号。",
-      "detail_content": "【核心事件】GergelyOrosz（Pragmatic Engineer 作者）7 月 23 日在 X 连发两条推文，记录了 PRD（产品需求文档）在 AI 时代截然相反的两种命运。第一条转述一位朋友加入某快增长后期创业公司的观察：「我一开始纳闷这里为什么没人写 PRD，后来意识到 Head of Product 和大多数 PM 都是 25 岁，连一页文档都没耐心读完，三个 bullet 之后就把你丢了」。第二条反转：在与 Anthropic 员工深谈后他发现，这家「史上最快增长的 AI 公司（可能也是史上最快增长的公司）」内部仍然坚持写 PRD。\n\n【关键细节与引用】GergelyOrosz 给出的判断是金句级的：「Turns out these are valuable. When building the right thing is more important than building the thing」（事实证明 PRD 很有价值。当「做对的事」比「做事」更重要的时候）。他把 PRD 的存废和公司所处的阶段挂钩：靠 AI 提速的快增长团队倾向于砍掉一切拖慢节奏的文档化动作，但真正在复杂约束下做前沿产品（如 Anthropic）的团队反而更需要 PRD 来锁定「到底该做什么」。\n\n【背景与上下文】这条观察精准踩在本频道「AI 改变工程师工作方式」主线上，且和几条既有线索咬合。7/16 Armin Ronacher（Flask 作者）讲「摩擦是软件项目共同语言的一部分，AI 消除摩擦时别把理解也消掉」——PRD 正是那种看起来是摩擦、实则是共享理解的载体；7/17 Pragmatic Engineer 给「循环工程」命名时，Claude Code 之父 Boris Cherny 说「我不再 prompt，我的工作是写循环」，强调的是人在更高抽象层做判断——PRD 就是这个更高抽象层的产物之一。GergelyOrosz 同日另一条提到 OpenAI 在自家文档站大量用 AI 写作、并提示「要带着利益相关的视角看」，呼应反 slop 主线：当文档本身都可能是 AI slop，人写的、经过判断的 PRD 反成稀缺品。\n\n【影响与前瞻】对 Eason 的工程管理本职是个清醒的反共识：AI 让「写代码」变便宜，恰恰让「想清楚做什么」变贵——所以考核工程师不该只看产出量，而要看有没有把判断沉淀成可被评审的文档（PRD/设计/验收标准）。Anthropic 的做法可借鉴：越是用 AI 提速，越要在「做对的事」这一层保留人类判断和书面化。否则团队会被年轻 PM 的注意力 span 和 AI 的产出速度裹挟，把 slop 当交付。",
-      "source": "@GergelyOrosz (X)",
-      "source_type": "opentwitter",
-      "url": "https://x.com/GergelyOrosz/status/2080389718462648405",
-      "timestamp": "2026-07-24T04:28:55+08:00",
-      "importance": 7,
-      "tags": [
-        "PRD",
-        "工程管理",
-        "Anthropic",
-        "判断力",
-        "反 slop"
-      ],
-      "batch_time": "2026-07-24T10:00:00+08:00"
     }
   ]
 }
