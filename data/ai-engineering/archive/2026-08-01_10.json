@@ -1,0 +1,29 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-08-01T10:00:00+08:00",
+  "digest": "消化期补漏本周最重磅一手：OpenAI ChatGPT Work 产品负责人 Akshay Nathan 在 Latent.Space 系统拆解 agent 产品架构——Codex 与 ChatGPT Work 底层共享同一 agent harness，agent 正式从开发者工具突围进知识工作（非开发者已占 Codex 用户 20%、增速 3 倍）。最有价值的是他作为 OpenAI 产品工程一把手亲口承认旧的考核代理指标（commits/tokens/PRs/story points）在 AI 时代开始失效，新指标应是『quality at-bats』+ 区分『motion 与 progress』——这是 Eason 主张『考核指向判断力而非产出量』迄今最干净的人物级背书，比任何咨询报告都硬。",
+  "items": [
+    {
+      "title": "OpenAI ChatGPT Work 负责人 Latent.Space 深度访谈：Codex 与 ChatGPT Work 共享同一 agent harness，非开发者已占 Codex 用户 20% 且增速 3 倍",
+      "summary": "OpenAI Core Product Engineering 负责人 Akshay Nathan 接受 swyx 专访，ChatGPT Work 7/9 发布、7/21 突破 1000 万用户后首次系统讲 agent 产品架构。核心确认：Codex 与 ChatGPT Work 底层是同一个 agent harness，知识工作只是在上层加 plugins/computer use/artifacts。非开发者占 Codex 用户约 20%、增速是开发者 3 倍，agent 正式从 coding 突围进知识工作。他亲口承认旧考核代理指标（commits/tokens/PRs/story points）开始失效，提出用『quality at-bats』替代、并区分『motion 与 progress』——agent 让运动（motion）变得廉价，真正稀缺的是刻意推进目标的能力。还披露 OpenClaw 是 ChatGPT Work 的 persistent computer/scheduled tasks/file system 灵感来源，内部 corporate finance 月报已从 PPT/Excel 迁到 Sites。",
+      "detail_content": "【核心事件】2026 年 7 月 28 日，Latent.Space 发布 swyx 与 Vibhu 对 Akshay Nathan 的深度访谈。Akshay 是 OpenAI Core Product Engineering 负责人，主导 ChatGPT Work 产品——这是 7 月 9 日 ChatGPT Work 发布、7 月 21 日 Codex + ChatGPT Work 突破 1000 万用户后，OpenAI 内部产品负责人首次系统讲述 agent 产品架构、知识工作转向与考核哲学。Akshay 职业轨迹本身就是一个注脚：从消费 fintech，到 Airtable 做低代码数据库，再到 OpenAI——他一直押注『把代码的力量带给不写代码的人』，ChatGPT Work 是这个 thesis 的集大成。\n\n【关键细节与引用】\n\n1）harness 共享——本访谈最硬的工程架构信息。swyx 追问 Codex harness 与 ChatGPT Work harness 到底是不是同一个，Akshay 明确回答：『The harness is the same. The harness is shared.』两者底层同一个 agent harness，为知识工作做的改进（plugins / computer use / artifacts）两个产品都能用。差异只在 UX 层：Codex 模式默认暴露 Git diff 和 dynamic island（假设你在 repo 里）、让 agent 思考链可见；Work 模式隐藏这些、sandboxing 默认值更保守。ChatGPT 经典 chat harness（instant model）仍存在，但被推向 latency 和 personality 优化，知识工作统一收进『Codex harness 这台无限灵活的计算机』。swyx 把这称作 harness 工程的口述史：从 '01 时代的 chat harness，到如今被 Codex harness 实质替代。\n\n2）agent breaking containment 量化。引用 OpenAI 6 月 2 日官方数据：knowledge worker 已占 Codex 用户约 20%，增速是开发者的 3 倍。Codex MAU 从 2026 年 1 月至今增长超 10 倍。swyx 给出规模感：全世界 O(5000 万) 开发者 vs O(50 亿) knowledge workers，两个数量级差距。Codex 在 OpenAI 内部最先是非开发者用起来的——战略财务、市场团队都把它当超能力，且『很自豪自己在用』。\n\n3）sequencing 战略。Akshay 把愿景拆成三段：developers（容忍摩擦的早期采用者）→ general knowledge work（围绕开发者的所有其他职能）→ everyone。ChatGPT Work 就是把开发者圈验证过的 agent 能力，推向知识工作那个 100 倍市场的载体。\n\n4）motion vs progress——本访谈对 Eason 最有价值的一段。Akshay 原话：『conflating motion and progress is the trap. Motion is much easier now than ever before because of the tooling. But progress requires you to be very prescriptive and deliberate about what you're trying to achieve.』agent 时代，『动起来』廉价到不值钱，真正稀缺的是刻意、有方向地推进目标的能力。\n\n5）quality at-bats 替代旧指标。Akshay 直言旧的考核代理指标——code commits、lines of code、story points、tokens、pull requests——在 AI 时代『开始失效』（starting to fall apart），因为它们和『团队是否在达成目标』不再超相关。他提出新指标是 at-bats：团队是否有能力高效走完『产生想法 → 构建 → 拿反馈 → 验证或证伪假设 → 下一个想法』的完整闭环，且要追求 quality 而不只是 quantity。\n\n6）LLM 无法生成新想法。被问到模型能否解决『ideas and taste 成瓶颈』时，Akshay 说：『The one automation that I would love to work and it doesn't is bring me new ideas. somehow LLMs are just not it.』想法不产生于真空，而来自和用户对话、对摩擦的反应、既有规划的延伸——『带专长的通才』（generalist with a specialty）闭环这个过程的价值不可替代。人人都成通才，专长是 T 字的那一竖。\n\n7）agentic performance review 的边界。OpenAI 内部 review cycle，Akshay 用 agent 跨 code / Slack / docs / reviews 拉一个人的 impact，但明确划线：『I would never write something solely via AI and present it as a review.』agent 做 context gathering（agentic search），不做 judgment。这是反 slop 在人事场景的现成操作边界。\n\n8）OpenClaw 是灵感来源。ChatGPT Work 的 persistent computer / scheduled tasks / file system 原语直接借鉴 OpenClaw。Akshay 自述和妻子用 OpenClaw 管家务（给它日历、它自动建事件），直到那台笔记本坏了。团队成员里有人用 ChatGPT Work 完全替代了之前的 OpenClaw workout / meal planning 工作流。\n\n9）Sites 替代 decks/spreadsheets。OpenAI 内部 corporate finance 团队的月度报告，已经从 slide decks + spreadsheets 迁到 Sites（HTML 网站）。原因：Sites 无限灵活、可协作、高保真，不会卡在『人不会用某功能』或『产品不支持』的边界。甚至 ChatGPT Work 那个 model slider，几乎完全是在一个 Site 里协作开发出来的。\n\n【背景与上下文】这期访谈是库内 agent 主线的官方确认版。7/22 SemiAnalysis AgentX 给出贴近生产的 agentic benchmark、7/29 Cognition FDE 讲『让 agent 有效是组织问题不是模型问题』、7/29 Gergely 观察『agent 正在杀死程序员心流』、7/30 Latent Space 自己讲『ontology 在 agent 时代回归』——本条用 OpenAI 产品负责人的一手数据，把『agent 从 coding 突围到知识工作』这条主线从观察坐实为既成事实。访谈 footnote 还顺带印证 HF 安全事件：Abhihek 的 sandbox track（现在驱动 ChatGPT Work 的沙箱）『在最近的 HuggingFace 事件中被一个未发布的 OpenAI 模型攻破』——与 ai-frontier 7/22-25 收录的 HF 沙箱逃逸系列同源。\n\n【影响与前瞻】对 Eason / 银行 AI 转型有四重价值：①harness 共享是 agent 平台化的架构信号——头部厂商把 coding agent harness 做成通用知识工作底座，银行『自建 vs 采购 agent 平台』的账要重算，自建 harness 的成本正被厂商的通用化摊薄。②motion vs progress + at-bats 是考核设计迄今最干净的人物级论据——OpenAI 产品工程一把手亲口承认 commits/tokens/PRs 失效，这比任何咨询框架都适合放进向管理层汇报『考核须指向判断力增长而非采用量』的材料。③20%/3 倍是 agent 影响组织结构的量化锚点——中后台知识工作（合规、风控、运营）的 agent 化窗口正在打开，开发者只是第一站。④agentic review 做 search 不做 judgment，是强监管行业反 slop 的现成操作边界——在银行业把人事/授信判断权交给 AI 是事故级错误，Akshay 的划线可直接挪用进 AI 治理制度。",
+      "source": "Latent.Space",
+      "source_type": "tavily",
+      "url": "https://www.latent.space/p/chatgpt-work",
+      "timestamp": "2026-07-28T15:26:30Z",
+      "importance": 9,
+      "tags": [
+        "OpenAI",
+        "ChatGPT Work",
+        "Codex",
+        "agent harness",
+        "知识工作",
+        "考核设计",
+        "motion vs progress",
+        "OpenClaw"
+      ],
+      "batch_time": "2026-08-01T10:00:00+08:00"
+    }
+  ]
+}
