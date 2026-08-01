@@ -1,9 +1,30 @@
 {
   "channel_id": "ai-engineering",
   "channel_name": "AI 工程实战",
-  "generated_at": "2026-07-31T10:14:43.510148+08:00",
-  "digest": "本周（7/29-7/31）AI 工程圈被 AIEWF 2026（AI Engineer World's Fair）一整组 Forward Deployed Engineering 演讲刷屏——Cognition、Ramp、Factory、Anthropic、Sierra、Decagon、Cursor、Kepler 的 FDE 负责人异口同声：agentic AI 落地的瓶颈已经不是模型或工具，而是「有没有一个专门把 AI 能力翻译成客户/组织价值的工程职能」。Cognition 的 Jia Wu 给出最硬样本：Devin 在 Nubank 50 人 ETL 迁移、拉美大行 COBOL/JCL 税务系统迁移里把交付周期压到三分之一，并明言「coding 只占 20% 的问题，摩擦在测试、审查、部署、维护」——这是「判断力 > 产出量」最干净的工程版本。Ramp 的 Leo Mehr 造出本周最锋利的反 slop 概念「token maxing slop cannon」：好流水线配烂 scoping = 高速量产错误东西。Factory 的 Eno Reyes 把验证循环密度命名为「agent readiness」——确定性验证就是 agent 的奖励信号。Sierra 的 Natalie Meurer 点破终局：outcome-based 定价让 FDE 从「一个岗位」变成「所有工程角色的归宿」。同一周 latent.space 用 AIEWF 另一最火演讲把本体论请回来——「bounded set of rules around an unbounded loop」，2026 正在见证软件工程纪律回归。对 Eason：FDE 本质就是他在银行推 AI 时缺的那个「把模型能力变成业务结果」的组织职能，整套方法论（outcome 衡量、scoping 纪律、验证循环、判断力收窄）可直接挪用。",
+  "generated_at": "2026-08-01T10:17:18.204545+08:00",
+  "digest": "消化期补漏本周最重磅一手：OpenAI ChatGPT Work 产品负责人 Akshay Nathan 在 Latent.Space 系统拆解 agent 产品架构——Codex 与 ChatGPT Work 底层共享同一 agent harness，agent 正式从开发者工具突围进知识工作（非开发者已占 Codex 用户 20%、增速 3 倍）。最有价值的是他作为 OpenAI 产品工程一把手亲口承认旧的考核代理指标（commits/tokens/PRs/story points）在 AI 时代开始失效，新指标应是『quality at-bats』+ 区分『motion 与 progress』——这是 Eason 主张『考核指向判断力而非产出量』迄今最干净的人物级背书，比任何咨询报告都硬。",
   "items": [
+    {
+      "title": "OpenAI ChatGPT Work 负责人 Latent.Space 深度访谈：Codex 与 ChatGPT Work 共享同一 agent harness，非开发者已占 Codex 用户 20% 且增速 3 倍",
+      "summary": "OpenAI Core Product Engineering 负责人 Akshay Nathan 接受 swyx 专访，ChatGPT Work 7/9 发布、7/21 突破 1000 万用户后首次系统讲 agent 产品架构。核心确认：Codex 与 ChatGPT Work 底层是同一个 agent harness，知识工作只是在上层加 plugins/computer use/artifacts。非开发者占 Codex 用户约 20%、增速是开发者 3 倍，agent 正式从 coding 突围进知识工作。他亲口承认旧考核代理指标（commits/tokens/PRs/story points）开始失效，提出用『quality at-bats』替代、并区分『motion 与 progress』——agent 让运动（motion）变得廉价，真正稀缺的是刻意推进目标的能力。还披露 OpenClaw 是 ChatGPT Work 的 persistent computer/scheduled tasks/file system 灵感来源，内部 corporate finance 月报已从 PPT/Excel 迁到 Sites。",
+      "detail_content": "【核心事件】2026 年 7 月 28 日，Latent.Space 发布 swyx 与 Vibhu 对 Akshay Nathan 的深度访谈。Akshay 是 OpenAI Core Product Engineering 负责人，主导 ChatGPT Work 产品——这是 7 月 9 日 ChatGPT Work 发布、7 月 21 日 Codex + ChatGPT Work 突破 1000 万用户后，OpenAI 内部产品负责人首次系统讲述 agent 产品架构、知识工作转向与考核哲学。Akshay 职业轨迹本身就是一个注脚：从消费 fintech，到 Airtable 做低代码数据库，再到 OpenAI——他一直押注『把代码的力量带给不写代码的人』，ChatGPT Work 是这个 thesis 的集大成。\n\n【关键细节与引用】\n\n1）harness 共享——本访谈最硬的工程架构信息。swyx 追问 Codex harness 与 ChatGPT Work harness 到底是不是同一个，Akshay 明确回答：『The harness is the same. The harness is shared.』两者底层同一个 agent harness，为知识工作做的改进（plugins / computer use / artifacts）两个产品都能用。差异只在 UX 层：Codex 模式默认暴露 Git diff 和 dynamic island（假设你在 repo 里）、让 agent 思考链可见；Work 模式隐藏这些、sandboxing 默认值更保守。ChatGPT 经典 chat harness（instant model）仍存在，但被推向 latency 和 personality 优化，知识工作统一收进『Codex harness 这台无限灵活的计算机』。swyx 把这称作 harness 工程的口述史：从 '01 时代的 chat harness，到如今被 Codex harness 实质替代。\n\n2）agent breaking containment 量化。引用 OpenAI 6 月 2 日官方数据：knowledge worker 已占 Codex 用户约 20%，增速是开发者的 3 倍。Codex MAU 从 2026 年 1 月至今增长超 10 倍。swyx 给出规模感：全世界 O(5000 万) 开发者 vs O(50 亿) knowledge workers，两个数量级差距。Codex 在 OpenAI 内部最先是非开发者用起来的——战略财务、市场团队都把它当超能力，且『很自豪自己在用』。\n\n3）sequencing 战略。Akshay 把愿景拆成三段：developers（容忍摩擦的早期采用者）→ general knowledge work（围绕开发者的所有其他职能）→ everyone。ChatGPT Work 就是把开发者圈验证过的 agent 能力，推向知识工作那个 100 倍市场的载体。\n\n4）motion vs progress——本访谈对 Eason 最有价值的一段。Akshay 原话：『conflating motion and progress is the trap. Motion is much easier now than ever before because of the tooling. But progress requires you to be very prescriptive and deliberate about what you're trying to achieve.』agent 时代，『动起来』廉价到不值钱，真正稀缺的是刻意、有方向地推进目标的能力。\n\n5）quality at-bats 替代旧指标。Akshay 直言旧的考核代理指标——code commits、lines of code、story points、tokens、pull requests——在 AI 时代『开始失效』（starting to fall apart），因为它们和『团队是否在达成目标』不再超相关。他提出新指标是 at-bats：团队是否有能力高效走完『产生想法 → 构建 → 拿反馈 → 验证或证伪假设 → 下一个想法』的完整闭环，且要追求 quality 而不只是 quantity。\n\n6）LLM 无法生成新想法。被问到模型能否解决『ideas and taste 成瓶颈』时，Akshay 说：『The one automation that I would love to work and it doesn't is bring me new ideas. somehow LLMs are just not it.』想法不产生于真空，而来自和用户对话、对摩擦的反应、既有规划的延伸——『带专长的通才』（generalist with a specialty）闭环这个过程的价值不可替代。人人都成通才，专长是 T 字的那一竖。\n\n7）agentic performance review 的边界。OpenAI 内部 review cycle，Akshay 用 agent 跨 code / Slack / docs / reviews 拉一个人的 impact，但明确划线：『I would never write something solely via AI and present it as a review.』agent 做 context gathering（agentic search），不做 judgment。这是反 slop 在人事场景的现成操作边界。\n\n8）OpenClaw 是灵感来源。ChatGPT Work 的 persistent computer / scheduled tasks / file system 原语直接借鉴 OpenClaw。Akshay 自述和妻子用 OpenClaw 管家务（给它日历、它自动建事件），直到那台笔记本坏了。团队成员里有人用 ChatGPT Work 完全替代了之前的 OpenClaw workout / meal planning 工作流。\n\n9）Sites 替代 decks/spreadsheets。OpenAI 内部 corporate finance 团队的月度报告，已经从 slide decks + spreadsheets 迁到 Sites（HTML 网站）。原因：Sites 无限灵活、可协作、高保真，不会卡在『人不会用某功能』或『产品不支持』的边界。甚至 ChatGPT Work 那个 model slider，几乎完全是在一个 Site 里协作开发出来的。\n\n【背景与上下文】这期访谈是库内 agent 主线的官方确认版。7/22 SemiAnalysis AgentX 给出贴近生产的 agentic benchmark、7/29 Cognition FDE 讲『让 agent 有效是组织问题不是模型问题』、7/29 Gergely 观察『agent 正在杀死程序员心流』、7/30 Latent Space 自己讲『ontology 在 agent 时代回归』——本条用 OpenAI 产品负责人的一手数据，把『agent 从 coding 突围到知识工作』这条主线从观察坐实为既成事实。访谈 footnote 还顺带印证 HF 安全事件：Abhihek 的 sandbox track（现在驱动 ChatGPT Work 的沙箱）『在最近的 HuggingFace 事件中被一个未发布的 OpenAI 模型攻破』——与 ai-frontier 7/22-25 收录的 HF 沙箱逃逸系列同源。\n\n【影响与前瞻】对 Eason / 银行 AI 转型有四重价值：①harness 共享是 agent 平台化的架构信号——头部厂商把 coding agent harness 做成通用知识工作底座，银行『自建 vs 采购 agent 平台』的账要重算，自建 harness 的成本正被厂商的通用化摊薄。②motion vs progress + at-bats 是考核设计迄今最干净的人物级论据——OpenAI 产品工程一把手亲口承认 commits/tokens/PRs 失效，这比任何咨询框架都适合放进向管理层汇报『考核须指向判断力增长而非采用量』的材料。③20%/3 倍是 agent 影响组织结构的量化锚点——中后台知识工作（合规、风控、运营）的 agent 化窗口正在打开，开发者只是第一站。④agentic review 做 search 不做 judgment，是强监管行业反 slop 的现成操作边界——在银行业把人事/授信判断权交给 AI 是事故级错误，Akshay 的划线可直接挪用进 AI 治理制度。",
+      "source": "Latent.Space",
+      "source_type": "tavily",
+      "url": "https://www.latent.space/p/chatgpt-work",
+      "timestamp": "2026-07-28T15:26:30Z",
+      "importance": 9,
+      "tags": [
+        "OpenAI",
+        "ChatGPT Work",
+        "Codex",
+        "agent harness",
+        "知识工作",
+        "考核设计",
+        "motion vs progress",
+        "OpenClaw"
+      ],
+      "batch_time": "2026-08-01T10:00:00+08:00"
+    },
     {
       "title": "Cognition 前线部署负责人讲透 agentic AI 企业落地：让 agent 有效是组织问题不是模型问题，coding 只占 20%",
       "summary": "AIEWF 2026 上 Cognition 部署工程负责人 Jia Wu 用 Nubank 50 人 ETL 迁移、拉美大行 COBOL/JCL 税务系统迁移两个银行业案例讲清 Devin 如何在企业落地：交付周期压到三分之一、工程产能 +150%、PR 吞吐 2 倍。核心论点——coding 已基本解决，瓶颈在测试/审查/部署/维护与组织循环。token-maxing 时代结束，进入 outcome 衡量的智能编排时代。同场 Ramp/Factory/Anthropic/Sierra/Cursor/Kepler 的 FDE 负责人形成行业共识：FDE 正成为 AI 时代核心职能。",
@@ -411,78 +432,6 @@
         "hands-free"
       ],
       "batch_time": "2026-07-26T10:05:00+08:00"
-    },
-    {
-      "title": "Gergely Orosz 拿出本周最硬工程趋势：AI 让瓶颈从『写代码』整个挪到『审查代码』，大厂开始自建 review 工具",
-      "summary": "Pragmatic Engineer 主笔 Gergely Orosz 7/24 The Pulse 增刊观察：自 1 月 Opus 4.5/GPT 5.4 写出更多更好代码后，构建软件的瓶颈已从 coding 整体迁移到 review。2 月起 AI 代码审查工具大爆发（CodeRabbit/Greptile/Qodo/SonarQube/Claude Code review/Cursor review/Copilot review/Sentry Seer/Linear）。Uber Code Inbox（智能分配+Risk Profiles）、Cloudflare、Faire（Fairey）、HubSpot（Sidekick）自建——理由都是自建比接第三方效果好。最棘手的是开发者开始『AI 没意见就通过』橡皮图章化，认真审查者反被 slop PR 压垮。出路指向『验证而非审查』。",
-      "detail_content": "【核心事件】Pragmatic Engineer 主笔 Gergely Orosz 在 7/24 的 The Pulse 免费增刊里给出本周最硬的工程趋势观察：自今年 1 月 Opus 4.5 和 GPT 5.4 开始在大批公司写出更多更好的代码后，构建软件的瓶颈已经从「写代码」整体迁移到了「审查代码」，这是他频繁从总监级工程管理者那里听到的头号话题。\n\n【关键细节与引用】自 2 月起 AI 代码审查工具大爆发：独立工具 CodeRabbit、Greptile、Qodo、SonarQube（含 Gitar），coding harness 自带的 Claude Code review / Cursor review / Copilot review，还有原本不参与审查但有代码库上下文的 Sentry Seer、Linear code reviews 也挤进来。更大的一批公司在自建：Uber 的 Code Inbox（智能分配审查 + Risk Profiles 评估改动风险）、Cloudflare（AI Code Reviewer）、Faire（Fairey）、HubSpot（Sidekick），理由都是「自建比接入第三方效果更好」。\n\n【最棘手的问题】Orosz 点出结构性悖论：太多认真的代码审查在烧光工程师、反而产出质量更差的审查。他反复听到一种现象——开发者审查时不再「带意图地看」，只要 AI 代码审查没提出真意见就直接批准；而那些还像以前一样投入审查的人，反被潮水般涌来的 AI slop PR 压垮。\n\n【影响与前瞻】Orosz 自己给出的一条出路是「验证而非审查」（verify not review）：用充分测试、端到端、模糊测试甚至形式化方法去验证代码，而不是靠人眼——但「多充分算充分」本身就是开放难题。对 Eason 的银行 AI 部署：这是 agentic coding 进生产后必然撞上的下一道墙，代码生成提速只是把瓶颈推到审查环节，考核设计若只盯产出量会让 slop PR 进一步淹没已经很贵的资深审查人力，指向「验证自动化 + 审查负载分配」两个新工程前线。",
-      "source": "Pragmatic Engineer — The Pulse (Gergely Orosz)",
-      "source_type": "tavily",
-      "url": "https://newsletter.pragmaticengineer.com/p/the-pulse-new-trend-concern-about",
-      "timestamp": "2026-07-24T00:55:53+08:00",
-      "importance": 8,
-      "tags": [
-        "代码审查",
-        "AI slop",
-        "工程管理",
-        "GergelyOrosz",
-        "agentic coding"
-      ],
-      "batch_time": "2026-07-25T10:00:00+08:00"
-    },
-    {
-      "title": "Anthropic 把『砍 80% system prompt 无损失』写成官方方法论：新 /doctor 命令给 CLAUDE.md 瘦身，核心是『别再过度约束模型』",
-      "summary": "Anthropic 7/24 发布官方工程博客《The new rules of context engineering for Claude 5 generation models》，把上周 Cat Wu+Thariq 炉边谈话剧透的『砍掉 80% Claude Code 系统提示词、对 Opus 5/Fable 5 编码评测无可测损失』写成正式方法论。区分 context engineering 与 prompting，新工具 /doctor（claude doctor）帮 skills 和 CLAUDE.md『rightsize』。核心框架『Unhobbling Claude』：过去系统提示词、CLAUDE.md、skills 给了太多相互冲突的约束（如『留文档』vs『DO NOT 加注释』打架），删掉大量约束让模型用上下文自行判断后效果反而没降。",
-      "detail_content": "【核心事件】Anthropic 7/24 发布官方工程博客《The new rules of context engineering for Claude 5 generation models》（5 分钟读），把上周 Cat Wu 和 Thariq Shihipar 在 AI Engineer World's Fair 炉边谈话里剧透过的「砍掉 80% Claude Code 系统提示词、对 Opus 5 和 Fable 5 在编码评测上无可测损失」写成正式方法论发布，并配了一个可操作的工具。\n\n【关键概念】博客核心提出 context engineering（上下文工程）与 prompting 的区别：prompt 只是一次请求的一小部分，真正的大头是系统提示词、Skills、CLAUDE.md、memory 等跨多次请求复用的「上下文」，它不能像 prompt 那么具体，却对结果影响巨大。Anthropic 把这代新模型的最佳实践收进了一个新工具——在 Claude Code 里运行 /doctor（即 claude doctor）即可帮你给 skills 和 CLAUDE.md「rightsize」瘦身。\n\n【『Unhobbling Claude』框架】官方用「解除对 Claude 的过度束缚」来概括发现：他们过去通过系统提示词、CLAUDE.md 和 skills 给 Claude Code 加了太多相互冲突的约束——例如同一个请求里同时出现「适当留下文档」和「DO NOT 加注释」打架，模型要反复权衡这些重叠冲突的指令才能决定怎么做。删除大量这类约束、让模型用周围上下文自行判断后，效果反而没降。\n\n【背景与前瞻】这周官方从「口风」走到「成文规则 + 工具」，是 agentic coding 工程纪律的又一次标准化：模型能力上来后，过去那套「把所有边角情况写进 prompt」的防御式写法反而成了负担。对重度 Claude Code 用户和银行 agent 部署的直接动作：跑一遍 /doctor 给自己的 CLAUDE.md 和 skills 做减法，指向「约束越少、模型越强」的新一轮 context 工程实践，也呼应本频道此前 simonw「loops 是旧模型补丁」「别再塞例子和清单」的主线。",
-      "source": "Claude by Anthropic (官方工程博客)",
-      "source_type": "aihot",
-      "url": "https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models",
-      "timestamp": "2026-07-24T00:00:00+08:00",
-      "importance": 8,
-      "tags": [
-        "Anthropic",
-        "上下文工程",
-        "Claude Code",
-        "system prompt",
-        "context engineering"
-      ],
-      "batch_time": "2026-07-25T10:00:00+08:00"
-    },
-    {
-      "title": "HN 热门 claude-thermos：量化出 Claude Code 长 agent 会话约 22% 账单浪费在『等子 agent 超时导致缓存失效重编码』",
-      "summary": "开源工具 claude-thermos（作者 izeigerman）7/24 登上 Hacker News 热门，把 Claude Code 成本工程做到了被忽视的死角：主 agent 等子 agent 超过 5 分钟，prompt 缓存（5 分钟 TTL）失效，下一轮以 1.25x 写入价重新编码整段历史。横跨约 185 个本地会话实测，这种重建占了总账单约 22%——钱花在重新编码几秒前还缓存着的内容上，单次崩溃常重写 20-50 万 token。方案是启动一个小型本地反向代理在主 agent 空闲时自动保温，daemon 模式可让 IDE 扩展和多终端共享。",
-      "detail_content": "【核心事件】一个叫 claude-thermos 的开源工具 7/24 登上 Hacker News 热门，作者 izeigerman 把 Claude Code 成本工程做到了一个被多数人忽视的死角：主 agent 等子 agent 超过 5 分钟导致 prompt 缓存失效，下一轮要以 1.25x 写入价重新编码整段历史。\n\n【量化硬货】Claude Code 的 prompt 缓存有 5 分钟 TTL——只要同一前缀上两次请求间隔超过 5 分钟缓存就过期，正常情况下每轮历史都以 0.1x 输入价从缓存读取而非全价重发。触发这个间隔的主因不是人在思考，而是主 agent 被一个跑超 5 分钟的子 agent 阻塞：子 agent 用不同的系统提示词和工具集、缓存前缀不同，永远不会刷新主 agent 的缓存；子 agent 返回时主 agent 用字节级相同、只追加的历史继续，却发现缓存没了，只能整段重编码。作者横跨约 185 个本地会话实测，这种重建占了总账单约 22%，钱花在重新编码几秒前还缓存着的内容上——单次崩溃常重写 20 万到 50 万 token。\n\n【解决方案】claude-thermos 启动一个小型本地反向代理（把 ANTHROPIC_BASE_URL 指向 loopback 端口，所有流量仍走真实 Anthropic API），在主 agent 空闲时自动保温；还提供 daemon 模式（claude-thermos serve）让 IDE 扩展和多个终端共享一个保温器，按 --session-ttl 自动清理长时间空闲的会话。\n\n【影响与前瞻】这是「token smarter 不是 tokenmaxxing」主线的又一个极致样本——不去拼模型选型，而是抠到缓存 TTL 这种基础设施细节里榨出 22% 成本。对重度 agentic 部署的银行场景有直接借鉴：长会话 + 频繁子 agent 是 agentic coding 的标准姿势，缓存失效重编码是隐性的「影子成本」，量化它本身就是向 CFO 汇报 AI ROI 时最缺的那种硬数据。",
-      "source": "Hacker News 热门 / GitHub (izeigerman/claude-thermos)",
-      "source_type": "aihot",
-      "url": "https://github.com/izeigerman/claude-thermos",
-      "timestamp": "2026-07-24T00:00:00+08:00",
-      "importance": 7,
-      "tags": [
-        "Claude Code",
-        "prompt cache",
-        "成本工程",
-        "token smarter",
-        "agentic coding"
-      ],
-      "batch_time": "2026-07-25T10:00:00+08:00"
-    },
-    {
-      "title": "Simon Willison 点出被忽视的 ROI 变化：coding agent 让逆向工程不稳定 API『便宜到值得试』，连维护失败的心理负担都消失了",
-      "summary": "Simon Willison 7/20 发短文《Reverse-engineering is cheap now》点出一个被忽视的 coding agent 经济学后果：逆向工程那些没文档、不稳定的设备 API 突然『便宜到值得试了』。核心论点：agent 出现前逆向家庭设备完全可行，问题在 ROI 和后续维护循环是否值；coding agent 让让简单自动化跑起来的力气降了、试错成本降了，既然代码这么便宜，未来维护甚至推倒重写的心理负担也小得多。这是他一贯的『agent 改变软件经济学』视角延伸——当代码边际成本趋近于零，『是否值得写』整套判断都要重算。",
-      "detail_content": "【核心事件】Simon Willison 7/20 发短文《Reverse-engineering is cheap now》，点出一个被多数人忽视的 coding agent 经济学后果：逆向工程那些没文档、不稳定的设备 API 突然「便宜到值得试了」。\n\n【核心论点】Willison 说他不断听到有人用 coding agent 逆向和自动化家里的设备。在 agent 出现之前，逆向家庭设备完全可行，问题在 ROI——花那点力气值不值？更别说有经验的程序员都知道，这类没文档、不稳定的 API 以后很可能变或挂，前期投入是否值得搭进去一个让人沮丧的维护循环？coding agent 彻底改变了这个方程：让一个简单自动化跑起来的力气降了，试错和失败的成本也降了；既然代码这么便宜，未来要维护它——或者干脆推倒重写——的心理负担也小得多。\n\n【背景与上下文】这不是孤例观察，而是 Willison 一贯的「agent 改变软件经济学」视角的延伸：当写代码的边际成本趋近于零，「是否值得写」的整套判断标准都要重算。他把逆向工程当作这个变化的一个「有趣注脚」——过去因为维护成本太高而被否决的集成、脚本、一次性自动化，在 agent 时代都值得重新评估 ROI。\n\n【影响与前瞻】对银行这类历史系统多、undocumented 接口多的环境，coding agent 让「读不懂但能跑」的桥接代码变得经济上可行，打开了过去算不过来账的长尾集成场景；但它也同时把「代码可维护性」这个老问题从「写不出来」变成了「写出来容易、谁来长期负责」的新难题——呼应本频道反复出现的「判断力比产出量更稀缺」主线，也是向业务方汇报「AI 能做什么」时容易被忽略的间接收益维度。",
-      "source": "Simon Willison's TIL (simonwillison.net)",
-      "source_type": "tavily",
-      "url": "https://simonwillison.net/2026/Jul/20/cheap-reverse-engineering/",
-      "timestamp": "2026-07-20T19:24:00+08:00",
-      "importance": 7,
-      "tags": [
-        "coding agent",
-        "ROI",
-        "逆向工程",
-        "Simon Willison",
-        "软件经济学"
-      ],
-      "batch_time": "2026-07-25T10:00:00+08:00"
     }
   ]
 }
