@@ -1,0 +1,83 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-08-04T10:00:00+08:00",
+  "digest": "8月3日这天，agentic 工程的「两端基建」被同日往前推了一截：微软开源 Orchard 把训练侧做实（能在真实部署的 harness 里端到端训练 agent，3B 活跃参数把 SWE-bench Verified 打到 69.7%、rerank 后 73%），Cloudflare 则用「agent 需要一台电脑不是容器」重写运行时（isolate 与 container 智能调度，给大规模并发留出成本空间）。一线实践者同日补上另外两个维度——Gergely 转述一个非技术背景的制造业老板靠 AI 三个月干了过去一整年 4-5 倍的零售集成，ashpreetbedi 开新系列讲怎么把「改进 agent 的苦活」自动化成夜间循环。整体看，agentic 工程正从「能不能跑」正式进入「怎么规模化降本、怎么系统化改进、谁在真正用起来」三线并进。对 Eason：Orchard 的「环境层最重要」和 computer 的成本账，是银行自建 agent 平台架构选型最直接的两块外部背书；Gergely 那条是非科技企业 AI 兑现的稀缺一手实证，可对冲行内「AI 用不起来」的悲观 slop。",
+  "items": [
+    {
+      "title": "微软开源 Orchard：能在真实 harness（Codex/OpenClaw）里端到端训练 agent，3B 活跃参数把 SWE-bench Verified 打到 69.7%-73%",
+      "summary": "微软研究院 8/3 发布 Orchard——开源 agentic AI 训练框架，核心是可复用的 Orchard Env（K8s 环境服务）。最大创新是能直接在 agent 真实部署的 harness（Codex、OpenClaw、ZeroClaw）里训练，用一个轻量 proxy 录下 harness 自己的 model calls 当训练数据，每个 rollout 跑在独立容器里，消除「训练用简化替身、部署换真实环境」的不匹配。配套三个 recipe：Orchard-SWE 用约 3B 活跃参数在 SWE-bench Verified 做到 69.7%、value-model rerank 后 73%，逼近大它 10 倍以上的前沿系统；Orchard-GUI 4B 视觉语言模型做浏览器 agent 平均 68.4%；Orchard-Claw 仅 200 个合成任务训练个人助理，在 Codex harness 下成功率从 18.6% 跳到 51.5%。",
+      "detail_content": "【核心事件】微软研究院 8/3 发布开源框架 Orchard，定位是「面向研究的可扩展、高性价比 agentic AI 训练底座」。中央是一个叫 Orchard Env 的轻量 Kubernetes 环境服务，负责并行创建、管理、销毁数千个隔离组件——从采训练数据、跑强化学习 rollout 到评测，都用同一套环境。团队同时放出三个领域配方 Orchard-SWE / Orchard-GUI / Orchard-Claw，以及对应的训练数据和评测方法。\n\n【关键细节与引用】Orchard 最被强调的一句话是「环境层才是关键（the environment layer matters）」——它把运行环境做成独立、可复用的服务，而不是嵌在某个训练框架里的附属品。最硬的工程创新是「能在任意 harness 里训练 agent」：今天最强的 agent 几乎都不再是裸模型跑，而是跑在 Claude Code、Codex、OpenClaw 这类复杂 harness 里，这些 harness 管 multi-turn 推理、工具调用、外部系统连接。开源训练工具通常处理不了这种有状态、多进程的 harness，只能训练一个简化替身再部署到真实环境，造成训练-部署不匹配。Orchard 的解法是一个轻量 proxy 录下 harness 自己的 model calls 当训练数据，每个 rollout 跑在独立容器里，于是 agent 可以端到端地在它将来要部署的那个 harness 里训练——Codex、OpenClaw、ZeroClaw 都行，甚至跨多个 harness 一起训。\n\n三个配方里 Orchard-SWE 数据最硬：基于 Mini-SWE-Agent，从 MiniMax-M2.5 和 Qwen3.5-397B 蒸馏了 10.7 万条 agent 交互，覆盖大量 GitHub Issue。训练用 credit-assignment SFT（不丢掉失败的尝试，学习其中有产出的部分）+ Balanced Adaptive Rollout + 两类 dense reward（on-policy distillation 让更强教师逐步打分 + process reward model 让 AI 裁判奖励好的解题过程，独立于最终测试是否通过）+ value model rerank（用过去 20 次实验的轨迹训一个 4B value model 来给候选答案排序）。SWE-bench Verified 从 61.4% 基线 →69.1%（Balanced Adaptive Rollout）→69.7%（dense reward）→73%（value-model rerank），约 3B 活跃参数就逼近大它 10 倍以上的前沿系统。Orchard-GUI 用 4B vision-language 模型 + 仅 400 条蒸馏演示和 2200 个开放任务，在 WebVoyager 拿 74.1%、Online-Mind2Web 67.0%、DeepShop 64.0%，平均 68.4%，自称最强开源 GUI agent。Orchard-Claw 更说明问题——只用 200 个合成任务训练个人助理 agent，在 Claw-Eval 上三次尝试内完成 59.6%，配上更强的 ZeroClaw harness 升到 73.9%；在 Codex harness 下，训练把成功率从 18.6% 直接拉到 51.5%。\n\n【背景与上下文】Orchard 解决的是 agentic AI 研究的持久瓶颈：做 SOTA agent 往往依赖自研沙箱、闭源训练管线、专有数据集，多数研究者和从业者既拿不到也复现不了。这跟本频道近期多条主线咬合——7/25 SemiAnalysis AgentX 用真实生产轨迹做评测、7/30 simonw 反转「loops 是给旧模型打的补丁」、7/28 Anthropic 的「context engineering 新规则」，都在重新定义「agent 在哪个环境里被验证」。Orchard 把「训练环境」也纳入这条主线：不是替身、不是 benchmark 子集，而是 agent 真实跑的那个 harness。\n\n【影响与前瞻】对 Eason 和银行 AI 平台的直接启发有三层。第一，开源对前沿的逼近已经到了「3B 参数打 SWE-bench 73%」的程度，行内自建 agent 评测/微调有了可复用的开源底座，不必从零造沙箱。第二，「环境层最重要」+「在真实 harness 里训练」是两个可写进汇报的架构原则——如果行里最终用 Claude Code 或 Codex 部署 agent，那评测和微调就应该在那个 harness 里做，而不是用一个对不上的简化测试床。第三，Orchard 把训练轨迹当「持久资产」蒸馏成 value model、做累积学习的思路，是 agent 工程从一次性训练走向持续积累的方向标。caveat：当前是研究发布、面向研究社区，离生产级还有距离；Orchard-Claw 的 Claw-Eval 是自建基准；性能数字是自报。",
+      "source": "Microsoft Research",
+      "source_type": "tavily",
+      "url": "https://www.microsoft.com/en-us/research/blog/orchard-an-open-framework-for-scalable-agentic-ai/",
+      "timestamp": "2026-08-03T16:00:00Z",
+      "importance": 9,
+      "tags": [
+        "微软",
+        "Orchard",
+        "agent训练",
+        "开源",
+        "SWE-bench",
+        "agentic基建"
+      ],
+      "batch_time": "2026-08-04T10:00:00+08:00"
+    },
+    {
+      "title": "Cloudflare「agent 需要一台电脑不是容器」：@cloudflare/computer 让 agent 自己在 isolate 与 container 间智能调度",
+      "summary": "Cloudflare 8/3 推出开源库 @cloudflare/computer，定位是 agent runtime。核心论点是给每个 agent 一个自己的「电脑」（文件系统+shell+工具+执行环境），由平台在轻量 isolate（快、便宜、无限水平扩展）和完整 Linux container（npm/原生二进制）之间动态编排，agent 自己按任务选对的环境。背景判断很直接：全球 hyperscaler 的算力加起来都不够给每个用户的 agent 一个容器化环境，无法扩展到亿级并发，行业正出现「对 CPU 算力而非只是 GPU 的恐慌性需求」。目标是把 container 使用压到全部工作的 10% 以下。",
+      "detail_content": "【核心事件】Cloudflare 8/3 发开源库 @cloudflare/computer（npm install @cloudflare/computer），定位是 agent runtime 预览版。开篇一句话定调：最强的 agent 有一个共同点——它们都被给了「一台自己的电脑」去工作：一个文件系统、一个 shell、工具、包、跑代码的能力，于是 agent 可以检查环境、改东西、测自己的产出、继续推进。@cloudflare/computer 把这套「给 agent 一台电脑」抽象成平台能力，由 runtime 负责在 isolate、container sandbox、浏览器之间做编排。\n\n【关键细节与引用】最锋利的一句是标题本身——「Your agent needs a computer, not a container」。团队判断给每个 agent 一个 container 这条路扩不动：全云、全 hyperscaler 加起来，都不够给每家公司的每个用户 agent 一个容器化计算环境，扩不到几亿再到几十亿并发；「这就是为什么行业出现对 CPU 算力（不只是 GPU 算力）近乎恐慌的需求」。Cloudflare 的押注是 isolate——近 10 年前 Workers 就开始、6 年前 Durable Objects 又押一次——因为 isolate 无限水平扩展、启停极快、空闲能休眠、还能自己拉起 isolate 跑不可信代码。\n\n设计上，@cloudflare/computer 的核心是 workspace：一个 SQLite 支撑的虚拟文件系统，可以从 git 仓库、存储桶或任意文件填充，提供 node:fs 兼容接口和 AI SDK 兼容工具集（read/write/edit/ls/exec）。exec 工具跨 runtime，带一个 backend 参数，工具描述会引导 agent 自己选——只需要操作文件、处理数据、管 git 仓库的活跑在 isolate 里；需要 Linux、npm、原生二进制的活跑在 container 里；两边操作同一份保持同步的源文件。团队称在测试里前沿模型非常擅长做这个选择，只在必要时才回退到 container。目标是 container 只占 agent 不到 10% 的工作，编码、音视频处理、文档生成都交给 isolate。示例里直接用 @cloudflare/think（Cloudflare 自家 agent harness）接 @cloudflare/computer 做一个 bug 分诊 agent。\n\n【背景与上下文】这篇是 Cloudflare Agents Week 的一部分（同日还发了 Workers 入站 TCP + 双向 gRPC 支持，服务于低延迟 voice AI）。更宽的脉络是 agent 架构这半年的演进——年初「起一个 container 跑 agent」是常态，最近半年快速转向「harness 把 sandbox code execution 当工具调」，即把「手」（干活用的沙箱）和「脑」（agent 循环）分开。@cloudflare/computer 是这条脉络在运行时层的一次抽象收敛，跟本频道 7/29 Mitchell Hashimoto 创办 Superlogical「造比 OS 高一层的 agentic OS」、以及 Anthropic Managed Agents 把 harness 产品化是同一组问题不同切面。\n\n【影响与前瞻】对 Eason 的银行场景有两块直接价值。一是 agent 运行时的成本账——当 agent 部署规模从几十扩到全行几万人、再到对外亿级用户调用时，「每个 agent 一个 container」的算力账会爆掉，isolate/container 混合调度是必须的架构选择，这可以写进行内 agent 平台的中长期规划。二是「给 agent 一台电脑而不是一个容器」是个很强的汇报级框架——它点破 agent 真正需要的是可操作的完整工作环境（文件+shell+工具+执行），而非一个隔离的计算盒子，这影响的是 agent 平台该提供什么原语。caveat：目前是 early preview、开源库形态，Cloudflare 自己也说在跟少量客户一起学；isolate 跑不可信/复杂二进制的能力边界仍需验证。",
+      "source": "Cloudflare Blog",
+      "source_type": "tavily",
+      "url": "https://blog.cloudflare.com/cloudflare-computer/",
+      "timestamp": "2026-08-03T13:15:24Z",
+      "importance": 8,
+      "tags": [
+        "Cloudflare",
+        "agent运行时",
+        "isolate",
+        "container",
+        "agentic基建",
+        "成本"
+      ],
+      "batch_time": "2026-08-04T10:00:00+08:00"
+    },
+    {
+      "title": "Gergely 转述一手案例：非技术背景的制造业老板靠 AI，三个月做的零售集成是过去一整年的 4-5 倍",
+      "summary": "Pragmatic Engineer 作者 Gergely Orosz 8/3 在 X 转述一次一手对话：一个物理制造业工厂主（几千员工、非技术人员）说靠 AI，过去三个月建的零售商务集成数量是过去一整年的 4-5 倍，而这些「都是基础集成」。价值不在数字本身多惊艳，而在于它是一个非科技、非技术背景的传统企业主亲口确认 AI 价值兑现的稀缺实证——而且兑现的不是什么高深场景，正是那些「基础但耗时」的集成工作。",
+      "detail_content": "【核心事件】Pragmatic Engineer 作者 Gergely Orosz 8/3 在 X（推文 id 2084325354651394421）转述了一次一手对话：他和一位物理制造业工厂主聊，对方是一个大体量企业（几千员工）、且明确「不是 tech person」的老板。这位老板说，靠 AI，他们过去三个月完成的零售商务（commerce）集成数量，是过去一整年的 4-5 倍。Gergely 特别补了一句「这些是基础集成」。\n\n【关键细节与引用】原推很短，但信息密度集中在「谁说的」和「说的什么」两点上。谁：一个非科技、非技术背景的传统制造业决策者，管着几千人的实体生意——这正是 AI 价值兑现讨论里最稀缺的那类一手信源，因为公开场上发声的多是科技公司 CEO 或 AI 从业者。说的什么：AI 让他们的零售集成产能翻了 4-5 倍，而且明说这些集成「basic」——基础、不性感、但占用大量工时。这个 4-5x 不是来自咨询报告的问卷，而是一位老板对自己企业产出的直接对比。\n\n【背景与上下文】这条推之所以值得单独记一笔，是因为它落在本频道第一优先级「AI 如何改变实际工作方式的一手实践」上，而且补的是一个特别的角度——非科技公司、非技术决策者。它和近期一组「生产力悖论 vs 真实兑现」的讨论形成张力：宏观上（圣路易斯联储 49 万场财报会研究、Apollo 降薪不裁员）AI 生产力在统计上「结构性不可见」，但在具体企业的具体环节上，这种「基础集成 4-5 倍提速」正在真实发生。值得对照的是 Gergely 自己 8/3 同日另一组推文在讨论 Anthropic/OpenAI 用远高于市场价的薪酬挖人——一边是顶级 AI 人才被天价争抢，一边是非科技公司靠现有 AI 工具就把基础集成产能翻几倍，两个画面并置才是当下 AI 扩散的完整图景。\n\n【影响与前瞻】对 Eason 的银行场景，这是一个可以直接拿来对冲两种 slop 的素材。对冲「AI 用不起来/都是炒作」的悲观 slop：一个非技术背景的制造业老板都能靠 AI 把基础集成做到 4-5 倍，银行业务里大量「基础但耗时」的系统对接、报表、配置类工作同理。也对冲「AI 只在硅谷大厂有用」的地域/行业 slop。更有用的是它点出了 AI 兑现最先发生的地方——不是最复杂的智能场景，而是最基础、最重复、最吃工时的集成类工作，这恰好是银行中后台最大的一块人力池。caveat 很明确：这是单条推文转述的一位老板口述，没有可核验的企业名、没有财报数据，4-5x 是主观对比而非实测；「基础集成」具体指什么也未展开。作为信号而非证据使用。",
+      "source": "Gergely Orosz (@GergelyOrosz)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2084325354651394421",
+      "timestamp": "2026-08-03T17:07:44Z",
+      "importance": 7,
+      "tags": [
+        "Gergely",
+        "制造业",
+        "非科技企业",
+        "AI采用",
+        "一手案例",
+        "生产力"
+      ],
+      "batch_time": "2026-08-04T10:00:00+08:00"
+    },
+    {
+      "title": "ashpreetbedi 开新系列「Pro Agent Builders」：把改进 agent 的苦活（prompt/工具/测试）自动化成夜间循环",
+      "summary": "Agentic Software Engineering 方法论博主 ashpreetbedi 8/3 开新系列「Pro Agent Builders」，定位是「专家到底怎么建 agent 的内部信息」。第一篇主题是把「改进 agent 的苦活」自动化——prompt engineering、工具构造、测试这些吃掉工程师晚上的活，变成一个通宵跑的 loop。这是他在 7-8 月连续写「Agent Platform」系列（库内 8/1 已收）之后，把焦点从「搭 agent 平台」推进到「系统化改进 agent 本身」的下一段。",
+      "detail_content": "【核心事件】Agentic Software Engineering 方法论博主 Ashpreet Bedi（@ashpreetbedi，持续写企业 agent 工程实践）8/3 在 X（推文 id 2084331523147239805，♥92/🔁8/浏览约 1.17 万）宣布新系列「Pro Agent Builders」，定位是「关于专家如何构建 agent 的内部信息」。系列第一篇的主题是「自动化改进 agent 的苦活」——prompt engineering、工具构造、测试，即那些「吃掉你晚上」的工作，现在被组织成一个「通宵跑的 loop」。\n\n【关键细节与引用】原推对这第一篇的概括很精炼：automating the grueling work of improving agents，覆盖 prompt engineering、tool construction、testing 三类活，并给出一句很有画面感的定位——「the work that eats your evenings is now an overnight loop」。这跟本频道近期反复出现的「verification 才是人们最没搞对的、唯一最重要的事」「motion vs progress」是同一组判断：agent 时代，定义目标和验证产出的人力价值在上升，而把改进过程本身变成可自动化循环的 agent loop，是放大这少数人力价值的杠杆。\n\n【背景与上下文】这条要放在 ashpreetbedi 7-8 月的连续写作脉络里看。7/28 他写「不写一行代码搭 agent 平台」、7/30「人人都在抢着搭内部 agent 平台」、8/2 写「Agent Platform 新浪潮」（库内 8/1 已把这一组收为「工具让个体更快，系统让公司更好」的点破个人生产力转化断层）。新系列「Pro Agent Builders」是这条线往下一阶段的自然推进——平台搭完之后，真正难的是持续改进跑在上面的 agent，而这恰恰是目前最缺方法论、最吃资深工程师时间的地方。\n\n【影响与前瞻】对 Eason 和银行 agent 团队，这个系列值得跟进的点有两个。一是它给「agent 工程团队该干什么」提供了一个具体职能切分——prompt/工具/测试的持续改进，可以组织成一个半自动的夜间循环，而不是每次都靠资深工程师人肉调；这跟 7/29 Cognition 前线负责人讲的「让 agent 有效是组织问题、coding 只占 20%」同向。二是它指向一个可写进考核的判断——当改进 agent 的苦活能被自动化循环吸收，人类工程师的稀缺价值进一步收窄到「定义什么叫改进、怎么验证改进有效」，即 verification 与判断力，而不是产出量。caveat：本条基于系列开篇推文，博客正文链接（t.co 缩短）未在抓取中展开，具体方法论细节（loop 怎么跑、用什么评测改进）需看系列后续正文；系列刚开篇，深度待观察。",
+      "source": "Ashpreet Bedi (@ashpreetbedi)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/ashpreetbedi/status/2084331523147239805",
+      "timestamp": "2026-08-03T17:32:14Z",
+      "importance": 7,
+      "tags": [
+        "ashpreetbedi",
+        "agent工程",
+        "方法论",
+        "verification",
+        "Pro Agent Builders"
+      ],
+      "batch_time": "2026-08-04T10:00:00+08:00"
+    }
+  ]
+}
