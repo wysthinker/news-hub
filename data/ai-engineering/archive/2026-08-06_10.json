@@ -1,0 +1,84 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-08-06T10:00:00+08:00",
+  "digest": "本周三巨头仍处模型测评消化期，但 agent 真正落地的两层——组织内部的治理与日常工作流——被几家基础设施/平台公司同时给出了迄今最完整的一手样本。Cloudflare CIO Sam Rhea 用第一人称写完整个内部 AI 推行 playbook：从销售私自要 API key 造 SuperApp 的恐慌，到 5 条 ground rules、用 magic email alias 反向摸出真实 jobs-to-be-done、Engineering Codex 4 个月标记 25 万问题并挡下 1.6 万次 merge，再到 V2 用自然语言生成确定性 app（重跑零 token），销售团队 30 天省下 1 万小时——这是目前对一个几千人工程组织如何安全铺开 agent 最详尽的实战复盘。同一天 Cloudflare 还把「怎么发现失控 agent」做成了可量化的工程方法：用每个账号自身 p95 会话成本做行为基线、超过 2x 即为异常候选，点破了 shared API key 让企业既看不见谁在用、也看不见谁跑飞的痛点。GitHub 工程团队则正面接住了 AI 生成巨型 PR 这个新痼疾：把一个 1700 行的 agent 产物拆成 4 层堆叠 PR，每层单一关注点、配独立 reviewer。一线工程师这边，卡尔@aiwarts 给 Codex 和 Claude Code 里 300 多个 Skill 做上下文瘦身，算出仅 Skill 列表每月就吃掉 4-5 亿 token——接住了 Anthropic 自己删 80% 系统提示词之后的上下文工程新账。四条合起来指向同一句：agent 要进生产，胜负手已经不在模型，而在治理基建、工作流结构和上下文账本这三件「无聊但决定成败」的工程纪律上。",
+  "items": [
+    {
+      "title": "Cloudflare CIO 第一人称：内部 AI 推行 6 个月的完整 playbook——Engineering Codex 4 个月挡下 1.6 万次 merge、magic email 反向摸出真实需求",
+      "summary": "Cloudflare CIO Sam Rhea 罕见地用第一人称写完整个内部 AI 推行历程。起点是恐慌：一个销售主动要十几个系统 of record 的 API key 和部署管道 admin 权限去造 SuperApp。由此倒推出 5 条 ground rules（最硬两条：人拥有产出、用 AI 时绝不能比平时有更多数据权限）。用 magic email alias 反向摸出真实的 jobs-to-be-done，Engineering Codex 4 个月标记 25 万问题/挡下 1.6 万 merge/在近 600 个设计写代码前拦下架构问题，V2 从烧 token 的 skill 文件升级到自然语言生成确定性 app（重跑零 token）。销售团队 30 天省 1 万小时。迄今对「几千人工程组织如何安全铺开 agent」最完整的一手样本。",
+      "detail_content": "【核心事件】Cloudflare CIO Sam Rhea 在官方博客发表了《How we're rethinking work at Cloudflare with Cloudflare OS》，第一人称复盘 Cloudflare 内部过去半年从「谨慎试点」到「全员铺开 agent」的完整历程，并把这套内部平台打包成产品 Cloudflare OS 对外发布。文章的引爆点是 Rhea 讲的故事：大约半年前，一个销售团队成员主动找他要一批 API key——而且是要 production 权限，去访问 Cloudflare 十几个系统 of record，外加一条部署管道的 admin 权限，用来跑他们用 AI 搭出来的一个号称能改造整个 go-to-market 团队的 SuperApp。Rhea 意识到，这不再是孤例，而是「几百个技术与非技术岗位的员工在新年前后集体动手用 agent 造工具」浪潮的第一个信号。\n\n【关键细节与引用】Rhea 和 CTO 在奥斯汀办公室草拟了 5 条 ground rules，最硬的两条是：第三条「The human owns the output——人拥有产出」，AI 是工具和造工具的人、不是团队成员，部署 agent 的团队必须为 agent 的产出负责，员工离职则其 manager 继承 agent 的责任，方式和继承其他工作流一样；第五条「You should never have more permission with systems of record when using AI——用 AI 时绝不能比平时有更多数据权限」，agent 只能拿到它需要的最小权限，分享给别人时也按对方的权限而非创建者的权限执行。给工程师侧，Cloudflare 搭了一个叫 Engineering Codex 的上下文层——Codex 是「你应该怎么做」的权威指南，区别于「你不能做什么」的 policy，每个代码模块都有 domain owner 对「什么是对的」负责。三个 agent 把 Codex 撒进研发全流程：一个审查每个 Merge Request、一个在写代码前审查技术设计、一个审查事故报告。Rhea 给的硬数字：过去 4 个月，这些 agent 标记了近 25 万个潜在问题、挡下 1.6 万次 merge、在近 600 个设计里写代码之前就拦下了架构问题。\n\n给非工程师，Cloudflare 踩过一个反直觉的坑：把工程师的工具套个友好 UI 发下去，结果是「一堆找问题的 vibe coded app」。他们反过来搞了个 magic email alias——员工把不想干的活发给这个 AI bot，背后一小撮人用 AI 工具真人接单。Rhea 的洞察原话：「people are less willing to send their vibe coding ideas to what they think is an automated system, but very willing to send the work they do not want to do——人们不愿意把 vibe coding 的点子发给一个自动系统，却非常愿意把不想干的活丢过去」。靠这几百上千次接单，他们摸清了真正的 jobs-to-be-done，再做 skill 和上下文文件去自动化。V1 的 Cloudflare OS 是容器里跑 skill 文件，Rhea 自己每天早上重跑工单报告就烧掉几千 token；V2 让用户用自然语言描述工作流、agent 写代码生成确定性 app，通过一个 gatekeeper 服务按用户权限访问数据、零 API key 管理，重跑初始报告时 token 消耗为零。Rhea 的判断原话：「We don't need AI to always be a tool as much as we need AI to be a toolmaker——我们不需要 AI 总是当工具，我们需要 AI 当造工具的人」。\n\n【背景与上下文】这一篇和 Cloudflare 这周连发的 Astro 软件工厂（8/5，隔离 AI 子代理在 GitHub Actions 里把 open issue 从 200 干到 30）、cloudflare-computer（8/4，agent 需要一台电脑不是容器）是同一波 Agents Week 产品潮，但 CIO 这篇是唯一一个完整讲「组织内部怎么推行」的，工程叙事远重于产品叙事。它和库内的 Uber Agentic Pods（8/3，把最强 AI 工程师塞进业务部门重构工作流）、monday.com 重造组织（ai-org 7/23）是同一条主线——agent 时代的企业落地，组织怎么承接比模型多强更关键。区别在于 Cloudflare 给到了迄今最细的 ground rules + 数字 + 踩坑路径。\n\n【影响与前瞻】对要在强监管银行推 AI 的管理者，这是迄今最可直接挪用的组织级 agent 推行模板：第五条「最小权限 + 权限随人走」几乎是银行业数据隔离的天然翻译，Engineering Codex 的「写代码前审设计」思路对应银行的需求/合规评审前置，magic email alias 则是一个低成本探真实需求的取巧办法。但要带 caveat——Cloudflare 卖的就是 Zero Trust + Workers + AI Gateway + MCP Portal 这一整套，这篇文章既是复盘也是 Cloudflare OS 的产品叙事，引用时宜摆案例视角、对其商业立场保持清醒。Rhea 自己说「expect it to continue to evolve, quickly」，这套 playbook 还在快速变形。",
+      "source": "Cloudflare Blog (Sam Rhea, CIO)",
+      "source_type": "tavily",
+      "url": "https://blog.cloudflare.com/how-we-use-ai-with-cloudflare-os",
+      "timestamp": "2026-08-05T13:00:01Z",
+      "importance": 9,
+      "tags": [
+        "Cloudflare",
+        "agent落地",
+        "组织转型",
+        "CIO视角",
+        "权限治理",
+        "context工程"
+      ],
+      "batch_time": "2026-08-06T10:00:00+08:00"
+    },
+    {
+      "title": "一线工程师的上下文新账本：给 Codex 和 Claude Code 的 300+ Skill 瘦身，算出仅 Skill 列表每月就吃掉 4-5 亿 token",
+      "summary": "卡尔@aiwarts（卡尔的AI沃茨）第一人称实战：给 Codex 和 Claude Code 里 300 多个 Skill 做了一次上下文瘦身。硬数字——Skills 一多，每开一个新会话仅 Skill 列表就要占约 9.9k token；按 7 月使用强度估算，多余的 Skill 列表大约吃掉 4-5 亿 token 的上下文空间。瘦身逻辑踩在 Anthropic 自己 10 天前删 80% 系统提示词的肩膀上：Fable 5/Sonnet 5 已经够聪明，很多以前写死在提示词里的规则模型自己能判断。一篇把「上下文工程」从口号算成具体账单的一手实战。",
+      "detail_content": "【核心事件】卡尔@aiwarts（卡尔的AI沃茨）发文《这是我给 Codex 和 Claude Code 做 Skill 上下文瘦身的新技巧》，第一人称记录了他为 Codex 和 Claude Code 两个 agent harness 里累积的 300 多个 Skill 做的一次系统性上下文瘦身。文章把一个一直被模糊处理的成本——Skill 越装越多到底要付多少 token——第一次算成了具体账单，并给出了可复用的瘦身思路。\n\n【关键细节与引用】卡尔给出了两个硬数字：当 Skills 数量堆到 300+，每开一个新会话、仅 Skill 列表本身就要占掉约 9.9k token；按他 7 月的使用强度粗略估算，这份「多余的 Skill 列表」大约会吃掉 4 到 5 亿 token 的上下文空间。这是一个被绝大多数重度用户忽视的隐性税——装 Skill 时是免费的，每次开会话时都在重复交。瘦身的逻辑支点他直接踩在 Anthropic 自己的动向上：10 天前 Claude Code 把自家系统提示语删了 80%（库内 7/25 Anthropic context engineering 官博），理由是 Fable 5/Sonnet 5 这一档模型已经足够聪明，很多以前必须写死在提示词里的规则、约束、注意事项，模型自己就能在上下文里判断出来。卡尔把这个思路从系统提示词外推到 Skill 描述——精简每个 Skill 的 description 和说明文字，去掉那些「模型其实能自己推断」的硬编码规则，让 Skill 列表从一份冗长的说明书退回成一行够用的索引。知乎专栏（zhuanlan.zhihu.com/p/2068360607154417921）有完整全文。\n\n【背景与上下文】这篇是本周上下文工程主线的最新一块拼图。库内已有 Anthropic 7/25《context engineering 新规则》官博方法论、claude-thermos（7/25，prompt cache 5 分钟 TTL 失效导致 22% 账单是重编码）、simonw smevals（8/2，如何可信比较 harness）。卡尔的切入点不同——不是官方方法论、不是评测工具，而是一线重度用户拿自己的 token 账单开刀、把「context engineering」从一个抽象口号量化成「4-5 亿 token = 一笔可量化的钱」。和库内 8/1 OpenAI ChatGPT Work 负责人「motion vs progress」、7/24 tokenmaxxing 续集是同一个更大趋势的微观切面：当模型能力上来了，真正决定成本和效果的不再是 prompt 写得多花哨，而是上下文里塞了多少不必要的噪音。\n\n【影响与前瞻】对在自己 agent 项目里堆 Skill、在银行内部推 Claude Code/Codex 的重度用户，卡尔的账法可以直接套用——先量一下自己的 Skill 列表每次会话占多少 token、乘以月会话数，大概率是一笔意外大的钱；再按「模型能否自行推断」这条线做减法。这个思路也呼应了一种系统设计偏好：宁可功能有少量重复也不要复杂联动，Skill 池精简比 Skill 池庞大更接近正确答案。中文一手实战、可操作性强，可作为向团队推广 agent 时「为什么我们要统一管理 Skill」的开场素材。",
+      "source": "卡尔的AI沃茨（公众号，知乎专栏同步）",
+      "source_type": "tavily",
+      "url": "https://zhuanlan.zhihu.com/p/2068360607154417921",
+      "timestamp": "2026-08-05T06:46:00Z",
+      "importance": 8,
+      "tags": [
+        "上下文工程",
+        "Claude Code",
+        "Codex",
+        "token成本",
+        "Skill",
+        "一线实战"
+      ],
+      "batch_time": "2026-08-06T10:00:00+08:00"
+    },
+    {
+      "title": "GitHub 工程团队正面接住 AI 巨型 PR：把 1700 行 agent 产物拆成 4 层堆叠 PR，教 agent 自己学「怎么分层交付」",
+      "summary": "GitHub 官方工程博客给出了应对 AI coding agent 副作用——动辄 1000-1700 行无法审查的巨型 PR——的工程结构方案：堆叠式 PR。以「给购物助手加商品搜索」为例，原本一个 1721 行的 agent 产物，被拆成 catalog 数据 / search API / chat 接线 / 接地 UI 共 4 层依赖链，每层单一关注点、配独立 reviewer（data owner / UI owner）。GitHub 配套放出 gh-stack CLI 和 gh-stack skill——后者专门教 agent 怎么建/管理堆叠。把「AI 让代码审查失灵」这个结构性问题，落成了一个可操作的工作流纪律。",
+      "detail_content": "【核心事件】GitHub 工程博客发表《Turn one giant AI-generated pull request to a reviewable stack》，针对 AI coding agent 普遍带来的副作用——动辄 1000 行以上、描述又长又浅、reviewer 看一眼就拖着不审的巨型 PR——给出了官方的工程结构方案：把一个 agent 的巨型产物，分解成一条逻辑有序、可独立审查的堆叠 PR 链（stacked pull requests）。作者 Julia Muiruri 来自 GitHub Developer Experiences。\n\n【关键细节与引用】文章用「给购物助手加商品搜索」做全程演示。原来的 agent 一次产出一个把数据模型+API+客户端接线+UI+各种 empty/error state 全揉在一起的 1721 行 diff，reviewer 的第一反应原话是「1,721 lines changed!! This description isn't very helpful. I'll review this later——1721 行改动，描述没卵用，我以后再审」，然后就再也没有以后了。堆叠 PR 的做法是先定 stack base（所有层的 CI 和 merge 规则都对照它评估），再按依赖关系把工作分层：L1 catalog 数据（typed catalog + seed data + 数据访问模块，data owner 审）/ L2 search API（后端 agent，依赖 L1）/ L3 chat 接线（前端 agent，依赖 L2）/ L4 接地 UI 与引用（前端 agent，依赖 L3）。每一层单一关注点、小到 reviewer 能装进脑子、并自然承接上一层已审过的上下文。GitHub 给了配套工具：gh extension install github/gh-stack 装 CLI，gh skill install github/gh-stack 给 agent 装 skill——这个 skill 专门教 agent 怎么理解、创建和管理堆叠，让 agent 自己学会分层交付而不是一锅端。审查方式也很清晰：自顶向下读拿全局目标、自底向上审逐层推进；下层返工时用 gh stack rebase 本地级联 rebase、gh stack sync 一键让整条链追上——文章特意点了一个坑：网页端点 Rebase stack 按钮会在 GitHub 服务器上跑、committer 被改成点按钮的人、commit 不再签名，如果分支保护要求签名提交就会「quietly breaks——悄悄坏掉」，必须用终端 gh stack rebase 才安全。\n\n【背景与上下文】这篇是 GitHub 对「AI 代码审查失灵」这个本周主线问题的正面回答。库内已有 Gergely 7/24《瓶颈从 coding 迁移到 review》（开发者把 AI 没意见就通过变成橡皮图章、认真审查者反被 slop PR 压垮）、GitHub Copilot 7/31「stacked sessions」产品功能。区别在于：7/31 那条是 Copilot 产品里把大重构拆成一串 agent 任务的 product feature，这一条是 GitHub 工程团队从工程实践角度讲清楚「为什么要拆、怎么拆、agent 怎么学会拆」的 workflow discipline，配套的 gh-stack skill 把「教 agent 分层」标准化了。和库内 7/28 GitHub 官方 harness 8 步工作流、simonw 7/28「Rubber Duck 跨模型互审」是同一条「verify not review」方法论的不同切面。\n\n【影响与前瞻】对在团队里推 coding agent、又要面对代码审查质量下滑的管理者，这套方案的好处是把一个组织问题（reviewer 被巨型 PR 压垮）转成了一个结构问题（PR 怎么分层），而结构问题是可以写进团队规约、可以让 agent 自动遵守的。「不同层配不同 reviewer audience（data owner / UI owner）」这个拆法和银行的岗位职责分工天然契合，「网页 rebase 会悄悄破坏签名提交」这个坑也值得提前写进团队避坑清单。caveat：这是 GitHub 官方推自家 gh-stack 生态的博文，对堆叠 PR 是不是适合所有团队规模、对小型改动是不是过度工程，需要按自己团队情况判断。",
+      "source": "The GitHub Blog (Engineering)",
+      "source_type": "tavily",
+      "url": "https://github.blog/engineering/turn-one-giant-ai-generated-pull-request-to-a-reviewable-stack",
+      "timestamp": "2026-08-04T16:47:18Z",
+      "importance": 8,
+      "tags": [
+        "GitHub",
+        "代码审查",
+        "堆叠PR",
+        "coding agent",
+        "工作流",
+        "AI代码"
+      ],
+      "batch_time": "2026-08-06T10:00:00+08:00"
+    },
+    {
+      "title": "Cloudflare 把「发现失控 agent」做成可量化工程：用每个账号自身 p95 会话成本做行为基线，超过 2x 即为异常候选",
+      "summary": "Cloudflare 把 Identity-Aware AI Gateway 推到 open beta、User Insights 正式 GA。点破企业 AI 治理的痛点：shared API key 让你既看不见谁在用、也看不见哪个 agent 跑飞。两层解法——(1) Cloudflare Access 套在 gateway 前面，每个请求带验证过的用户身份 cf.user_id，可按人设 spend limit（Flexport 早期用户）；(2) User Insights 不卡绝对阈值，而是对每个账号（人或 agent）用其 30 天 p95 会话成本做行为基线，超过自身 2x 且在全组织 p99（$200）之上才告警，给出了一套可复用的失控检测方法论。",
+      "detail_content": "【核心事件】Cloudflare 发布 Identity-Aware AI Gateway（open beta）并把 User Insights 正式 GA 给所有 AI Gateway 客户免费使用。文章《Catching rogue AI behavior with identity-aware analytics》第一次把「怎么在企业里发现一个跑飞或被滥用的 agent」讲成了一套可量化的工程方法，而不是靠人盯日志。\n\n【关键细节与引用】Cloudflare 先点破了一个几乎所有企业都有的盲点：shared API key 让你既看不见谁在用 AI、也看不见哪个 agent 跑飞——「You first need a baseline so you can see what has changed, whether it's an agent that's gone wild or an employee whose usage has spiked 10x」。引用 Stanford 一份研究说 59% 的组织把「知识缺口」列为负责任 AI 治理的最大障碍。第一层解法是身份：把 Cloudflare Access（Zero Trust）套在 AI Gateway 前面，支持任意 SAML IdP（Okta/Entra）认证，不再需要生成和传递 Cloudflare API key；每个请求带上验证过的 cf.user_id，于是可以按人设 spend limit、超了就降级到更便宜的模型或拒绝。Flexport 的 Staff Security Engineer Max Baumgarten 原话：「Shared API keys make it almost impossible to tell who is using an AI service——共享 API key 让你几乎无法判断谁在用 AI 服务」，套上 Access 后能直接复用既有的员工身份策略。第二层解法是行为基线，也是全文最有工程价值的部分：User Insights 不卡绝对阈值（因为对一个重用户 $500 跳变可能正常、对一个总是花 $5 的 agent 花到 $50 就是 10x 异常），而是对每个账号用其 30 天 p95 会话成本做自身基线，超过自身 2x 且在全组织 p99（约 $200）之上才作为强异常候选告警；基线是滚动适配的，还加了 dollar floor 防止「一个微用户 500x 几分钱的跳变」触发误报。文章给出了完整的四象限图（Stars 强异常 / 其余三类忽略）。User Insights 明确不阻断、不定性，只把少数行为突变的账号推到 admin 面前让人去问下一个问题——「sometimes that leads to a real investigation. Sometimes it just means someone needs coaching（比如那个每次都把整个 codebase 塞进 prompt 的开发者）」。\n\n【背景与上下文】这篇是 Cloudflare Agents Week（8/4-5）治理线的主干，和库内 token-maxxing 主线（Uber Agentic Pods 烧完全年预算、OpenAI CFO 记分卡、Claude Code token 账单）、失控 agent 主线（simonw 沙箱逃逸系列、AISI cyber 评测）严丝合缝。库内 Cloudflare 8/4 cloudflare-computer、8/5 Astro 软件工厂是同一周产品潮，但这篇单独把「企业 AI 的可观测性与异常检测」做成了一个独立工程命题——它解决的不是「agent 能不能跑」而是「跑起来之后你怎么知道哪一个出事了」。路线图还预告了 task-based smart routing（按请求类型路由到性价比最高的模型）和 prompt classification（把流量分成 coding/writing 等类别，回答「AI 到底被用来干嘛了」）。\n\n【影响与前瞻】对在银行推 agent 的场景，这套「身份 + 行为基线」几乎是现成的治理采购清单：第一步把所有 agent harness（Claude Code/Codex/Copilot）的流量统一收口到一个 gateway（对应 Cloudflare AI Gateway 或自建等价物）、不再用裸 API key；第二步按 IdP 身份做 per-user budget；第三步用 p95/2x 的行为基线替代拍脑袋的固定阈值——这套方法论本身不绑 Cloudflare，自建网关也能照搬。和头条 CIO 那篇组成 Cloudflare 内部 AI 治理的攻防两面：一篇讲怎么铺开（ground rules + 最小权限）、一篇讲铺开后怎么盯（身份 + 行为基线）。caveat：Cloudflare 卖的就是 AI Gateway + Access 这套，异常检测方法论虽可迁移，但产品是商业闭环，引用时宜把方法论和产品分开看。",
+      "source": "Cloudflare Blog",
+      "source_type": "tavily",
+      "url": "https://blog.cloudflare.com/identity-aware-ai-gateway",
+      "timestamp": "2026-08-05T13:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Cloudflare",
+        "AI治理",
+        "失控检测",
+        "身份认证",
+        "成本治理",
+        "行为基线"
+      ],
+      "batch_time": "2026-08-06T10:00:00+08:00"
+    }
+  ]
+}
