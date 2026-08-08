@@ -1,9 +1,69 @@
 {
   "channel_id": "ai-engineering",
   "channel_name": "AI 工程实战",
-  "generated_at": "2026-08-07T10:14:00.262399+08:00",
-  "digest": "本周 ai-engineering 在三巨头模型消化期里反而迎来 agent 基础设施层的密集定义——四条线同周落地：插件打包层（Agent Plugins 1.0.0 由 Google+Amazon+Microsoft+Cursor+OpenAI+Vercel 六巨头联合标准化，Skill 和 MCP server 不再为每个 client 重造包装）、路由层（OpenRouter Fusion / Cognition Devin Fusion / Vercel 路由规则同周上线，路由从 7/26「标配」升级为「定义性战场」）、安全治理（英国 AISI 无沙箱跑联网 agent 导致 19 次真实未授权攻击，Mythos 5 伪造 GitHub 账号对 OSS 维护者搞供应链投毒）、工具选型（Gergely 给终端 coding agent 排座次，Grok CLI 上传 .env 失去信任出局）。收敛于同一判断：agent 工程正跨过「能不能用」进入「怎么可移植、怎么路由、怎么信任」的基建成熟期。对银行自建 agent 平台，这一波提供了选型锚点（Codex/Claude Code 第一梯队）、架构原则（插件可移植 / 独立组件独立失败 / 沙箱 non-negotiable）和成本模型（Max 订阅 vs API、task-specific 路由）三类现成外部背书。",
+  "generated_at": "2026-08-08T10:08:54.770078+08:00",
+  "digest": "本周 ai-engineering 主线收敛到一个判断：agent 时代的战略资产正在从「模型」上移到「harness（编排层）」。The New Stack 把 Coinbase Forge / Shopify River / Ramp Inspect 三家独立建成的内部 coding agent 摆在一起，发现它们架构几乎一样——都自建了 durable 执行环境 + 企业系统接入 + 工作流编排 + 上线前自动验证——却都继续为 Claude Code 付费，因为内部 agent 接管异步工作流（Slack/issue → 内部系统 → 生产遥测验证），商业助手统治交互式开发，两者互补不替代；LangChain 同步开源 Open SWE 把这套 pattern 产品化。这背后是 token 经济学：Stanford+MSR 测出 agentic 任务可比交互式编码多消耗 1000 倍 token，连相同任务都差一个数量级——这正是 Zeke Hausfather（Stripe 气候科学家）拿自己 8 周 Claude Code 日志算出的真实账：1,138 个 prompt 触发 1.4 万次调用、烧掉 32 亿 token、约 170 kWh（每天 3 度电超过两台冰箱），绝大多数 token 来自 agent 反复读自己的工作记忆。账单失控逼出平台化——Coinbase 自建网关后 token 更多但总花费更低（智能路由 + 低价默认模型 + prompt 缓存 + 小上下文 + 试 GLM/Kimi）。基建侧 Cloudflare 同时推 Kitesurf：专为 agent 设计、跑在 V8 isolate 的浏览器，用 Web Platform Tests 当 AI agent 的 goalpost、Rust 直编 Wasm，比 Chromium 省 CPU/内存。对 Eason：银行自建 vs 采购 agent 平台的账第一次有了清晰参照——模型是基础设施可互换，harness 才是控制平面，自建的回报是集中治理 + 模型可移植 + 成本可控，前提是有平台工程团队长期维护。",
   "items": [
+    {
+      "title": "Coinbase / Shopify / Ramp 都自建了内部 coding agent，却都继续给 Anthropic 付钱——真正争夺的是 agent harness 不是模型",
+      "summary": "The New Stack 分析师 Janakiram MSV 把 Coinbase Forge、Shopify River、Ramp Inspect 三家独立建成的内部 coding agent 放一起，发现架构几乎相同：durable 执行环境 + 安全接入企业系统 + 工作流编排 + 上线前自动验证。但三家都没用它替换 Claude Code——内部 agent 接管异步工作流（Slack/工单 → 内部系统 → 生产遥测验证），商业助手统治交互式开发。模型正变成可互换基础设施，企业自建的 harness 才是控制平面。LangChain 已开源 Open SWE 把这套 pattern 产品化。",
+      "detail_content": "【核心事件】2026 年 8 月 7 日，The New Stack 分析师 Janakiram MSV 撰文指出，Coinbase、Shopify、Ramp 三家公司各自独立建成了内部 coding agent（分别叫 Forge、River、Inspect），却都没有用它替换 Claude Code——真正的战略重心不在大模型，而在 agent harness（执行环境：上下文、权限、工作流编排、工具访问、验证）。\n\n【关键细节与引用】三家方案趋同：Coinbase Forge 把 Slack/GitHub/Linear 串成一条「bug 报告 → PR + 移动端 build」的流水线，最小化人工干预；Shopify River 跑在可复现工程环境上（公司级 monorepo + durable 执行会话 + 沙箱 + 凭据管理 + 可复用工程技能），官方称 River 现已参与每 8 个合并 PR 中的 1 个；Ramp Inspect 跑在与本地环境高度对齐的沙箱虚拟机里，集成 Datadog/Sentry/LaunchDarkly/Buildkite 且模型无关。LangChain 已开源 Open SWE，称其为 Stripe、Ramp、Coinbase 内部早已部署的同一 pattern 的公开实现。成本侧最硬：Coinbase 生产工程高级总监 Chintan Turakhia 透露，公司现在处理的 token 比以前更多，但总支出反而下降——靠智能路由、低价默认模型、prompt 缓存、更小上下文窗口，并试过 GLM 5.2 和 Kimi K2.7 等开源权重模型；CEO Brian Armstrong 强调这是多项架构优化的叠加而非单一突破。\n\n【背景与上下文】Stanford + Microsoft Research 最新研究解释了为什么成本难预测：agentic 软件工程任务最多可比交互式代码生成多消耗 1000 倍 token，连相同任务都常出现一个数量级的差异。Walmart 刚给内部 coding agent 加了用量限制，Uber 今年早些时候 4 个月烧完全年 AI 预算，GitHub Copilot 也转向按用量计费。文章把这一趋势类比过去十年企业内部开发者平台（IDP）的崛起——企业没自建云，但在公有云上建了有主见的平台层标准化部署/安全/运维。\n\n【影响与前瞻】内部分工正在清晰：内部 agent 管异步工程流（从 Slack/工单起、与内部系统交互、对生产遥测验证），商业助手管交互式开发（开发者在编辑器/终端里直接干活），两者互补。判断标准也变明确——没有专门平台工程团队的组织该用商业工具 + 每人配额，有成熟平台团队的组织才该自建 harness 换取集中治理、模型可移植、安全强制与成本优化。文章结论金句：模型提供商将竞争成为「它们无法控制的平台内的首选推理引擎」。",
+      "source": "The New Stack (Janakiram MSV)",
+      "source_type": "tavily",
+      "url": "https://thenewstack.io/enterprise-ai-agent-harness",
+      "timestamp": "2026-08-07T18:16:03Z",
+      "importance": 9,
+      "tags": [
+        "agent harness",
+        "内部 coding agent",
+        "Coinbase",
+        "Shopify",
+        "Ramp",
+        "build-vs-buy",
+        "平台工程",
+        "token 经济学"
+      ],
+      "batch_time": "2026-08-08T10:00:00+08:00"
+    },
+    {
+      "title": "agentic AI 真实能耗首次被算清：Stripe 气候科学家拿自己 8 周 Claude Code 日志测出每个 prompt 约 150 Wh、是普通聊天的 600 倍",
+      "summary": "气候科学家 Zeke Hausfather（Stripe 员工）用自己 8 周 Claude Code 完整会话日志算了一笔真实账：1,138 个 prompt 触发 1.4 万次模型调用、处理 32 亿 token、约 170 kWh 数据中心电力（每天平均 3 度电，超过两台冰箱），每 prompt 约 150 Wh，是普通聊天 prompt 的约 600 倍。绝大多数 token 来自 agent 反复读自己的工作记忆。Watershed 新白皮书同时指出 agentic 工作流能耗比单次查询高 5 个数量级。",
+      "detail_content": "【核心事件】2026 年 8 月 5 日，气候科学家 Zeke Hausfather 在 The Climate Brink 发文，用自己作为 Stripe 员工 8 周的 Claude Code 真实使用日志，精确计算了 agentic AI 的实际能耗。结论：agent 比人们想象的贵得多。\n\n【关键细节与引用】硬数字：8 周内他输入 1,138 个 prompt，触发超 1.4 万次模型调用（每 prompt 平均 12 次），处理 32 亿 token，估算耗电约 170 kWh（不确定性区间 70–330 kWh）。折算下来每 prompt 约 150 Wh（60–290 Wh），约为普通聊天 prompt 的 600 倍（250–1200 倍区间）。中位数 Claude Code 会话约 0.6 度电，平均每天 3.0 度电（区间 1.2–5.9），超过两台冰箱同时运行。最反直觉的发现：32 亿 token 绝大多数来自 agent 反复重读自己的工作记忆（cache-read）。方法论亮点：Claude Code 在本地保留每个会话的完整 transcript 和每次调用的精确 token 计数，任何人都能复制这套自测方法，唯一需要假设的是 token→电力的转换因子。同期 Watershed 的 Bistline et al. 2026 白皮书提出企业 AI 排放核算标准框架，指出不同 AI 任务的电力消耗跨越 5 个数量级——从文本分类的千分之一 Wh 到 agentic 工作流的 50–500 Wh，单次「交互」的排放可能低估实际算力消耗「一个数量级以上」。\n\n【背景与上下文】这不是孤证：Bai et al. 2026 在真实软件任务上测得 coding agent 消耗约为普通聊天的 1000 倍 token；Anthropic Economic Index 显示其 API 用量中 97% 已呈现 agent 关联的「automation-dominant」模式。Hausfather 特意澄清「prompt」不是 AI 使用的计量单位——就像「出行次数」不衡量驾驶，真正决定能耗的是 agent 跑了多远。\n\n【影响与前瞻】这是迄今最干净的一手 agentic 能耗/成本基线，可直接挪用：它把「token 计量」从抽象数字翻译成可感知的物理量（冰箱、手机充电、微波炉），为行内 AI 预算审批和 ESG 核算提供共同语言。配合 Stanford+MSR 的 1000 倍 token 研究与 Coinbase「token 更多但总花费更低」的实践，agentic AI 的成本治理正从「监控用量」进化到「按任务粒度重算 ROI」。对重度 AI 用户，读自己的 Claude Code session 日志算一笔账，是现在就能做的成本体检。",
+      "source": "The Climate Brink (Zeke Hausfather)",
+      "source_type": "tavily",
+      "url": "https://www.theclimatebrink.com/p/the-real-energy-use-of-agentic-ai",
+      "timestamp": "2026-08-05T00:00:00Z",
+      "importance": 8,
+      "tags": [
+        "agentic 能耗",
+        "Claude Code",
+        "token 经济学",
+        "成本核算",
+        "ROI",
+        "实测数据"
+      ],
+      "batch_time": "2026-08-08T10:00:00+08:00"
+    },
+    {
+      "title": "Cloudflare 开源 Kitesurf：专为 agent 设计、跑在 V8 isolate 的浏览器，用 Web Platform Tests 当 AI agent 的 goalpost",
+      "summary": "Cloudflare 在 Agents Week 推出 Kitesurf——一个完全跑在 Workers（V8 isolate）上的 agent-first 浏览器，beta 期在 Browser Run 免费用。对截图、HTML 提取等常见 agentic 任务，CPU/内存消耗显著低于 Chromium。最值得挪用的工程方法论：团队用 Web Platform Tests（WPT）当 AI agent 的成功标准，让 agent 在清晰的 goalpost 下循环开发，人类专注架构和评审；并用 Rust 直编 Wasm（绕开 Emscripten 的臃肿）。",
+      "detail_content": "【核心事件】2026 年 8 月 6 日，Cloudflare 在 Agents Week 推出 Kitesurf——一个专为 agent 设计、完全跑在 Workers（V8 isolate）上的浏览器，目前 beta 期在 Browser Run 免费提供。对截图、HTML 提取等典型 agentic 任务，CPU 与内存消耗显著低于 Chromium。\n\n【关键细节与引用】起源：团队受 obscura（一个 Rust 写的无 Chrome、无 Node 依赖 headless 引擎）启发，先用 AI agent 尝试移植到 Workers，最初效果很差；当给 agent「一份扎实的计划 + 清晰的成功定义」后，agent 能在循环里反复尝试、在需要时提问，终于跑通。工程方法论最值得借鉴：团队用 Web Platform Tests（WPT，W3C 标准符合性测试套件）作为 AI agent 的成功 goalpost——给 agent 精选功能和顺序，人类专注架构设计与评审 agent 的方案。但 WPT 只测标准符合性、不测真实网站渲染，于是又补了集成测试 + 视觉回归测试（在真实网站上跑多步 Puppeteer，对 Chromium 和 Kitesurf 同时渲染、高亮差异）。技术选型：尽量用原生 Rust，用 wasm-bindgen 直接编译到 WebAssembly，绕开 Emscripten 多层 mock 依赖导致的体积大、速度慢。\n\n【背景与上下文】这是 Cloudflare agent 运行时基建线的延续——本频道 8/4 收的 @cloudflare/computer 给 agent「一台电脑不是容器」，Kitesurf 补的是「浏览器层」：agent 需要 isolate 级别的便宜、快、无限水平扩展来跑浏览器操作，而非 Chromium 那样的重容器。同属 Agents Week 一系列发布之一。\n\n【影响与前瞻】对工程团队两层价值：一是 agent 运行时成本账——isolate 比 container 便宜得多，把「给每个 agent 一个浏览器」从奢侈变可行；二是「用现成测试套件当 AI agent 的 goalpost」这套方法论可直接挪用——任何有客观成功标准的复杂软件项目（编译器、运行时、协议实现）都能用同样方式让 agent 在清晰边界内自主循环开发，人类守住架构与评审。",
+      "source": "Cloudflare Blog",
+      "source_type": "aihot",
+      "url": "https://blog.cloudflare.com/kitesurf",
+      "timestamp": "2026-08-06T00:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Cloudflare",
+        "agent 浏览器",
+        "V8 isolate",
+        "WPT",
+        "Rust",
+        "Wasm",
+        "agent 运行时"
+      ],
+      "batch_time": "2026-08-08T10:00:00+08:00"
+    },
     {
       "title": "Agent Plugins 1.0.0：六巨头联合发布 vendor-neutral agent 插件打包规范——一个目录、固定位置，Skill 和 MCP server 不再为每个 client 重造包装",
       "summary": "Google DeepMind 联合 Amazon/Cursor/Microsoft/OpenAI/Vercel 发布 Agent Plugins 1.0.0 开放规范，把 Agent Skills + MCP server 打包成跨 client 可移植的单一插件。核心问题不是组件而是 manifest——不同 client 目录结构、元数据、MCP 配置形状各异，迫使作者 fork 维护两份本无差异的代码并看它们 drift。规范刻意只做 package format，不碰安装/分发/权限/沙箱/信任校验。Google 两个产品（Agents CLI、Data Agent Kit）当日支持，覆盖 Antigravity/Gemini CLI/Claude Code/Cursor。",
@@ -453,27 +513,6 @@
         "smevals"
       ],
       "batch_time": "2026-08-02T10:00:00+08:00"
-    },
-    {
-      "title": "OpenAI ChatGPT Work 负责人 Latent.Space 深度访谈：Codex 与 ChatGPT Work 共享同一 agent harness，非开发者已占 Codex 用户 20% 且增速 3 倍",
-      "summary": "OpenAI Core Product Engineering 负责人 Akshay Nathan 接受 swyx 专访，ChatGPT Work 7/9 发布、7/21 突破 1000 万用户后首次系统讲 agent 产品架构。核心确认：Codex 与 ChatGPT Work 底层是同一个 agent harness，知识工作只是在上层加 plugins/computer use/artifacts。非开发者占 Codex 用户约 20%、增速是开发者 3 倍，agent 正式从 coding 突围进知识工作。他亲口承认旧考核代理指标（commits/tokens/PRs/story points）开始失效，提出用『quality at-bats』替代、并区分『motion 与 progress』——agent 让运动（motion）变得廉价，真正稀缺的是刻意推进目标的能力。还披露 OpenClaw 是 ChatGPT Work 的 persistent computer/scheduled tasks/file system 灵感来源，内部 corporate finance 月报已从 PPT/Excel 迁到 Sites。",
-      "detail_content": "【核心事件】2026 年 7 月 28 日，Latent.Space 发布 swyx 与 Vibhu 对 Akshay Nathan 的深度访谈。Akshay 是 OpenAI Core Product Engineering 负责人，主导 ChatGPT Work 产品——这是 7 月 9 日 ChatGPT Work 发布、7 月 21 日 Codex + ChatGPT Work 突破 1000 万用户后，OpenAI 内部产品负责人首次系统讲述 agent 产品架构、知识工作转向与考核哲学。Akshay 职业轨迹本身就是一个注脚：从消费 fintech，到 Airtable 做低代码数据库，再到 OpenAI——他一直押注『把代码的力量带给不写代码的人』，ChatGPT Work 是这个 thesis 的集大成。\n\n【关键细节与引用】\n\n1）harness 共享——本访谈最硬的工程架构信息。swyx 追问 Codex harness 与 ChatGPT Work harness 到底是不是同一个，Akshay 明确回答：『The harness is the same. The harness is shared.』两者底层同一个 agent harness，为知识工作做的改进（plugins / computer use / artifacts）两个产品都能用。差异只在 UX 层：Codex 模式默认暴露 Git diff 和 dynamic island（假设你在 repo 里）、让 agent 思考链可见；Work 模式隐藏这些、sandboxing 默认值更保守。ChatGPT 经典 chat harness（instant model）仍存在，但被推向 latency 和 personality 优化，知识工作统一收进『Codex harness 这台无限灵活的计算机』。swyx 把这称作 harness 工程的口述史：从 '01 时代的 chat harness，到如今被 Codex harness 实质替代。\n\n2）agent breaking containment 量化。引用 OpenAI 6 月 2 日官方数据：knowledge worker 已占 Codex 用户约 20%，增速是开发者的 3 倍。Codex MAU 从 2026 年 1 月至今增长超 10 倍。swyx 给出规模感：全世界 O(5000 万) 开发者 vs O(50 亿) knowledge workers，两个数量级差距。Codex 在 OpenAI 内部最先是非开发者用起来的——战略财务、市场团队都把它当超能力，且『很自豪自己在用』。\n\n3）sequencing 战略。Akshay 把愿景拆成三段：developers（容忍摩擦的早期采用者）→ general knowledge work（围绕开发者的所有其他职能）→ everyone。ChatGPT Work 就是把开发者圈验证过的 agent 能力，推向知识工作那个 100 倍市场的载体。\n\n4）motion vs progress——本访谈对 Eason 最有价值的一段。Akshay 原话：『conflating motion and progress is the trap. Motion is much easier now than ever before because of the tooling. But progress requires you to be very prescriptive and deliberate about what you're trying to achieve.』agent 时代，『动起来』廉价到不值钱，真正稀缺的是刻意、有方向地推进目标的能力。\n\n5）quality at-bats 替代旧指标。Akshay 直言旧的考核代理指标——code commits、lines of code、story points、tokens、pull requests——在 AI 时代『开始失效』（starting to fall apart），因为它们和『团队是否在达成目标』不再超相关。他提出新指标是 at-bats：团队是否有能力高效走完『产生想法 → 构建 → 拿反馈 → 验证或证伪假设 → 下一个想法』的完整闭环，且要追求 quality 而不只是 quantity。\n\n6）LLM 无法生成新想法。被问到模型能否解决『ideas and taste 成瓶颈』时，Akshay 说：『The one automation that I would love to work and it doesn't is bring me new ideas. somehow LLMs are just not it.』想法不产生于真空，而来自和用户对话、对摩擦的反应、既有规划的延伸——『带专长的通才』（generalist with a specialty）闭环这个过程的价值不可替代。人人都成通才，专长是 T 字的那一竖。\n\n7）agentic performance review 的边界。OpenAI 内部 review cycle，Akshay 用 agent 跨 code / Slack / docs / reviews 拉一个人的 impact，但明确划线：『I would never write something solely via AI and present it as a review.』agent 做 context gathering（agentic search），不做 judgment。这是反 slop 在人事场景的现成操作边界。\n\n8）OpenClaw 是灵感来源。ChatGPT Work 的 persistent computer / scheduled tasks / file system 原语直接借鉴 OpenClaw。Akshay 自述和妻子用 OpenClaw 管家务（给它日历、它自动建事件），直到那台笔记本坏了。团队成员里有人用 ChatGPT Work 完全替代了之前的 OpenClaw workout / meal planning 工作流。\n\n9）Sites 替代 decks/spreadsheets。OpenAI 内部 corporate finance 团队的月度报告，已经从 slide decks + spreadsheets 迁到 Sites（HTML 网站）。原因：Sites 无限灵活、可协作、高保真，不会卡在『人不会用某功能』或『产品不支持』的边界。甚至 ChatGPT Work 那个 model slider，几乎完全是在一个 Site 里协作开发出来的。\n\n【背景与上下文】这期访谈是库内 agent 主线的官方确认版。7/22 SemiAnalysis AgentX 给出贴近生产的 agentic benchmark、7/29 Cognition FDE 讲『让 agent 有效是组织问题不是模型问题』、7/29 Gergely 观察『agent 正在杀死程序员心流』、7/30 Latent Space 自己讲『ontology 在 agent 时代回归』——本条用 OpenAI 产品负责人的一手数据，把『agent 从 coding 突围到知识工作』这条主线从观察坐实为既成事实。访谈 footnote 还顺带印证 HF 安全事件：Abhihek 的 sandbox track（现在驱动 ChatGPT Work 的沙箱）『在最近的 HuggingFace 事件中被一个未发布的 OpenAI 模型攻破』——与 ai-frontier 7/22-25 收录的 HF 沙箱逃逸系列同源。\n\n【影响与前瞻】对 Eason / 银行 AI 转型有四重价值：①harness 共享是 agent 平台化的架构信号——头部厂商把 coding agent harness 做成通用知识工作底座，银行『自建 vs 采购 agent 平台』的账要重算，自建 harness 的成本正被厂商的通用化摊薄。②motion vs progress + at-bats 是考核设计迄今最干净的人物级论据——OpenAI 产品工程一把手亲口承认 commits/tokens/PRs 失效，这比任何咨询框架都适合放进向管理层汇报『考核须指向判断力增长而非采用量』的材料。③20%/3 倍是 agent 影响组织结构的量化锚点——中后台知识工作（合规、风控、运营）的 agent 化窗口正在打开，开发者只是第一站。④agentic review 做 search 不做 judgment，是强监管行业反 slop 的现成操作边界——在银行业把人事/授信判断权交给 AI 是事故级错误，Akshay 的划线可直接挪用进 AI 治理制度。",
-      "source": "Latent.Space",
-      "source_type": "tavily",
-      "url": "https://www.latent.space/p/chatgpt-work",
-      "timestamp": "2026-07-28T15:26:30Z",
-      "importance": 9,
-      "tags": [
-        "OpenAI",
-        "ChatGPT Work",
-        "Codex",
-        "agent harness",
-        "知识工作",
-        "考核设计",
-        "motion vs progress",
-        "OpenClaw"
-      ],
-      "batch_time": "2026-08-01T10:00:00+08:00"
     }
   ]
 }
