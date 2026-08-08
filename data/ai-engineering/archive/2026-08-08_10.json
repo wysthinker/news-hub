@@ -1,0 +1,68 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-08-08T10:00:00+08:00",
+  "digest": "本周 ai-engineering 主线收敛到一个判断：agent 时代的战略资产正在从「模型」上移到「harness（编排层）」。The New Stack 把 Coinbase Forge / Shopify River / Ramp Inspect 三家独立建成的内部 coding agent 摆在一起，发现它们架构几乎一样——都自建了 durable 执行环境 + 企业系统接入 + 工作流编排 + 上线前自动验证——却都继续为 Claude Code 付费，因为内部 agent 接管异步工作流（Slack/issue → 内部系统 → 生产遥测验证），商业助手统治交互式开发，两者互补不替代；LangChain 同步开源 Open SWE 把这套 pattern 产品化。这背后是 token 经济学：Stanford+MSR 测出 agentic 任务可比交互式编码多消耗 1000 倍 token，连相同任务都差一个数量级——这正是 Zeke Hausfather（Stripe 气候科学家）拿自己 8 周 Claude Code 日志算出的真实账：1,138 个 prompt 触发 1.4 万次调用、烧掉 32 亿 token、约 170 kWh（每天 3 度电超过两台冰箱），绝大多数 token 来自 agent 反复读自己的工作记忆。账单失控逼出平台化——Coinbase 自建网关后 token 更多但总花费更低（智能路由 + 低价默认模型 + prompt 缓存 + 小上下文 + 试 GLM/Kimi）。基建侧 Cloudflare 同时推 Kitesurf：专为 agent 设计、跑在 V8 isolate 的浏览器，用 Web Platform Tests 当 AI agent 的 goalpost、Rust 直编 Wasm，比 Chromium 省 CPU/内存。对 Eason：银行自建 vs 采购 agent 平台的账第一次有了清晰参照——模型是基础设施可互换，harness 才是控制平面，自建的回报是集中治理 + 模型可移植 + 成本可控，前提是有平台工程团队长期维护。",
+  "items": [
+    {
+      "title": "Coinbase / Shopify / Ramp 都自建了内部 coding agent，却都继续给 Anthropic 付钱——真正争夺的是 agent harness 不是模型",
+      "summary": "The New Stack 分析师 Janakiram MSV 把 Coinbase Forge、Shopify River、Ramp Inspect 三家独立建成的内部 coding agent 放一起，发现架构几乎相同：durable 执行环境 + 安全接入企业系统 + 工作流编排 + 上线前自动验证。但三家都没用它替换 Claude Code——内部 agent 接管异步工作流（Slack/工单 → 内部系统 → 生产遥测验证），商业助手统治交互式开发。模型正变成可互换基础设施，企业自建的 harness 才是控制平面。LangChain 已开源 Open SWE 把这套 pattern 产品化。",
+      "detail_content": "【核心事件】2026 年 8 月 7 日，The New Stack 分析师 Janakiram MSV 撰文指出，Coinbase、Shopify、Ramp 三家公司各自独立建成了内部 coding agent（分别叫 Forge、River、Inspect），却都没有用它替换 Claude Code——真正的战略重心不在大模型，而在 agent harness（执行环境：上下文、权限、工作流编排、工具访问、验证）。\n\n【关键细节与引用】三家方案趋同：Coinbase Forge 把 Slack/GitHub/Linear 串成一条「bug 报告 → PR + 移动端 build」的流水线，最小化人工干预；Shopify River 跑在可复现工程环境上（公司级 monorepo + durable 执行会话 + 沙箱 + 凭据管理 + 可复用工程技能），官方称 River 现已参与每 8 个合并 PR 中的 1 个；Ramp Inspect 跑在与本地环境高度对齐的沙箱虚拟机里，集成 Datadog/Sentry/LaunchDarkly/Buildkite 且模型无关。LangChain 已开源 Open SWE，称其为 Stripe、Ramp、Coinbase 内部早已部署的同一 pattern 的公开实现。成本侧最硬：Coinbase 生产工程高级总监 Chintan Turakhia 透露，公司现在处理的 token 比以前更多，但总支出反而下降——靠智能路由、低价默认模型、prompt 缓存、更小上下文窗口，并试过 GLM 5.2 和 Kimi K2.7 等开源权重模型；CEO Brian Armstrong 强调这是多项架构优化的叠加而非单一突破。\n\n【背景与上下文】Stanford + Microsoft Research 最新研究解释了为什么成本难预测：agentic 软件工程任务最多可比交互式代码生成多消耗 1000 倍 token，连相同任务都常出现一个数量级的差异。Walmart 刚给内部 coding agent 加了用量限制，Uber 今年早些时候 4 个月烧完全年 AI 预算，GitHub Copilot 也转向按用量计费。文章把这一趋势类比过去十年企业内部开发者平台（IDP）的崛起——企业没自建云，但在公有云上建了有主见的平台层标准化部署/安全/运维。\n\n【影响与前瞻】内部分工正在清晰：内部 agent 管异步工程流（从 Slack/工单起、与内部系统交互、对生产遥测验证），商业助手管交互式开发（开发者在编辑器/终端里直接干活），两者互补。判断标准也变明确——没有专门平台工程团队的组织该用商业工具 + 每人配额，有成熟平台团队的组织才该自建 harness 换取集中治理、模型可移植、安全强制与成本优化。文章结论金句：模型提供商将竞争成为「它们无法控制的平台内的首选推理引擎」。",
+      "source": "The New Stack (Janakiram MSV)",
+      "source_type": "tavily",
+      "url": "https://thenewstack.io/enterprise-ai-agent-harness",
+      "timestamp": "2026-08-07T18:16:03Z",
+      "importance": 9,
+      "tags": [
+        "agent harness",
+        "内部 coding agent",
+        "Coinbase",
+        "Shopify",
+        "Ramp",
+        "build-vs-buy",
+        "平台工程",
+        "token 经济学"
+      ],
+      "batch_time": "2026-08-08T10:00:00+08:00"
+    },
+    {
+      "title": "agentic AI 真实能耗首次被算清：Stripe 气候科学家拿自己 8 周 Claude Code 日志测出每个 prompt 约 150 Wh、是普通聊天的 600 倍",
+      "summary": "气候科学家 Zeke Hausfather（Stripe 员工）用自己 8 周 Claude Code 完整会话日志算了一笔真实账：1,138 个 prompt 触发 1.4 万次模型调用、处理 32 亿 token、约 170 kWh 数据中心电力（每天平均 3 度电，超过两台冰箱），每 prompt 约 150 Wh，是普通聊天 prompt 的约 600 倍。绝大多数 token 来自 agent 反复读自己的工作记忆。Watershed 新白皮书同时指出 agentic 工作流能耗比单次查询高 5 个数量级。",
+      "detail_content": "【核心事件】2026 年 8 月 5 日，气候科学家 Zeke Hausfather 在 The Climate Brink 发文，用自己作为 Stripe 员工 8 周的 Claude Code 真实使用日志，精确计算了 agentic AI 的实际能耗。结论：agent 比人们想象的贵得多。\n\n【关键细节与引用】硬数字：8 周内他输入 1,138 个 prompt，触发超 1.4 万次模型调用（每 prompt 平均 12 次），处理 32 亿 token，估算耗电约 170 kWh（不确定性区间 70–330 kWh）。折算下来每 prompt 约 150 Wh（60–290 Wh），约为普通聊天 prompt 的 600 倍（250–1200 倍区间）。中位数 Claude Code 会话约 0.6 度电，平均每天 3.0 度电（区间 1.2–5.9），超过两台冰箱同时运行。最反直觉的发现：32 亿 token 绝大多数来自 agent 反复重读自己的工作记忆（cache-read）。方法论亮点：Claude Code 在本地保留每个会话的完整 transcript 和每次调用的精确 token 计数，任何人都能复制这套自测方法，唯一需要假设的是 token→电力的转换因子。同期 Watershed 的 Bistline et al. 2026 白皮书提出企业 AI 排放核算标准框架，指出不同 AI 任务的电力消耗跨越 5 个数量级——从文本分类的千分之一 Wh 到 agentic 工作流的 50–500 Wh，单次「交互」的排放可能低估实际算力消耗「一个数量级以上」。\n\n【背景与上下文】这不是孤证：Bai et al. 2026 在真实软件任务上测得 coding agent 消耗约为普通聊天的 1000 倍 token；Anthropic Economic Index 显示其 API 用量中 97% 已呈现 agent 关联的「automation-dominant」模式。Hausfather 特意澄清「prompt」不是 AI 使用的计量单位——就像「出行次数」不衡量驾驶，真正决定能耗的是 agent 跑了多远。\n\n【影响与前瞻】这是迄今最干净的一手 agentic 能耗/成本基线，可直接挪用：它把「token 计量」从抽象数字翻译成可感知的物理量（冰箱、手机充电、微波炉），为行内 AI 预算审批和 ESG 核算提供共同语言。配合 Stanford+MSR 的 1000 倍 token 研究与 Coinbase「token 更多但总花费更低」的实践，agentic AI 的成本治理正从「监控用量」进化到「按任务粒度重算 ROI」。对重度 AI 用户，读自己的 Claude Code session 日志算一笔账，是现在就能做的成本体检。",
+      "source": "The Climate Brink (Zeke Hausfather)",
+      "source_type": "tavily",
+      "url": "https://www.theclimatebrink.com/p/the-real-energy-use-of-agentic-ai",
+      "timestamp": "2026-08-05T00:00:00Z",
+      "importance": 8,
+      "tags": [
+        "agentic 能耗",
+        "Claude Code",
+        "token 经济学",
+        "成本核算",
+        "ROI",
+        "实测数据"
+      ],
+      "batch_time": "2026-08-08T10:00:00+08:00"
+    },
+    {
+      "title": "Cloudflare 开源 Kitesurf：专为 agent 设计、跑在 V8 isolate 的浏览器，用 Web Platform Tests 当 AI agent 的 goalpost",
+      "summary": "Cloudflare 在 Agents Week 推出 Kitesurf——一个完全跑在 Workers（V8 isolate）上的 agent-first 浏览器，beta 期在 Browser Run 免费用。对截图、HTML 提取等常见 agentic 任务，CPU/内存消耗显著低于 Chromium。最值得挪用的工程方法论：团队用 Web Platform Tests（WPT）当 AI agent 的成功标准，让 agent 在清晰的 goalpost 下循环开发，人类专注架构和评审；并用 Rust 直编 Wasm（绕开 Emscripten 的臃肿）。",
+      "detail_content": "【核心事件】2026 年 8 月 6 日，Cloudflare 在 Agents Week 推出 Kitesurf——一个专为 agent 设计、完全跑在 Workers（V8 isolate）上的浏览器，目前 beta 期在 Browser Run 免费提供。对截图、HTML 提取等典型 agentic 任务，CPU 与内存消耗显著低于 Chromium。\n\n【关键细节与引用】起源：团队受 obscura（一个 Rust 写的无 Chrome、无 Node 依赖 headless 引擎）启发，先用 AI agent 尝试移植到 Workers，最初效果很差；当给 agent「一份扎实的计划 + 清晰的成功定义」后，agent 能在循环里反复尝试、在需要时提问，终于跑通。工程方法论最值得借鉴：团队用 Web Platform Tests（WPT，W3C 标准符合性测试套件）作为 AI agent 的成功 goalpost——给 agent 精选功能和顺序，人类专注架构设计与评审 agent 的方案。但 WPT 只测标准符合性、不测真实网站渲染，于是又补了集成测试 + 视觉回归测试（在真实网站上跑多步 Puppeteer，对 Chromium 和 Kitesurf 同时渲染、高亮差异）。技术选型：尽量用原生 Rust，用 wasm-bindgen 直接编译到 WebAssembly，绕开 Emscripten 多层 mock 依赖导致的体积大、速度慢。\n\n【背景与上下文】这是 Cloudflare agent 运行时基建线的延续——本频道 8/4 收的 @cloudflare/computer 给 agent「一台电脑不是容器」，Kitesurf 补的是「浏览器层」：agent 需要 isolate 级别的便宜、快、无限水平扩展来跑浏览器操作，而非 Chromium 那样的重容器。同属 Agents Week 一系列发布之一。\n\n【影响与前瞻】对工程团队两层价值：一是 agent 运行时成本账——isolate 比 container 便宜得多，把「给每个 agent 一个浏览器」从奢侈变可行；二是「用现成测试套件当 AI agent 的 goalpost」这套方法论可直接挪用——任何有客观成功标准的复杂软件项目（编译器、运行时、协议实现）都能用同样方式让 agent 在清晰边界内自主循环开发，人类守住架构与评审。",
+      "source": "Cloudflare Blog",
+      "source_type": "aihot",
+      "url": "https://blog.cloudflare.com/kitesurf",
+      "timestamp": "2026-08-06T00:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Cloudflare",
+        "agent 浏览器",
+        "V8 isolate",
+        "WPT",
+        "Rust",
+        "Wasm",
+        "agent 运行时"
+      ],
+      "batch_time": "2026-08-08T10:00:00+08:00"
+    }
+  ]
+}
