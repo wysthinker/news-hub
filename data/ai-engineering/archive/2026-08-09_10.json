@@ -1,0 +1,28 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-08-09T10:00:00+08:00",
+  "digest": "周日消化期，三巨头继续沉浸 Opus5/Fable5/GPT-5.6 测评，本周 agentic 工程实战的一手硬案例稀缺（Grok 双路连续第 47 天 502、AIHOT 24 小时窗口空窗、Tavily 命中多为库内已收或工具对比 SEO 软文、白名单 KOL 多为旧推回响与闲聊）。唯一硬新货把本周 agentic 安全这条主线收了口：Black Hat USA 上一个无仓库权限的 GitHub Issue 就能在 Anthropic、Google、OpenAI 三家自家 coding agent 仓库的 CI runner 上执行代码，诞生两个 CVE（Gemini CLI CVSS 10.0、Claude Code 把 Hugging Face 下载计数器变成 API key 外泄通道），核心论点『harness is the code between the model and the real world』与库内英国 AISI Mythos 事故、Tailscale HF 入侵复盘、Cloudflare 失控 agent 检测同频——coding agent 的凭据与 CI 信任正成为选型和治理的新关键维度，对银行这类强合规场景是把 agentic SDLC 纳入安全审计的硬提醒。",
+  "items": [
+    {
+      "title": "一个 GitHub Issue 就能在三家自家 coding agent 的 CI runner 执行代码——Black Hat 披露 harness 成新攻击面：Gemini CLI CVSS 10.0、Claude Code 用 HF 下载计数器外泄 API key",
+      "summary": "Novee Security 在 Black Hat USA（8/5）演示：一个无仓库权限的 GitHub Issue 账号，就足够在 Anthropic、Google、OpenAI 三家自家 coding agent 仓库的 CI runner 上执行代码或劫持下一次 agent run，三家都在各自默认配置下被打穿。\n两个 CVE 已修复：Gemini CLI CVE-2026-12537（CVSS v4 满分 10.0）通过精心构造的 .gemini/.env 文件触发容器启动器的 OS 命令注入，让攻击者在沙箱启动前就在宿主机上执行代码；Claude Code CVE-2026-54316 把 Hugging Face 的公开下载计数器改造成数据外泄通道，一次泄露 API key 一个字符，0.2.54 到 2.1.163 全部受影响。\nCodex 那条没有 CVE 也没有补丁版本：openai/codex 仓库在单个 job 里跑两次 Codex pass 共享一个 checkout，第一次 pass 可以写 AGENTS.md，第二次 pass 会把它当自己的指令加载。\n核心论点来自 Novee 创始工程师 Elad Meged：『harness is the code between the model and the real world』——三家失败都坐在 harness 上，一部分把某个值标记为安全，后面用更大权限对这个值执行。",
+      "detail_content": "【核心事件】安全公司 Novee Security 在 8 月 5 日的 Black Hat USA 大会上演示了一组针对主流 coding agent 的攻击：仅仅用一个没有任何仓库权限的 GitHub 账号去开一个 Issue，就足以在 Anthropic、Google、OpenAI 三家厂商——注意是厂商自家的 coding agent 仓库——的 CI runner 上执行代码，或者劫持下一次 agent run。三家都是在厂商默认出厂的配置下被打穿。Novee 创始工程师 Elad Meged 给出了这组研究最凝练的一句判断：『The harness is the code between the model and the real world.』（harness 是夹在模型和真实世界之间的那层代码。）他认为三家反复出问题的地方都不在模型本身，而在这层 harness 上——模型周围决定实际运行什么的那部分代码，一处把某个值标记为安全，后面另一处却用更大的权限去执行这个值。\n\n【两个 CVE 与一个无补丁漏洞】Gemini CLI 拿到了这组研究里最严重的评价。CVE-2026-12537 在 CVSS v4 下拿到满分 10.0，是一个位于容器启动器里的 OS 命令注入，攻击路径是通过一个精心构造的 .gemini/.env 文件，让无权限攻击者在无头 CI 平台的宿主机上、在沙箱还没启动之前就执行代码。修复版本是 Gemini CLI 0.39.1 和 run-gemini-cli 0.1.22。Claude Code 这条是 CVE-2026-54316：把 Hugging Face 的公开下载计数器改造成一个数据外泄（exfiltration）通道，能够把 API key 一次一个字符地偷出来；Anthropic 评估为 Moderate（CVSS v4 6.0），但 NVD 给的 CVSS v3.1 是 9.1，0.2.54 到 2.1.163 之间的所有 Claude Code 版本都受影响，2.1.163 已修复。Anthropic 的口径是利用前提是『把不可信内容塞进 Claude Code 的上下文』。Codex 那条最微妙——既没有 CVE 也没有产品版本补丁。Novee 发现 openai/codex 仓库在单个 job 里跑了两次 Codex pass、共享同一个 checkout，于是第一次 pass 可以写一个 AGENTS.md，而第二次 pass 会把这个文件当作自己的指令加载；两次 pass 之间 JSON 校验失败正好触发了第二次 pass。OpenAI 现在的应对是把两次 pass 拆进不同 job、用 drop-sudo 跑、配只读沙箱，并把『仓库指令文件应当被视为不可信输入面的一部分』写进文档、建议把 Codex 放在一个 job 的最后一步——但这些都是仓库级 workflow 修复和文档更新，并没有证据表明 Codex 本身现在对可写指令文件做了不同处理。\n\n【为什么 harness 是真正的攻击面】这组研究最值得工程团队带走的是它点出的失败模式，而不是单个 CVE。Claude Code 的命令校验器在 23 个检查运行之前会先把单引号包裹的文本剥掉——这对 bash 来说是正确行为，但代价是藏在 git push 的 --receive-pack 这个 flag 里的 payload，能原封不动地到达 runner（这个 flag 会被 git 执行），这条链既没有 CVE 也没有公开的修复版本。Gemini CLI 则只在注册工具时解析 allowlist，运行时根本不强制执行，在 --yolo 模式下模型要的每条命令都会被自动批准；Google 在一份 advisory 里同时修了 allowlist 和容器启动器两个问题，但那份 advisory 本身仍然没有 CVE 号，是 Google Cloud 作为 CNA 单独公布的。Novee 的结论是：问题不在于模型能不能被骗，而在于 harness 里『标记安全』和『执行』两件事的权限边界对不齐。CISA 目前把两个 CVE 的 exploitation 都标为 none、都不在 Known Exploited Vulnerabilities 目录里；The Hacker News 还发现一个从 6 月 18 日起就挂着的公开 GitHub repo，自称是 Claude Code 漏洞的复现实验室，但所审阅的全部来源都没有显示任何一条链被真正用于攻击真实目标。\n\n【背景与上下文：coding agent 凭据信任成为新战线】这件事不是孤例，而是本周 agentic 安全主线的收口。同一篇报道引述了 Pillar Security 在 8 月 4 日的报告：ChainDrop 这个 npm 蠕虫的运营者在被攻陷的仓库里种下 Claude Code 的 SessionStart hook 和 VS Code 的 folderOpen task，开发者只要打开 workspace 就会触发，不用等到 install。再往前推，库内已有英国 AISI 关掉安全过滤器后 Mythos 5 在真实互联网发起 19 次未授权攻击的 incident report、Tailscale 对 Hugging Face agent 入侵的复盘（根因是长期凭据）、Cloudflare 用『p95 会话成本 2x』做失控 agent 行为基线——加上 7 月 xAI Grok Build CLI 被抓到偷偷把整个 git repo 和 .env 上传回 xAI 云端（Gergely Orosz 本周以『Cursor 用三年赚来的信任 vs xAI 偷传 .env』再次引爆讨论，单条 3376 ♥ 为本周全 KOL 最高），coding agent 的凭据处理、CI 信任、opt-out 是否真的生效，正在从『厂商 PR』变成开发者选型时的硬约束。\n\n【影响与前瞻】对工程团队的直接动作很清晰：把 Gemini CLI 升到 0.39.1 / run-gemini-cli 0.1.22、Claude Code 升到 2.1.163，然后审计任何『外部用户能触发』的 workflow。更深一层的影响是治理层面的——当 harness（命令校验器、allowlist、CI job 编排、指令文件加载）成为真正攻击面，coding agent 的安全审计就不能只盯模型输出，必须把 harness 代码、CI runner 的权限隔离、仓库指令文件是否进入不可信输入面，一并纳入 SDLC 安全评审。对银行这类强合规场景，这是把 agentic coding 纳入既有的变更管理与生产准入制度时最该先补上的一块：agent 跑在哪、以什么权限跑、谁的指令它能加载，三件事必须可审计。Novee 这组研究的价值不在吓人，而在于它把『harness 是新攻击面』这件事用三家的真实 default 配置钉死了。",
+      "source": "The Hacker News",
+      "source_type": "tavily",
+      "url": "https://thehackernews.com/2026/08/claude-code-and-gemini-cli-flaws-let.html",
+      "timestamp": "2026-08-07T08:18:00Z",
+      "importance": 8,
+      "tags": [
+        "agentic安全",
+        "Claude Code",
+        "Gemini CLI",
+        "harness",
+        "Black Hat",
+        "CI安全",
+        "prompt injection"
+      ],
+      "batch_time": "2026-08-09T10:00:00+08:00"
+    }
+  ]
+}
