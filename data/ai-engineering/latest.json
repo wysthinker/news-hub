@@ -1,9 +1,63 @@
 {
   "channel_id": "ai-engineering",
   "channel_name": "AI 工程实战",
-  "generated_at": "2026-08-10T10:16:58.578409+08:00",
-  "digest": "coding agent 的头号安全威胁本周被 Anthropic 宣告「基本解决」——auto mode 8月14日成为 Claude Code 默认、第三方评测 720 次提示注入攻击 0 次得手，但 Simon Willison 用一个恶意包反例提醒「还想看到更多独立验证」。同期两份一手工程材料补上另一条线：Wisedocs 工程师给出迄今最诚实的「AI 时代重构经济学」现场报告（同一任务跨代际模型耗时差 5 倍，但 AI 写的新代码正在变成新的 legacy），swyx + steipete 把「ultracode/动态工作流」定性为 harness 特性而非模型专属——下一代 coding mode 的跃迁任何 agent 平台都能自建。Notion 6000 人调研则钉住宏观采用现实：57% 仍处早期、领导 26% vs 一线 5% 的鸿沟才是落地真瓶颈。",
+  "generated_at": "2026-08-11T10:12:18.255572+08:00",
+  "digest": "computer-use agent 这周从『demo 能力展示』实质跨进『规模化生产部署』，主战场随之从模型层（它会不会点鼠标）整体上移到治理层、harness 层和生态层。a16z 综合投资组合真实部署数据定性：裸 UI 导航已是模型层商品，模型不再是瓶颈，持久的护城河长在 context、权限、流程知识、校验、升级、缓存这些『懂一家公司具体怎么干活』的能力上，BPO 后台流程成为新前沿。Databricks 同日发深度架构文给出治理层最干净的工程答案——agent 挂最终用户凭证跑、数据治理平面（而非模型/prompt）做安全边界，直接戳破『我加了 prompt 让它别露数据』这种审计说不出口的反模式，对强监管行业是即取即用的设计模板。steipete 用 ChatGPT Work 浏览器 agent 一键装好 OpenClaw+Ollama+本地模型，h1260，既示范 computer-use agent 独立完成开发环境搭建这类多步骤真实任务，也印证 OpenClaw 正收敛成『跑任意模型（含本地）的通用 harness』。本周三件事合起来是一句话——agent 落地的胜负手已经不在模型多强，在治理、harness、生态这三层工程基建。",
   "items": [
+    {
+      "title": "a16z 用真实部署数据给 computer-use agent 定性：模型已不是瓶颈，护城河上移到 context/权限/校验/缓存",
+      "summary": "a16z 三位投资人综合投资组合的真实部署数据发文《Can Agents Use a Computer Yet? We've Got the Data》，定性判断 computer-use agent 已越过 demo 阶段，开始在标准化后台流程上规模化生产可用——更新系统记录、跨门户搬运数据、处理工单、核查档案、处理那串没有干净 API 的长尾遗留软件。第一波基础设施解决『agent 能不能用』（看屏幕/点击/输入/纠错），下一波解决『agent 能不能在公司里真正有用』：当裸 UI 导航成为模型层商品，模型不再是主要瓶颈，持久优势上移到 context、权限、流程知识、校验、升级、错误处理、缓存这些『懂这家公司具体怎么干活』的能力。BPO（业务流程外包）成为新的 agentic 前沿。但 agent 在偏离 runbook 时仍脆弱，缓存难做时成本仍高到算不过账。",
+      "detail_content": "【核心事件】a16z 投资人 Fabrizio Serafini、Seema Amble、Eric Zhou 8/10 发文《Can Agents Use a Computer Yet? We've Got the Data》。文章开篇点出一个朴素事实：走出硅谷告诉外面的人『有一种叫 agent 的东西能帮你干活』，对方第一个问题永远是『那它能用电脑吗？』——a16z 的回答是：现在能了，而且开始在生产里扛量。综合 a16z 投资组合里多家公司的真实部署数据，computer-use agent 已经能在窄而重复的工作流上稳定跑生产：更新系统的记录、把数据从一个门户搬到另一个、处理工单、核查档案，以及处理那串『没有干净 API、以前只能人手点』的长尾遗留软件。\n\n【关键细节与判断】文章把 computer-use 基础设施分成两波。第一波解决『agent 能不能用』——让它能看屏幕、点击、输入、从错误里恢复。第二波（当下）解决『agent 能不能在真实公司里有用』。原文核心判断：\"As raw UI navigation becomes a model-layer commodity, the model is no longer the main bottleneck and the durable advantage moves up the stack: context, permissions, process knowledge, validation, escalation, error handling, caching, and the hard-earned understanding of how work actually gets done inside one specific customer's organization to map a workflow end-to-end.\"（当裸 UI 导航成为模型层商品，模型不再是主要瓶颈，持久优势上移到 context、权限、流程知识、校验、升级、错误处理、缓存，以及对『某一家公司的活具体是怎么干的』的来之不易的理解，去端到端映射一整条工作流。）a16z 把 BPO（业务流程外包）明确点为新的 agentic 前沿——以前问『这活能不能外包』，现在问『能不能交给一个 7×24、可弹性扩容、不用人盯的 agent』。两个诚实的 caveat：agent 在工作偏离 runbook 时仍脆弱；某些缓存难做的场景下成本仍高到数学不成立。\n\n【背景与上下文】a16z 去年就写过同题文章，当时 computer-use 还『主要是一堆 demo』。一年间模型进步速度超预期，部署侧从『能不能』进入『划不划算』。文章一个有意思的观察：『当你最重的用户不再看排行榜，排行榜就不再是故事』——暗示前沿玩家已经离开刷榜，进真实生产环境较劲。Gergely Orosz 同日发推（h953）呼应这个判断：以前觉得做健身房预订/活动预订系统毫无挑战性，但『当 agent 即将（或已经）蜂拥而上』，任何预订系统都变成了更难的问题——印证 a16z 所说的『最长的生产力红利跑经过的最日常的工作』。这跟本频道库内主线一致：harness 才是关键（7/28 ai-frontier、8/1 latent.space ChatGPT Work 访谈），模型路由成定义性战场（8/7），自建 harness 的 Coinbase/Shopify/Ramp 都还在给 Anthropic 付钱（8/8）。\n\n【影响与前瞻】对工程团队和强监管行业，a16z 这条等于把 computer-use agent 的 ROI 论证从『demo 很酷』推到『标准化后台流程可以交』。银行业后台正好是 BPO 的重灾区——无数遗留系统、信贷审批、合规报送、对账、客服工单没有 API，长期靠人手点击。a16z 的『护城河上移』判断也直接告诉你别再盯着选哪个模型，该投资 context 工程、权限模型、校验回路、缓存策略。caveat 是这是 a16z（VC）基于投资组合观察的分析，不是同行评审的基准测试，引用时宜定位成『一线投资人综合部署观察』而非硬 benchmark。",
+      "source": "a16z",
+      "source_type": "tavily",
+      "url": "https://www.a16z.news/p/can-agents-use-a-computer-yet-weve",
+      "timestamp": "2026-08-10T14:00:46Z",
+      "importance": 9,
+      "tags": [
+        "computer-use agent",
+        "BPO",
+        "生产部署",
+        "harness",
+        "a16z"
+      ],
+      "batch_time": "2026-08-11T10:00:00+08:00"
+    },
+    {
+      "title": "Databricks 给 Genie Agent 立治理架构：让 agent 挂最终用户凭证跑——Unity Catalog 而非模型才是安全边界，『我加了 prompt 让它别露数据』对审计说不出口",
+      "summary": "Databricks 工程博客发深度架构文，讲怎么让 Genie Agent 同时基于结构化数据（表/视图/指标视图）和非结构化文档（PDF/Office/图片）作答、又不丢治理。核心原则一句话：Genie Agent 挂最终用户凭证跑，Unity Catalog 默认执行治理——agent 能决定『怎么查』，但拿不回用户无权看到的记录，因为每个答案在离开 Lakehouse 前就在数据层被过滤。直接点名反模式：很多自建系统给 agent 宽松授权、靠 prompt engineering 在模型层过滤，等于把 LLM 当安全边界——『跟审计说「我加了指令让它别显示受限数据」不是站得住脚的治理控制』。给出四层访问控制（对象权限/ABAC/行过滤/列掩码）和三条落地模式：打标签再配策略别逐表掩码、一个 volume 对一类受众、用『冒充测试』而非『读策略自查』验证。",
+      "detail_content": "【核心事件】Databricks 工程团队 8/10 发深度架构文《How to ground Genie Agents in both structured data and documents without losing governance》。问题起点很尖锐：当你把结构化数据（表、视图、指标视图）和非结构化文档（PDF、Office、扫描件、图片）都接给同一个 agent，『如果这一个 agent 能看到所有东西，什么能阻止它把不对的事告诉不对的人？』Databricks 的答案是不另起炉灶——复用已有的 Unity Catalog 治理基座（身份同步、对象权限、ABAC、行过滤、列掩码），让 agent 自动继承。\n\n【关键细节与引用】文章的灵魂是一句架构原则：\"Genie Agents run with the end user's credentials\"（Genie Agent 挂最终用户的凭证跑）。这意味着 agent 决定『怎么查』，但 Unity Catalog 决定『能查到什么』——每个答案在离开 Lakehouse 之前就在数据层被过滤，agent 在结构上就拿不回该用户无权看到的记录。文章直接点名最普遍的反模式：\"many homegrown systems grant agents broad access and rely on prompt engineering to filter results at the model layer. This effectively makes the LLM your security perimeter—a dangerous bet, given that models can be manipulated or bypassed.\"（很多自建系统给 agent 宽松授权，靠 prompt engineering 在模型层过滤，等于把 LLM 当安全边界——模型可被操纵或绕过，这是危险押注。）金句：\"Telling an auditor that 'I added instructions that said not to show restricted data' is not a defensible governance control.\"（跟审计说『我加了指令让它别显示受限数据』不是站得住脚的治理控制。）治理是连续的：员工从 APAC 调到 AMER，IdP 改组、同步传播，他下一个问题就自动返回 AMER 视图，无需提工单改 agent。\n\n【四层访问控制与三条模式】结构化数据上叠四层：对象权限（GRANT SELECT，没这个 agent 查不了）、ABAC（打一次 governed tag 如 pii:email，策略自动传播到所有带该标签的列）、行过滤（SQL UDF 按组成员身份筛行）、列掩码（UDF 返回原值或掩码值）。ABAC 的价值是『定义一次、到处继承』，取代过去逐表配过滤的 gap-prone 写法。文档侧把文件放进 Unity Catalog Volumes 当 securable，GRANT READ VOLUME 控权——但 volume 是最小可授权单元，所以『一个 volume 对一类受众』，两类受众需要不同文档就要两个 agent。文末三条落地模式最可挪用：①Tag, then policy. Don't mask table-by-table（打标签再配策略，别逐表掩码）；②One audience per volume（一个 volume 一类受众）；③Test by impersonation, not inspection（用冒充测试而非读策略自查来验证治理——别读一遍策略说服自己它对了，而是以每个组成员身份问同一个问题、比答案，做成回归测试）。\n\n【背景与上下文】这篇文章是 agent 治理主线迄今最系统的工程落地样本，呼应本频道和 banking-ai 一贯主线：agent 的胜负手在治理和 harness（7/30 ai-frontier、8/7 Agent Plugins 1.0 规范）。它也给 a16z 同日那篇『护城河上移到权限/校验』提供了最具体的实现蓝图——『权限』那层到底怎么砌。caveat 是 Databricks 卖 Unity Catalog，有商业立场，引用宜摆『一家 Lakehouse 厂商给出的治理设计范式』，但其架构原则（身份即边界、数据层过滤、冒充测试）是平台无关的通用工程智慧。\n\n【影响与前瞻】对银行业这是即取即用的 agent 治理设计模板。强监管下『把 LLM 当安全边界』是事故级设计，而『agent 挂用户凭证跑 + 数据层强制过滤 + 冒充测试做回归』恰好对得上银行现有的身份/权限/审计基础设施——不需要为了上 agent 重造一套 IAM。『test by impersonation, not inspection』尤其值得直接写进行内 agent 上线的合规验收清单。",
+      "source": "Databricks Blog",
+      "source_type": "aihot",
+      "url": "https://www.databricks.com/blog/how-ground-genie-agents-both-structured-data-and-documents-without-losing-governance",
+      "timestamp": "2026-08-10T23:08:50Z",
+      "importance": 8,
+      "tags": [
+        "agent 治理",
+        "Unity Catalog",
+        "ABAC",
+        "身份即边界",
+        "银行业"
+      ],
+      "batch_time": "2026-08-11T10:00:00+08:00"
+    },
+    {
+      "title": "steipete 拿 ChatGPT Work 浏览器 agent 装好 OpenClaw+Ollama 跑本地模型——agent 给 agent 搭开发环境，1260 ♥",
+      "summary": "Peter Steinberger（steipete，PSPDFKit 创始人、重度 OpenClaw 用户）8/10 发推获 1261 ♥：他打开 ChatGPT Work 的网站 agent，让它去装 OpenClaw 和 Ollama、下载本地模型、在本地跑起自己的 claw。配合同期 OpenClaw 新版修复 MiniMax 和 Ollama 集成、明确『做任何模型的 harness』。这件事的双重看点：一个浏览器 computer-use agent 现在能把一整套本地优先的 agent 生态（harness+模型服务+权重下载）从零搭起来；而 OpenClaw 的定位正从『Claude Code 替代品』收敛成『跑任意模型（含本地 Ollama）的通用 harness』。『for the lols』的语气背后是真实信号——computer-use agent 已能独立完成开发环境搭建这类多步骤真实任务。",
+      "detail_content": "【核心事件】Peter Steinberger（@steipete，PSPDFKit 创始人，长期重度 OpenClaw 用户）8/10 发推：\"Just for the lols, I used ChatGPT Work (Website!) to install OpenClaw and Ollama, let it download a local model and run my claw in it.\"（纯属好玩：我用 ChatGPT Work 的网站版去装 OpenClaw 和 Ollama，让它下个本地模型、在里面跑我的 claw。）这条推当周获 1260 ♥、38 转发，是本频道七个 KOL 本周互动量最高的一条。\n\n【关键细节】这里有三层套娃：最外层是 ChatGPT Work 的浏览器 agent（OpenAI 的 computer-use agent，跑在网站里），它被指派去完成『装软件』这件本来属于人/脚本的工作；中间层是 OpenClaw（开源 coding agent harness）和 Ollama（本地模型运行时），两者被 agent 装到本机；最里层是 agent 让 Ollama 下载一个本地模型权重，然后把 OpenClaw 的 claw 跑在这个本地模型上。steipete 在后续回复里补充，OpenClaw 新版也对 MiniMax 和 Ollama 做了修复——『想成为任何模型的 harness』（we wanna be a great harness for *any* model）。\n\n【背景与上下文】这件事放在本周另外两条（a16z computer-use 生产可用、Databricks agent 治理）的背景下读最清楚：它正是 a16z 所说『computer-use agent 开始在真实任务上扛事』的一个轻量级现场演示——搭开发环境是多步骤、有失败模式、需要看屏幕点击的真实任务，不再是玩具 demo。同时它呼应本频道 8/8 主线『Coinbase/Shopify/Ramp 自建 coding agent 却仍给 Anthropic 付钱』——harness 是战略资产，而 OpenClaw 正把『harness』的定义从『Claude Code 的开源替代』拓宽到『跑任意模型（云端 API 或本地 Ollama）的通用 harness』，本地模型路径让数据不出本机成为可能。steipete 一贯是 OpenClaw 最权威的一手体验源（本频道长期追踪他的反馈），他这条『for the lols』态度本身就是信号——当重度用户拿浏览器 agent 玩着把整套本地 agent 栈搭起来，说明这套工具链的摩擦已经低到值得拿来消遣。\n\n【影响与前瞻】对工程团队，这是一个可复现的最小实验：用现有的浏览器 agent（ChatGPT Work / Claude 之类）去驱动本地 agent 栈的搭建，反过来评估 computer-use agent 在『多步骤、需纠错的安装配置类任务』上的成熟度。对关注数据主权的场景（金融/医疗），OpenClaw+Ollama 的本地化路径 + 一个外部 agent 做编排，是一条值得验证的『本地优先』架构草图。caveat：这是单条推文、『for the lols』定性，没有失败率/耗时等硬数据，宜当一手体验信号而非 benchmark；OpenClaw+Ollama 的生产稳定性仍需独立验证。",
+      "source": "@steipete (X)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/steipete/status/2086648656946696641",
+      "timestamp": "2026-08-10T02:59:00Z",
+      "importance": 7,
+      "tags": [
+        "OpenClaw",
+        "Ollama",
+        "computer-use agent",
+        "本地模型",
+        "harness"
+      ],
+      "batch_time": "2026-08-11T10:00:00+08:00"
+    },
     {
       "title": "Anthropic 宣告 coding agent 头号威胁「基本解决」：auto mode 8/14 成为 Claude Code 默认，720 次提示注入攻击 0 得手——Simon Willison 独立质疑",
       "summary": "Anthropic 宣布 Claude Code 的 auto mode 8月14日起对 Pro/Max/Team 新会话默认开启。第三方 Trajectory Labs 评测用 72 个 Anthropic 未见的间接提示注入场景、720 次攻击，对运行 auto mode 的 Fable 5/Opus 5/Sonnet 5 全部 0 成功。Cat Wu 在 AI Engineer World's Fair 称 Anthropic 内部「几乎所有人」都用 auto mode、「风险远低于人类审查者」。但 Simon Willison 愿意相信同时要求更多独立验证，并给出 auto mode 难防的反例：恶意第三方包诱导 agent 跑一个本身就是恶意包的命令。Boris Cherny 原推 2476♥：「叠加模型训练+输入探测+auto mode 后成功率 0%」。",
@@ -385,81 +439,6 @@
         "工具链"
       ],
       "batch_time": "2026-08-05T10:00:00+08:00"
-    },
-    {
-      "title": "微软开源 Orchard：能在真实 harness（Codex/OpenClaw）里端到端训练 agent，3B 活跃参数把 SWE-bench Verified 打到 69.7%-73%",
-      "summary": "微软研究院 8/3 发布 Orchard——开源 agentic AI 训练框架，核心是可复用的 Orchard Env（K8s 环境服务）。最大创新是能直接在 agent 真实部署的 harness（Codex、OpenClaw、ZeroClaw）里训练，用一个轻量 proxy 录下 harness 自己的 model calls 当训练数据，每个 rollout 跑在独立容器里，消除「训练用简化替身、部署换真实环境」的不匹配。配套三个 recipe：Orchard-SWE 用约 3B 活跃参数在 SWE-bench Verified 做到 69.7%、value-model rerank 后 73%，逼近大它 10 倍以上的前沿系统；Orchard-GUI 4B 视觉语言模型做浏览器 agent 平均 68.4%；Orchard-Claw 仅 200 个合成任务训练个人助理，在 Codex harness 下成功率从 18.6% 跳到 51.5%。",
-      "detail_content": "【核心事件】微软研究院 8/3 发布开源框架 Orchard，定位是「面向研究的可扩展、高性价比 agentic AI 训练底座」。中央是一个叫 Orchard Env 的轻量 Kubernetes 环境服务，负责并行创建、管理、销毁数千个隔离组件——从采训练数据、跑强化学习 rollout 到评测，都用同一套环境。团队同时放出三个领域配方 Orchard-SWE / Orchard-GUI / Orchard-Claw，以及对应的训练数据和评测方法。\n\n【关键细节与引用】Orchard 最被强调的一句话是「环境层才是关键（the environment layer matters）」——它把运行环境做成独立、可复用的服务，而不是嵌在某个训练框架里的附属品。最硬的工程创新是「能在任意 harness 里训练 agent」：今天最强的 agent 几乎都不再是裸模型跑，而是跑在 Claude Code、Codex、OpenClaw 这类复杂 harness 里，这些 harness 管 multi-turn 推理、工具调用、外部系统连接。开源训练工具通常处理不了这种有状态、多进程的 harness，只能训练一个简化替身再部署到真实环境，造成训练-部署不匹配。Orchard 的解法是一个轻量 proxy 录下 harness 自己的 model calls 当训练数据，每个 rollout 跑在独立容器里，于是 agent 可以端到端地在它将来要部署的那个 harness 里训练——Codex、OpenClaw、ZeroClaw 都行，甚至跨多个 harness 一起训。\n\n三个配方里 Orchard-SWE 数据最硬：基于 Mini-SWE-Agent，从 MiniMax-M2.5 和 Qwen3.5-397B 蒸馏了 10.7 万条 agent 交互，覆盖大量 GitHub Issue。训练用 credit-assignment SFT（不丢掉失败的尝试，学习其中有产出的部分）+ Balanced Adaptive Rollout + 两类 dense reward（on-policy distillation 让更强教师逐步打分 + process reward model 让 AI 裁判奖励好的解题过程，独立于最终测试是否通过）+ value model rerank（用过去 20 次实验的轨迹训一个 4B value model 来给候选答案排序）。SWE-bench Verified 从 61.4% 基线 →69.1%（Balanced Adaptive Rollout）→69.7%（dense reward）→73%（value-model rerank），约 3B 活跃参数就逼近大它 10 倍以上的前沿系统。Orchard-GUI 用 4B vision-language 模型 + 仅 400 条蒸馏演示和 2200 个开放任务，在 WebVoyager 拿 74.1%、Online-Mind2Web 67.0%、DeepShop 64.0%，平均 68.4%，自称最强开源 GUI agent。Orchard-Claw 更说明问题——只用 200 个合成任务训练个人助理 agent，在 Claw-Eval 上三次尝试内完成 59.6%，配上更强的 ZeroClaw harness 升到 73.9%；在 Codex harness 下，训练把成功率从 18.6% 直接拉到 51.5%。\n\n【背景与上下文】Orchard 解决的是 agentic AI 研究的持久瓶颈：做 SOTA agent 往往依赖自研沙箱、闭源训练管线、专有数据集，多数研究者和从业者既拿不到也复现不了。这跟本频道近期多条主线咬合——7/25 SemiAnalysis AgentX 用真实生产轨迹做评测、7/30 simonw 反转「loops 是给旧模型打的补丁」、7/28 Anthropic 的「context engineering 新规则」，都在重新定义「agent 在哪个环境里被验证」。Orchard 把「训练环境」也纳入这条主线：不是替身、不是 benchmark 子集，而是 agent 真实跑的那个 harness。\n\n【影响与前瞻】对 Eason 和银行 AI 平台的直接启发有三层。第一，开源对前沿的逼近已经到了「3B 参数打 SWE-bench 73%」的程度，行内自建 agent 评测/微调有了可复用的开源底座，不必从零造沙箱。第二，「环境层最重要」+「在真实 harness 里训练」是两个可写进汇报的架构原则——如果行里最终用 Claude Code 或 Codex 部署 agent，那评测和微调就应该在那个 harness 里做，而不是用一个对不上的简化测试床。第三，Orchard 把训练轨迹当「持久资产」蒸馏成 value model、做累积学习的思路，是 agent 工程从一次性训练走向持续积累的方向标。caveat：当前是研究发布、面向研究社区，离生产级还有距离；Orchard-Claw 的 Claw-Eval 是自建基准；性能数字是自报。",
-      "source": "Microsoft Research",
-      "source_type": "tavily",
-      "url": "https://www.microsoft.com/en-us/research/blog/orchard-an-open-framework-for-scalable-agentic-ai/",
-      "timestamp": "2026-08-03T16:00:00Z",
-      "importance": 9,
-      "tags": [
-        "微软",
-        "Orchard",
-        "agent训练",
-        "开源",
-        "SWE-bench",
-        "agentic基建"
-      ],
-      "batch_time": "2026-08-04T10:00:00+08:00"
-    },
-    {
-      "title": "Cloudflare「agent 需要一台电脑不是容器」：@cloudflare/computer 让 agent 自己在 isolate 与 container 间智能调度",
-      "summary": "Cloudflare 8/3 推出开源库 @cloudflare/computer，定位是 agent runtime。核心论点是给每个 agent 一个自己的「电脑」（文件系统+shell+工具+执行环境），由平台在轻量 isolate（快、便宜、无限水平扩展）和完整 Linux container（npm/原生二进制）之间动态编排，agent 自己按任务选对的环境。背景判断很直接：全球 hyperscaler 的算力加起来都不够给每个用户的 agent 一个容器化环境，无法扩展到亿级并发，行业正出现「对 CPU 算力而非只是 GPU 的恐慌性需求」。目标是把 container 使用压到全部工作的 10% 以下。",
-      "detail_content": "【核心事件】Cloudflare 8/3 发开源库 @cloudflare/computer（npm install @cloudflare/computer），定位是 agent runtime 预览版。开篇一句话定调：最强的 agent 有一个共同点——它们都被给了「一台自己的电脑」去工作：一个文件系统、一个 shell、工具、包、跑代码的能力，于是 agent 可以检查环境、改东西、测自己的产出、继续推进。@cloudflare/computer 把这套「给 agent 一台电脑」抽象成平台能力，由 runtime 负责在 isolate、container sandbox、浏览器之间做编排。\n\n【关键细节与引用】最锋利的一句是标题本身——「Your agent needs a computer, not a container」。团队判断给每个 agent 一个 container 这条路扩不动：全云、全 hyperscaler 加起来，都不够给每家公司的每个用户 agent 一个容器化计算环境，扩不到几亿再到几十亿并发；「这就是为什么行业出现对 CPU 算力（不只是 GPU 算力）近乎恐慌的需求」。Cloudflare 的押注是 isolate——近 10 年前 Workers 就开始、6 年前 Durable Objects 又押一次——因为 isolate 无限水平扩展、启停极快、空闲能休眠、还能自己拉起 isolate 跑不可信代码。\n\n设计上，@cloudflare/computer 的核心是 workspace：一个 SQLite 支撑的虚拟文件系统，可以从 git 仓库、存储桶或任意文件填充，提供 node:fs 兼容接口和 AI SDK 兼容工具集（read/write/edit/ls/exec）。exec 工具跨 runtime，带一个 backend 参数，工具描述会引导 agent 自己选——只需要操作文件、处理数据、管 git 仓库的活跑在 isolate 里；需要 Linux、npm、原生二进制的活跑在 container 里；两边操作同一份保持同步的源文件。团队称在测试里前沿模型非常擅长做这个选择，只在必要时才回退到 container。目标是 container 只占 agent 不到 10% 的工作，编码、音视频处理、文档生成都交给 isolate。示例里直接用 @cloudflare/think（Cloudflare 自家 agent harness）接 @cloudflare/computer 做一个 bug 分诊 agent。\n\n【背景与上下文】这篇是 Cloudflare Agents Week 的一部分（同日还发了 Workers 入站 TCP + 双向 gRPC 支持，服务于低延迟 voice AI）。更宽的脉络是 agent 架构这半年的演进——年初「起一个 container 跑 agent」是常态，最近半年快速转向「harness 把 sandbox code execution 当工具调」，即把「手」（干活用的沙箱）和「脑」（agent 循环）分开。@cloudflare/computer 是这条脉络在运行时层的一次抽象收敛，跟本频道 7/29 Mitchell Hashimoto 创办 Superlogical「造比 OS 高一层的 agentic OS」、以及 Anthropic Managed Agents 把 harness 产品化是同一组问题不同切面。\n\n【影响与前瞻】对 Eason 的银行场景有两块直接价值。一是 agent 运行时的成本账——当 agent 部署规模从几十扩到全行几万人、再到对外亿级用户调用时，「每个 agent 一个 container」的算力账会爆掉，isolate/container 混合调度是必须的架构选择，这可以写进行内 agent 平台的中长期规划。二是「给 agent 一台电脑而不是一个容器」是个很强的汇报级框架——它点破 agent 真正需要的是可操作的完整工作环境（文件+shell+工具+执行），而非一个隔离的计算盒子，这影响的是 agent 平台该提供什么原语。caveat：目前是 early preview、开源库形态，Cloudflare 自己也说在跟少量客户一起学；isolate 跑不可信/复杂二进制的能力边界仍需验证。",
-      "source": "Cloudflare Blog",
-      "source_type": "tavily",
-      "url": "https://blog.cloudflare.com/cloudflare-computer/",
-      "timestamp": "2026-08-03T13:15:24Z",
-      "importance": 8,
-      "tags": [
-        "Cloudflare",
-        "agent运行时",
-        "isolate",
-        "container",
-        "agentic基建",
-        "成本"
-      ],
-      "batch_time": "2026-08-04T10:00:00+08:00"
-    },
-    {
-      "title": "Gergely 转述一手案例：非技术背景的制造业老板靠 AI，三个月做的零售集成是过去一整年的 4-5 倍",
-      "summary": "Pragmatic Engineer 作者 Gergely Orosz 8/3 在 X 转述一次一手对话：一个物理制造业工厂主（几千员工、非技术人员）说靠 AI，过去三个月建的零售商务集成数量是过去一整年的 4-5 倍，而这些「都是基础集成」。价值不在数字本身多惊艳，而在于它是一个非科技、非技术背景的传统企业主亲口确认 AI 价值兑现的稀缺实证——而且兑现的不是什么高深场景，正是那些「基础但耗时」的集成工作。",
-      "detail_content": "【核心事件】Pragmatic Engineer 作者 Gergely Orosz 8/3 在 X（推文 id 2084325354651394421）转述了一次一手对话：他和一位物理制造业工厂主聊，对方是一个大体量企业（几千员工）、且明确「不是 tech person」的老板。这位老板说，靠 AI，他们过去三个月完成的零售商务（commerce）集成数量，是过去一整年的 4-5 倍。Gergely 特别补了一句「这些是基础集成」。\n\n【关键细节与引用】原推很短，但信息密度集中在「谁说的」和「说的什么」两点上。谁：一个非科技、非技术背景的传统制造业决策者，管着几千人的实体生意——这正是 AI 价值兑现讨论里最稀缺的那类一手信源，因为公开场上发声的多是科技公司 CEO 或 AI 从业者。说的什么：AI 让他们的零售集成产能翻了 4-5 倍，而且明说这些集成「basic」——基础、不性感、但占用大量工时。这个 4-5x 不是来自咨询报告的问卷，而是一位老板对自己企业产出的直接对比。\n\n【背景与上下文】这条推之所以值得单独记一笔，是因为它落在本频道第一优先级「AI 如何改变实际工作方式的一手实践」上，而且补的是一个特别的角度——非科技公司、非技术决策者。它和近期一组「生产力悖论 vs 真实兑现」的讨论形成张力：宏观上（圣路易斯联储 49 万场财报会研究、Apollo 降薪不裁员）AI 生产力在统计上「结构性不可见」，但在具体企业的具体环节上，这种「基础集成 4-5 倍提速」正在真实发生。值得对照的是 Gergely 自己 8/3 同日另一组推文在讨论 Anthropic/OpenAI 用远高于市场价的薪酬挖人——一边是顶级 AI 人才被天价争抢，一边是非科技公司靠现有 AI 工具就把基础集成产能翻几倍，两个画面并置才是当下 AI 扩散的完整图景。\n\n【影响与前瞻】对 Eason 的银行场景，这是一个可以直接拿来对冲两种 slop 的素材。对冲「AI 用不起来/都是炒作」的悲观 slop：一个非技术背景的制造业老板都能靠 AI 把基础集成做到 4-5 倍，银行业务里大量「基础但耗时」的系统对接、报表、配置类工作同理。也对冲「AI 只在硅谷大厂有用」的地域/行业 slop。更有用的是它点出了 AI 兑现最先发生的地方——不是最复杂的智能场景，而是最基础、最重复、最吃工时的集成类工作，这恰好是银行中后台最大的一块人力池。caveat 很明确：这是单条推文转述的一位老板口述，没有可核验的企业名、没有财报数据，4-5x 是主观对比而非实测；「基础集成」具体指什么也未展开。作为信号而非证据使用。",
-      "source": "Gergely Orosz (@GergelyOrosz)",
-      "source_type": "opentwitter",
-      "url": "https://x.com/GergelyOrosz/status/2084325354651394421",
-      "timestamp": "2026-08-03T17:07:44Z",
-      "importance": 7,
-      "tags": [
-        "Gergely",
-        "制造业",
-        "非科技企业",
-        "AI采用",
-        "一手案例",
-        "生产力"
-      ],
-      "batch_time": "2026-08-04T10:00:00+08:00"
-    },
-    {
-      "title": "ashpreetbedi 开新系列「Pro Agent Builders」：把改进 agent 的苦活（prompt/工具/测试）自动化成夜间循环",
-      "summary": "Agentic Software Engineering 方法论博主 ashpreetbedi 8/3 开新系列「Pro Agent Builders」，定位是「专家到底怎么建 agent 的内部信息」。第一篇主题是把「改进 agent 的苦活」自动化——prompt engineering、工具构造、测试这些吃掉工程师晚上的活，变成一个通宵跑的 loop。这是他在 7-8 月连续写「Agent Platform」系列（库内 8/1 已收）之后，把焦点从「搭 agent 平台」推进到「系统化改进 agent 本身」的下一段。",
-      "detail_content": "【核心事件】Agentic Software Engineering 方法论博主 Ashpreet Bedi（@ashpreetbedi，持续写企业 agent 工程实践）8/3 在 X（推文 id 2084331523147239805，♥92/🔁8/浏览约 1.17 万）宣布新系列「Pro Agent Builders」，定位是「关于专家如何构建 agent 的内部信息」。系列第一篇的主题是「自动化改进 agent 的苦活」——prompt engineering、工具构造、测试，即那些「吃掉你晚上」的工作，现在被组织成一个「通宵跑的 loop」。\n\n【关键细节与引用】原推对这第一篇的概括很精炼：automating the grueling work of improving agents，覆盖 prompt engineering、tool construction、testing 三类活，并给出一句很有画面感的定位——「the work that eats your evenings is now an overnight loop」。这跟本频道近期反复出现的「verification 才是人们最没搞对的、唯一最重要的事」「motion vs progress」是同一组判断：agent 时代，定义目标和验证产出的人力价值在上升，而把改进过程本身变成可自动化循环的 agent loop，是放大这少数人力价值的杠杆。\n\n【背景与上下文】这条要放在 ashpreetbedi 7-8 月的连续写作脉络里看。7/28 他写「不写一行代码搭 agent 平台」、7/30「人人都在抢着搭内部 agent 平台」、8/2 写「Agent Platform 新浪潮」（库内 8/1 已把这一组收为「工具让个体更快，系统让公司更好」的点破个人生产力转化断层）。新系列「Pro Agent Builders」是这条线往下一阶段的自然推进——平台搭完之后，真正难的是持续改进跑在上面的 agent，而这恰恰是目前最缺方法论、最吃资深工程师时间的地方。\n\n【影响与前瞻】对 Eason 和银行 agent 团队，这个系列值得跟进的点有两个。一是它给「agent 工程团队该干什么」提供了一个具体职能切分——prompt/工具/测试的持续改进，可以组织成一个半自动的夜间循环，而不是每次都靠资深工程师人肉调；这跟 7/29 Cognition 前线负责人讲的「让 agent 有效是组织问题、coding 只占 20%」同向。二是它指向一个可写进考核的判断——当改进 agent 的苦活能被自动化循环吸收，人类工程师的稀缺价值进一步收窄到「定义什么叫改进、怎么验证改进有效」，即 verification 与判断力，而不是产出量。caveat：本条基于系列开篇推文，博客正文链接（t.co 缩短）未在抓取中展开，具体方法论细节（loop 怎么跑、用什么评测改进）需看系列后续正文；系列刚开篇，深度待观察。",
-      "source": "Ashpreet Bedi (@ashpreetbedi)",
-      "source_type": "opentwitter",
-      "url": "https://x.com/ashpreetbedi/status/2084331523147239805",
-      "timestamp": "2026-08-03T17:32:14Z",
-      "importance": 7,
-      "tags": [
-        "ashpreetbedi",
-        "agent工程",
-        "方法论",
-        "verification",
-        "Pro Agent Builders"
-      ],
-      "batch_time": "2026-08-04T10:00:00+08:00"
     }
   ]
 }
