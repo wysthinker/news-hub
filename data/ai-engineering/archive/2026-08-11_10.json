@@ -1,0 +1,62 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-08-11T10:00:00+08:00",
+  "digest": "computer-use agent 这周从『demo 能力展示』实质跨进『规模化生产部署』，主战场随之从模型层（它会不会点鼠标）整体上移到治理层、harness 层和生态层。a16z 综合投资组合真实部署数据定性：裸 UI 导航已是模型层商品，模型不再是瓶颈，持久的护城河长在 context、权限、流程知识、校验、升级、缓存这些『懂一家公司具体怎么干活』的能力上，BPO 后台流程成为新前沿。Databricks 同日发深度架构文给出治理层最干净的工程答案——agent 挂最终用户凭证跑、数据治理平面（而非模型/prompt）做安全边界，直接戳破『我加了 prompt 让它别露数据』这种审计说不出口的反模式，对强监管行业是即取即用的设计模板。steipete 用 ChatGPT Work 浏览器 agent 一键装好 OpenClaw+Ollama+本地模型，h1260，既示范 computer-use agent 独立完成开发环境搭建这类多步骤真实任务，也印证 OpenClaw 正收敛成『跑任意模型（含本地）的通用 harness』。本周三件事合起来是一句话——agent 落地的胜负手已经不在模型多强，在治理、harness、生态这三层工程基建。",
+  "items": [
+    {
+      "title": "a16z 用真实部署数据给 computer-use agent 定性：模型已不是瓶颈，护城河上移到 context/权限/校验/缓存",
+      "summary": "a16z 三位投资人综合投资组合的真实部署数据发文《Can Agents Use a Computer Yet? We've Got the Data》，定性判断 computer-use agent 已越过 demo 阶段，开始在标准化后台流程上规模化生产可用——更新系统记录、跨门户搬运数据、处理工单、核查档案、处理那串没有干净 API 的长尾遗留软件。第一波基础设施解决『agent 能不能用』（看屏幕/点击/输入/纠错），下一波解决『agent 能不能在公司里真正有用』：当裸 UI 导航成为模型层商品，模型不再是主要瓶颈，持久优势上移到 context、权限、流程知识、校验、升级、错误处理、缓存这些『懂这家公司具体怎么干活』的能力。BPO（业务流程外包）成为新的 agentic 前沿。但 agent 在偏离 runbook 时仍脆弱，缓存难做时成本仍高到算不过账。",
+      "detail_content": "【核心事件】a16z 投资人 Fabrizio Serafini、Seema Amble、Eric Zhou 8/10 发文《Can Agents Use a Computer Yet? We've Got the Data》。文章开篇点出一个朴素事实：走出硅谷告诉外面的人『有一种叫 agent 的东西能帮你干活』，对方第一个问题永远是『那它能用电脑吗？』——a16z 的回答是：现在能了，而且开始在生产里扛量。综合 a16z 投资组合里多家公司的真实部署数据，computer-use agent 已经能在窄而重复的工作流上稳定跑生产：更新系统的记录、把数据从一个门户搬到另一个、处理工单、核查档案，以及处理那串『没有干净 API、以前只能人手点』的长尾遗留软件。\n\n【关键细节与判断】文章把 computer-use 基础设施分成两波。第一波解决『agent 能不能用』——让它能看屏幕、点击、输入、从错误里恢复。第二波（当下）解决『agent 能不能在真实公司里有用』。原文核心判断：\"As raw UI navigation becomes a model-layer commodity, the model is no longer the main bottleneck and the durable advantage moves up the stack: context, permissions, process knowledge, validation, escalation, error handling, caching, and the hard-earned understanding of how work actually gets done inside one specific customer's organization to map a workflow end-to-end.\"（当裸 UI 导航成为模型层商品，模型不再是主要瓶颈，持久优势上移到 context、权限、流程知识、校验、升级、错误处理、缓存，以及对『某一家公司的活具体是怎么干的』的来之不易的理解，去端到端映射一整条工作流。）a16z 把 BPO（业务流程外包）明确点为新的 agentic 前沿——以前问『这活能不能外包』，现在问『能不能交给一个 7×24、可弹性扩容、不用人盯的 agent』。两个诚实的 caveat：agent 在工作偏离 runbook 时仍脆弱；某些缓存难做的场景下成本仍高到数学不成立。\n\n【背景与上下文】a16z 去年就写过同题文章，当时 computer-use 还『主要是一堆 demo』。一年间模型进步速度超预期，部署侧从『能不能』进入『划不划算』。文章一个有意思的观察：『当你最重的用户不再看排行榜，排行榜就不再是故事』——暗示前沿玩家已经离开刷榜，进真实生产环境较劲。Gergely Orosz 同日发推（h953）呼应这个判断：以前觉得做健身房预订/活动预订系统毫无挑战性，但『当 agent 即将（或已经）蜂拥而上』，任何预订系统都变成了更难的问题——印证 a16z 所说的『最长的生产力红利跑经过的最日常的工作』。这跟本频道库内主线一致：harness 才是关键（7/28 ai-frontier、8/1 latent.space ChatGPT Work 访谈），模型路由成定义性战场（8/7），自建 harness 的 Coinbase/Shopify/Ramp 都还在给 Anthropic 付钱（8/8）。\n\n【影响与前瞻】对工程团队和强监管行业，a16z 这条等于把 computer-use agent 的 ROI 论证从『demo 很酷』推到『标准化后台流程可以交』。银行业后台正好是 BPO 的重灾区——无数遗留系统、信贷审批、合规报送、对账、客服工单没有 API，长期靠人手点击。a16z 的『护城河上移』判断也直接告诉你别再盯着选哪个模型，该投资 context 工程、权限模型、校验回路、缓存策略。caveat 是这是 a16z（VC）基于投资组合观察的分析，不是同行评审的基准测试，引用时宜定位成『一线投资人综合部署观察』而非硬 benchmark。",
+      "source": "a16z",
+      "source_type": "tavily",
+      "url": "https://www.a16z.news/p/can-agents-use-a-computer-yet-weve",
+      "timestamp": "2026-08-10T14:00:46Z",
+      "importance": 9,
+      "tags": [
+        "computer-use agent",
+        "BPO",
+        "生产部署",
+        "harness",
+        "a16z"
+      ],
+      "batch_time": "2026-08-11T10:00:00+08:00"
+    },
+    {
+      "title": "Databricks 给 Genie Agent 立治理架构：让 agent 挂最终用户凭证跑——Unity Catalog 而非模型才是安全边界，『我加了 prompt 让它别露数据』对审计说不出口",
+      "summary": "Databricks 工程博客发深度架构文，讲怎么让 Genie Agent 同时基于结构化数据（表/视图/指标视图）和非结构化文档（PDF/Office/图片）作答、又不丢治理。核心原则一句话：Genie Agent 挂最终用户凭证跑，Unity Catalog 默认执行治理——agent 能决定『怎么查』，但拿不回用户无权看到的记录，因为每个答案在离开 Lakehouse 前就在数据层被过滤。直接点名反模式：很多自建系统给 agent 宽松授权、靠 prompt engineering 在模型层过滤，等于把 LLM 当安全边界——『跟审计说「我加了指令让它别显示受限数据」不是站得住脚的治理控制』。给出四层访问控制（对象权限/ABAC/行过滤/列掩码）和三条落地模式：打标签再配策略别逐表掩码、一个 volume 对一类受众、用『冒充测试』而非『读策略自查』验证。",
+      "detail_content": "【核心事件】Databricks 工程团队 8/10 发深度架构文《How to ground Genie Agents in both structured data and documents without losing governance》。问题起点很尖锐：当你把结构化数据（表、视图、指标视图）和非结构化文档（PDF、Office、扫描件、图片）都接给同一个 agent，『如果这一个 agent 能看到所有东西，什么能阻止它把不对的事告诉不对的人？』Databricks 的答案是不另起炉灶——复用已有的 Unity Catalog 治理基座（身份同步、对象权限、ABAC、行过滤、列掩码），让 agent 自动继承。\n\n【关键细节与引用】文章的灵魂是一句架构原则：\"Genie Agents run with the end user's credentials\"（Genie Agent 挂最终用户的凭证跑）。这意味着 agent 决定『怎么查』，但 Unity Catalog 决定『能查到什么』——每个答案在离开 Lakehouse 之前就在数据层被过滤，agent 在结构上就拿不回该用户无权看到的记录。文章直接点名最普遍的反模式：\"many homegrown systems grant agents broad access and rely on prompt engineering to filter results at the model layer. This effectively makes the LLM your security perimeter—a dangerous bet, given that models can be manipulated or bypassed.\"（很多自建系统给 agent 宽松授权，靠 prompt engineering 在模型层过滤，等于把 LLM 当安全边界——模型可被操纵或绕过，这是危险押注。）金句：\"Telling an auditor that 'I added instructions that said not to show restricted data' is not a defensible governance control.\"（跟审计说『我加了指令让它别显示受限数据』不是站得住脚的治理控制。）治理是连续的：员工从 APAC 调到 AMER，IdP 改组、同步传播，他下一个问题就自动返回 AMER 视图，无需提工单改 agent。\n\n【四层访问控制与三条模式】结构化数据上叠四层：对象权限（GRANT SELECT，没这个 agent 查不了）、ABAC（打一次 governed tag 如 pii:email，策略自动传播到所有带该标签的列）、行过滤（SQL UDF 按组成员身份筛行）、列掩码（UDF 返回原值或掩码值）。ABAC 的价值是『定义一次、到处继承』，取代过去逐表配过滤的 gap-prone 写法。文档侧把文件放进 Unity Catalog Volumes 当 securable，GRANT READ VOLUME 控权——但 volume 是最小可授权单元，所以『一个 volume 对一类受众』，两类受众需要不同文档就要两个 agent。文末三条落地模式最可挪用：①Tag, then policy. Don't mask table-by-table（打标签再配策略，别逐表掩码）；②One audience per volume（一个 volume 一类受众）；③Test by impersonation, not inspection（用冒充测试而非读策略自查来验证治理——别读一遍策略说服自己它对了，而是以每个组成员身份问同一个问题、比答案，做成回归测试）。\n\n【背景与上下文】这篇文章是 agent 治理主线迄今最系统的工程落地样本，呼应本频道和 banking-ai 一贯主线：agent 的胜负手在治理和 harness（7/30 ai-frontier、8/7 Agent Plugins 1.0 规范）。它也给 a16z 同日那篇『护城河上移到权限/校验』提供了最具体的实现蓝图——『权限』那层到底怎么砌。caveat 是 Databricks 卖 Unity Catalog，有商业立场，引用宜摆『一家 Lakehouse 厂商给出的治理设计范式』，但其架构原则（身份即边界、数据层过滤、冒充测试）是平台无关的通用工程智慧。\n\n【影响与前瞻】对银行业这是即取即用的 agent 治理设计模板。强监管下『把 LLM 当安全边界』是事故级设计，而『agent 挂用户凭证跑 + 数据层强制过滤 + 冒充测试做回归』恰好对得上银行现有的身份/权限/审计基础设施——不需要为了上 agent 重造一套 IAM。『test by impersonation, not inspection』尤其值得直接写进行内 agent 上线的合规验收清单。",
+      "source": "Databricks Blog",
+      "source_type": "aihot",
+      "url": "https://www.databricks.com/blog/how-ground-genie-agents-both-structured-data-and-documents-without-losing-governance",
+      "timestamp": "2026-08-10T23:08:50Z",
+      "importance": 8,
+      "tags": [
+        "agent 治理",
+        "Unity Catalog",
+        "ABAC",
+        "身份即边界",
+        "银行业"
+      ],
+      "batch_time": "2026-08-11T10:00:00+08:00"
+    },
+    {
+      "title": "steipete 拿 ChatGPT Work 浏览器 agent 装好 OpenClaw+Ollama 跑本地模型——agent 给 agent 搭开发环境，1260 ♥",
+      "summary": "Peter Steinberger（steipete，PSPDFKit 创始人、重度 OpenClaw 用户）8/10 发推获 1261 ♥：他打开 ChatGPT Work 的网站 agent，让它去装 OpenClaw 和 Ollama、下载本地模型、在本地跑起自己的 claw。配合同期 OpenClaw 新版修复 MiniMax 和 Ollama 集成、明确『做任何模型的 harness』。这件事的双重看点：一个浏览器 computer-use agent 现在能把一整套本地优先的 agent 生态（harness+模型服务+权重下载）从零搭起来；而 OpenClaw 的定位正从『Claude Code 替代品』收敛成『跑任意模型（含本地 Ollama）的通用 harness』。『for the lols』的语气背后是真实信号——computer-use agent 已能独立完成开发环境搭建这类多步骤真实任务。",
+      "detail_content": "【核心事件】Peter Steinberger（@steipete，PSPDFKit 创始人，长期重度 OpenClaw 用户）8/10 发推：\"Just for the lols, I used ChatGPT Work (Website!) to install OpenClaw and Ollama, let it download a local model and run my claw in it.\"（纯属好玩：我用 ChatGPT Work 的网站版去装 OpenClaw 和 Ollama，让它下个本地模型、在里面跑我的 claw。）这条推当周获 1260 ♥、38 转发，是本频道七个 KOL 本周互动量最高的一条。\n\n【关键细节】这里有三层套娃：最外层是 ChatGPT Work 的浏览器 agent（OpenAI 的 computer-use agent，跑在网站里），它被指派去完成『装软件』这件本来属于人/脚本的工作；中间层是 OpenClaw（开源 coding agent harness）和 Ollama（本地模型运行时），两者被 agent 装到本机；最里层是 agent 让 Ollama 下载一个本地模型权重，然后把 OpenClaw 的 claw 跑在这个本地模型上。steipete 在后续回复里补充，OpenClaw 新版也对 MiniMax 和 Ollama 做了修复——『想成为任何模型的 harness』（we wanna be a great harness for *any* model）。\n\n【背景与上下文】这件事放在本周另外两条（a16z computer-use 生产可用、Databricks agent 治理）的背景下读最清楚：它正是 a16z 所说『computer-use agent 开始在真实任务上扛事』的一个轻量级现场演示——搭开发环境是多步骤、有失败模式、需要看屏幕点击的真实任务，不再是玩具 demo。同时它呼应本频道 8/8 主线『Coinbase/Shopify/Ramp 自建 coding agent 却仍给 Anthropic 付钱』——harness 是战略资产，而 OpenClaw 正把『harness』的定义从『Claude Code 的开源替代』拓宽到『跑任意模型（云端 API 或本地 Ollama）的通用 harness』，本地模型路径让数据不出本机成为可能。steipete 一贯是 OpenClaw 最权威的一手体验源（本频道长期追踪他的反馈），他这条『for the lols』态度本身就是信号——当重度用户拿浏览器 agent 玩着把整套本地 agent 栈搭起来，说明这套工具链的摩擦已经低到值得拿来消遣。\n\n【影响与前瞻】对工程团队，这是一个可复现的最小实验：用现有的浏览器 agent（ChatGPT Work / Claude 之类）去驱动本地 agent 栈的搭建，反过来评估 computer-use agent 在『多步骤、需纠错的安装配置类任务』上的成熟度。对关注数据主权的场景（金融/医疗），OpenClaw+Ollama 的本地化路径 + 一个外部 agent 做编排，是一条值得验证的『本地优先』架构草图。caveat：这是单条推文、『for the lols』定性，没有失败率/耗时等硬数据，宜当一手体验信号而非 benchmark；OpenClaw+Ollama 的生产稳定性仍需独立验证。",
+      "source": "@steipete (X)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/steipete/status/2086648656946696641",
+      "timestamp": "2026-08-10T02:59:00Z",
+      "importance": 7,
+      "tags": [
+        "OpenClaw",
+        "Ollama",
+        "computer-use agent",
+        "本地模型",
+        "harness"
+      ],
+      "batch_time": "2026-08-11T10:00:00+08:00"
+    }
+  ]
+}
