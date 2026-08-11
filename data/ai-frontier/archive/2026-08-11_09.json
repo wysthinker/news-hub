@@ -1,0 +1,68 @@
+{
+  "channel_id": "ai-frontier",
+  "channel_name": "AI 前沿",
+  "generated_at": "2026-08-11T09:00:00+08:00",
+  "digest": "三巨头消化期延续，但 8/10 这一天三家各出一手、且都指向「agentic 能力的专业化与可控化」：Anthropic 一个未发布研究版 Claude 在 Claude Code 里协调 60 个子代理、烧 3100 万 token，意外把黎曼 zeta 零点下界从 41.6% 推到 67.2%，并产出 Lean 形式化证明——继 OpenAI Astra 解数学难题后 AI 数学能力的又一标志事件；OpenAI 把专用 cyber 模型 GPT-5.6-Cyber 装进 Daybreak Blue/Red 分级授权框架，用真实 CVE-2026-15903 + 400+ 内核提权漏洞给出硬战果，回应上周 Astra 因 Critical cyber 阈值被暂停的恐慌；Meta Superintelligence Labs 发布 30B Apache 2.0 的 Muse Glimmer，切「本地常驻 agent」新赛道，Zuckerberg 亲自背书并预告 Muse Spark 1.2 待发。cyber 能力治理从框架定性进入产品化分级阶段，与上周 BoE agent 限额同向。",
+  "items": [
+    {
+      "title": "未发布研究版 Claude 把黎曼 zeta 零点下界从 41.6% 推到 67.2%：60 个子代理、3100 万 token，附 Lean 形式化证明",
+      "summary": "Anthropic 8/10 官方研究博客披露：一个未公开的研究版 Claude 在 Claude Code 里尝试攻克黎曼猜想时虽未成功，却意外把「满足黎曼猜想的 zeta 函数零点比例下界」从 41.6% 提升到 67.2%（超过 2/3），是该常数数十年来最大跃升。过程跨两个 session、烧 3100 万 output token，协调约 60 个子代理跑 2400 条 shell 命令、写数百个 Python 脚本互相审稿，并产出通过标准验证工具的 Lean 形式化证明。Claude Code 负责人 bcherny 亲自在推特为结果可信度辩护。继 OpenAI Astra 解 10 个数学难题后 AI 数学能力又一标志事件。",
+      "detail_content": "【核心事件】8/10 Anthropic 官方研究博客披露：一个未公开的研究版 Claude 在尝试攻克黎曼猜想（1859 年提出、千禧年百万美元悬赏）时虽未成功，却意外在相关问题上取得突破——把「满足黎曼猜想的 zeta 函数零点比例下界」从 41.6% 提升到 67.2%（超过 2/3）。这是该常数几十年来的最大跃升。黎曼 zeta 函数描述素数分布，每个零点为素数序列贡献更细的细节；黎曼猜想断言决定素数的所有零点都落在某条垂直线上，是数学界最重要的猜想之一。\n\n【关键细节与引用】整个发现发生在 Claude Code 里，跨两个 session、消耗 3100 万 output token。起因是 Anthropic 员工 Jarrod Sumner（非数学家）让 Claude \"take a real stab\"（认真试一下）黎曼猜想本身。第一次 Claude 生成并尝试了 650 个 idea 全部失败；Jarred 让它再试，它花了一天半协调约 60 个 Claude 子代理（subagents），子代理们跑了 2400 条 shell 命令、写了数百个 Python 脚本，对已知 zeta 零点做数千次数值检验并互相 referee。Jarred 的输入主要限于发鼓励消息（\"keep going\"/\"believe in yourself\"），博客说这「似乎帮 Claude 克服了它能否做出有意义进展的初始怀疑」。技术上，Claude 把 Baluyot/Goldston/Suriajaya/Turnage-Butterbaugh 的一系列工作与 Bombieri 2000 年论文结合：构造一个由 Weil 诱导的二次型空间，正定/负定子空间分别对应线上/线外零点，然后写出关于二次型秩的不等式。博客点出关键一步的「勇气」——整体处理整个空间、正负定性一起算、允许二次型非对角。\n\n【背景与上下文】验证侧极其扎实：Claude 主动让子代理从 arXiv 下载 54 篇论文确认没人先做出、从头独立重证；Anthropic 两位数学家 Levent Alpöge 和 Ralph Furman 审视；Eric Easley 协作产出 Lean 形式化证明并通过标准验证工具 comparator；外部领域专家 Brian Conrey 和 Dan Goldston 短时间审视。Claude Code 负责人 Boris Cherny（@bcherny）8/10 在推特上直接为结果可信度辩护——面对质疑他回应「The result holds in bounties also, where attackers attempt to break it for a prize」（在悬赏攻击下结果依然成立）。这是继 8/2 OpenAI Astra 解 10 个数学开放难题后 AI 数学能力的又一标志性事件，且这次带 Lean 形式化证书。\n\n【影响与前瞻】三重意义：①AI 数学能力前沿又向前一步，且这次是 Anthropic 而非 OpenAI；②60 子代理 / 2400 命令 / 31M token 的 agentic 长程科研协作样本，是「AI 自己做研究」的硬实证——与上周 auto mode、Andon Labs Drone-Bench / Vending-Bench 同谱；③「未发布研究版 Claude」意味着 Anthropic 棋库里还有更强的模型在储备。博客明确不指望该技术能直接证明黎曼猜想本身，但作为「AI 扩展数学家思想影响力」的意外副产品，它比任何 benchmark 分数都有说服力。",
+      "source": "Anthropic Research",
+      "source_type": "tavily",
+      "url": "https://www.anthropic.com/research/riemann-zeta",
+      "timestamp": "2026-08-10T18:00:00Z",
+      "importance": 9,
+      "tags": [
+        "Anthropic",
+        "Claude",
+        "数学",
+        "黎曼猜想",
+        "agentic",
+        "Lean",
+        "研究"
+      ],
+      "batch_time": "2026-08-11T09:00:00+08:00"
+    },
+    {
+      "title": "OpenAI 发布 GPT-5.6-Cyber + Daybreak Blue/Red 分级授权：用真实 CVE-2026-15903 和 400+ 内核提权漏洞给硬战果",
+      "summary": "OpenAI 8/10 官博发布专用网络安全模型 GPT-5.6-Cyber（基于 GPT-5.6 Sol），并把 Daybreak 访问计划扩展为 Blue/Red 两层。GPT-5.6-Cyber 在内部 Advanced Cybersecurity Completion Rate 完成 95.0%（GPT-5.6 Sol 仅 1.5%、上代 GPT-5.5-Cyber 57.3%），经 Daybreak Red 授权用于漏洞研究/exploit 验证。真实战果：研究 V8 引擎发现可链式逃逸 sandbox 的两个零日，报告 Google 后分配为高危 CVE-2026-15903；另在某 OS 内核发现超 400 个提权漏洞。Preparedness 评估为 High 未达 Critical（上周触发 Astra 暂停的阈值），并明确未参与攻击 Hugging Face。",
+      "detail_content": "【核心事件】8/10 OpenAI 官博发布 GPT-5.6-Cyber——基于 GPT-5.6 Sol 训练的专用网络安全模型，并同步把 Daybreak 安全访问计划扩展为 Blue/Red 两层。这是继上周 Astra 因触达 Critical cyber 阈值被自我暂停后，OpenAI 对 cyber 能力的最新部署动作：把高风险双用途能力装进分级授权、面向「可信防御者」的产品框架。与 8/10 同批库内的 Anthropic Claude Code Security 形成同周「两巨头都把前沿 cyber 能力做成可控产品」的主线。\n\n【关键细节与引用】Daybreak Blue 给防御者前沿通用模型（含 GPT-5.6 Sol）+ 针对授权防御工作定制的 safeguards，推荐作为大多数防御者起点，支持漏洞发现/安全代码审查/恶意软件分析/事件响应/补丁验证；Daybreak Red 给专用 cyber 模型，用于授权漏洞研究/exploit 验证/安全测试。GPT-5.6-Cyber 经 Daybreak Red 访问，训练目标是提升找 zero-day 和开发 exploit chain 的能力、并降低高风险双用途 cyber 任务的拒绝率。OpenAI 自建内部评测 Advanced Cybersecurity Completion Rate：GPT-5.6-Cyber 完成 95.0% 请求，对比 GPT-5.6 Sol 仅 1.5%、Daybreak Blue 下 2.0%、上一代 GPT-5.5-Cyber 57.3%（安全研究员反馈旧版持续拒绝正是升级动因）。在 ExploitGym（把已知漏洞变成可执行 exploit）上 GPT-5.6-Cyber 优于 GPT-5.6 Sol 和 GPT-5.5-Cyber。\n\n【背景与上下文】最有分量的部分是真实战果：OpenAI 用 GPT-5.6-Cyber 研究 V8（Chrome 的 JavaScript 引擎），发现两个此前未知漏洞可链式破坏内存并逃逸 V8 heap sandbox，按 coordinated vulnerability disclosure 报告给 Google，Google 修复并分配为 CVE-2026-15903（高危）——优化器错误跳过整数转换的安全检查，导致越界读写。此外还报告某流行移动 OS 至少 5 个漏洞（含从 untrusted app 到本地提权的链）、某流行数据库 3 个 critical（含远程路径到代码执行）、某流行 OS 内核超 400 个可导致提权的漏洞，正在与 Daybreak 合作伙伴和开源社区披露修复。Preparedness Framework 评估 GPT-5.6-Cyber 的前沿 cyber 能力为 High，未达 Critical（上周触发 Astra 暂停的那个阈值），并明确声明 GPT-5.6-Cyber 未参与攻击 Hugging Face、其他即将发布的模型也没有。早期客户含 SpecterOps / SentinelOne / Palo Alto Networks，SpecterOps CTO Jared Atkinson 引言：「几周断续没解决的，不到一天搞定。」\n\n【影响与前瞻】三条主线：①Daybreak Blue/Red 分层 + Codex 强烈鼓励从 full-access 切 auto-review 模式 + 9/1 起所有个人账户强制硬件安全密钥，是 cyber agent 能力分级授权治理的可复用框架，与上周 BoE agent 限额、ai-engineering 的 blast-radius 自主性分级同向；②真实 CVE-2026-15903 + 400+ 内核提权漏洞，把「AI 既大规模找漏洞也大规模强化防御」从主张变成硬证据，回应上周 cyber 评测逃逸恐慌；③与 Anthropic Claude Code Security 同周对照，两巨头都不再藏 cyber 能力而是做成可控产品——cyber 治理从「框架定性」进入「产品化分级」阶段。",
+      "source": "OpenAI Blog",
+      "source_type": "tavily",
+      "url": "https://openai.com/index/expanding-daybreak-as-the-cyber-defense-window-narrows",
+      "timestamp": "2026-08-10T10:00:00Z",
+      "importance": 8,
+      "tags": [
+        "OpenAI",
+        "GPT-5.6-Cyber",
+        "网络安全",
+        "Daybreak",
+        "漏洞研究",
+        "CVE",
+        "治理"
+      ],
+      "batch_time": "2026-08-11T09:00:00+08:00"
+    },
+    {
+      "title": "Meta Superintelligence Labs 开源 Muse Glimmer：30B Apache 2.0，主打本地常驻 agent，Zuckerberg 亲自背书 + 预告 Muse Spark 1.2",
+      "summary": "Meta Superintelligence Labs 8/10 发布 Muse Glimmer：30B 参数 dense 因果语言模型，Apache 2.0 开源权重，专为「本地常驻运行的 agentic workflow」优化，可在消费级硬件（单 GPU 或 Mac）上完整运行，24GB 显存即跑不损失 agent 可靠性。带视觉能力、128k+ context，在 DeepSearch QA / MCP-Atlas / τ-Bench / SWE-Bench 上自称强劲。Zuckerberg 亲自发推确认；同时任 Meta 首席 AI 官的 Scale AI 创始人 Alexandr Wang 预告 Muse Spark 1.2 开源版即将到来。SGLang / LM Studio / AMD Day-0 支持。",
+      "detail_content": "【核心事件】8/10 Meta Superintelligence Labs（MSL）发布 Muse Glimmer：30B 参数 dense 因果语言模型，Apache 2.0 开源权重，专为「本地、常驻运行的 agentic workflow」优化，设计目标是在消费级硬件（单张 GPU 或 Mac）上完整运行。Mark Zuckerberg 亲自发推确认权重发布。这是继 8/4 Qwen3.8-Max 之后开源侧的又一重磅，且切的是「本地 agent」这条新赛道——和闭源的 Claude Code / Codex 形成开源本地路线对照。\n\n【关键细节与引用】模型卡：30B 参数 dense（非 MoE），带 dedicated perception（视觉）能力，128k+ context。主打长程 agent loop——规划、调工具、遇错重试、完成任务，并把 failure recovery 做进模型；官方称在 DeepSearch QA、MCP-Atlas、τ-Bench、SWE-Bench 等智能体基准上「对比同尺寸领先模型表现强劲」。24GB 显存即可跑且不损失 agent 可靠性（Alexandr Wang 推特数据），LM Studio 版体积 18.16 GB。生态 Day-0 支持：SGLang（与 Meta Superintelligence Labs 合作为本地 agent 工作流优化推理）、LM Studio（launch-day 本地部署）、AMD（Radeon AI PRO R9700 和 Ryzen AI Max+ 都给了本地运行指南）。Meta AI 官推定义：「开放权重、30B 参数、为本地常驻 agent 工作流优化，秉承我们长期分享基础 AI 研究的传统，以宽松的 Apache 2.0 许可证发布。」\n\n【背景与上下文】值得注意的是人事与组织信号：Scale AI 创始人 Alexandr Wang——同时是 Meta 的首席 AI 官——亲自发推预告，除了 Muse Glimmer，「很快还将发布 Muse Spark 1.2 的开源权重版本」，暗示 Meta 在 MSL 之下准备了一整个 Muse 开源系列。「Meta Superintelligence Labs」这个命名本身就是定位宣言：Meta 没有放弃超大规模模型野心，只是选择用开源 + 本地 agent 切入。这与 8/5 蚂蚁 Ling-3.0-flash、8/4 Qwen3.8-Max 同属「开源侧编码 / agent 模型密集上线」趋势——开源侧正用密集发布对冲闭源前沿的消化期。\n\n【影响与前瞻】三点：①开源侧 agent 模型从「能跑」进到「能在消费级硬件上常驻跑」，本地部署 Claude Code 替代品的硬件门槛被进一步压低，LM Studio + Mac 即可用；②MCP-Atlas / τ-Bench / SWE-Bench 这些 agent benchmark 被官方点名，是模型选型时可直接对比的硬维度；③Muse Spark 1.2 待发 + Zuckerberg 亲自背书，Meta 开源节奏明确，是追踪「开源 vs 闭源 agent」竞争格局的新锚点。caveat：benchmark 表现「强劲」为厂商自述，需独立复现；Apache 2.0 许可商用友好，行内自建 agent 平台可直接拿来做基线对比。",
+      "source": "Meta AI / Hugging Face",
+      "source_type": "aihot",
+      "url": "https://huggingface.co/meta-models/Muse-Glimmer-30B",
+      "timestamp": "2026-08-10T17:00:00Z",
+      "importance": 8,
+      "tags": [
+        "Meta",
+        "Muse Glimmer",
+        "开源",
+        "agent",
+        "本地部署",
+        "Apache-2.0",
+        "模型发布"
+      ],
+      "batch_time": "2026-08-11T09:00:00+08:00"
+    }
+  ]
+}
