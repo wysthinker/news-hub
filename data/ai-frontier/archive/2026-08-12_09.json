@@ -1,0 +1,65 @@
+{
+  "channel_id": "ai-frontier",
+  "channel_name": "AI 前沿",
+  "generated_at": "2026-08-12T09:00:00+08:00",
+  "digest": "消化期第六周中段，三巨头官方技术发布仍处真空，但 AI 助手整体跨过里程碑：Gemini 月活突破 10 亿、ChatGPT 也站上 10 亿量级，意味着通用 AI 助手正式成为十亿用户级品类——这是本周最具结构意义的信号。Google 侧另一条研究线推进：AMIE 医疗 AI 首次展示实时临床视频问诊能力（基于 Gemini + Project Astra 多 agent 架构），把医疗 AI 从文本对话推进到看脸、听咳、引导查体的多模态实时诊断。NVIDIA 继续填开源 agent 基建：Nemotron 3.5 Lightning（30B MoE/3B 激活，NVFP4 量化单 GPU 可跑）主打本地常驻 agent。三巨头旗舰模型仍沉浸于 7/24 Opus5/Fable5 发布后的测评消化，本周无新旗舰动作，AI 助手用户破 10 亿是消化期里罕见的硬里程碑。",
+  "items": [
+    {
+      "title": "Gemini 月活突破 10 亿成 Google 史上最快增长产品，ChatGPT 同周站上 10 亿用户量级——通用 AI 助手正式进入十亿用户品类",
+      "summary": "Sundar Pichai 8/11 在 X 宣布 Gemini 月活突破 10 亿，是 Google 历史上增长最快的产品。增长轨迹：2 月约 7.5 亿 → Q2 财报（7 月）9.5 亿 → 8 月破 10 亿。同周 ChatGPT 也跨过 10 亿用户（周活口径），The Verge 以「双双破 10 亿」定调。但 ChatGPT 市场份额首次跌破 50%，Gemini 与 Claude 三位数增长正在改写格局。",
+      "detail_content": "【核心事件】8/11，Google CEO Sundar Pichai 在 X 发帖宣布 Gemini 月度活跃用户突破 10 亿，并称这是 Google 历史上达到 10 亿用户最快的产品。同日 The Verge 以《ChatGPT and Gemini both just passed 1 billion users》为题报道，TechCrunch 也确认 Gemini app 用户数冲上 10 亿。\n\n【关键数据与轨迹】Gemini 的增长曲线被各家拼出：约 4.5 亿 → 6.5 亿 → 2026 年 2 月约 7.5 亿 → 7 月 Q2 财报电话会披露 9.5 亿 → 8 月破 10 亿。ChatGPT 一侧，多个口径显示其更早（5-6 月）月活已破 10 亿，本周报道把周活也推到 10 亿量级，仍是史上最快达到 10 亿用户的应用。\n\n【格局变化】里程碑背后是份额迁移：ChatGPT 市场份额首次跌破 50%，Gemini 与 Anthropic Claude 录得三位数增长率，正在侵蚀 OpenAI 的早期垄断。Gemini 的增速很大程度上由 Google 生态分发驱动——Android 系统级集成、Google Search 的 AI Overviews、Workspace 套件捆绑——这是「产品力 + 分发渠道」双轮的结果，而非纯模型能力领先。\n\n【背景与影响】这是消化期里罕见的硬里程碑。此前库内 Cloudflare 8/8 披露 AI agent 流量 5 月已超人类、预测五年后人机比 1:1000；本条从消费者侧给出另一面——通用 AI 助手已不再是早期采用者工具，而是与 Search、社交媒体同级的十亿用户基础设施。对 Eason：银行 AI 推广的「用户教育」成本论证从此有了十亿用户级的底层背书——「普通人已经在用」不再是预测是事实；同时 ChatGPT 跌破 50% 提醒单一供应商绑定的份额风险，与 banking-ai 频道信创/供应商集中度主线同频。",
+      "source": "The Verge",
+      "source_type": "tavily",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/978113/chatgpt-gemini-1-billion-users",
+      "timestamp": "2026-08-11T19:41:00Z",
+      "importance": 8,
+      "tags": [
+        "Gemini",
+        "Google",
+        "ChatGPT",
+        "OpenAI",
+        "用户里程碑",
+        "市场份额"
+      ],
+      "batch_time": "2026-08-12T09:00:00+08:00"
+    },
+    {
+      "title": "Google AMIE 医疗 AI 首次展示实时临床视频问诊能力：基于 Gemini + Project Astra 多 agent 架构，看脸听咳、引导查体、实时推理诊断",
+      "summary": "Google Research + DeepMind 8/11 官博宣布研究型医疗 AI 系统 AMIE 首次具备实时临床视频问诊能力，属首例此类研究。基于 Gemini 与 Project Astra 的多 agent 架构，可解读视听线索、引导虚拟查体、实时诊断推理。在用患者演员 + 初级保健医生的随机对照模拟研究中，AMIE 在病史采集、诊断准确性、管理合理性、沟通质量等核心临床能力上被评估为表现良好，患者演员更偏好视频体验。目前仍是研究系统。",
+      "detail_content": "【核心事件】8/11，Google Research 与 Google DeepMind 在 blog.google 发文（研究负责人 Anil Palepu 署名），宣布研究型医疗 AI 系统 AMIE 首次在实时临床视频问诊场景下展示专家级能力，称这是 first-of-its-kind（同类首创）研究。\n\n【技术架构】AMIE 构建于 Gemini 与 Project Astra 之上，采用多 agent 架构（multi-agent architecture）。系统现在能：解读视觉与听觉线索（notice a cough / observe gait / register visible signs of discomfort，官方原文类比「医生注意一声咳嗽、观察步态、捕捉不适的可见征兆」）、引导虚拟查体（guides virtual physical exams）、实时诊断推理（reasons diagnostically in real time）。这是把医疗 AI 从此前的纯文本对话推进到多模态实时视频的关键一跳。\n\n【研究方法与结果】团队设计了随机对照研究，用患者演员（patient actors）进行模拟问诊，并邀请一组初级保健医生（primary care physicians）参与对照。由临床评估者打分，AMIE 在以下核心临床胜任力上被评估为表现良好：病史采集彻底程度（history-taking thoroughness）、诊断准确性（diagnostic accuracy）、管理方案合理性（management appropriateness）、沟通质量（communication quality）。患者演员还报告相比纯文本聊天更偏好视频体验。\n\n【边界与影响】官方明确强调 AMIE 仍是研究系统（research system），「在负责任的真实临床部署前仍需更多研究」。这条与库内 8/7「斯坦福 + Arc Institute 用 Evo 设计 16 个能杀菌的活病毒」同属 AI 介入生物医学的研究线，但 AMIE 走的是临床交互侧而非分子设计侧。对 Eason：医疗是强监管行业，AMIE 的「研究系统、不部署」措辞与 banking-ai 频道反复强调的「demo vs production」治理纪律同构——技术能力到专家级 ≠ 可上岗，中间隔着合规、责任认定与失败模式；可作为汇报中「AI 能力边界与部署门槛」的跨行业案例。",
+      "source": "blog.google",
+      "source_type": "aihot",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/google-research/amie-video-consultations",
+      "timestamp": "2026-08-11T17:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Google",
+        "DeepMind",
+        "AMIE",
+        "医疗AI",
+        "多模态",
+        "Project Astra"
+      ],
+      "batch_time": "2026-08-12T09:00:00+08:00"
+    },
+    {
+      "title": "NVIDIA 开源 Nemotron 3.5 Lightning：30B MoE / 3B 激活、NVFP4 量化单 GPU 可跑，主打本地常驻 agent，agentic 任务速度提升 4 倍",
+      "summary": "NVIDIA 8/11 扩展 Nemotron 家族，推出 Nemotron 3.5 Lightning：30B 参数开源 MoE、仅 3B 激活，NVFP4 量化后单 GPU 即可运行，专为 always-on 本地 agent 与高吞吐 agentic 负载设计，官方称 agentic 任务速度提升 4 倍。已在 HuggingFace 与 Ollama 开放，可完全本地部署，SGLang 提供 Day-0 支持。",
+      "detail_content": "【核心事件】8/11，NVIDIA 在官方博客发布 Nemotron 3.5 Lightning，定位于快速、专用的 agentic 任务与本地部署。CNBC 同日报道确认发布。这是 NVIDIA 继 Nemotron 3 Nano / Super（120B，3 月）/ Ultra（GTC San Jose）之后，针对「本地常驻 agent」这一具体场景补上的轻量级模型。\n\n【关键参数】架构为 300 亿参数的开源 MoE（Mixture-of-Experts），但每次推理仅激活 30 亿参数（30B total / 3B active），这是其能效基础。模型以 NVFP4 格式量化，可在单张 GPU 上运行——官方将其定位为 lightweight。设计目标是 always-on agents（常驻 agent）与高吞吐 agentic 工作负载，官方称相对此前的配置，agentic 任务可获得最高 4 倍速度提升。\n\n【开放获取】权重已在 HuggingFace 以 nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4 发布，并登陆 Ollama 支持完全本地运行（开发者与爱好者可在自有硬件上离线跑）。推理框架侧，SGLang（LMSYS 团队，同日另发博客宣布 Day-0 支持）已适配。NVIDIA 配套的 NeMo Switchyard 工具链与 Nemotron 开发仓库同步更新。\n\n【背景与影响】这是库内 NVIDIA 开源 agent 基建线的最新一条：8/10 VoiceChat 11B（全双工语音 agent）、8/6 Cosmos 3 开放世界模型、8/5 Alpamayo 2（Robotaxi VLA），本月 NVIDIA 几乎每周一个开源 agent 侧模型，脉络清晰——把 GPU 算力优势从训练侧延伸到推理与端侧，用开源权重把开发者锁定在 CUDA 生态。Nemotron 3.5 Lightning 直指「本地常驻 agent」场景，与库内 Cloudflare「给 agent 一台电脑而非容器」、微软 Orchard 训练-部署对齐是同一产业方向的不同切面。对 Eason：行内 agent 平台选型时，「3B 激活、单 GPU、可完全本地」是私有部署 + 数据不出域的具体可选项，尤其契合银行业务数据敏感场景。",
+      "source": "NVIDIA Blog",
+      "source_type": "aihot",
+      "url": "https://blogs.nvidia.com/blog/local-ai-open-source-models-agents-nemotron",
+      "timestamp": "2026-08-11T13:00:00Z",
+      "importance": 6,
+      "tags": [
+        "NVIDIA",
+        "Nemotron",
+        "开源模型",
+        "本地部署",
+        "Agent",
+        "MoE"
+      ],
+      "batch_time": "2026-08-12T09:00:00+08:00"
+    }
+  ]
+}
