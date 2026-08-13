@@ -1,9 +1,103 @@
 {
   "channel_id": "ai-frontier",
   "channel_name": "AI 前沿",
-  "generated_at": "2026-08-12T09:10:49.207344+08:00",
-  "digest": "消化期第六周中段，三巨头官方技术发布仍处真空，但 AI 助手整体跨过里程碑：Gemini 月活突破 10 亿、ChatGPT 也站上 10 亿量级，意味着通用 AI 助手正式成为十亿用户级品类——这是本周最具结构意义的信号。Google 侧另一条研究线推进：AMIE 医疗 AI 首次展示实时临床视频问诊能力（基于 Gemini + Project Astra 多 agent 架构），把医疗 AI 从文本对话推进到看脸、听咳、引导查体的多模态实时诊断。NVIDIA 继续填开源 agent 基建：Nemotron 3.5 Lightning（30B MoE/3B 激活，NVFP4 量化单 GPU 可跑）主打本地常驻 agent。三巨头旗舰模型仍沉浸于 7/24 Opus5/Fable5 发布后的测评消化，本周无新旗舰动作，AI 助手用户破 10 亿是消化期里罕见的硬里程碑。",
+  "generated_at": "2026-08-13T09:12:51.814306+08:00",
+  "digest": "三巨头旗舰发布真空进入第二周，本周新鲜货几乎全在「评测自己 / 理解模型」这条副线——Anthropic 联合 Redwood 发概念推理评测 CRI（Opus 5 居首 73.6 分），Google Research 发 LLM 事实性瓶颈研究（recall 比 encoding 更该被打磨），微软第四势力 MAI-Thinking-1 自研推理模型正式上架 Foundry。产品侧 Anthropic 把 Cowork 推进 Chrome 侧栏（跨设备持续会话），DeepMind 把手语 AI 首次推到消费级 Pixel。整体看，模型发布潮后进入了「度量能力、部署能力」的消化期：钱花在让自己和别人都看清楚模型到底强在哪、能用在哪儿，而不是急着抛下一个旗舰。下一个发布窗口仍未打开。",
   "items": [
+    {
+      "title": "Anthropic 联合 Redwood 发布「概念推理」评测 CRI：专测无法经验验证的安全推理，Opus 5 居首 73.6 分、自 2024 末线性无平顶",
+      "summary": "alignment.anthropic.com 8/12 发布 Conceptual Reasoning Index（CRI），由 Redwood Research 主导、Anthropic（Ethan Perez）合作。三个基准：LMCA（560 立场 + 1461 条反驳论据，专家评级）、ACCoRD（1.4 万条逻辑一致性约束，567 条人工核验）、DTBench（407 道决策论选择题）。CRI = LMCA 60% + ACCoRD 20% + DTBench 20%。最高分 Opus 5 拿 73.6，天花板估计约 91，自 2024 末线性增长无平顶。意义：专门测模型在哲学/AI 风险/决策论这类「没有标准答案、只能靠论证」的领域的能力——而这正是 AI 安全减危工作最需要的。",
+      "detail_content": "【核心事件】8 月 12 日，Anthropic 对齐科学博客（alignment.anthropic.com）联合 Redwood Research 发布 Conceptual Reasoning Index（CRI，概念推理指数），并上线 live 榜单 conceptualreasoning.ai。作者团队为 Redwood 的 Emery Cooper、Caspar Oesterheld 等，加上 Anthropic 的 Joe Benton、Ethan Perez。这是一套专门评估模型「概念推理」能力的基准——即在无法靠经验或数学验证、只能靠论证来推进的问题上，模型有多强。\n\n【关键细节与引用】CRI 由三个基准加权合成：LMCA（Language Model Conceptual Argumentation，权重 60%）——560 条立场文本配 1461 条反驳论据，几乎全部由概念研究员 Emery Cooper 打分，测的是模型「判断论据好坏」的能力；ACCoRD（权重 20%）——近 1.4 万条模型生成的逻辑一致性约束，567 条经人工核验，测模型在概念问题上的信念是否自洽（例如 P(A) 是否 ≥ P(A&B)）；DTBench（权重 20%）——407 道决策论选择题，测模型能否忠实预测自身或近亲副本的行为。截至 8 月 10 日，各厂最强模型得分：Opus 5 居首 73.6（95% 置信区间 ±2.1），远低于估计天花板约 91。作者指出「自 2024 年末以来得分大致线性增长，没有平顶迹象」；DTBench 已接近饱和（Fable 5 拿 98%），LMCA 预计约一年后开始饱和，ACCoRD 何时饱和尚不确定。\n\n【背景与上下文】为什么要单独造一个概念推理评测？博客核心论点：当前 AI 训练高度依赖海量数据和可靠反馈，所以模型在「无法经验/数学验证」的任务上更弱；而降低高级 AI 风险的工作恰恰大量属于这类——比如推理比人类更强的 AI、一旦犯错可能不可逆（AGI 接管、AI 辅助政变）、以及哪些价值观该被植入 AI 这类可能根本没有 ground truth 的问题。一个关键判断是「我们能否及时让 AI 自动化或增强这类减危工作」，而要回答它得先能测量它。这与库内 7 月 METR 前沿风险报告「agent 在易验证问题上极强、在判断可靠性上远逊人类专家」的结论形成呼应——CRI 正是把那块短板做成可量化榜单。\n\n【影响与前瞻】对用户的意义有二。其一，这是 Anthropic 第一次系统公开「自家的对齐/安全能力评测标准」，且 Opus 5 居首——既是研究贡献，也是事实上的能力宣示。其二，CRI 填补了一个空白：现有 benchmark（SWE、数学、工具调用）几乎都是「可验证」任务，而 AI 安全的真正难题在不可验证的概念推理上。如果这条线像作者预测的那样线性增长，它可能成为下一个被各厂军备竞赛的能力维度。caveat：榜单样本偏小（LMCA 仅 1461 条论据）、评分主观性强（虽校准过评估员一致性）、且 Anthropic 既是出题方又是被测方，独立性靠 Redwood 背书。",
+      "source": "alignment.anthropic.com",
+      "source_type": "tavily",
+      "url": "https://alignment.anthropic.com/2026/conceptual-reasoning-index",
+      "timestamp": "2026-08-12T15:00:00Z",
+      "importance": 8,
+      "tags": [
+        "Anthropic",
+        "对齐研究",
+        "评测基准",
+        "概念推理",
+        "Redwood"
+      ],
+      "batch_time": "2026-08-13T09:00:00+08:00"
+    },
+    {
+      "title": "Google Research 论文给 LLM 事实性病灶重新定位：不是「没存进去」是「存了取不出」——recall 才是前沿模型的真瓶颈",
+      "summary": "research.google 8/12 发表《Empty Shelves or Lost Keys?》，引入 knowledge profiling 框架 + WikiProfile 基准（2150 条事实）。硬发现：Gemini-3-Pro / GPT-5 已编码 95-98% 的事实，但仍有 26-34% 无法直接 recall，开启 thinking 后仍失败 11-12%。经典的「反转诅咒」（知道 A 是 B 却答不出 B 是 A）被重新定性为 recall 问题而非双向知识缺失。thinking 能恢复 40-65% 已编码但不可直接调用的事实。结论：事实性的下一步提升不在继续 scaling，而在更好地「利用已编码的知识」。",
+      "detail_content": "【核心事件】8 月 12 日，Google Research 发表论文《Empty Shelves or Lost Keys? Recall Is the Bottleneck for Parametric Factuality》（空货架还是丢钥匙？recall 才是参数化事实性的瓶颈）。核心问题是：当一个模型答错事实题，究竟是这条事实「从没被编码进参数」（empty shelf，空货架），还是「编码了但调不出来」（lost key，丢钥匙）？传统准确率指标把这两种完全不同的失败混为一谈，而它们指向截然不同的补救方向——编码失败要靠 scaling 模型或扩数据，recall 失败则可能靠后训练和推理时方法。\n\n【关键细节与引用】作者提出 knowledge profiling 框架，把每条事实分为五种状态（编码失败 / recall 失败 / 直接 recall / thinking 后 recall / 未编码推断），并配套发布 WikiProfile 基准：2150 条源自维基百科的事实，每条配 10 个任务（2 个编码探测、4 个知识评测、4 个多选识别）。在 13 个 LLM、约 450 万次采样的评测后，核心结论是：在前沿模型（Gemini-2.5-Pro、Gemini-3-Pro/Flash、GPT-5）上，「事实编码已接近饱和，但 recall 没有」——Gemini-3-Pro 和 GPT-5 编码了 95-98% 的事实，却仍无法直接 recall 其中 26-34%；即便开启 thinking，仍失败 11-12%。原文：「the bottleneck is shifting from knowledge acquisition to knowledge utilization」。关于「反转诅咒」，论文给出新解：在开放式生成（recall）里反向问题确实更难，但在多选识别里反向问题并不更难、有时还更简单——这说明事实是编码了、甚至能认出，只是当提问方向偏离训练时遇到的方向时就调不出，所以是个 recall 问题。\n\n【背景与上下文】这篇论文直击当下 LLM 最顽固的短板之一——幻觉/事实错误。过去主流解法是「更多参数、更多数据」（把空货架填满），但 Google 的数据说前沿模型的货架已经基本满了（95-98%），问题在钥匙丢了。两个系统性 recall 失败场景被点出：稀有事实施实编码率接近热门事实，但 recall 差距更大；反向问题可识别但难 recall。thinking 被证明是有效的恢复机制——在 thinking 优化模型上能恢复约 40-65% 已编码但不可直接调用的事实，但对没编码的事实帮助很小，说明 thinking 主要起「recall 辅助」而非「多步推理」作用。这与库内 7 月 GPT-5.6 Sol「事实错误降 68%」、thinking 滑块等产品动作是同一主线的理论背书。\n\n【影响与前瞻】对行业的指向很硬：如果编码已近饱和，继续单纯堆参数和数据的边际收益在收窄，事实性的下一个突破点在「知识利用」——检索增强、thinking 调度、更好的 recall 机制。对 Google 自己，这也是为 Gemini 3 系列的 thinking 路线做理论铺垫（我们的事实性强不是靠背得多，是靠想得对）。对模型选型者，这篇给了判断事实性的新角度：别只看准确率，要看编码率和 recall 率的拆分。caveat：基准事实来自维基百科、autorater 打分、且发布方 Google 同时是被测方，但拆分框架本身有方法论价值。",
+      "source": "research.google",
+      "source_type": "aihot",
+      "url": "https://research.google/blog/empty-shelves-or-lost-keys-recall-is-the-bottleneck-for-parametric-factuality",
+      "timestamp": "2026-08-12T15:00:00Z",
+      "importance": 8,
+      "tags": [
+        "Google",
+        "DeepMind",
+        "LLM研究",
+        "事实性",
+        "recall",
+        "论文"
+      ],
+      "batch_time": "2026-08-13T09:00:00+08:00"
+    },
+    {
+      "title": "微软 AI 首个自研推理模型 MAI-Thinking-1 上架 Microsoft Foundry：Suleyman 宣告「从零构建」，微软正式有了不依赖 OpenAI 的旗舰推理能力",
+      "summary": "Mustafa Suleyman 8/12 推特宣布「我们的首个推理模型 MAI-Thinking-1，从零构建（built from scratch），现已在 Microsoft Foundry 上可用」，♥686/RT71。该模型属于微软 AI 6/2 发布的「七款 MAI 模型」家族（含 MAI-Thinking-1、MAI-Code-1.1-Flash、MAI-Image-2.5、MAI-Voice-2、MAI-Transcribe-1.5），8/12 是旗舰推理模型 GA 上架节点。战略意义：微软作为 OpenAI 最大的投资者和分销商，同时自研 from-scratch 模型家族，把「对 OpenAI 的依赖」从技术命题变成可对冲的现实选项。",
+      "detail_content": "【核心事件】8 月 12 日，微软 AI CEO Mustafa Suleyman 在 X 连发推宣布：「Our first reasoning model, MAI-Thinking-1, is built from scratch. Now available in Microsoft Foundry.」（我们的首个推理模型 MAI-Thinking-1，从零构建，现已在 Microsoft Foundry 上可用），获 ♥686、RT71，并附上试用入口。这是微软 AI 自研模型家族的旗舰推理模型正式进入开发者可用阶段。\n\n【关键细节与引用】MAI-Thinking-1 属于微软 AI 6 月 2 日发布的「七款 MAI 模型」全家桶——官博标题《Building a hill-climbing machine: Launching seven new MAI models》，家族成员包括 MAI-Thinking-1（旗舰推理）、MAI-Code-1.1-Flash（编码）、MAI-Image-2.5（图像）、MAI-Voice-2（语音）、MAI-Transcribe-1.5（转录）等。8 月这一波是各模型的陆续 GA 上架：Suleyman 8/11 推称最新 code 模型比 6 月版本「效率高 25%、质量更高、成本只有四分之一，已在 GitHub Copilot 上线」；8/10 又称 MAI-Image-2.6 已是「全球第二文生图模型」。结合 7 月已公布的 MAI-Cyber-1-Flash（配 MDASH 多智能体安全 harness，CyberGym 基准 96%、超 Mythos 12 分且成本减半），微软 AI 已经织出一张覆盖推理/编码/图像/语音/安全的多模态自研模型网。据多家转载，MAI-Thinking-1 为中型 MoE、约 35B 激活参数、128K 上下文，官方强调预训练数据「干净且合规授权、排除 AI 生成内容」。\n\n【背景与上下文】这件事的分量不在单个模型，在「微软 AI」这个实体的战略姿态。微软既是 OpenAI 最大的投资者和 Copilot/Microsoft 365 的分销渠道，又在 Mustafa Suleyman 主导下自建 MAI 模型家族且明确「from scratch」——这等于公开承认：即便是最亲密的盟友，微软也要把核心模型能力攥在自己手里。这与库内 8 月 Jeff Dean 离开 Google 创办 DiscoLoop、Demis Hassabis 转岗等人才从大厂流向独立实验室的趋势是镜像——大厂一边在重组前沿团队，一边在用自研模型补位。Suleyman 的「hill-climbing machine（爬山机器）」措辞也暗示 MAI 的定位是工程化、可迭代的中型模型群，而非单押一个前沿旗舰。\n\n【影响与前瞻】对企业模型选型者的信号：微软生态内现在有了「非 OpenAI」的推理/编码/多模态选项，且原生集成 Foundry 和 Copilot，合规叙事（干净训练数据）直接瞄准对数据来源敏感的行业。对竞争格局，三巨头叙事正在被「微软第四势力」松动。caveat 三点：其一，官博元数据确认模型 6/2 发布，8/12 是 Foundry GA 上架而非全新发布，新鲜度在「可用性」而非「模型本身」；其二，MAI 系列目前缺少独立第三方 benchmark（如 SWE-bench、PaperBench）的硬对比，多靠厂商自述和 Arena 口碑；其三，参数与训练细节多为厂商和二手源披露，非独立核实。",
+      "source": "x.com/mustafasuleyman",
+      "source_type": "opentwitter",
+      "url": "https://x.com/mustafasuleyman/status/2087570047967408396",
+      "timestamp": "2026-08-12T16:00:00Z",
+      "importance": 7,
+      "tags": [
+        "微软",
+        "MAI",
+        "推理模型",
+        "Mustafa Suleyman",
+        "自研模型",
+        "Microsoft Foundry"
+      ],
+      "batch_time": "2026-08-13T09:00:00+08:00"
+    },
+    {
+      "title": "Anthropic 把 Cowork 推进 Chrome 侧栏：浏览器侧边栏升级为完整跨设备 Cowork 会话，对话进 history、skills/connectors 全同步",
+      "summary": "claude.com/blog 8/12 发布（datePublished Aug 12 2026 确认），Claude in Chrome 的侧边栏正式升级为一个完整的 Cowork session——在侧栏开的对话会保存进 Claude 历史、可在 Claude 桌面/移动 app 里继续；conversations、skills、connectors 在浏览器和 app 间打通。9to5Mac、Digital Trends 等多源确认。意义：Cowork（1 月以「Claude Code for the rest of your work」研究预览发布）从独立形态被织进浏览器这个最高频入口，Claude 的跨设备持续会话补齐了最后一块。",
+      "detail_content": "【核心事件】8 月 12 日，Anthropic 在 claude.com/blog 发布《Claude Cowork comes to the Chrome side panel》。页面元数据 datePublished 确认为「Aug 12, 2026」，Last Published 时间戳为 8/12 20:13 UTC。改动一句话概括：Claude in Chrome 浏览器扩展里的侧边栏，现在是一个完整的 Cowork 会话，而不是过去那个相对割裂的浏览器小窗。\n\n【关键细节与引用】具体三处打通：其一，在侧栏发起的对话会保存进 Claude 历史记录，可像任何其他 Cowork 会话一样被恢复（resume）；其二，会话跨设备延续——浏览器里开的工作，可以在 Claude 桌面 app 或移动 app 里接着做；其三，conversations、skills、connectors 在浏览器和各 Claude app 之间互通。9to5Mac（8/12）报道佐证：「Conversations started in the side panel are now saved to Claude history and can be resumed from the Claude app」；Digital Trends（8/12）补充描述了 Claude 现在能从浏览器标签页拉取数据并在桌面端继续工作的跨设备体验。\n\n【背景与上下文】Cowork 本身是 Anthropic 2026 年 1 月以「研究预览」形态推出的产品，定位「Claude Code for the rest of your work」——把 agentic 工作方式从开发者扩展到非编程的知识工作。Claude in Chrome 扩展此前（截至 8 月初）仍在所有付费 Claude 计划的公开 beta 阶段（仅 Chrome、无免费档）。这次把 Cowork 塞进 Chrome 侧栏，等于把最高频的入口（浏览器）变成了 Cowork 的原生载体——用户不需要专门打开 app 或切窗口，在浏览网页时侧栏里就是完整的 agentic 会话。这与库内 8/8 Anthropic 把 auto mode 推成 Claude Code 默认、8/6 Jeff Dean/Demis 讨论的「agent 在哪跑」基建线是同向的产品推进：让 agent 无处不在且连续。\n\n【影响与前瞻】对日常用 Claude 的用户，实际影响是工作流更少断裂——浏览器里查资料、让 Claude 处理，回头在桌面/手机上无缝继续，skills 和 connectors 都带着走。对竞争格局，这是 Anthropic 在「通用助手入口」上对 ChatGPT 浏览器集成和 Gemini in Chrome 的直接回应，且 Cowork 的 agentic 定位比纯聊天更重。caveat：此次更新是体验整合而非能力突破（没有新模型或新 skill），且 Chrome 扩展仍限付费计划，对免费用户无感；属产品打磨级，重要性中等偏上。",
+      "source": "claude.com/blog",
+      "source_type": "tavily",
+      "url": "https://claude.com/blog/cowork-chrome-side-panel",
+      "timestamp": "2026-08-12T21:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Anthropic",
+        "Claude",
+        "Cowork",
+        "Chrome",
+        "产品更新",
+        "agentic"
+      ],
+      "batch_time": "2026-08-13T09:00:00+08:00"
+    },
+    {
+      "title": "DeepMind 把手语 AI 首次推到消费级：SL2T 模型登陆 Pixel 11 的 Gboard 和 Live Transcribe，70 BLEURT 零样本刷新 ASL→英文纪录",
+      "summary": "deepmind.google 8/12 发布（publishedTime 2026-08-12T15:00Z 确认）sign-language-to-text（SL2T）模型，由 DeepMind + Android 联合打造，首次把手语翻译推进消费级产品——Pixel 11 的 Gboard 和 Live Transcribe，先支持 ASL→英文。训练超 10 万小时、50+ 手语（约 1/4 为 ASL），FLEURS-ASL 基准零样本 70 BLEURT 创纪录。隐私设计：只上传身体姿态坐标、原始视频即时丢弃。服务全球 200+ 手语、约 7000 万聋哑人。",
+      "detail_content": "【核心事件】8 月 12 日，Google DeepMind 手语团队联合 Android 发布《Putting sign language AI into users' hands》，推出 sign-language-to-text（SL2T）大规模多语言手语翻译模型，并宣布它已进入消费级产品——Pixel 11 的 Gboard（语音/手势输入）和 Live Transcribe（实时转录），首发支持美国手语（ASL）到英文，更多设备和语言将陆续推出。这是手语 AI 第一次大规模走出实验室、进入消费者手机。\n\n【关键细节与引用】SL2T 把手语输入视作签名者身体上的一系列关键点（pose landmarks），直接翻译成流式文本输出，绕开了以往手语翻译常用的「gloss」中间标注。训练数据超过 10 万小时、覆盖 50+ 种手语（约四分之一为 ASL），多语言联合训练让模型学到共享结构，单语种对比下表现更好。在 FLEURS-ASL 基准上，SL2T 拿到零样本 70 BLEURT，显著高于此前所有公开成绩。隐私设计是亮点：端上 MediaPipe Holistic 模型只追踪身体关键点坐标，只把这些几何坐标上传服务器翻译，原始视频即时丢弃——既保护隐私又降低带宽。产品体验上，聋哑用户可以像听力用户用语音输入一样，对着手机打手语来搜索、写消息、让 Gemini 执行任务，测试者反馈「比用英文打字更快、更自然」。项目还成立 AI 手语咨询委员会（AISLAC）做参与式治理，由 Sam Sepah（一位失聪的 Googler）主导构思。\n\n【背景与上下文】手语 AI 进展一直慢于语音，原因有二：手语是独立的自然语言（有自己的语法和词汇），需要真正的机器翻译而非顺序的字-词映射；且模型要能「看见」并理解手、臂、躯、头、脸的同步运动，是高帧率下的高难度视觉任务。早期「手语手套」类方案之所以受限，正是因为把手语误当成「手上的英语」。SL2T 直接从 3D 姿态坐标翻译、跳过 gloss，被作者认为是质量能随数据规模化的主要原因。这与库内 8/9 NVIDIA VoiceChat 11B（开源全双工语音）、8/7 DeepMind WeatherNext 等是同一周 Google/DeepMind 把模型能力向边缘模态（语音、气象、手语）外扩的一部分。\n\n【影响与前瞻】对约 7000 万聋哑人和 200+ 手语社群，这是无障碍 AI 从演示到日常工具的跨越，且免费内置于 Pixel 11。对行业，SL2T 的「姿态坐标直译、跳过 gloss、多语联合训练」方法论，可能成为后续手语及更多非文本模态翻译的范式。caveat：目前仅 ASL→英文、仅 Pixel 11，覆盖面有限；翻译在罕见手语、快速指拼、被动语态、分类词描绘等场景仍有错误（官方示例中 prey→grey、漏掉 claws）；且无独立第三方复测，70 BLEURT 为厂商自报。",
+      "source": "deepmind.google",
+      "source_type": "tavily",
+      "url": "https://deepmind.google/blog/putting-sign-language-ai-into-users-hands",
+      "timestamp": "2026-08-12T15:00:00Z",
+      "importance": 6,
+      "tags": [
+        "Google",
+        "DeepMind",
+        "手语",
+        "无障碍",
+        "SL2T",
+        "Pixel"
+      ],
+      "batch_time": "2026-08-13T09:00:00+08:00"
+    },
     {
       "title": "Gemini 月活突破 10 亿成 Google 史上最快增长产品，ChatGPT 同周站上 10 亿用户量级——通用 AI 助手正式进入十亿用户品类",
       "summary": "Sundar Pichai 8/11 在 X 宣布 Gemini 月活突破 10 亿，是 Google 历史上增长最快的产品。增长轨迹：2 月约 7.5 亿 → Q2 财报（7 月）9.5 亿 → 8 月破 10 亿。同周 ChatGPT 也跨过 10 亿用户（周活口径），The Verge 以「双双破 10 亿」定调。但 ChatGPT 市场份额首次跌破 50%，Gemini 与 Claude 三位数增长正在改写格局。",
@@ -360,62 +454,6 @@
         "事实性"
       ],
       "batch_time": "2026-08-07T09:00:00+08:00"
-    },
-    {
-      "title": "Jeff Dean 离开 Google 创办 DiscoLoop AI：拉上 Sanjay Ghemawat、Oriol Vinyals、Quoc Le 联创，Khosla+Radical 下注，all-in「AI for science」",
-      "summary": "Google 首席科学家、27 年老将 Jeff Dean 8/5 宣布 8/6 是在 Google 最后一天。他联合 Google 仅有的另一位 Senior Fellow Sanjay Ghemawat、DeepMind 研究 VP Oriol Vinyals、神经网络元老 Quoc Le 创办新公司 DiscoLoop AI（Discovery Loop），方向是 AI for science，Khosla Ventures 与 Radical Ventures 已投资。这是 Google 史上最大规模的核心 AI 人才出走，伴随同日 Demis 卸任 DeepMind CEO，标志 Google 顶层 AI 大脑集体转向科学发现赛道。",
-      "detail_content": "【核心事件】Google 首席科学家、MapReduce/BigTable/Spanner/TensorFlow 联合设计者 Jeff Dean 8/5 在 X 宣布：「Tomorrow will be my last day at Google after 27 years, and watching it grow from 25 people to 190,000+ has been an amazing journey.」（明天是我在 Google 的最后一天，看着它从 25 人长到 19 万是段奇妙的旅程）。这条推文拿下 8719♥，是他个人互动最高的内容之一。他联合 Sanjay Ghemawat、Oriol Vinyals、Quoc Le 创办新公司 DiscoLoop AI（对外也称 Discovery Loop），定位 AI-for-science，已获 Khosla Ventures（Vinod Khosla 亲自背书）和 Radical Ventures 投资。\n\n【关键细节与引用】创始团队是 Google 系统与 ML 的「全明星」：Sanjay Ghemawat 是 Google 仅有的两位 Senior Fellow 之一（另一位就是 Dean 本人），与 Dean 合作二十多年设计了 Google 几乎所有底层分布式系统；Oriol Vinyals 是 DeepMind 研究 VP、AlphaStar 与 Gemini 背后主将；Quoc Le 是 sequence-to-sequence、神经架构搜索的元老。Jeff Dean 在推文中说「Our immediate order of business is to find office space, and hire an amazing founding team over the next few weeks」，并罕见地放出了给 VC 的 pitch deck。Business Insider（Hugh Langley，publishedTime 2026-08-05T16:22:57Z 确认新鲜）首发。\n\n【背景与上下文】这不是孤立事件——同日 Demis Hassabis 卸任 DeepMind CEO 转 Alphabet 首席科学家专注科学发现，两人不约而同扑向「AI for science」。更深背景是 Google 在前沿模型赛跑中掉队：下代旗舰模型年内多次延期，而 Anthropic（Opus 5/Fable 5）和 OpenAI（GPT-5.6）连发顶级模型。Google 股价当日跌 5%。\n\n【影响与前瞻】Jeff Dean + Sanjay Ghemawat 同时出走，等于 Google 系统+基础设施大脑的「双核心」离场，是 Google 27 年历史上最大的人才地震之一。DiscoLoop 是继 xAI、Anthropic 之后最值得关注的「顶级研究员主导」新实验室，AI-for-science 赛道（AlphaFold/Isomorphic 已验证商业价值）将迎来一个资本充足、全明星团队的竞争者。对行业的信号：前沿 AI 的人才红利正从大厂向创业公司加速转移。",
-      "source": "Jeff Dean 推特 / Business Insider",
-      "source_type": "opentwitter",
-      "url": "https://x.com/JeffDean/status/2085083442669318443",
-      "timestamp": "2026-08-05T19:20:00Z",
-      "importance": 9,
-      "tags": [
-        "Google",
-        "Jeff Dean",
-        "DiscoLoop",
-        "AI for science",
-        "人才出走",
-        "Khosla"
-      ],
-      "batch_time": "2026-08-06T09:00:00+08:00"
-    },
-    {
-      "title": "Google AI 领导层大地震：Demis Hassabis 卸任 DeepMind CEO，转任 Alphabet 首席科学家 + DeepMind 主席，原 CTO Koray Kavukcuoglu 接棒",
-      "summary": "8/5 Demis Hassabis 卸任 Google DeepMind CEO，转任 Alphabet 首席科学家 + DeepMind 主席，专注长期战略与科学发现，继续掌舵 Isomorphic Labs。原 CTO Koray Kavukcuoglu 接手日常运营，直接向 Pichai 汇报。Google 股价当日跌 5%。背景是 Google 在前沿模型赛道掉队——下代旗舰模型年内多次延期，而 Anthropic 和 OpenAI 连发顶级模型；同日 BI 爆出 Google 正洽谈向 AI coding 评测公司 Mechanize 投资 15 亿美元以上补 coding 短板。",
-      "detail_content": "【核心事件】8/5，Google DeepMind 联合创始人 Demis Hassabis 宣布卸任 CEO，转任两个新角色：Alphabet 首席科学家 + Google DeepMind 主席。原 CTO Koray Kavukcuoglu 接手日常运营，直接向 Google CEO Sundar Pichai 汇报。Demis 在给同事的备忘录中说：「I've decided that now is the right time for me to hand over my day-to-day operational responsibilities at GDM, so that I have the time and space to focus on the big picture.」（现在是我交出 GDM 日常运营的合适时机，这样我有时间空间聚焦全局）。\n\n【关键细节与引用】Demis 的新角色专注长期战略与「加速科学发现」，同时继续掌舵 Isomorphic Labs（AlphaFold 衍生的药物发现公司）。Pichai 在博客中写道：「We have to accelerate all this work and stay focused on the AI frontier. At the same time, there's never been a more important moment to shape the future of AGI and science.」（我们必须加速、聚焦 AI 前沿；同时，塑造 AGI 与科学未来的关键时刻从未如此重要）。Koray 是 DeepMind 老将、首席技术官，接棒后 DeepMind 进入「职业经理人 + 研究者主席」的双首长制。Axios / Business Insider / CNBC 8/5 多源确认。\n\n【背景与上下文】这是同日 Google AI 大地震的另一半——Jeff Dean 同日宣布离开 Google 创办 DiscoLoop。两人都把重心转向「AI for science」，但 Google 的现实是前沿模型掉队：下代旗舰模型年内多次延期，Anthropic（Claude Opus 5/Fable 5）和 OpenAI（GPT-5.6）连发顶级模型，Google 在 coding 等最赚钱赛道尤其被动——同日 BI 爆出 Google 正洽谈向 AI coding 评测创业公司 Mechanize 投资 15 亿美元以上。Google 股价当日跌 5%。\n\n【影响与前瞻】Demis 长期被外界视为 Pichai 接班人候选，此次转向「超脱」角色既是给他空间做长线科学项目，也暗示 Google 想用「AGI + 科学」叙事重夺话语权。Koray 上任后的首要考验是能否把延期的下代旗舰模型尽快推出来止血。对行业：Google 的「研究贵族」模式（Demis 式长线科学）与 Anthropic/OpenAI 的「工程化猛攻」模式分歧加大，DeepMind 能否两线兼顾将决定 Google 在 AGI 竞赛中的位置。",
-      "source": "Demis Hassabis 推特 / Axios / Business Insider",
-      "source_type": "opentwitter",
-      "url": "https://x.com/demishassabis/status/2085034334914769203",
-      "timestamp": "2026-08-05T16:04:00Z",
-      "importance": 9,
-      "tags": [
-        "Google DeepMind",
-        "Demis Hassabis",
-        "Alphabet",
-        "领导层变动",
-        "Koray Kavukcuoglu"
-      ],
-      "batch_time": "2026-08-06T09:00:00+08:00"
-    },
-    {
-      "title": "NVIDIA 开源 Alpamayo 2 Super：34B VLA 推理模型，面向 Robotaxi 与 L4 自动驾驶，HuggingFace 开放下载",
-      "summary": "NVIDIA 8/5 发布 Alpamayo 2 Super，34B 参数（32B 推理核心）开源 Vision-Language-Action 模型，专为 Robotaxi 与 L4 自动驾驶设计。基于 Cosmos 平台，能处理多路摄像头视频+导航输入生成驾驶轨迹，并给出 Chain-of-Causation 因果推理链。OpenMDW-1.1 商用许可，HuggingFace 开放下载，是 NVIDIA 迄今最强开源推理模型。定位是让 AV 厂商不用从零造基建就能加速 L4 部署。",
-      "detail_content": "【核心事件】NVIDIA 8/5 发布 Alpamayo 2 Super，34B 参数（其中 32B 为推理核心）开源 Vision-Language-Action（VLA）模型，专为 Robotaxi 与 L4 级自动驾驶设计。模型基于 NVIDIA Cosmos 世界模型平台构建，HuggingFace 开放下载（nvidia/Alpamayo2-Super），商用许可 OpenMDW-1.1。NVIDIA 官方定位为「迄今最强开源推理模型」（the frontier open model for robotaxis）。\n\n【关键细节与引用】模型能处理多路摄像头视频、导航输入与驾驶上下文，端到端生成驾驶轨迹，并给出 Chain-of-Causation（因果链）推理过程——即不只输出「怎么开」，还解释「为什么这么开」。NVIDIA 官博称 Alpamayo 家族已是 HuggingFace 上「采用最广的开源自动驾驶推理模型」。产品页强调 AV 厂商可借此加速 L4 部署、「不必从零搭建核心基础设施」。投资者 PR 同步发布，多源（NVIDIA 官博 / HuggingFace 模型卡 / MarkTechPost）确认。\n\n【背景与上下文】这是 NVIDIA「物理 AI」战略的延续：Cosmos 世界模型平台 + Vera Rubin 算力 + 开源 VLA 模型，NVIDIA 想把自动驾驶、机器人的「模型层」像 CUDA 之于 GPU 那样攥在手里。开源（OpenMDW 许可）是对 Tesla、Wayve 等闭源 VLA 路线的直接竞争——用社区生态换厂商锁定。\n\n【影响与前瞻】对 AV 行业，开源 34B VLA 把「造一个 L4 模型」的门槛进一步拉低，利好中小 Robotaxi 厂商和 Tier 1 供应商。对 NVIDIA，这是把 CUDA 护城河从训练侧延伸到车载推理侧的关键一步。caveat：NVIDIA 自家模型跑自家芯片（Thor/Rubin），开源既是生态杠杆也是硬件导流，引用时宜摆「锁定 vs 开放」两面。",
-      "source": "NVIDIA Blog",
-      "source_type": "aihot",
-      "url": "https://blogs.nvidia.com/blog/alpamayo-2-super-open-model-now-available/",
-      "timestamp": "2026-08-05T08:25:00Z",
-      "importance": 7,
-      "tags": [
-        "NVIDIA",
-        "Alpamayo",
-        "VLA",
-        "自动驾驶",
-        "开源模型",
-        "Robotaxi"
-      ],
-      "batch_time": "2026-08-06T09:00:00+08:00"
     }
   ]
 }
