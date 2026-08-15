@@ -1,9 +1,99 @@
 {
   "channel_id": "ai-engineering",
   "channel_name": "AI 工程实战",
-  "generated_at": "2026-08-14T10:15:58.091030+08:00",
-  "digest": "三巨头旗舰真空进入第二月，harness 战场却在一周内被连推三把，胜负手彻底从『模型多强』转向『harness / 编排 / 插件生态』。同一天（8/13）两件事把这条主线钉死：DeepSeek 开源 Harness v0.1 正式进军 agent harness SDK，用『一切皆插件』（Cordis 元框架驱动，模型/工具/循环/UI 全部热插拔）直接抢 Claude Code / Codex 的开发者入口——是这条赛道第一个国产开源重量级玩家，15393♥ 的关注度已是 Anthropic 量级；Anthropic 自己人 Boris Cherny 同日公开『让 Claude 接管 app 日常维护』实验，一个 Slack channel 驱动 Claude 每天对 iOS/Android/Desktop/Web/CLI 做 crash fuzzing 然后自动提 fix PR，几周攒下 388 个、用 Opus、只有 1/50 是噪音——这是 auto mode 8/14 刚成为默认后第一个完整公开的生产落地案例。再加上 latent.space 把 agent-to-agent 通信框架化（Zawinski's Law 套到 multi-agent），整条线索收口：harness 不只是『怎么跑 agent』，正在变成『agent 之间怎么通信、怎么插件化、谁能成为新的开发者操作系统』。对 Eason 的银行自建 agent 平台，这三条凑齐了开源可自托管选项 + 维护环节自动化样本 + 多 agent 通信治理预演。",
+  "generated_at": "2026-08-15T10:13:55.592975+08:00",
+  "digest": "本周 coding agent 舆论场上演『工具人恐慌 vs 中产消失论』对冲：ZDNET 138 人调研给出 Claude Code 与 Codex 竞争现状最完整画像（75% 用 Claude Code，判断力而非代码质量成为核心差异）；前 Lululemon 工程顾问 Florian Herrengt 的『AI 正在消灭软件工程中产阶级』被 Simon Willison 转载、HN 热议，与 Gergely Orosz 观察到的 Grok Bot『normie 的 Claude Code 时刻』同周出现——AI 编程正在同时向两端扩散：往下渗透非程序员知识工作者，往上挤压缺乏判断力的中间层工程师。评测侧 Pierluca D'Oro 用『重放脚本打平前沿模型』实验给所有 deterministic benchmark 下了结构性判词。三条线索合起来的信号很一致：胜负手都不在模型层，在人的判断力和评测的严谨度。",
   "items": [
+    {
+      "title": "ZDNET 138 人调研：75% 开发者选 Claude Code 而非 Codex，赢的原因不是代码质量是判断力",
+      "summary": "ZDNET 通过 HARO/Qwoted 征集 138 名活跃开发者的一手选择理由，四分之三用 Claude Code，22% 两个都用。选 Claude Code 的最大理由是大 codebase 上下文保持连贯（14%）+ 先规划再动手（9%）；选 Codex 的最大理由是价格和无周限（7%）。最有信息量的发现：22 人让两个工具互相对抗式 review，18 名非工程师（含水管工、泌尿科医生、摄影师）用它们交付生产软件。",
+      "detail_content": "【核心事件】ZDNET 资深编辑 David Gewirtz 8/13 发布非科学但样本扎实的一手调研：138 名活跃 AI coding 用户回答『你用 Claude Code 还是 Codex，为什么』。75% 用 Claude Code，约三分之一用 Codex，22% 两者都用（数字重叠因双持）。样本包括 Meta 工程师、Palo Alto Networks 工程经理、Nvidia staff 数据科学家、Tableau 高级工程师等具名受访者。\n\n【关键细节与引用】选 Claude Code 的理由排序：大 codebase 多文件改动保持连贯（14%）、先规划推理再编辑所以复杂重构返工少（9%）、原始代码质量更好（9%）、在终端里对着真实 repo 和真实基础设施 agentic 工作而非编辑器补全（7%）、生态先发 skills/integrations 围绕它建成切换成本高（5%）、agent 工具链（skills/subagents/hooks/MCP）支持多 agent 架构 Codex 还在抄（4%）。Tableau 的 Chippagiri：『它替我干掉了 routine 部分的真实苦活，但架构和最终判断还是我的，它碰过的每行我都 review。』选 Codex 的理由排序：同样价钱用量更多永不限量（7%）、融入现有 OpenAI 工作流（6%）、可预测少 babysitting（5%）。最扎心的单条来自双持用户：『Codex 赢在价格和限额，Claude 赢在判断力。对一人公司来说判断力更值钱。』另一条：『Claude Code 是我的 planner 和 brainstormer，Codex 是我的 workhorse，我还让它们互相当 adversarial reviewer 审所有 PR。』\n\n【背景与上下文】这是对 8/12 库内『Coinbase/Shopify/Ramp 自建 agent 却续费 Claude Code』的微观个体版补充：企业侧和个体侧指向同一结论——harness 和判断力构成粘性，模型本身不是。18 名非工程师受访者（创始人、营销、运营商、艺术家、摄影师、泌尿科医生、水管工）用这些工具交付生产软件，也是『AI 编程向非程序员扩散』最直接的样本证据。6 名受访者明确警告 silent failure：代码看起来对、也能跑，但悄悄是错的。\n\n【影响与前瞻】对银行 AI 工具选型的启示：(1) 选型评估别只跑 benchmark，要测『大 codebase 多文件上下文连贯性』这个真实差异点；(2)『一个写一个审』的双工具对抗模式已有 22/138 采用率，可作为行内代码质量流程的低成本增强；(3) caveat 很明确——HARO 自选样本、厂商偏好是主观感知非实测，Anthropic 信任度（4% 提及）与 OpenAI 不信任是真实存在的品牌变量。判断力溢价这条与同周 Herrengt『中产消失论』互为注脚。",
+      "source": "ZDNET",
+      "source_type": "tavily",
+      "url": "https://www.zdnet.com/article/why-most-developers-prefer-claude-code-over-codex",
+      "timestamp": "2026-08-13T12:06:00Z",
+      "importance": 8,
+      "tags": [
+        "Claude Code",
+        "Codex",
+        "开发者调研",
+        "工具选型",
+        "判断力"
+      ],
+      "batch_time": "2026-08-15T10:00:00+08:00"
+    },
+    {
+      "title": "『AI 正在消灭软件工程的中产阶级』：一篇工程师长文道破 AI 代码债的真实积累速度",
+      "summary": "独立工程师 Florian Herrengt 8/11 发文，被 Simon Willison 转载并登上 HN 热榜。核心论点：AI 拿掉了坏工程的速度限制——以前烂决策积累以月计，现在一个下午 2 万行；周一早上 senior 面前摆着 7 个 AI 生成的大 PR（+24506/-3938 行）。判断：好工程师因 AI 更值钱，坏工程师从『拖后腿』变成『雇不起的负债』，中间层被挤掉。",
+      "detail_content": "【核心事件】法国独立工程师 Florian Herrengt 8/11 发布《AI is removing the middle class of software engineering》，8/12 被 Simon Willison 摘引、HN front page 热议。文章用第二人称叙事展开一个 2026 年的普通周一：senior 工程师打开电脑面对 7 个待审 PR，第一个就是 +24506/-3938 行、附 AI 生成的描述。团队周末产出的变更比过去几周假期还多。设计决策埋在 15 轮 Claude 改主意的对话记录里，问『这数据从哪来』，答案是一个链接：『 Probably all of it. 』\n\n【关键细节与引用】三个关键论断。(1) 『AI removed the speed limit』——AI makes projects with weak engineering culture fail much faster. 最悲剧的是『to the untrained eye, it works』：拉分支跑一下大概率能跑，于是继续堆，直到没有任何人知道系统怎么工作，『like someone buying a luxury car on a credit card. You don't see the debt. You just see the car.』(2) 修复成本不对称：LLM 加一堆数据库表只要 10 分钟，但数据进去之后要迁移计划、失败预案、孤儿外键——『By the time you've untangled one bad decision, five more have been merged.』(3) 薪资分化判断：『You are paid to make good decisions』——就业门槛是『当前最强模型能做到什么』，好工程师被 AI 加速更值钱，缺乏评估 LLM 建议所需判断力的人『become much cheaper to hire or get replaced entirely』，且这个逻辑会扩散到大部分知识工作。\n\n【背景与上下文】这是对库内多条主线的文学级收束：与 8/12 Dan Luu『动态语言省 token 是错觉』同属『被复制的常识要逐条重审』；与 Cloudflare Astro『agent 失败重定义为代码债信号』直接对上——Astro 是解法的一半（治理层），Herrengt 写的是没人治理时的下场；与 Uber Agentic Pods『重构工作流而非加速单任务』的对照组：只让 agent 堆代码不重排流程，就是这个故事。HN 最高赞评论：『With AI, \"bad\" engineers can now amplify their \"bad\" engineering x10 across the organization.』\n\n【影响与前瞻】对银行这类强监管环境是最直接的警示文本：AI 代码债在银行不是效率问题是审计问题——『没人知道数据从哪来』在监管审查下就是事故。考核设计的含义与库内 motion vs progress 一脉相承：如果考核产出量（行数/PR 数），等于奖励刷信用卡买车；考核指向判断力（能解释每个决策、能拒绝 2.5 万行 PR）才能对冲。caveat：这是个人经验叙事非实证研究，但 HN 共鸣度和 Simon Willison 背书说明它击中了行业真实痛点。",
+      "source": "blog.florianherrengt.com（Simon Willison 转载）",
+      "source_type": "tavily",
+      "url": "https://blog.florianherrengt.com/ai-removing-middle-class-software-engineering.html",
+      "timestamp": "2026-08-11T00:00:00Z",
+      "importance": 8,
+      "tags": [
+        "技术债",
+        "工程文化",
+        "AI替代",
+        "判断力",
+        "代码审查"
+      ],
+      "batch_time": "2026-08-15T10:00:00+08:00"
+    },
+    {
+      "title": "Gergely Orosz 定性 Grok Bot：『normie 知识工作的 Claude Code 时刻』——agentic 工作方式的消费级拐点",
+      "summary": "Pragmatic Engineer 主理人 Gergely Orosz 连发推文记录自己被 Grok Bot 圈粉的全程：用一句话指令让它在 Gmail 里自动过滤 PR 邮件并封锁域名（620♥），每项自动化 2 分钟内配好。定性：这是『OpenClaw without needing to know anything about OpenClaw』——不用懂 OpenClaw 就能用的 agentic 工作方式，OpenAI/Anthropic/Google 每拖一天都在丢非技术用户。",
+      "detail_content": "【核心事件】Grok Bot 是 SpaceXAI（Cursor 团队参与构建）8/11 进入早期 beta 的持久 agent 产品：云端一台带 UI 和网络的电脑，agent 7x24 常驻、可登录网站、跨任务保持上下文、并行工作，iPhone/Mac 桌面端已上线，需付费 Grok 订阅（Cursor Ultra $200/月）。Gergely Orosz 8/12-8/14 连发推文：8/14 主推 473♥——『Grok Bot is a MASSIVE success (I'm hooked) and is the \"Claude Code\" moment for \"normie\" knowledge work. OpenClaw without needing to know anything about OpenClaw. Every day OpenAI, Anthropic, Google and others wait...』\n\n【关键细节与引用】三个一手用例细节。(1) Gmail 反垃圾：『any and all pitches from PR agencies are spam. Block sending domains』一句话搞定 Google Workspace 的邮件过滤——『Google pushes Gemini everywhere... and yet they did not build anything like this?!!』（620♥，其本周最高互动）。(2) 他配的自动化『bulk of it 每项最多 2 分钟』，模式是让 Grok Bot 起草、自己审批后再发送。对 Google Studio 的对比测试：提示『PR 邮件标垃圾并封域名』后 Gemini Studio 像无代码工具一样太基础、get 不到『PR one』的含义，『Grok Bot just gets it. What an AI-native interface should be more like.』(3) 战略判断两条：Grok Bot 由 Cursor 团队构建，『Cursor is really proving they are NOT a one-trick pony』——Copilot 两年先发被 Cursor 超越、模型被Anthropic/OpenAI 领先后 Cursor 靠 Grok Bot 再次卡位；以及『谁先推出对标产品，老二会吃掉大部分生意，因为很多人不买 Elon 的东西，在等 alternatives』。他现在自费订阅 Pangram Chrome 插件检测 AI slop，也在用这个产品组合工作。\n\n【背景与上下文】这是库内两条主线的汇合点：steipete 8/8 用 ChatGPT Work 浏览器 agent 装 OpenClaw 跑本地模型（agent 给 agent 搭环境），Gergely 这次的观察是同一件事的消费级版本——带浏览器+登录能力的云端持久 agent 正在成为所有知识工作的通用底座。与 8/14 Cursor 被 SpaceX 收购完成（ai-frontier 已收）构成结构背景：工具+算力+模型垂直整合后第一个面向大众的产物。区别于产品发布公告，本条价值在重度用户的一手使用反馈和竞争格局判断。\n\n【影响与前瞻】对 Eason 的启示：(1) 『一句话让 agent 进 Gmail 按语义过滤并封域名』这个用例对银行中后台（邮件分派、工单 triage、报表分发）是最直白的 agentic 化模板；(2) Gergely 的『老二吃肉』判断值得注意——企业采购普遍回避单一供应商绑定和品牌风险，agent 产品的竞争窗口还大；(3) caveat：早期 beta、Gergely 是重度尝鲜者且明确说『不在乎成本在乎易用性』，企业级权限/合规能力未知，他与 steipete 都提到 permissions system 仍是软肋（『I connect stuff either with permissions turned off...』）。",
+      "source": "X：Gergely Orosz (@GergelyOrosz)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz",
+      "timestamp": "2026-08-14T21:23:05Z",
+      "importance": 8,
+      "tags": [
+        "Grok Bot",
+        "Cursor",
+        "agent产品",
+        "agentic工作",
+        "Pragmatic Engineer"
+      ],
+      "batch_time": "2026-08-15T10:00:00+08:00"
+    },
+    {
+      "title": "『一个不到 1MB 的盲重放脚本打平前沿模型』：computer-use agent 评测的地基被证明是空的",
+      "summary": "Programma Labs 创始人 Pierluca D'Oro（与 Meta Superintelligence Labs 合作研究）17 分钟报告：把前沿模型在 OSWorld/MobileWorld 上的成功轨迹录下来编译成盲重放脚本，成功率与原模型持平甚至更高——deterministic benchmark 可以被记忆，Pass@K 指标在数学上等价于给重放脚本打分。常用于部署决策的『95% 置信区间』实际覆盖率只有 17-20%。",
+      "detail_content": "【核心事件】D'Oro 在 AI Engineer 演讲中展示论文《Computer Use Agent Evaluation》的核心实验：让前沿模型在标准 computer-use benchmark 上跑，收集全部成功轨迹，把点击/输入/滚动动作编译成一个不到 1MB 的『重放 agent』——任务来了就盲放录制的动作序列。结果：『the success rate of this agent compared to the frontier model from which the agent was extracted is actually the same or even better.』这直接证明静态确定性 benchmark 可以被整体记忆，测的是记忆容量不是能力。\n\n【关键细节与引用】三个层级的拆解。(1) 指标层：『Pass@K is sort of a metrification of that exploit of the replay agent』——论文形式化证明 Pass@K 在确定性环境上等价于给重放脚本打分。(2) 环境层：提出 PRISM 五原则（多因子变化/组合验证/沙箱/验证器支持/忠实真实感）并构建 DGWorld benchmark：15 个 Android 应用、387 个验证场景、320 万个验证过的配置，用『像编译器一样』的验证系统保证多样性不退化成坏任务。重放脚本在 DGWorld 上立刻失效。(3) 统计层：只跑 rollouts 的常规做法，名义 95% 置信区间真实覆盖率仅 17-20%（『the interval contains the truth about one time in five』）；反例算术：百万任务规模下两个模型 4% 的真实性能差被过窄置信区间掩盖、选错模型，一个月损失数十万美元。最重的批评留给全行业借口：『A non-rigorous benchmark is misleading... it can be misleading for your own decisions.』额外发现：前沿模型在『仅换启动页面/换主题』的单轴扰动下性能就明显下降——『frontier models are pretty bad actually at being robust to these variations.』\n\n【背景与上下文】这是库内评测主线的最重一环：与 8/12 Dan Luu『旧 eval symlink 污染致 Rust 假失败』、8/2 OpenAI『两项 API 设置让 ARC-AGI-3 从 13.3% 跳 38.3%』、Wisedocs『Meter 图应该看 90-99% 线』同属一条线——benchmark 数字不可信的机制性原因一个个被拆穿。D'Oro 已创办公司做 computer-use 评测验证基础设施，说明这个缺口开始商业化。\n\n【影响与前瞻】对银行自建 agent 评测的直接含义：(1) 引用任何 computer-use/UI 自动化 agent 的 benchmark 分数前先问『这个环境可被重放攻击吗』；(2) 内部评测集要有多因子变化（不同初始状态/不同数据/不同界面主题），否则测出来的是记忆；(3) 部署决策别信单点分数+窄置信区间，百万次调用规模下 4% 的模型差异选错就是真金白银——『先建评测再选模型』的权重再+1。caveat：DGWorld 是作者自家 benchmark 且公司在卖评测基建，有利益立场；但重放攻击的数学论证是独立可验证的。",
+      "source": "AI Engineer（BigGo 转录）",
+      "source_type": "tavily",
+      "url": "https://finance.biggo.com/podcast/c42d146fe9148e95",
+      "timestamp": "2026-08-14T00:00:00Z",
+      "importance": 7,
+      "tags": [
+        "评测",
+        "computer-use agent",
+        "Pass@K",
+        "benchmark",
+        "置信区间"
+      ],
+      "batch_time": "2026-08-15T10:00:00+08:00"
+    },
+    {
+      "title": "steipete 弃 Codex 转 OpenClaw 干活：『main killer feature 是我能跟我的 agent 说话，它自己拉起 Claude』",
+      "summary": "OpenClaw 核心维护者 steipete 8/14 答网友：已从 Codex 迁移到 OpenClaw 做日常工作，关键功能是自然语言驱动、agent 自己决定拉起哪个模型干活。同期他透露 OpenClaw 用户量已达 2-3 百万。这为『harness 正在成为模型入口』提供了最重度用户的行为投票。",
+      "detail_content": "【核心事件】steipete（Peter Steinberger）8/14 在 X 回复网友时确认：『Yeah I moved from using codex to using OpenClaw for my work. Main killer feature is that I can talk to my agent and it spins up Claude...』——日常工作流已从 Codex 迁移到 OpenClaw，核心吸引力是对话式编排：跟一个 agent 说话，它自动拉起 Claude 完成工作。同日另一条回复透露 OpenClaw 项目用户规模『We're at 2-3 Mio』（2-3 百万）。\n\n【关键细节与引用】这与他同周的其他推文构成完整图景：(1) 对比 Grok Bot 时他强调选择标准是『which of them is optimized to run on your own hardware, where you keep control over data and memories?』——数据主权和记忆归属是他的硬约束；(2) 谈到他项产品被滥用时『Guess anything that is built to help people will eventually be abused』；(3) 关于新模型内测『Dude not even I got access. Capacity is limited and they're afraid I'd use it all xD』（691♥）——最重度用户被算力限流，侧面印证算力仍是顶层约束。\n\n【背景与上下文】这补上了库内 harness 主线缺失的一块行为证据：8/8 他演示『ChatGPT Work 浏览器 agent 装 OpenClaw+Ollama 跑本地模型』是技术可行性，这次是真实工作流的迁移决策。与 swyx『ultracode 是 harness 特性不是模型特性』、RLanceMartin『brain 是托管 harness、hands 可换』、ZDNET 调研『Claude Code 的粘性在 skills/subagents/hooks/MCP 工具链』合流成同一个判断：harness/编排层正在成为用户真正的家，模型变成被调度的资源。\n\n【影响与前瞻】对行内 agent 平台选型的含义：(1) 『对话式编排+自动拉起合适模型』正在成为重度用户的事实标准交互，自建平台若还停留在『一个入口绑一个模型』会落后一代；(2) OpenClaw 2-3 百万用户规模说明开源 harness 生态已过临界点，值得设专人跟踪其企业级权限/审计能力成熟度；(3) caveat：steipete 是 OpenClaw 核心维护者，其偏好有天然立场，样本量为 1；但作为行业最前沿的重度用户，他的迁移方向历来是 6-12 个月后大众用户的风向标。",
+      "source": "X：steipete (@steipete)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/steipete/status/2089716630967783778",
+      "timestamp": "2026-08-14T01:26:09Z",
+      "importance": 7,
+      "tags": [
+        "OpenClaw",
+        "steipete",
+        "harness",
+        "agent编排",
+        "模型路由"
+      ],
+      "batch_time": "2026-08-15T10:00:00+08:00"
+    },
     {
       "title": "DeepSeek 开源 Harness v0.1 正式进军 agent harness SDK：『一切皆插件』抢 Claude Code/Codex 的开发者入口",
       "summary": "DeepSeek 8/13 发布 Harness v0.1 开发者预览版（15393♥），MIT 协议开源，正式杀入 agent harness SDK 战场。基于 Cordis 元框架（koishi 聊天机器人作者入职 DeepSeek 后打造），核心理念是『一切皆插件』——模型、工具、技能、会话、沙箱、文件系统、循环、编排、UI 全部插件化、热插拔、可自定义。官方定调『Agent = Model + Harness 新时代』，直接对标 Claude Code、Codex 这类 AI Agent SDK 的开发者入口。",
@@ -336,66 +426,6 @@
         "prompt injection"
       ],
       "batch_time": "2026-08-09T10:00:00+08:00"
-    },
-    {
-      "title": "Coinbase / Shopify / Ramp 都自建了内部 coding agent，却都继续给 Anthropic 付钱——真正争夺的是 agent harness 不是模型",
-      "summary": "The New Stack 分析师 Janakiram MSV 把 Coinbase Forge、Shopify River、Ramp Inspect 三家独立建成的内部 coding agent 放一起，发现架构几乎相同：durable 执行环境 + 安全接入企业系统 + 工作流编排 + 上线前自动验证。但三家都没用它替换 Claude Code——内部 agent 接管异步工作流（Slack/工单 → 内部系统 → 生产遥测验证），商业助手统治交互式开发。模型正变成可互换基础设施，企业自建的 harness 才是控制平面。LangChain 已开源 Open SWE 把这套 pattern 产品化。",
-      "detail_content": "【核心事件】2026 年 8 月 7 日，The New Stack 分析师 Janakiram MSV 撰文指出，Coinbase、Shopify、Ramp 三家公司各自独立建成了内部 coding agent（分别叫 Forge、River、Inspect），却都没有用它替换 Claude Code——真正的战略重心不在大模型，而在 agent harness（执行环境：上下文、权限、工作流编排、工具访问、验证）。\n\n【关键细节与引用】三家方案趋同：Coinbase Forge 把 Slack/GitHub/Linear 串成一条「bug 报告 → PR + 移动端 build」的流水线，最小化人工干预；Shopify River 跑在可复现工程环境上（公司级 monorepo + durable 执行会话 + 沙箱 + 凭据管理 + 可复用工程技能），官方称 River 现已参与每 8 个合并 PR 中的 1 个；Ramp Inspect 跑在与本地环境高度对齐的沙箱虚拟机里，集成 Datadog/Sentry/LaunchDarkly/Buildkite 且模型无关。LangChain 已开源 Open SWE，称其为 Stripe、Ramp、Coinbase 内部早已部署的同一 pattern 的公开实现。成本侧最硬：Coinbase 生产工程高级总监 Chintan Turakhia 透露，公司现在处理的 token 比以前更多，但总支出反而下降——靠智能路由、低价默认模型、prompt 缓存、更小上下文窗口，并试过 GLM 5.2 和 Kimi K2.7 等开源权重模型；CEO Brian Armstrong 强调这是多项架构优化的叠加而非单一突破。\n\n【背景与上下文】Stanford + Microsoft Research 最新研究解释了为什么成本难预测：agentic 软件工程任务最多可比交互式代码生成多消耗 1000 倍 token，连相同任务都常出现一个数量级的差异。Walmart 刚给内部 coding agent 加了用量限制，Uber 今年早些时候 4 个月烧完全年 AI 预算，GitHub Copilot 也转向按用量计费。文章把这一趋势类比过去十年企业内部开发者平台（IDP）的崛起——企业没自建云，但在公有云上建了有主见的平台层标准化部署/安全/运维。\n\n【影响与前瞻】内部分工正在清晰：内部 agent 管异步工程流（从 Slack/工单起、与内部系统交互、对生产遥测验证），商业助手管交互式开发（开发者在编辑器/终端里直接干活），两者互补。判断标准也变明确——没有专门平台工程团队的组织该用商业工具 + 每人配额，有成熟平台团队的组织才该自建 harness 换取集中治理、模型可移植、安全强制与成本优化。文章结论金句：模型提供商将竞争成为「它们无法控制的平台内的首选推理引擎」。",
-      "source": "The New Stack (Janakiram MSV)",
-      "source_type": "tavily",
-      "url": "https://thenewstack.io/enterprise-ai-agent-harness",
-      "timestamp": "2026-08-07T18:16:03Z",
-      "importance": 9,
-      "tags": [
-        "agent harness",
-        "内部 coding agent",
-        "Coinbase",
-        "Shopify",
-        "Ramp",
-        "build-vs-buy",
-        "平台工程",
-        "token 经济学"
-      ],
-      "batch_time": "2026-08-08T10:00:00+08:00"
-    },
-    {
-      "title": "agentic AI 真实能耗首次被算清：Stripe 气候科学家拿自己 8 周 Claude Code 日志测出每个 prompt 约 150 Wh、是普通聊天的 600 倍",
-      "summary": "气候科学家 Zeke Hausfather（Stripe 员工）用自己 8 周 Claude Code 完整会话日志算了一笔真实账：1,138 个 prompt 触发 1.4 万次模型调用、处理 32 亿 token、约 170 kWh 数据中心电力（每天平均 3 度电，超过两台冰箱），每 prompt 约 150 Wh，是普通聊天 prompt 的约 600 倍。绝大多数 token 来自 agent 反复读自己的工作记忆。Watershed 新白皮书同时指出 agentic 工作流能耗比单次查询高 5 个数量级。",
-      "detail_content": "【核心事件】2026 年 8 月 5 日，气候科学家 Zeke Hausfather 在 The Climate Brink 发文，用自己作为 Stripe 员工 8 周的 Claude Code 真实使用日志，精确计算了 agentic AI 的实际能耗。结论：agent 比人们想象的贵得多。\n\n【关键细节与引用】硬数字：8 周内他输入 1,138 个 prompt，触发超 1.4 万次模型调用（每 prompt 平均 12 次），处理 32 亿 token，估算耗电约 170 kWh（不确定性区间 70–330 kWh）。折算下来每 prompt 约 150 Wh（60–290 Wh），约为普通聊天 prompt 的 600 倍（250–1200 倍区间）。中位数 Claude Code 会话约 0.6 度电，平均每天 3.0 度电（区间 1.2–5.9），超过两台冰箱同时运行。最反直觉的发现：32 亿 token 绝大多数来自 agent 反复重读自己的工作记忆（cache-read）。方法论亮点：Claude Code 在本地保留每个会话的完整 transcript 和每次调用的精确 token 计数，任何人都能复制这套自测方法，唯一需要假设的是 token→电力的转换因子。同期 Watershed 的 Bistline et al. 2026 白皮书提出企业 AI 排放核算标准框架，指出不同 AI 任务的电力消耗跨越 5 个数量级——从文本分类的千分之一 Wh 到 agentic 工作流的 50–500 Wh，单次「交互」的排放可能低估实际算力消耗「一个数量级以上」。\n\n【背景与上下文】这不是孤证：Bai et al. 2026 在真实软件任务上测得 coding agent 消耗约为普通聊天的 1000 倍 token；Anthropic Economic Index 显示其 API 用量中 97% 已呈现 agent 关联的「automation-dominant」模式。Hausfather 特意澄清「prompt」不是 AI 使用的计量单位——就像「出行次数」不衡量驾驶，真正决定能耗的是 agent 跑了多远。\n\n【影响与前瞻】这是迄今最干净的一手 agentic 能耗/成本基线，可直接挪用：它把「token 计量」从抽象数字翻译成可感知的物理量（冰箱、手机充电、微波炉），为行内 AI 预算审批和 ESG 核算提供共同语言。配合 Stanford+MSR 的 1000 倍 token 研究与 Coinbase「token 更多但总花费更低」的实践，agentic AI 的成本治理正从「监控用量」进化到「按任务粒度重算 ROI」。对重度 AI 用户，读自己的 Claude Code session 日志算一笔账，是现在就能做的成本体检。",
-      "source": "The Climate Brink (Zeke Hausfather)",
-      "source_type": "tavily",
-      "url": "https://www.theclimatebrink.com/p/the-real-energy-use-of-agentic-ai",
-      "timestamp": "2026-08-05T00:00:00Z",
-      "importance": 8,
-      "tags": [
-        "agentic 能耗",
-        "Claude Code",
-        "token 经济学",
-        "成本核算",
-        "ROI",
-        "实测数据"
-      ],
-      "batch_time": "2026-08-08T10:00:00+08:00"
-    },
-    {
-      "title": "Cloudflare 开源 Kitesurf：专为 agent 设计、跑在 V8 isolate 的浏览器，用 Web Platform Tests 当 AI agent 的 goalpost",
-      "summary": "Cloudflare 在 Agents Week 推出 Kitesurf——一个完全跑在 Workers（V8 isolate）上的 agent-first 浏览器，beta 期在 Browser Run 免费用。对截图、HTML 提取等常见 agentic 任务，CPU/内存消耗显著低于 Chromium。最值得挪用的工程方法论：团队用 Web Platform Tests（WPT）当 AI agent 的成功标准，让 agent 在清晰的 goalpost 下循环开发，人类专注架构和评审；并用 Rust 直编 Wasm（绕开 Emscripten 的臃肿）。",
-      "detail_content": "【核心事件】2026 年 8 月 6 日，Cloudflare 在 Agents Week 推出 Kitesurf——一个专为 agent 设计、完全跑在 Workers（V8 isolate）上的浏览器，目前 beta 期在 Browser Run 免费提供。对截图、HTML 提取等典型 agentic 任务，CPU 与内存消耗显著低于 Chromium。\n\n【关键细节与引用】起源：团队受 obscura（一个 Rust 写的无 Chrome、无 Node 依赖 headless 引擎）启发，先用 AI agent 尝试移植到 Workers，最初效果很差；当给 agent「一份扎实的计划 + 清晰的成功定义」后，agent 能在循环里反复尝试、在需要时提问，终于跑通。工程方法论最值得借鉴：团队用 Web Platform Tests（WPT，W3C 标准符合性测试套件）作为 AI agent 的成功 goalpost——给 agent 精选功能和顺序，人类专注架构设计与评审 agent 的方案。但 WPT 只测标准符合性、不测真实网站渲染，于是又补了集成测试 + 视觉回归测试（在真实网站上跑多步 Puppeteer，对 Chromium 和 Kitesurf 同时渲染、高亮差异）。技术选型：尽量用原生 Rust，用 wasm-bindgen 直接编译到 WebAssembly，绕开 Emscripten 多层 mock 依赖导致的体积大、速度慢。\n\n【背景与上下文】这是 Cloudflare agent 运行时基建线的延续——本频道 8/4 收的 @cloudflare/computer 给 agent「一台电脑不是容器」，Kitesurf 补的是「浏览器层」：agent 需要 isolate 级别的便宜、快、无限水平扩展来跑浏览器操作，而非 Chromium 那样的重容器。同属 Agents Week 一系列发布之一。\n\n【影响与前瞻】对工程团队两层价值：一是 agent 运行时成本账——isolate 比 container 便宜得多，把「给每个 agent 一个浏览器」从奢侈变可行；二是「用现成测试套件当 AI agent 的 goalpost」这套方法论可直接挪用——任何有客观成功标准的复杂软件项目（编译器、运行时、协议实现）都能用同样方式让 agent 在清晰边界内自主循环开发，人类守住架构与评审。",
-      "source": "Cloudflare Blog",
-      "source_type": "aihot",
-      "url": "https://blog.cloudflare.com/kitesurf",
-      "timestamp": "2026-08-06T00:00:00Z",
-      "importance": 7,
-      "tags": [
-        "Cloudflare",
-        "agent 浏览器",
-        "V8 isolate",
-        "WPT",
-        "Rust",
-        "Wasm",
-        "agent 运行时"
-      ],
-      "batch_time": "2026-08-08T10:00:00+08:00"
     }
   ]
 }
