@@ -1,9 +1,45 @@
 {
   "channel_id": "banking-ai",
   "channel_name": "银行业 AI 应用",
-  "generated_at": "2026-08-20T09:47:24.050631+08:00",
-  "digest": "agentic AI 本周实质打进银行核心利润流程：DBS 8/19 官宣对公信贷评估 agent 方案（70+ 任务、1500 名 banker、RM 40% 时间目标减 30%），与 Westpac 房贷/信用卡集群、兴业「技术流」5000 亿审批构成「agentic 进信贷」三连样本；支付侧同周双响——Rain 联合 Visa/Mastercard/Fiserv/Circle 等 26 家成立 Agentic Payments Alliance（8/18），Synchrony 携手 OpenAI 把分期/支付/权益带进 ChatGPT 购物（8/17）；中国侧「全员 AI」叙事推进到岗位 JD 层面：宁波银行财富条线社招首次把「AI 大模型生成内容专业审核」写进非科技岗位职责（8/20 证券日报）。整体看，西方银行「用 AI」硬新闻真空期被这波 agentic 信贷+支付标准化集中破局，「AI 调查/生成、人深化判断」的分工范式在信贷、支付两条线同时落地。",
+  "generated_at": "2026-08-21T09:44:33.800149+08:00",
+  "digest": "西方银行「用 AI」硬新闻真空延续，但本周两条硬货打在 agentic 规模化的两个前置件上：一是数据可信度——Westpac 公布「agentic data ecosystem」，把业务定义/数据血缘/治理/质量/所有权收进「单一活系统」，智能层数据源 251→285、模型构建快 5 倍、洞察转化 engagement 快 6 倍，与 8/5 信贷 agent 集群构成「应用先跑、底座跟上」完整路径；二是交易信任度——Experian 年度报告给出 AI Trust Gap 量化基线：31% 消费者已用 AI 网购，但愿让 AI 做金融决策的仅 17%，企业 80% 已在反欺诈用 AI、77% 反欺诈预算要涨。加上库内 DBS agentic 信贷、Rain 支付联盟、宁波 JD 审核，「agent 进核心业务」主线正在「数据底座」与「身份信任」两端同时补基建——胜负手不在模型的判断再添两组同业注脚。",
   "items": [
+    {
+      "title": "Westpac 公布「agentic data ecosystem」：285 个数据源喂智能层，模型构建快 5 倍，三大平台按 banker 工作日节律设计",
+      "summary": "Westpac 首席数据数字 AI 官 McMullan 在悉尼 Snowflake 活动公布专为大模型 agent 构建的数据生态：业务定义、数据血缘、治理、质量、所有权全部收进「一个活系统」。智能层数据源从 251 增至 285，AI 模型构建部署快 5 倍、客户洞察转化 engagement 快 6 倍、offer 营销从数月压缩到数天。三大平台：Start Your Day Informed（每日情报）/ Create a Better Day（经济分析，institutional banker 用来强化 underwriting 讨论）/ Sleep Tight at Night（风险信贷夜间监控）。核心诊断：机构不缺数据，缺对数据的信心。",
+      "detail_content": "【核心事件】\n\n8/17 iTnews（Andrew Colsey 报道），Westpac 首席数据、数字与 AI 官 Andrew McMullan 在悉尼 Snowflake 客户活动上公布了一个新的工作计划：构建「agentic data ecosystem」（agentic 数据生态）——在银行已有 intelligence layer 基础上，专门为大模型 agent 技术新建的数据底座。\n\nMcMullan 将其定位为「one single living system」（单一活系统）：Westpac 的业务定义、数据血缘、治理、质量和所有权全部纳入这一个系统，形成「a shared intelligence foundation」（共享智能基础）。这是 8/5 AFR 披露 Westpac 用 AI agent 集群评估房贷/信用卡申请（数千 banker 在用、首月省 1.2 万工时，库内已收）之后，该行在 agentic 路线上的下一个结构性动作——应用层的 agent 已经跑起来，现在补的是底层的可信数据生态。\n\n【关键细节与引用】\n\n硬数字：智能层接入的数据源从去年 11 月的 251 个增至 285 个；AI 模型的构建和部署时间加速 5 倍；把基于客户数据的洞察转化为客户 engagement 的速度提升 6 倍。基于客户数据的 offer 类营销活动从「数月」压缩到「数天」——offer 不再从零构建，而是从预先批准的目录（pre-approved catalogue）中匹配浮出，品牌一致、已过合规审查，再按参与场景选受众。\n\n面向 banker 的三大平台，按典型工作日节律命名：Start Your Day Informed（每日市场情报，汇集全行系统的「数千」信号）；Create a Better Day（经济活动分析、可按地理区域下钻——McMullan 透露 commercial banker 用它准备客户对话、发现原本看不到的机会，institutional banker 用它「strengthen underwriting discussions and challenge assumptions」强化承销讨论、挑战假设）；Sleep Tight at Night（与风险管理和信贷控制系统集成，风险、信贷、控制全部持续监控）。技术栈上与 Snowflake 的 CoWork（面向业务）和 CoCo（面向数据工程师）虚拟助手集成。\n\nMcMullan 的诊断原话值得整段引用：「most organisations don't struggle with a lack of data - [they] struggle with confidence in it」「[They] struggle whether or not [there's] the right controls and lineage; [and on] the time spent trying to debate the numbers instead of acting on the data and making intelligent decisions. That is what the agentic data ecosystem is designed to solve at Westpac.」——多数机构不缺数据，缺的是对数据的信心；缺的是控制与血缘是否到位，以及把时间花在争论数字对不对、而不是基于数据做决策上。\n\n【背景与上下文】\n\nMcMullan 2025 年 9 月从 CBA 加入 Westpac，直接向 CEO Anthony Miller 汇报，头衔本身就是「Chief Data, Digital and AI Officer」三合一——数据、数字、AI 一把手。澳洲大行的 agentic 竞赛已经全面展开：Westpac 有信贷 agent 集群 + 本周的数据生态；CommBank 7 月在 Snowflake Summit 披露用 CoWork/CoCo 破解「AI 碰不到核心数据」的困境（此前因安全/治理/合资合规，AI 只能围着数据外围用，库内已收）；NAB 则在 4 月组建了 AI science 团队（McKinsey QuantumBlack 背景的 George Mathews 领衔）。两家大行都选了 Snowflake 虚拟助手作为 banker AI 的载体，这个技术选型的趋同值得关注。Westpac 已预告 9/15 由 McMullan 主讲 investor briefing（Data, Digital and AI update），届时可能有更完整的数字披露。\n\n【影响与前瞻】\n\n这条新闻的价值在于给出了 agentic AI 规模化的一条清晰因果链：agent 要跑在可信数据上 → 可信数据要靠血缘/定义/质量/所有权一体化 → 这套底座建好后，模型迭代 5 倍速、洞察转化 6 倍速才有意义。与 Standard Bank COO「真正的差异化在于把技术与可信数据、强治理、正确技能结合」（库内 8/19）完全同频——两家不同市场的大行 AI 一把手在同一周给出同一诊断：瓶颈不在模型。\n\n对 Eason 的可调用点：① 行内推 agentic 时的建设次序参考——先「单一活系统」收拢数据定义/血缘/质量/所有权，再谈 agent 规模化；② 三平台「早知情/日增效/夜安眠」是按一线工作节律产品化 AI 工具的现成框架，比按技术能力分类更贴近业务；③ McMullan「争论数字对不对 vs 基于数据做决策」的时间浪费诊断，是数据治理立项的好表述。\n\ncaveat：全部内容来自银行高管在供应商活动上的自述（Snowflake 场合有站台性质），5 倍/6 倍为内部度量口径未经审计，三大平台披露详略不一（Create a Better Day 和 Sleep Tight at Night 的具体功能语焉不详），且未披露投入成本与对经营指标的实质影响。",
+      "source": "iTnews",
+      "source_type": "tavily",
+      "url": "https://www.itnews.com.au/news/westpac-at-work-on-new-agentic-ecosystem-628175",
+      "timestamp": "2026-08-16T20:28:00Z",
+      "importance": 8,
+      "tags": [
+        "澳洲",
+        "Westpac",
+        "agentic AI",
+        "数据治理",
+        "Snowflake"
+      ],
+      "batch_time": "2026-08-21T09:30:00+08:00"
+    },
+    {
+      "title": "Experian 年度报告量化「AI Trust Gap」：31% 消费者已用 AI 交易，愿让 AI 做金融决策的仅 17%",
+      "summary": "Experian 第 11 份年度 Identity and Fraud Report（8/19 发布，2000+ 消费者 + 200+ 企业调研）给出 agentic 金融的信任基线：31% 已用 AI 工具网购，但舒适度在高风险场景骤降——旅行 21%、金融决策仅 17%；超半数担心 AI 诈骗。企业侧 80% 已在反欺诈用 ML/GenAI，77% 预期反欺诈预算增加。CIO 提出「human-not-present era」，同步上线 Agent Trust 产品验证「人 + 代人行事的 AI agent」双侧身份。",
+      "detail_content": "【核心事件】\n\n8/19，Experian 发布第 11 份年度 Identity and Fraud Report（身份与欺诈报告），基于 HarrisX 2026 年 4 月的两项美国调研：2000+ 名美国消费者 + 200 余家企业（营收 1000 万至 10 亿美元以上）。核心发现被概括为「AI Trust Gap」——消费者正在拥抱 AI 参与日常数字交易，但在高风险决策上明确抗拒。\n\n这是「人+AI agent 同时参与数字交易」的经济里，第一份给出系统化信任度量的征信机构年度报告。\n\n【关键细节与引用】\n\n消费者侧：31% 的消费者已经用 AI 工具在线购物和交易，另有 23% 表示会考虑；但当决策权重上升，舒适度骤降——愿意依赖 AI 完成旅行类购买的仅 21%，愿意依赖 AI 做金融服务决策的只有 17%。超过半数消费者表示担心 AI 驱动的诈骗。欺诈形势在恶化：FTC 口径下 2025 年美国消费者欺诈损失 159 亿美元（同比 +27%），实际数字大概率更高（很多案件未上报）；近 1/5 的人过去一年有实际损失，另有 15% 被尝试过但拦住了；钓鱼仍是最常见形态（26%），其后是虚假广告（19%）、包裹诈骗（16%）、信用卡盗窃（16%）、未授权扣款（15%）、银行欺诈交易（15%）。72% 的受害者在事后感到自己在线上更脆弱。\n\n企业侧：60% 的企业报告欺诈损失高于往年；77% 预期欺诈管理预算增加。企业最担心的 AI 相关欺诈：AI 生成的钓鱼攻击（53%）、AI 辅助的一方欺诈（51%）、文件伪造（45%）、自动化 bot 攻击（40%）、deepfake 语音诈骗（37%）。80% 的组织已在欺诈管理环境中使用机器学习或生成式 AI。\n\n首席创新官 Kathleen Peters 的定调值得引用：「As we move toward a human-not-present era where consumers increasingly rely on AI to help make decisions on their behalf, the organizations that will succeed will be the ones that make trust visible.」——当消费者越来越依赖 AI 代自己决策，赢家将是把信任「做可见」的机构。\n\n【背景与上下文】\n\nExperian 同步发布了 Agent Trust 产品，把身份验证能力从「验人」扩展到「验证代人行事的 AI agent」；该公司 2025 年帮客户规避了约 190 亿美元的全球欺诈损失。这条新闻与本频道近期主线严丝合缝：8/12 BioCatch/Frost 提出 agentic 欺诈迫使银行「从验证身份转向验证意图」（AI 辅助诈骗利润率已达正常业务 4.5 倍，库内已收）；8/18 Rain 联合 Visa/Mastercard 等 26 家成立 Agentic Payments Alliance，工作重点就是 agent 身份、授权标准与反欺诈（库内已收）。三层拼图凑齐：产业标准层（APA 联盟）→ 征信基础设施层（Experian Agent Trust）→ 需求侧态度数据（17% 信任度）。此前 Mastercard 的 Agent Pay、银联 APOP 三层信任框架（identity/intent/process）走的也是同一条路。\n\n【影响与前瞻】\n\n对 Eason 的可调用点：① 「仅 17% 消费者愿意让 AI 做金融决策」是 agentic 零售金融落地必须直面的信任约束基线——行内设计对客 agent 场景时，透明披露、人工可及、渐进授权不是合规点缀，是采用的先决条件；「make trust visible」是可以直接挪用的产品设计原则。② 77% 企业反欺诈预算增加 + 80% 已用 AI 反欺诈，是安全条线争取资源的同业对标锚点。③ 报告隐含一个结构性机会：银行若能率先解决「验证人和验证 agent」的双侧身份问题，信任本身就是差异化——Experian 把它做成了产品，银行的对应动作是什么值得思考。\n\ncaveat：Experian 是身份验证与反欺诈解决方案厂商，报告发布与 Agent Trust 产品上线同步，调研结论服务其商业叙事；17% 是自我报告的态度数据而非实际行为数据（attitude-behavior gap 在 FinTech 采纳研究中长期存在）；调研样本仅覆盖美国市场，200+ 企业的样本量对细分行业结论支撑有限。",
+      "source": "Experian 官方新闻稿",
+      "source_type": "tavily",
+      "url": "https://www.experianplc.com/newsroom/press-releases/2026/new-experian-report-reveals-ai-trust-gap-as-consumers-embrace-ai",
+      "timestamp": "2026-08-19T12:00:00Z",
+      "importance": 7,
+      "tags": [
+        "反欺诈",
+        "消费者信任",
+        "agentic 支付",
+        "Experian",
+        "身份验证"
+      ],
+      "batch_time": "2026-08-21T09:30:00+08:00"
+    },
     {
       "title": "DBS 官宣 agentic AI 对公信贷评估：70+ 专业 agent 协作生成「可上会」信贷备忘录首稿，1500 名 banker 已在用，RM 信贷耗时占比 40% 目标砍 30%",
       "summary": "DBS 8/19 官宣将 agentic AI 方案推广至对公信贷评估全流程：专业化 agent 分工处理 70+ 项任务（研读年报/行业研究/内部记录），把非结构化数据综合成 review-grade 信贷备忘录首稿，RM 与信贷风控经理与 agent 迭代打磨成终稿。150 人试点后已推至全球约 1500 名员工。对公条线主管 Han Kwee Juan 称目标是把 RM 信贷备忘录及相关活动耗时（占其时间 40%）至少压缩 30%。这是继 Westpac 房贷/信用卡集群（8/5）后，agentic AI 渗透进大行信贷核心流程的又一具名全球样本，也是对公信贷条线迄今最具体的一次公开拆解。",
@@ -185,66 +221,6 @@
         "英国"
       ],
       "batch_time": "2026-08-15T09:30:00+08:00"
-    },
-    {
-      "title": "Westpac 部署「AI agent 集群」评估房贷与信用卡申请：数千 banker 在用、首月省 1.2 万工时，澳洲大行 agentic 首次大规模进信贷审批核心流程",
-      "summary": "澳大利亚四大行之一 Westpac 把 agentic AI 做进了房贷和信用卡申请评估这一信贷核心流程——数千名 banker 已在用一组「AI agent 集群（swarm of AI agents）」辅助审批，上线第一个月就节省了 12000 个 banker 工时。AFR 顶级财经记者 James Eyers 报道，推动这场部署的直接动机是「急迫证明 AI 投资回报（scrambles to demonstrate return on investment）」，Westpac 与 Accenture 合作落地。这是迄今 agentic AI 渗透进大型银行信贷审批核心流程最具体、可点名的西方样本，与库内 CommBank「AI 碰不到核心数据」的困境构成澳洲大行 AI 落地「卡点 vs 突破」的张力对照。",
-      "detail_content": "【核心事件】8 月 5 日《澳大利亚金融评论》（AFR）资深记者 James Eyers 报道，Westpac 已部署一组「AI agent 集群（swarm of AI agents）」用于评估房贷与信用卡申请，数千名 Westpac banker 正在日常使用这套系统。报道披露的最硬数字是：这些 agent 在上线第一个月就为 Westpac 节省了 12000 个 banker 工时。Westpac 与 Accenture 合作落地这套 agentic 系统。报道明确指出，Westpac 此举的直接动机是「急迫证明 AI 投资回报（as the lender scrambles to demonstrate return on investment from its AI investments）」——即在外部对银行 AI capex 质疑加剧的背景下，必须拿出可量化的产能数字。\n\n【关键细节与上下文】这是 agentic AI 第一次在一家全球系统重要性级别的大型银行（Westpac 是澳洲四大行、市值约 1000 亿澳元）的信贷审批核心流程里被「数千 banker 规模化使用」并给出首月产能硬数字。它和本频道库内几条澳洲大行 AI 报道构成一组完整张力：CommBank（澳洲联邦银行）前 CIO Ralston 在 7 月 Snowflake Summit 上公开承认「过去一年 AI 碰不到 CBA 的核心数据皇冠珠宝、团队只能围着数据外围用 AI」是困境表述；AMP Bank 是 agentic AML 反洗钱样本；而 Westpac 这条是 agentic 直接进了房贷+信用卡审批这一利润中心核心流程，是「突破」表述。两相对照说明：澳洲大行 AI 落地并非齐头并进，谁能把 agentic 嵌进核心信贷流程，谁就先拿到产能数字去对冲 ROI 质疑。AFR 同期还有多条 James Eyers 的相关报道（Westpac+Accenture 工程师代码迁移用 agentic AI、Westpac AI agent 帮房贷 banker 核验借款人工资单、CBA 与 Westpac 竞相 scale AI、ANZ 与 Westpac 给企业 banker 开发 agentic 助手），说明澳洲四大行正集体把 agentic 从试点推向信贷与企业银行业务一线。\n\n【影响与前瞻】对 Eason 的汇报价值有三：①「首月省 12000 banker 工时」是 agentic 进信贷核心流程迄今最干净的西方大行产能锚点，可放进「等效人年/节省工时」全球光谱（工行 5.5 万人年 / 招行 1556 万小时≈8000 人 / CIBC 20 万小时 / DBS 26000 agents / Westpac 首月 12000 工时），须注意各家口径不同（存量年化 vs 首月 vs 自建数）。②「急迫证明 ROI」直接呼应库内胡德斌三本账、上证报 ROI 退潮、田轩摒弃技术规模考核、KPMG 本周数据「仅 11% gaining edge」——银行 AI 已进入「拿产出说话」的硬约束期，逼采用量是 slop。③Westpac 把 agentic 做进信贷审批而非只是客服/反欺诈，验证了 agentic 正从外围渗透进银行核心利润流程这一判断，与 DBS CEO「agent-to-agent banking 是 potential eventuality」、UK Finance「agentic 已在 Tier 1 欧洲银行反欺诈生产」同方向。\n\n【caveat 必须标】AFR 是付费墙单一来源（正文需订阅，硬数字来自 AFR 摘要），「首月 12000 工时」是银行/合作方自述非第三方实测，Accenture 作为合作方有商业利益。「数千 banker」是规模描述非精确数字，具体 agent 数量、审批通过率变化、坏账影响均未披露。Westpac 8/5 发布，本频道 8/8、8/11 两次抓取均漏收，本次属「稍早但新鲜具名」补收（与 Forbes DBS 8/5、ABN AMRO 8/5 同处理）。引用宜与 CommBank「碰不到核心数据」困境并列，避免单边渲染 agentic 信贷突破。",
-      "source": "AFR (Australian Financial Review)",
-      "source_type": "tavily",
-      "url": "https://www.afr.com/companies/financial-services/westpac-deploys-swarm-of-ai-agents-to-assess-loan-applications-20260805-p60lj0",
-      "timestamp": "2026-08-05T04:00:00Z",
-      "importance": 7,
-      "tags": [
-        "Westpac",
-        "澳洲",
-        "agentic AI",
-        "信贷审批",
-        "房贷",
-        "ROI",
-        "Accenture"
-      ],
-      "batch_time": "2026-08-14T09:30:00+08:00"
-    },
-    {
-      "title": "KPMG Global AI Pulse 金融切片：27% 机构全企业 scaling AI、59% 已见价值，但仅 11% 因 AI agent 部署真正「占得先机」、员工准备度仅 16%",
-      "summary": "KPMG 8 月 13 日发布 Global AI Pulse 调研的金融服务业切片分析（基于跨 20 国 2100+ 高管的全球调研）。核心数字：27% 的金融服务机构正全企业范围 scaling AI，59% 报告已实现有意义商业价值；agentic 系统开始涌现，10% 已部署 AI agent、18% 在跨职能 scaling（合计约 1/4），但全球仅 11% 因 agent 部署真正「gaining edge（占得先机）」；61% 自认具备管理 AI 风险的准备，但员工准备度（workforce readiness）仅 16% 非常有信心。财富/资管、商业银行、保险三条子赛道演化路径截然不同。这是迄今最干净的银行业 AI adoption 第三方权威量化基线。",
-      "detail_content": "【核心事件】KPMG 于 2026-08-13 发布 Global AI Pulse 调研的金融服务业专题分析（press release「AI adoption growing rapidly in financial services, but execution remains the key challenge」）。这份切片基于 KPMG Global AI Pulse 全球调研（Q2 2026 跨 20 国、2100+ 位 C-suite 与高管），从八个行业中切出金融服务业单独分析。核心结论是「采用快、执行难」——金融机构在部署广度上表现强劲，但「编排（orchestration）受监管与合规约束而受限」。\n\n【关键硬数字】①部署广度：27% 的金融服务机构正全企业范围（enterprise-wide）scaling AI，59% 报告已实现有意义的商业价值（meaningful business value）。AI 已嵌入欺诈检测、承销、信用风险、客户运营等核心域。②agentic 涌现：10% 的受访机构已部署 AI agent，18% 正在跨职能 scaling agent，支撑决策与工作流自动化——合计约 1/4 金融机构已有 agentic 部署。③但真正占先的极少：全球跨八行业仅 11% 的机构因 AI agent 部署、跨职能 scaling 并开始在工作流中协调它们而「gaining edge（占得先机）」。④风险与人才准备度鸿沟：61% 的金融机构报告具备管理 AI 风险的准备（反映强监管环境的复杂性倒逼），但员工准备度仍是瓶颈——仅 16% 非常有信心支持 AI 驱动的执行。⑤治理升级：随着 AI 进入业务核心，治理已被提升（elevated）并被视为负责任地规模化、赢得利益相关方信任的不可或缺要素。\n\n【三子赛道分化路径】报告给金融服务业内部分化最清晰的结构：财富与资产管理优先「决策增强与个性化，其中可解释性（explainability）至关重要」；商业银行聚焦「运营效率、风险管理、跨遗留系统集成」；保险业用 AI 设计「无缝客户体验」，重点是定制化与速度。这个三分法与库内 KPMG 中国银行业报告「三类银行差异化路径」、Bain「deterministic vs probabilistic 分层」可拼成「跨地域 × 跨子赛道」的银行业 AI 架构全景。\n\n【背景与影响】这是迄今银行业 AI adoption 最干净的第三方权威量化基线（非银行自述、非单一厂商）。它填补了本频道长期缺的一块——「行业整体渗透率到底多少」。把它的数字与本频道库存拼起来，能讲一个完整的反 slop 故事：59% 报告有价值（价值在兑现）vs 仅 11% gaining edge（真正占先的极少）vs workforce readiness 仅 16%（人才/判断力是瓶颈）——「部署≠产出价值≠占得先机」三段式落差，正是对「AI 已颠覆银行业」这类 slop 叙事最硬的数据反驳。对 Eason 向上汇报：①「27% scaling / 59% 有价值 / 11% gaining edge / 16% workforce ready」是一组可直接挪用的全球同业对标基线，比单引某一家银行自述更权威；②「agentic 已有约 1/4 部署但仅 11% 占先」佐证「agentic 落地胜负手不在模型在治理与判断力分工」主线；③三子赛道分化路径可指导行内按业务条线差异化 AI 策略（财富管理重可解释性、对公重运营效率+遗留集成）。\n\n【caveat 必须标】这份 press release 由 KPMG Crown Dependencies（皇家属地：泽里、根西、马恩岛）分部发布，引用的是 KPMG 全球 AI Pulse 的金融服务业切片，数据是全球性的但发布视角是小辖区（Russell Kelly，Head of Advisory at KPMG in the Crown Dependencies 的评论偏本地化）。金融服务业的具体子样本量、调查方法学细节未在 press release 披露，需查完整报告（kpmg.ws/ai-pulse）。KPMG 作为咨询公司有服务于 AI 转型业务的商业立场，「governance integral to scaling」结论服务于其治理咨询业务，引用宜与学术界/监管侧数据并列平衡。",
-      "source": "KPMG (Global AI Pulse survey)",
-      "source_type": "tavily",
-      "url": "https://kpmg.com/dp/en/media/press-releases/2026/08/ai-adoption-in-financial-services.html",
-      "timestamp": "2026-08-13T13:51:22Z",
-      "importance": 7,
-      "tags": [
-        "KPMG",
-        "AI Pulse",
-        "行业基线",
-        "agentic AI",
-        "adoption",
-        "workforce",
-        "治理"
-      ],
-      "batch_time": "2026-08-14T09:30:00+08:00"
-    },
-    {
-      "title": "中国大行 AI 做进科创金融授信：兴业「技术流」累计审批近 5000 亿、建行 AI 科创画像压缩审批 60%+，多家大行落地全生命周期科创信贷",
-      "summary": "《现代商业银行杂志》8 月 13 日发表长文（建行浙江分行撰写），系统梳理 AI 在中国银行业科创金融授信评价中的应用，汇集多家大行具名案例：兴业银行「技术流」AI 智能授信截至 2025 年 6 月累计审批近 5000 亿、实际投放超 2000 亿；建设银行 AI 科创画像重构授信标尺、审批周期压缩 60%+；农业银行杭州分行给硬科技企业程天科技投放 990 万纯信用贷款；建行 AI 无形资产估值做知识产权质押（上海某高校 300 万）。文章并提出「摒弃重规模重投放」、转向精准获客转化率与 AUM 留存的考核新导向。这是库内中国侧信贷/科创业务切面（此前是基建、采购、考核角度）的具名样本补充。",
-      "detail_content": "【核心事件】2026-08-13 新浪财经转载《现代商业银行杂志》长文《智见｜大模型破局，重塑银行服务科创实体新模式》（作者：建设银行浙江分行办公室 楼迪龙）。文章系统梳理 AI 如何重构中国银行业对科创企业的授信评价与全生命周期服务，汇集兴业、建行、农行、宁波、青岛、广发、浦发、上海农商等多家银行具名案例与部分硬数字。核心命题是：传统银行「重抵押、靠财报、重资产」的科创服务模式无法适配科创企业「轻资产、高研发」特征，存在授信不准、风控滞后痛点；大模型+AI 智能体+大数据中台使银行能搭建「技术流」科创专属评价体系，实现「数据授信、技术换信用」。\n\n【关键具名案例与硬数字】①兴业银行「技术流」AI 智能授信：自动抓取研发投入、专利含金量、技术壁垒、科研团队资质、产业政策适配度五维数据量化企业价值，截至 2025 年 6 月末累计审批科创企业授信近 5000 亿元、实际投放超 2000 亿元，批量服务数千家无固定资产抵押的专精特新企业——这是全篇最硬数字。②建设银行 AI 科创画像：整合技术专利、产业化进度、赛道景气度、战略适配性生成专属画像，弱化账面资产考核，为轻资产科创企业核定纯信用授信，将人工审批周期压缩 60% 以上。③农业银行杭州分行：为无营收无抵押的硬科技企业程天科技投放 990 万元纯信用贷款。④建行 AI 无形资产估值：做知识产权质押融资，上海某高校科研团队获批三年期循环贷款近 300 万元。⑤宁波银行北京分行：初创期 1000 万纯信用→成长期「商行+投行」投贷联动。⑥广发银行 AI 科创智能策略中枢：自研科创能力评价大模型+AI 拓客引擎 7×24 小时监测新增专利/项目落地信号。⑦浦发武汉分行：「浦新贷+知识价值信用贷」「中试险+浦研贷」场景化产品。\n\n【六大保障机制与考核转向】文章提出 AI 科创金融落地的六大保障，其中对 Eason 最相关的是「举措六：重构科创专属考核导向」——明确提出「彻底摒弃传统重规模、重投放的粗放考核模式」，弱化贷款规模/开户数量，重点考核 AI 精准获客转化率、科创首贷户数、专精特新服务覆盖率、客户活跃度、AUM 留存率、投贷联动落地规模。这与库内田轩「摒弃单纯技术规模考核」、胡德斌「考核反转（2025 绑使用量 KPI→2026 退潮算 ROI）」、上证报 ROI 退潮三方同频，是反 slop 考核主线又一中国大行侧落地表述。其余五项：总行设科创金融数智化专营部门打破条线壁垒、建 CDP+500+ 标签数据中台、AI 动态风控+容错机制、AI 合规审计（可解释可追溯可审计+双人审核）、复合型「金融+产业+数字化」人才梯队。\n\n【影响与对 Eason 价值】这是本频道中国侧首次专门覆盖「信贷/科创金融业务」切面——此前中国侧条目是基建（工行 DeepSeek/千卡算力云）、采购（城商行智能体招标）、考核（胡德斌三本账/田轩），缺业务侧。①兴业 5000 亿审批/2000 亿投放是迄今中国银行业 AI 信贷场景最硬的规模数字，可作汇报锚点。②「数据授信、技术换信用」是对「AI 重构信贷评价逻辑」最凝练的中国表述，与 Westpac agentic 信贷、DBS 信贷备忘录 agent 链构成「信贷 AI 化」全球三样本。③考核六举措可直接挪用进行内科创/对公 AI 业务考核设计，与田轩/胡德斌拼成完整反 slop 考核弹药包。\n\n【caveat 必须标】本文是单一作者（建行浙江分行员工）发表在行业杂志的综述/方法论文章，非新闻事件，带较强宣传与方法论色彩（「重塑 DNA」「成长合伙人」等表述）。硬数字多为机构自述（兴业 5000 亿/建行 60%/农行 990 万/建行 300 万），未经第三方审计。建行作为作者所在机构案例占比偏高。与库内中国侧条目（工行 DeepSeek、城商行招标、田轩、胡德斌）在「中国大行 AI」大主题下有部分重叠，本条增量=信贷/科创评价业务切面+多家具名案例+考核六举措。引用宜摆案例数字平衡宣传措辞，并标注单一来源综述性质。",
-      "source": "现代商业银行杂志 / 新浪财经",
-      "source_type": "tavily",
-      "url": "https://finance.sina.com.cn/roll/2026-08-13/doc-ininchpe0269493.shtml",
-      "timestamp": "2026-08-13T06:12:02+08:00",
-      "importance": 6,
-      "tags": [
-        "中国银行业",
-        "科创金融",
-        "信贷",
-        "建设银行",
-        "兴业银行",
-        "技术流授信",
-        "考核"
-      ],
-      "batch_time": "2026-08-14T09:30:00+08:00"
     }
   ]
 }
