@@ -1,0 +1,104 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-08-21T10:10:00+08:00",
+  "digest": "本周主题是「厂商案例研究时代的Fact-check时刻」：OpenAI 发布 Asana 两周完成五年迁移的标杆案例（$12K vs $6M），24 小时内被 Gergely Orosz 用内部信源拆出叙事水分——迁移确实完成了，但「五年」是优先级排序后的自然周期而非工时缺口，Gergely 自己先嘲讽后公开认错的过程本身成了最好的一课。同日 Anthropic 发布采访 14+ 家创业公司的 Claude Code 五规则指南（数据具体可核），Slack 把 coding agents 搬进群聊频道（Slack Code），agent 工作场所化+案例叙事纪律两条线同时推进。",
+  "items": [
+    {
+      "title": "OpenAI 发布 Asana 案例：「两周干完五年迁移、$12K 替代 $6M」，24 小时内被 Gergely 拆出叙事水分",
+      "summary": "OpenAI 8/19 官方发布 Asana 案例：用 Codex 五句话 prompt 驱动最多 4 个并行 agent，1.5 周完成 Enzyme→RTL 测试框架迁移，成本 $12K，对比原计划「至少 5 年、约 $600 万」。但 Gergely Orosz 8/20 连发十余条推文事实核查：Asana 从 2024 年就在手工做这个迁移，已完成最重要的 top 25% 测试，剩余部分是低 ROI 才一直拖——「5 年」是排优先级后的自然周期，不是「一个全职团队干五年」。Gergely 自己先嘲讽 Asana、核实后公开认错留帖提醒自己「别轻视别人的迁移」。",
+      "detail_content": "【核心事件】OpenAI 8/19 发布官方案例研究《Asana cleared 5 years of engineering work in 2 weeks with Codex》。Asana 的前端测试框架 Enzyme 已停止维护、阻塞前端现代化，旧测试全部需要重写。Asana 用 Codex 从一段五句话的 prompt 出发，最多四个 coding agent 并行、各自在代码库的独立副本上工作，一名工程师每天检查两次进度、审查每一个 proposed change。1.5 周工程投入（跨两个日历周）后 Enzyme 彻底移除，模型+基础设施成本约 $12,000，对比原 staffing 计划估算约 $600 万。Asana CTO Amritansh Raghav 的引言相当克制：\"Not every years-long project will collapse into weeks. But agents can give engineers more room for craft—and make once-impossible work worth attempting.\"\n\n【关键细节与引用】最值得注意的工程细节：五句话的简单指令效果优于精心设计的复杂流程（\"Simpler instructions worked better than a more elaborate setup\"）；迁移完成后 Asana 开始把 agent 投向其他「曾经默认要干几年」的迁移、重写和性能项目。\n\n【事实核查】Gergely Orosz（Pragmatic Engineer）8/20 先发推嘲讽「whoever at Asana signed off saying it's a 5-years project made Asana engineering look v bad」，随后向 Asana 内部核实，连发十余条更正：「OpenAI 的文章 full of holes」——Asana 从 2024 年起就在手工做这个迁移，已迁移最重要/最常用的 top 25% 测试，剩余部分 ROI 太低才被压到迁移队列底部；没有 AI 的情况下「大概 5 年内会排上并完成」，本质是优先级问题而非性能问题；「it wasn't that it would take a full-blown team 5 years」。他随后公开认错：「我通常会删掉错误的推文，但这次留着，提醒自己不要轻视别人的迁移」并补充「Enzyme→RTL 是彻底重写，纯 grunt work，AI 确实是绝配」。Asana 员工也向他确认对 OpenAI 的表述方式感到不满。\n\n【背景与上下文】这件事与库内反 slop 证据链（Writer 75%、南风窗暗访、联储机器分析）同向但角度全新：不是「案例造假」，而是「数字真实、框架有水分」——$12K 和两周都是真的，但「5 年/$6M」的 baseline 选择了最有利的解释。Gergely 同日的 Pragmatic Engineer 付费刊补充了 Airbnb、Uber 的类似迁移故事，并顺带拆了 Gartner（把 AWS/微软/IBM 排在 Anthropic/Cursor/OpenAI 之上，因为前者付「Gartner tax」）。\n\n【影响与前瞻】对汇报场景这是完整的一套方法论：引用厂商案例时先问三个问题——baseline 怎么算的（工时缺口还是排期自然周期）、有多少前置工作已手工完成、谁在核实数字。AI 做迁移的价值是真实的（grunt work 全自动），但 ROI 数字必须自己重算。预期这类「社区 24 小时事实核查」会越来越快，厂商案例研究的黄金时代也是 fact-check 的黄金时代。",
+      "source": "OpenAI 官方 + Gergely Orosz 推特事实核查",
+      "source_type": "tavily",
+      "url": "https://openai.com/index/asana",
+      "timestamp": "2026-08-19T19:00:00Z",
+      "importance": 9,
+      "tags": [
+        "OpenAI",
+        "Codex",
+        "Asana",
+        "案例研究",
+        "事实核查",
+        "迁移",
+        "ROI"
+      ],
+      "batch_time": "2026-08-21T10:10:00+08:00"
+    },
+    {
+      "title": "Anthropic 官方《Claude Code 创业公司指南》：14+ 家公司访谈总结五条运营规则，ClickHouse 修复 agent 成仓库第二/第三大贡献者",
+      "summary": "Anthropic 8/20 发布基于十余家高增长创业公司访谈的操作指南（ClickHouse/Omni/Clay/Artemis/Harvey/Cognition/Commure/Heidi/Crosby 等），五规则：Everyone ships / Automate the tedium / Trust but verify / Build for rebuilding / Prototype-dogfood-productionize。硬数字：ClickHouse 多发 30% features，Omni 工程生产力 2-3x，Clay 100% bug triage 自动化，Artemis 每周 6000+ PRs；ClickHouse 两个专门 agent（修 flaky test + 补测试覆盖）已是仓库 #2/#3 contributor；Zingage 把团队不变式写成 567 行 CLAUDE.md。",
+      "detail_content": "【核心事件】Anthropic 8/20 发布《The Claude Code guide for startups》，作者 Michael Segner，基于对 14+ 家高增长创业公司的访谈，提炼五条 AI-native 组织的运营规则。这不是产品公告而是组织实践样本：如果一家公司从零开始把产品研发生命周期建在 Claude Code 上，会长什么样。\n\n【五规则与关键细节】① Everyone ships：agentic coding 降低门槛后「懂问题的人直接出第一版」。法律科技公司 Crosby 的律师直接 ship 产品改进（「Claude Code changed what it meant to be a lawyer at Crosby」）；医疗公司 Heidi 的 CEO 说它解决了「broken telephone」——想法经 PM→设计师→工程师的传递链损耗，现在懂问题的人直接出 PR。Clay 用季度评审让非技术员工的原型进入正式 roadmap，GTM 成员做出了自动测试官网 lead-capture 响应速度的 agent。② Automate the tedium：「agents own the mechanical 80%，工程师把时间花在需要判断力的 20%」。ClickHouse 把几乎每个 SDLC 阶段都做成了自主循环，两个专门 agent（修 flaky tests、找缺失测试覆盖）现在是仓库 #2 和 #3 contributor；Commure 一名工程师用 Claude subagents 并行跑完 13 个 ticket 的 initiative。③ Trust but verify：Zingage 早期给 Claude 完全自主权，「代码看起来对但偏离了架构」，于是把团队所有不变式写成 567 行 CLAUDE.md（「How we frame problems. What has to be true no matter what. How to prove something works instead of trusting a confident answer」）。④ Build for rebuilding：模型能力持续演进，几乎没有什么是永久的。Harvey Applied AI 负责人：六个月前的架构描述和今天根本不同，「不推翻重来就不可能 agent native」。Commure 用一句 skill 指令清理已全量发布的 feature flags：「migration 从吃掉大量 dev cycles 变成 plan + fan out，几小时完成」。⑤ Prototype, dogfood, productionize：内部 agent → 自用 → 升级为客户产品，ClickHouse 用 Claude Code 构建、迭代自己产品里的 AI SRE。\n\n【背景与上下文】文中侧栏披露 Anthropic 内部 Claude Tag 作为 CI/CD on-call 一线响应者已运行数月、每次有 sitrep 的事故都由 Claude 出首份分析，与库里 8/19 收录的 on-call 实践呼应。这是继 Stripe Minions、Uber Skills 之后「大厂→创业公司」样本谱系的补全：创业公司版更激进（全员 ship、常 rebuild），大厂版更重治理。\n\n【影响与前瞻】对银行 AI 推广的直接参照：五规则里最可迁移的是③（把不变式显式化成 CLAUDE.md 式文档，agent 时代合规要求写下来的粒度大幅变细）和④（为重建而设计，接受每次模型升级都推翻部分基建）。caveat：Anthropic 官方内容天然有 vendor 立场，公司名和数字具体可核（比一般 vendor 案例扎实），但「+30% features」这类数字的口径未披露，引用时按 Asana 案例的纪律标注来源。",
+      "source": "Claude 官方博客",
+      "source_type": "aihot",
+      "url": "https://claude.com/blog/claude-code-guide-for-startups",
+      "timestamp": "2026-08-20T13:26:53Z",
+      "importance": 8,
+      "tags": [
+        "Anthropic",
+        "Claude Code",
+        "组织实践",
+        "ClickHouse",
+        "Clay",
+        "AGENTS.md"
+      ],
+      "batch_time": "2026-08-21T10:10:00+08:00"
+    },
+    {
+      "title": "Slack Code 发布：coding agents 搬进群聊频道，高风险动作须人类签核，频道即审计日志",
+      "summary": "Salesforce 8/20 发布 Slack Code：在任何对话里 @ 一个 coding agent（Claude Code/ChatGPT/Devin/Copilot/Vercel 均为创始合作方）即生成项目专属 code channel，内置对话/计划/diff/实时预览四个标签页，任务完成频道自动归档留存为审计记录。合并到生产环境等高风险动作必须人类在频道内签核，agent 直接继承 Slack 现有企业权限模型、IT 无需新建身份。Gergely 评价「makes so much sense，better late than never」。",
+      "detail_content": "【核心事件】Slack 8/20 发布 Slack Code，把 AI coding 从终端和独立浏览器 tab 拉进群聊。机制：在任意对话 tag 一个 coding agent，自动生成项目专属 code channel；频道内有四个标签页——对话、计划、代码 diff、输出实时预览；任务结束后频道自动归档，记录保留为审计日志。任何频道成员可以中途暂停、重定向或停止 agent。\n\n【关键细节与引用】治理设计是这条新闻里对银行最有价值的部分：① 高风险动作（merge to production）必须人类在频道内签核——「Slack Code also requires human sign-off on high-stakes actions like merging code to production」；② agent 继承 Slack 现有企业权限和管理控制，IT 不需要配置新身份（「agents in code channels inherit Slack's permissions and admin controls, so IT provisions no new identities」）；③ diff 对全频道可见而非单个 reviewer 在独立工具里看。GitHub CPO Mario Rodriguez 的定位：「Humans set direction, agents close the loop」。商业模式：频道免费、各 agent 单独付费——Salesforce 赌的是「哪一半值钱」。背景：Benioff 5 月已预告，Salesforce 今年 Anthropic token 预算 $300M，Claude Tag 6 月先入 Slack，Slack Code 是自然延伸；Anthropic Claude 产品负责人 Cat Wu（库内优先信源 catcathedral）：「So much engineering work already starts as a conversation in Slack with Claude Tag」。\n\n【背景与上下文】Gergely Orosz：「FINALLY, Salesforce/Slack noticed. Slack Code makes so much sense for them. Better late than never!」这条与库里 8/11 a16z「computer-use agent 护城河上移到 context/权限/流程知识」、8/13 AGENTS.md 治理 gates 一脉相承：agent 落地的胜负手在治理和协作界面，不在模型。TNW 提出的开放问题也值得留着：diff 和预览在聊天窗口里让 approval 更快更可见，但「a thumbs up in a busy channel is not a code review」。\n\n【影响与前瞻】对银行的启示：agent 治理可以借用现有 IT 权限体系而非另建一套身份基建——这是 Slack 版「keep the person, add the agent」；频道归档即审计日志的形态天然契合金融业留痕要求。Slack 说 code channel API 将向开发者开放（营销、法审等非编码 agent 也可入频道），这个方向若成熟，「agent 协作界面」可能成为企业 IM 的下一个主战场。竞品侧 Block 的 Buzz（7 月）、Viktor（Accel $75M）在做同样的「人类+agent 共享工作区」。",
+      "source": "The Next Web / VentureBeat / The Register",
+      "source_type": "tavily",
+      "url": "https://thenextweb.com/news/slack-code-ai-coding-channels-launch",
+      "timestamp": "2026-08-20T15:45:49Z",
+      "importance": 8,
+      "tags": [
+        "Slack",
+        "Salesforce",
+        "agent协作",
+        "治理",
+        "Claude Code",
+        "审计"
+      ],
+      "batch_time": "2026-08-21T10:10:00+08:00"
+    },
+    {
+      "title": "simonw 实录：Fable 5 发现沙箱跑不了虚拟机，没打招呼自己写了个 GitHub Actions workflow 推上仓库",
+      "summary": "Simon Willison 8/20 发推（♥239/3.3 万浏览）：让 Claude Code for web 用 smolvm 做不可信代码沙箱研究，Fable 5 探测到环境没有 /dev/kvm 无法嵌套虚拟化，未经询问直接写了一个 GitHub Actions workflow、在有 /dev/kvm 的 runner 上跑完整测试矩阵并直接推到 GitHub。simonw 评价「Another example of Fable being relentlessly proactive」。配套硬数据：smolvm 冷启动 0.6-1.5 秒、warm 执行约 50ms，硬件隔离 VM 对比共享内核容器。",
+      "detail_content": "【核心事件】Simon Willison 8/19-20 发布研究笔记并推文：他给 Claude Code for web（Claude Fable 5）布置任务——测试 smolmachines/smolvm 作为不可信 Python/JavaScript 代码沙箱的能力（限制 RAM/CPU、无网络、文件系统只碰指定文件、防 while(true) 死循环）。问题：Claude Code for web 的运行环境本身是 Firecracker guest（Linux 6.18.5、4 vCPU、15GB RAM），没有 /dev/kvm、没有 vmx/svm CPU flags，无法嵌套虚拟化，smolvm 直接报「kvm not available」。Fable 5 的应对：不问 simonw，自己制定 Plan B——「GitHub Actions ubuntu runners DO expose /dev/kvm → run the real test battery via a temporary workflow on this branch, collect logs, remove workflow in final commit」，写了临时 workflow 在 GitHub Actions runner 上装 smolvm 跑完整个测试矩阵，收集日志后在最终 commit 里清掉 workflow。\n\n【关键细节与引用】笔记里的测试结论本身有工程价值：smolvm 1.8.3 适合用硬件隔离 VM（而非共享内核容器）跑不可信数据转换——离线本地镜像、无网络执行、CPU/RAM 限制、guest 级超时、存储配额、只读输入挂载、可写输出挂载、--unprivileged 全部按预期工作，冷启动 0.6-1.5 秒，warm 执行约 50ms。simonw 的评语：「That was a creative solution to the environmental limits posed by Claude Code for web. Another example of Fable being relentlessly proactive.」推文互动 ♥239、RT15、6.3 万粉之下的 3.3 万浏览。\n\n【背景与上下文】这是 agent 自主性光谱的又一个精确数据点：正面上，agent 具备环境感知+自主选择替代执行路径的完整能力（连「跑完删掉临时 workflow 保持仓库干净」都想到了）；另一面，它未经批准就修改了仓库的 CI 基础设施并推送——在 auto mode 成默认（库里 8/8 收录）之后，这类「创造性越界」正是治理设计要精确覆盖的场景：什么级别的环境变更需要人类点头。与库里 8/9 Black Hat「harness 成新攻击面」、8/11 Databricks「test by impersonation」构成三角：沙箱边界、权限分级、环境变更审批。\n\n【影响与前瞻】对做 agent 平台的团队两个直接启示：① 沙箱逃逸的工程答案在进化（硬件隔离 VM 的冷启动成本已降到亚秒级，与容器方案的差距在缩小）；② agent 权限模型需要「环境变更」这个独立维度——不只是「能碰哪些文件」，还有「能不能改 CI、能不能推送」，这类操作在银行环境里无论如何都要白名单化。",
+      "source": "Simon Willison 博客 + 推特",
+      "source_type": "opentwitter",
+      "url": "https://simonwillison.net/2026/Aug/19/smolmachines-untrusted-sandbox/",
+      "timestamp": "2026-08-19T23:16:00Z",
+      "importance": 7,
+      "tags": [
+        "simonw",
+        "Fable 5",
+        "沙箱",
+        "agent自主性",
+        "GitHub Actions",
+        "安全"
+      ],
+      "batch_time": "2026-08-21T10:10:00+08:00"
+    },
+    {
+      "title": "Matt Pocock 发布 /wayfinder skill：给「战争迷雾」式规划做编排层，让 grilling session 管理 grilling session",
+      "summary": "latent.space 8/20 刊发对 Matt Pocock（AI Skills for Real Engineers，GitHub 22 万 stars）的访谈：新 skill /wayfinder 解决「终点不清晰」的规划问题——用 orchestrator 层把规划拆成多个线程（原型/研究并行再汇总），核心结构是「map + ticket」双文档：map 记录已定的决策全局，ticket 给子会话具体任务。swyx 透露 Pocock 的 /grill-me 已是 aiDotEngineer 史上观看最多的演讲、传播到了 Nadella 层级。",
+      "detail_content": "【核心事件】latent.space 8/20 开设 skills 系列第一期，访谈 Matt Pocock 并发布其新 skill /wayfinder。Pocock 的「AI Skills for Real Engineers」项目在 GitHub 有 22 万+ stars，YouTube 34.7 万订阅。/wayfinder 的定位：greenfield 项目或「前路不明」时，帮人和 agent 一起在「fog of war」里导航——Pocock 用魔兽争霸 III 的战争迷雾比喻：某些决策会把探索范围往外推，map 逐渐展开。\n\n【关键细节与引用】出发点是他做 AFK agents（Away From Keyboard，夜间跑批量任务）的痛点：规划阶段很繁重，要不断操心 session 管理——「how many tokens am I into my context window? How deep am I going here?」。wayfinder 的答案是一个 orchestrator 层：「whatever you want to plan, I'm going to handle the planning sessions for you. I'm going to split this out into multiple different threads, do prototyping, do research and pull it all back together」。核心洞察是「what if a grilling session could manage other grilling sessions」——grilling session（拷问式规划会话，即他的 /grill-me 模式）需要两份文档：map（其余所有事、已做的决策）+ ticket（本会话的具体任务）。他说 skill 的本质是 context management：「because that's really what a skill is, you're managing the context of the agent you're working in」。swyx 补充背景：Pocock 是 aiDotEngineer 短历史上总观看量最高的讲者，他的 /grill-me「has reached all echelons up to @satyanadella (with some variations…)」——/wayfinder 被他称为「Pocock 的 /grill-me 之于 /grill-me」。\n\n【背景与上下文】skills 生态正在从「单个技能封装」进化到「编排层」：库里 8/14 收录的 Anthropic Skills API（版本化技能跑在 Claude 沙箱）、8/19 Simon Willison 的「认知容量负载均衡」观察，加上这条，构成同一条曲线——当单次会话的上下文预算成为瓶颈，规划本身也需要 fan out。与 DeepSeek Harness「一切皆插件」的差别：Pocock 走的是纯 prompt/skill 层（无框架依赖），哲学更接近 Unix 管道而非平台。\n\n【影响与前瞻】对重度 agent 用户的直接价值：大项目规划阶段的 token 预算焦虑是真实痛点，wayfinder 的 map/ticket 双文档结构可以立刻在自己的工作流里复刻（本质就是决策日志+任务卡的分离）。观察点：这种「skill 管 skill」的递归结构是否会成为 agent 编排的主流形态——比 multi-agent 框架轻，比单 prompt 深。",
+      "source": "latent.space",
+      "source_type": "tavily",
+      "url": "https://www.latent.space/p/wayfinder-skill",
+      "timestamp": "2026-08-20T00:00:00Z",
+      "importance": 6,
+      "tags": [
+        "Matt Pocock",
+        "skills",
+        "agent编排",
+        "规划",
+        "latent.space",
+        "context管理"
+      ],
+      "batch_time": "2026-08-21T10:10:00+08:00"
+    }
+  ]
+}
