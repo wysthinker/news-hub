@@ -1,0 +1,61 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-08-23T10:10:00+08:00",
+  "digest": "旗舰真空期第二个月，本周工程圈主线彻底转向「agent 的入口与架构归谁」：Gergely 用本周工程圈最高互动（1862♥）宣告——除非你是前沿实验室，别造 agent，给我 MCP 接口；.txt CEO 用两周自建 runtime 的实战证明 graph-based 框架是错误抽象层，「你不需要图，只需要事件」，事件日志+content addressing 才是可审计的 agent 底座（15 人公司跑了 20 个生产 agent，非技术人员用 Markdown 就能贡献）。配套判断：把 agent 管理等同人员管理是「可笑的」，可迁移的是 tech lead 技能而非 manager 技能。",
+  "items": [
+    {
+      "title": ".txt CEO 两周自建 agent runtime 后向框架宣战：「你不需要图，只需要事件」——20 个生产 agent 的事件驱动架构全复盘",
+      "summary": "15 人结构化输出公司 .txt 的 CEO Rémi Louf 在 AI Engineer 演讲中公开 2025 年 12 月的实验：休两周假手写一套 event-driven agent runtime，现在公司内跑 20 个生产 agent。核心论点：agent 编排的难题全是老分布式系统问题（durability/idempotency/observability/content addressing），用图和代码抽象解决的框架是错误层级。最硬的工程设计：prompt 组件全部 hash 寻址（Git/Nix 式），任何回答都能回溯到确切 prompt——因为「你在 Codex/Claude UI 里看到的会话是谎言」。已完全去掉第三方 API，开源模型跑后台 agent 够用。",
+      "detail_content": "【核心事件】Rémi Louf 是做结构化输出的 15 人 AI 公司 .txt 的 CEO。2025 年 12 月他判断 agentic AI 跨过了台阶式阈值（他归功于 Opus 4.6），于是跟 CTO 打招呼自己要消失两周，亲手写一套自动化自己晨间例程的系统——想要的不过是「散步一小时回来时，晨报已经和咖啡一起备好」。结果不是产品（他明确说 .txt 不打算卖），而是一套在公司内部部署了 20 个生产 agent 的事件驱动 runtime，和一整套关于「agent 停止演示、开始无人值守运行后什么才真正管用」的工程结论。8 月 22 日他以《Agent Frameworks Considered Harmful》为题在 AI Engineer 公开了完整复盘。\n\n【关键细节与引用】他的设计原则是「每个组件都源于一次生产事故」：第一周跑系统时，晨报在 Slack 发了两次（催生出带尝试计数的队列）、一条语音笔记彻底消失（催生出 append-only 因果事件日志）、他改了一处 prompt 后市场简报变成垃圾且无法追溯改了什么（催生出 content-addressed prompt 系统）。架构三层：Markdown 文件定义 agent（可版本化、可 diff、可 PR 审查，非技术人员也能贡献——20 个 agent 里有非工程师写的）；单张 append-only 事件表作为系统记忆，每个事件因果链到触发它的事件；prompt 的每个组件（system prompt/skill 描述/工具描述/用户消息）按 hash 存储寻址。他最强调的工程结论：「The job of the kernel is actually to make bad actions impossible, not just unlikely」（内核的职责是让坏动作不可能，而非不太可能）——typed tool calls 和 typed events 是不可协商的边界，他把大部分错误率下降归功于此；直接诱因是 Anthropic 结构化输出「糟糕透顶」，约 20% 事件格式错误被系统拒绝。关于编排：「You do not need graphs. All you need is events. You have no edges to maintain.」（你不需要图，只需要事件，没有边要维护，agent 只是订阅事件。）关于审计性：「你在 Codex 或类似工具里看到的实时会话是谎言——它不是模型看到的东西」；compaction 和隐藏思维链意味着无法从 UI 重建模型真实上下文，而 hash 寻址带来 diff、replay、换模型对照三种能力。成本可见后他用 replay 把第三方 API 全部换成了开源模型（笔记本上跑本地模型），「coding 我不知道，但我这套用途够用」。他给框架厂商的忠告：「Please eat your own dog food」——很明显有些做 agent 编排框架的人自己没在生产环境跑过。\n\n【背景与上下文】这是库内 harness 主线的第三块拼图：8/21 Anthropic SDLC playbook 把治理落点放在 hooks（agent 行动时拦截），8/13 AutoGPT 用 AGENTS.md+五道 gate 管仓库 PR，本条把治理下沉到运行时架构本身——事件溯源（event sourcing）本来就是金融行业审计的老朋友。与 8/22 Gergely「internal harness 远比通用高产」的判断互证：小公司也在得出「自建内核+Markdown userland」优于 adopting 框架的结论。\n\n【影响与前瞻】对强监管行业的启发直接：content-addressed prompt 让「模型当时到底看到了什么」变成可回放的事实而非 UI 呈现，这正是审计和事故调查最需要的性质。Louf 自己说 agent 基础设施这个品类「definitely unsettled」——值得观察框架厂商是否吸收 typed boundaries/content-addressed tracing/事件驱动这三课，还是被按这些原则新造的 runtime 替代。",
+      "source": "AI Engineer Podcast (BigGo 摘要页)",
+      "source_type": "tavly",
+      "url": "https://finance.biggo.com/podcast/e9ea855b7a749297",
+      "timestamp": "2026-08-22T02:00:00Z",
+      "importance": 8,
+      "tags": [
+        "Agent架构",
+        "事件驱动",
+        "content-addressing",
+        "分布式系统",
+        "开源模型"
+      ],
+      "batch_time": "2026-08-23T10:10:00+08:00"
+    },
+    {
+      "title": "Gergely 本周工程圈最高互动宣言（1862♥）：「除非你是前沿实验室，否则我不想用你的 agent——给我 MCP 接口」",
+      "summary": "Pragmatic Engineer 的 Gergely Orosz 8 月 22 日发推：「太多 vendor 没搞明白。我有一两个我在用且喜欢的 agent。对其他所有人：给我一个 MCP 接口让这些 agent 连上你的服务。除非你是前沿 AI 实验室，我大概率不想用你的 agent，抱歉。」1862♥ 85RT，本周工程圈最高互动。这不是孤立吐槽——同一小时他在连环回复 internal harness 话题：「内部 coding harness 远比通用的高产」「那是你们自己的公司建的，是 first-party 不是第三方」。",
+      "detail_content": "【核心事件】8 月 22 日，Gergely Orosz 在 X 上发出本周工程圈互动最高的一条判断（1862♥ / 85RT，超过他平时爆款一个量级）：\"So many vendors are NOT getting this. I have one or two agents I use and like. For anyone else: give me an MCP interface to connect these agents to so I can use your service. Unless you're a frontier AI lab, I prob don't want to use your agent, sorry.\"\n\n【关键细节与引用】这条推不是凭空而来，同一天他在 replies 里把逻辑链说全了：起点是有人讨论企业内部 harness，他先纠正「internal coding harnesses are far more productive than generic ones」（内部 harness 远比通用的高产），再澄清「that is NOT a vendor building it, it's your own company! It's 1st party, not 3rd party」（那不是 vendor 建的，是你自己公司建的，第一方而非第三方）。随后自然延伸到推论：既然 agent 入口会收敛到一两个（Claude Code / Codex 这个量级），其他所有 SaaS 厂商的正确姿势是暴露 MCP 服务让这些 agent 接入，而不是再造一个 agent 壳。他还预告周二将发 Ramp 的 deepdive，核心数据点：尽管开发者可以用 Codex、Claude Code 和任何工具，约 80% 用的是公司内部 harness。\n\n【背景与上下文】这条判断与本周库内多条形成互证网络：8/20 Slack Code 发布（Claude Tag、ChatGPT、Copilot、Devin、Vercel 作为被 @ 的 agent 进入 Slack code channel）说明协作平台在做 agent 的统一入口；8/14 swyx 提出的「Zawinski's Law of MultiAgents」说 agent 间通信走向任意 thread 互通；8/20 Gergely 自己的 Zapier 实录宣告 agent 吃掉自动化 SaaS。三条线合起来是同一个格局判断：agent 的层正在坍缩——入口层收敛到少数几个 harness，能力层下沉为 MCP 服务，中间的「vendor 自带 agent」是最先被挤掉的夹心层。这与 Anthropic 力推 MCP 成为行业标准的动作方向完全一致。\n\n【影响与前瞻】对 Eason 的银行场景是个直接的采购判据：评估任何「带 agent 的 AI 产品」时先问一句「能不能以 MCP 接口暴露给我的 Claude Code/内部 harness 用」——能，就买能力；不能、只肯卖 agent 壳的，谨慎。这也跟银行自建平台的主权逻辑同构：入口自持、能力外采。后续观察 Gergely 周二的 Ramp deepdive（80% 内部 harness 采用率背后的建设细节）。",
+      "source": "X @GergelyOrosz",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2091248280365682688",
+      "timestamp": "2026-08-22T19:36:58Z",
+      "importance": 8,
+      "tags": [
+        "MCP",
+        "agent生态",
+        "Gergely",
+        "工程管理",
+        "采购判断"
+      ],
+      "batch_time": "2026-08-23T10:10:00+08:00"
+    },
+    {
+      "title": "Gergely：把 AI agent 管理等同于人员管理「是可笑的」——工程管理只有 20-30% 是技术，可迁移的是 tech lead 技能",
+      "summary": "同日另一条高互动推（245♥）：针对「管理 AI agent 就像管理人员」的流行类比，做过工程管理者的 Gergely 直接开炮：「工程管理和它的接近程度，就像小黄人和格鲁之于真实世界（而 AI agent 确实就像那些小黄人，说真的）」。补充上下文里他给出更细的拆解：他过去的管理工作只有 20-30% 和技术相关，剩下是 1:1、绩效晋升、组织琐事；真正能迁移到 agent 管理的是 tech lead 技能——规划工作、拆解委派、检查结果。",
+      "detail_content": "【核心事件】「管 agent 就像管人」是当下管理圈最流行的类比之一——agent 有「入职」「绩效」「编制」叙事。8 月 22 日 Gergely Orosz 用一条 245♥ 的推文直接戳破：\"As someone who had been an engineering manager in the past, it's laughable for anyone to compare AI agents management to people management.\"（作为做过工程管理者的人，把 agent 管理和人员管理相提并论是可笑的。）\n\n【关键细节与引用】他的比喻很毒：「Engineering management is as close to this as The Minions and Gru is to the real world (and AI agents *are* like those Minions, seriously)」——工程管理与 agent 管理的接近程度，就像《神偷奶爸》里小黄人和格鲁之于真实世界的关系（而 AI agent 确实就像那些小黄人，说真的）。在后续回复中他给出了更精确的拆分：从他的经验看，管理工作只有约 20-30% 是技术相关（planning、delegation、checking），其余 70-80% 是 1:1、绩效与晋升、组织流程——后者完全不适用于 agent。所以正确的迁移方向是 tech lead 技能而非 manager 技能：「orchestrating, breaking down, delegating 100%」（编排、拆解、委派，100% 迁移）。当有人举例说某公司像管理员工一样管理 agent 池时，他回：「I'd put this more as tech lead skills transfer well. It's about planning the work; delegating the right parts; checking in on the results.」\n\n【背景与上下文】这条推与 8/18 库内「工程领导层出走潮」和 8/19 Addy Osmani「认知投降」访谈同属一条主线：行业正在艰难定义「AI 时代工程管理者到底管什么」。Gergely 的立场一贯——管理者若把 AI 当减编工具，组织会变差（8/18 他引述 CTO 们点名 Ramp/Stripe/Notion 是「懂 AI+工程文化」的正面样本）；本条则从另一端划界：别把 agent 编制想象成人员编制的镜像。\n\n【影响与前瞻】对 Eason 是汇报场合的校准弹药：当内部或外部出现「每个 agent 折算 X 个 HC」「agent 团队要设 manager」这类叙事时，可以引用这个拆分——向 agent 迁移的是 tech lead 的规划/拆解/验收技能，人员管理里真正难的部分（成长、激励、问责）没有对应物。反过来这也是设计 AI 转型考核的依据：考「委派与验收的质量」而非「管理幅度」。",
+      "source": "X @GergelyOrosz",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2091253493193384157",
+      "timestamp": "2026-08-22T19:57:41Z",
+      "importance": 6,
+      "tags": [
+        "工程管理",
+        "Gergely",
+        "组织转型",
+        "tech-lead技能"
+      ],
+      "batch_time": "2026-08-23T10:10:00+08:00"
+    }
+  ]
+}
