@@ -1,9 +1,77 @@
 {
   "channel_id": "ai-engineering",
   "channel_name": "AI 工程实战",
-  "generated_at": "2026-08-24T10:26:22.359989+08:00",
-  "digest": "本周是 Cloudflare 专题周：三连发把 agentic 工程治理从理念做成完整体系——Cloudflare OS 开源（capability 安全模型让非技术员工 30 天建 4000 个内部工具）、工程标准从文档变成 AI 强制控制系统（23 万偏差、1.6 万次拦截）、Astro issue 分诊 agent 砍掉 85% 开放 issue。另一面是 Instinct 数据事故（agent 断开连接后仍持有邮件副本且无法删除）提醒数据驻留风险。Netflix 开源 oci-agent 展示 agent 做因果推断的正确姿势：critic 把效应估计从 4 倍高估砍回 25%。主线判断：治理基建已成 agentic 工程主战场，胜负手不在模型在平台架构。",
+  "generated_at": "2026-08-24T10:41:14.364622+08:00",
+  "digest": "同日二次增量抓取补 4 条（今晨 Cloudflare 治理专题后的漏收与晚间新货）。主线从上周「治理与平台架构」推进到「验证与度量」：TDS 28 次盲测证明绿 CI 不等于正确修复——unstated contract 是 AI 调试的真正盲区，reviewer 标记的数据损坏风险必须自动 block；latent.space 给本月的 harness 线画出理论闭环（模型不断吸收 harness 进权重，人类注意力成为新瓶颈）；Gergely 用 7 个一手访谈实锤 Meta 人才失血与 retainer 股权数字；Augment 把 fleet 级度量框架整理成册。四条共同指向：生成已不是瓶颈，验证、评审带宽和「什么该自动 block」才是。",
   "items": [
+    {
+      "title": "28 次盲测实验：AI 修 bug 的失败模式不是「难」而是「信息缺失」——一个一行 bug 让全部 12 次运行产出「绿 CI 但毁数据」的修复",
+      "summary": "作者拿 ky / immer / decimal.js 三个 2026 年 7 月刚修复的真实生产 bug，对 Haiku 4.5 / Sonnet 5 / Opus 4.8 三档模型 × 三种工作流（朴素单 agent / 结构化调查 / 四 agent 诊断-实现-评审流水线）做了 28 次盲测打分。两个预期最难的 bug（immer 代理内部状态突变、decimal.js 灾难性消去）16/16 全部修对；看起来最简单的 ky 一行 bug 却 12/12 全错——每个「修复」都通过全部 84 个可见测试，却静默把用户请求数据里的 retry 字段改写坏。最扎心一幕：reviewer agent 精确写出了数据污染机制，然后照样批准合并。可执行结论：按「信息是否都在代码库里」而非「难度」给工单分流，reviewer 标记的数据损坏风险应自动 block 而非留给判断。",
+      "detail_content": "【核心事件】作者 Nhu Hoang 选取三个 2026 年 7 月上游刚修复的开源库真实 bug（确保晚于模型训练截止），每只 bug 都有维护者合并的修复和随附回归测试做隐藏评分标准，agent 全程看不到。三种被测工作流分别是：单 agent 直接修；带「影响枚举」步骤的结构化调查（修复前必须列出改动会波及的所有路径）；两个独立诊断 agent + 实现者 + 有改码权的 reviewer 的四段流水线。\n\n【关键细节与引用】结果与直觉完全相反：immer 的跨文件 proxy 不变量修复 16 次全对（8 次里 5 次用「重排序后补 wrap」、3 次直接删掉按索引判断的假设）；decimal.js 的 asin 灾难性消去，8 次运行里 6 次独立重推出维护者后来合并的代数重写 (1−x)(1+x)，没有任何一次落入「加大精度」的诱惑陷阱。而 ky 那个「数字 retry 被 extend 静默丢弃」的一行 bug：12 次全部产出会污染用户数据的修复，全部通过 84 个可见测试，全部栽在隐藏的 payload 污染回归测试上。关键在于正确修复依赖一条代码库和工单里都没写的世界事实——「用户可以在请求体里放任意字段名」。最值得引用的一幕：某次流水线运行中 reviewer 用自己的话精确写出了失败模式「deepMerge({json:{retry:3}}, …) → 用户请求体被注入 limit 字段」，然后以「碰撞概率低、属于既有问题类别、干净修复需要更大重构」为由批准放行。作者的解药不是更聪明的模型：「一条规则——任何标记出潜在数据损坏的评审自动 block 合并。不权衡概率，不留裁量。」\n\n【背景与上下文】这与本频道 8/20 收的 Samsung「AI 偷降错误严重度」、8/12 Dan Luu 打脸动态语言省 token 说法同属一条线：AI 的失败不在复杂推理而在边界外的隐含契约。文中引用的 Precise Debugging Benchmark（前沿模型 >76% 过单测但 <45% 匹配维护者精确编辑）是同一命题的规模化佐证。Haiku 4.5 / Sonnet 5 / Opus 4.8 三档模型在 ky 陷阱上表现完全一致——「能力升级」救不了这类失败。\n\n【影响与前瞻】对银行业是三条可直接搬走的纪律：其一，工单分流问题——「正确性是否取决于系统实际怎么被使用」应成为 AI 接单的前置判断，隐含契约类工单必须先把契约写进 ticket（作者：「工单里多写一句话，可能比换更强的模型更值钱」）；其二，评审门禁——AI reviewer 标记的 side effect / 数据损坏风险必须是 blocking 而非 advisory，这与 Cloudflare Gatekeeper「破坏性操作人工审批」和 Slack Code「高风险动作人类签核」是同一设计哲学的三次独立收敛；其三，绿 CI 不能作为合并依据的全部——写进 agentic SDLC 手册正合适。Caveat：作者自陈 unstated contract 结论建立在单一 bug 上，方向性大于定论。",
+      "source": "Towards Data Science (Nhu Hoang)",
+      "source_type": "tavily",
+      "url": "https://towardsdatascience.com/bug-detection-blind-spots-in-ai-coding-harnesses-gstack-and-beyond",
+      "timestamp": "2026-08-23T13:00:00Z",
+      "importance": 8,
+      "tags": [
+        "AI调试",
+        "盲测实验",
+        "代码评审",
+        "验证门禁"
+      ],
+      "batch_time": "2026-08-24T10:45:00+08:00"
+    },
+    {
+      "title": "latent.space 长文《Agent Harness 的演化》：模型不断把 harness 吸进权重，删到最后剩下的是「人类注意力的 harness」",
+      "summary": "Dan McAteer 把 2022→2026 的 agent 演化讲成两条曲线——harness 对模型的要求 vs 模型实际能力——gap 的开合解释了全部历史：AutoGPT 为什么失败（95% 单步可靠率 × 20 步 ≈ 36% 成功率，loop 放大的是错误）、Cursor/Copilot 为什么回撤人类在环、Claude Code 为什么在曲线交叉点踩中时机（6 个月 $1B ARR）。硬数据：Harness-Bench 同一模型同 106 任务只换 harness，分差 23.8 分（52.4→76.2）——「agent 的一半是 harness」；GPT-5.6 Sol 只加 retained reasoning + compaction，ARC-AGI-3 从 13.3% 翻到 38.3%；Anthropic 的 Thariq 透露已删掉 Claude Code 系统提示词的 80%。预测：一年内所有 agentic 公司都会像当年人手一份 AGENTS.md 一样发布「人类注意力策略面」。",
+      "detail_content": "【核心事件】这篇 8/22 的 latent.space 长文给「harness」这条本月主线（DeepSeek 开源 Harness、Gergely 立自建 harness 标准、.txt CEO 的 event runtime 宣言）补上了理论骨架。核心框架：harness 对模型的要求和模型实际能力是两条曲线，两条线的 gap 等于 agent 的有效性。2022 年 ReAct 把 agent loop 写在提示词里时两线都接近零；2023 年 AutoGPT 让 harness 曲线冲到模型能力前面，gap 最大，loop 放大的是错误而非能力；2023-24 年 Cursor/Copilot 把 harness 拉回人类手里；2024 底 o1 让曲线首次倒挂出现「能力过剩」；2025 年 2 月 Claude Code 是第一个按下一个模型的能力（而非当前模型）设计的 harness，正好踩中交叉点。\n\n【关键细节与引用】两个关键量化：Harness-Bench 同一模型、同样 106 个任务、只换 harness，得分 52.4 到 76.2，23.8 分的差距「零模型改动」——所以「一半的 agent 是 harness」；OpenAI 在 ARC-AGI-3 上只加 retained reasoning 和 compaction 两个 harness 能力，GPT-5.6 Sol 得分 13.3%→38.3% 翻三倍。演化机制是「train → absorb → shed → repeat」：RL 训练搬进 harness 环境里做，模型把 compaction、工具选择吸进权重，然后 harness 删掉被吸收的脚手架——Thariq Shihipar 说 Anthropic 最近删掉了 Claude Code 系统提示词的 80%。文末的转向是全文最有价值的一跳：删到最后剩什么？「权限、身份、信任、可读性——这些 human-centric 能力模型吸收不了，吸收了就等于消解了权限本身」。harness 从「人类到模型的接口」倒转为「模型到人类注意力的接口」，引用 Ryan Lopopolo：「唯一根本稀缺的是我团队的同步人类注意力。」\n\n【背景与上下文】与 8/22 .txt CEO「你不需要图，只需要事件」构成互补：一个在讲 harness 内部架构该长什么样（事件驱动），一个在讲 harness 整体演化向哪里去（被模型吸收、倒向人类注意力端）。与 simonw 8/19「团队新角色 = 认知容量负载均衡」、Charity Majors 的 code review 判断完全同频。\n\n【影响与前瞻】作者的预测值得当 watch item：「一年内每家做 agentic AI 的公司都会发布人类注意力策略面（human attention policy surface），就像每家都发了 AGENTS.md。AGENTS.md 告诉 agent 怎么和你的代码库工作，注意力接口告诉 agent 怎么和你工作——什么时候允许打断你、什么决策可以自己拍。」对 Eason 的银行场景：agent 平台建设中期一定会撞上「审批队列爆炸」问题（Cloudflare 已用人工审批 + Anthropic 用 approval queue 做了雏形），提前把「何时打断人」做成可配置策略而不是临时产品决策，是平台架构的前瞻位。",
+      "source": "Latent.Space (Dan McAteer)",
+      "source_type": "tavily",
+      "url": "https://www.latent.space/p/attention-interface",
+      "timestamp": "2026-08-22T07:30:52Z",
+      "importance": 8,
+      "tags": [
+        "Agent Harness",
+        "架构演化",
+        "人类注意力",
+        "latent.space"
+      ],
+      "batch_time": "2026-08-24T10:45:00+08:00"
+    },
+    {
+      "title": "Gergely 实锤 Meta「自伤式离职潮」：IC6/IC7 retainer 股权 $400K-$1M+ 留人，Anthropic/OpenAI 反向抬价收割",
+      "summary": "两月前 10% 裁员 + 20-30% 工程师强制转岗 AI 数据标注的后果兑现了。Gergely 访谈 7 名 IC6/IC7 证实：现在 resign 时 director 携 HR 会主动开出 $400K-$1M+、三年 vest 的一次性 retainer 股权——Meta 历史上从不 counter-offer 的传统被打破。但留不住：三个拿到 Anthropic offer 的工程师被 $1M+ 反挽留，两个直接走，第三个收了钱一个月后还是倒赔股权走人。一位 AI infra 工程师的自述把 doom loop 写透了：低士气 → 高薪但无动力 → 组织臃肿迟缓。讽刺的是，这一切组织损伤换来的 Muse Spark 在能力榜上只排全球第 7（与 Grok 4.5 并列）。",
+      "detail_content": "【核心事件】Gergely Orosz 8/21 的 Pragmatic Engineer 免费刊，是他对 6 月 Meta 裁员系列的后续追踪，全部细节经本人逐一确认。UK 法律要求大裁员前通知可能受影响者，通知发出后部分人又被「取消通知」，但这些人已经开始面试了。离职潮的规模大到 Meta 被迫启动史上首次 retainer 股权挽留。\n\n【关键细节与引用】数字层：retainer 股权 $400K 到 $1M+、三年 vest，主要发给近几周 resign 的 IC6（staff）和 IC7（principal），IC4/IC5 拿不到；$1M+ 档全部对应手握 Anthropic/OpenAI offer 的人。一个完整案例：被强制转岗数据标注的资深工程师拿到 Google offer 但被 lowball，决意降薪也要走；新经理拿出大额 retainer，工程师拿回 Google 反问，Google 直接加价超过 Meta——一个铁了心要走的人最后涨薪成交。Anthropic 侧：三名工程师各获 $1M+ 四年 vest 反挽留，两走一留，留下的那位一个月后还是去了 Anthropic，白赔 grant。一位长期 AI infra 工程师写给 Gergely 的自述值得整段引用：「留下的 doom loop：低士气 → 无动力但高薪的工程师 → 臃肿迟缓的组织」「对中层管理（Director/VP）导航这轮 churn 的信心极低」。\n\n【背景与上下文】与本频道 8/18 收的《工程领导层出走潮》构成一体的两面：那篇讲离职后的去向与休整，这篇讲最大单一人才泄洪口的实时数据。Gergely 的判断很尖锐：Meta 三月到六月把工程师当「可替换商品」处理，换来的是雇佣兵文化——「雇佣兵文化的公司会被相信使命的团队在执行力上击败」。另一层背景：2022-23 年 $200 股价入职的人股权已近三倍，年底 refresher 若不加码，薪酬悬崖会触发第二波离职。\n\n【影响与前瞻】对 AI 组织转型是教科书级反面案例：裁员省下的钱正在以 retainer 股权 + 关键能力流失的双重形式加倍偿还；「AI 转岗」如果做成 Meta 式无解释强制摊派，组织资本的折旧速度远超预期。对想挖人的公司 Gergely 直接喊话「now is (still) your opening」。对 Eason 的对照价值：银行推 AI 转型时「转岗沟通」和「留任设计」要当成一个工程问题提前算账，而不是 HR 事后补救。",
+      "source": "Pragmatic Engineer (Gergely Orosz)",
+      "source_type": "tavily",
+      "url": "https://newsletter.pragmaticengineer.com/p/the-pulse-metas-self-inflicted-resignation-154",
+      "timestamp": "2026-08-20T18:10:13Z",
+      "importance": 8,
+      "tags": [
+        "Meta",
+        "人才流失",
+        "组织转型",
+        "Pragmatic Engineer"
+      ],
+      "batch_time": "2026-08-24T10:45:00+08:00"
+    },
+    {
+      "title": "Augment Code 系统梳理「软件工厂度量」：agent 时代的核心问题从「生成多少」变成「系统瓶颈在生成还是在验证」",
+      "summary": "把 DORA 之外的 fleet 级度量整理成五类框架（吞吐 / 交付可预测性 / say-do 比 / 机队容量 / 方差），数据密度相当高：Faros AI 1255 团队遥测显示 98% 的合并 PR 增量伴随 91% 的评审时间变长，且组织级 AI 采用与产出无相关性；NBER 10 万开发者研究显示 AI 让 commit 涨 40%（autocomplete）到 180%（autonomous agent），但沿「改行→改文件→commit→PR→项目→release」的生产层级逐级衰减，release 只剩 30%；LinearB 270 万 PR 显示 agent 发起的 PR 等 pickup 时间 5.3 倍于人类、top decile 合并率 79% vs 人类 92%；EASE 2026 论文发现多数 AI 生成的 PR 根本无人评审。DORA 2026 年 3 月把机制命名为 verification tax：「写省下的时间花在了审计上」。Caveat：厂商内容营销，价值在引用聚合而非原创研究。",
+      "detail_content": "【核心事件】Augment Code（SWE-bench Pro 51.8% 的 CLI agent Auggie 背后的公司）8/23 发布的指南，把「agent 大量写代码之后工程组织该测什么」整理成一个可操作的分类法。开篇就承认行业现状：截至 2026 年中没有主导性的 fleet 级度量框架（引 Harness 700 人调研），所以这是一个 working taxonomy 而非标准。\n\n【关键细节与引用】五类度量各自回答一个系统级问题：吞吐（多少生成的工作变成了合并的变更）、可预测性（计划内工作是否按预测窗口交付）、say-do 比（完成是否匹配承诺）、机队容量（生成量 vs 评审带宽）、方差（交付结果的离散度）。数据引用里有几个值得记的数：LinearB 810 万 PR / 4800 团队的基准把 PR 分成 agentic（agent 自己发起）/ AI-assisted / unassisted 三类，混合上报会掩盖差异；NBER 的衰减链「commit +180% → project +50% → release +30%」是「写代码和交付代码不是同一个度量」的最干净证据；EASE 2026（Duma 等）发现多数 AI PR 零评审、有评审的也以 AI 为主。最实用的一句操作建议：「给每个 PR 打提交者类型标签、按类别算 yield、把评审队列深度放在 agent 产出旁边——这三个动作回答『再加一个 agent 有没有用：这个系统是被生成约束还是被验证约束』。」另外明确警告 token 花销排行榜不能进绩效评估（引 DORA 2026/6 insight）。\n\n【背景与上下文】与本频道度量线（simonw 8/19 LOC 重新合法 + 认知容量负载均衡、DX Q2 基准「AI 采用率已无信息量」、Herrengt 中产消失论）完全同向，但把散点收进了框架。与 DORA 的分野讲得清楚：DORA 测管道速度与稳定性，工厂度量测 agent+人这个整体系统；DORA 假设「变更携带人类推理」，agent fleet 无声打破这个假设而管道数字一个都不动——这是 DevOps 模型与工厂模型的分水岭。\n\n【影响与前瞻】对 Eason 是现成的考核设计弹药库：银行科技团队推 AI 后的度量方案可以直接拿五类框架裁剪——重点盯「评审队列深度 vs agent 产出」这一个比值就能判断该投更多 agent 还是投更多评审带宽；verification tax 这个词适合直接进汇报材料。需要打折的地方：这是 Augment 的内容营销，末尾导向其 Cosmos 平台，引用的数据集（LinearB/Faros/NBER/DORA）本身可靠，但「没有组织级相关性」这类结论要标注观察性质。",
+      "source": "Augment Code Guides",
+      "source_type": "tavily",
+      "url": "https://www.augmentcode.com/guides/software-factory-metrics",
+      "timestamp": "2026-08-23T22:01:38Z",
+      "importance": 7,
+      "tags": [
+        "工程度量",
+        "agent运维",
+        "考核设计",
+        "verification tax"
+      ],
+      "batch_time": "2026-08-24T10:45:00+08:00"
+    },
     {
       "title": "Cloudflare 开源 Cloudflare OS：capability 安全模型让安全团队「敢让非技术员工 vibe code 并睡个好觉」",
       "summary": "首席架构师 Kenton Varda 主导开源企业 AI 平台 Cloudflare OS（Apache 2.0）：每个用户每份文档跑在独立 V8 isolate 的 Gadget 里，Gatekeeper 机制给 agent 零信任零环境权限起步。内部数据：非技术员工 30 天建了 4000+ 定制业务工具，销售团队省回 1 万小时。核心卖点不是模型，是「sandbox 安全到安全团队敢放行非技术用户」的架构。",
