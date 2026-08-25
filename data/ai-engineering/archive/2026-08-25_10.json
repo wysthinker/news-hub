@@ -1,0 +1,95 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-08-25T10:31:00+08:00",
+  "digest": "本周主线从「要不要自建 harness」进入「harness 实证 + 采用率鸿沟」双证阶段：NVIDIA 用 AVO 架构把同一个 Claude Opus 5 从 30% 抬到 ARC-AGI-3 公开集 100%，给「系统设计而非模型能力决定 agent 上限」补上最硬数据；同日 TechCrunch 深度披露 OpenAI 自家研究——内部 98% 员工用 Codex，企业订阅者仅 17%、个人 <1%，agent 采用率的官方基线第一次有了数字。steipete（2198♥ 本周最高互动）与 Gergely（511♥）同日从两端收敛到同一命题：agent 时代的软件设计——前者说「必须远离无法用 prompt 修改的软件」，后者说「让 agent 高效的答案是重新发现 25 年前的架构原则」。预告：Gergely 预告 Pragmatic Engineer 今日发布某大厂（2022-23 自建 CDE 那家）自建 AI coding harness 深度稿，明日抓取跟进。",
+  "items": [
+    {
+      "title": "NVIDIA 实证 harness 战争：AVO 架构把 Claude Opus 5 的 ARC-AGI-3 成绩从 30% 抬到 100%，同一 agent 系统 7 天自主优化 GPU kernel 跑赢 FlashAttention-4",
+      "summary": "NVIDIA 技术博客披露 Agentic Variation Operators（AVO）agent 架构：裸模型 Claude Opus 5 在 ARC-AGI-3 只有 30%，包进 AVO 完整 agent 系统后拿下公开集全部 183 关、100.00 RHAE，比 VISTA 少用 12% 动作。同一套架构跑 GPU kernel 优化：连续自主运行 7 天、探索 500+ 方向、提交 40 个 kernel 版本，在 DGX B200 上比 FlashAttention-4 快最多 10.5%。核心论点：长程自主性能来自系统级架构（持久记忆+监督者），不是模型单点能力。",
+      "detail_content": "【核心事件】\nNVIDIA 研究团队（Terry Chen 领衔）8/21 发布技术博客，宣布其通用 coding agent 系统 AVO 在 ARC-AGI-3 公开集上取得 100.00 RHAE：25 个环境、183 关全部完成，共消耗 6,624 次环境动作。作为对照，裸 Claude Opus 5 在标准 harness 下只有 30% 基线——同一个模型，换一层系统，成绩差 70 个百分点。与 VISTA（此前完成同样 183 关的 harness）相比少用约 12% 动作（6,624 vs 7,542），但 NVIDIA 明确标注「这不应被视为受控消融实验，两套系统在 agent 后端、观察表示、记忆和上下文管理上都不同」。\n\n【关键细节与引用】\nAVO 的两个核心机制：持久记忆（persistent memory）携带历史实现、评估结果、编译器和 profiler 输出，「让 agent 从当前状态恢复，而不是反复重建搜索」；监督者（supervisor）监控整体轨迹的停滞和非生产循环，在搜索平台期时把主 agent 重定向到替代策略。观察接口上 AVO 用纯文本 64x64 网格，不发任何图像 token。GPU kernel 战绩：注意力 kernel 优化任务连续跑 7 天，比 cuDNN 快最多 3.5%、比 FlashAttention-4 快最多 10.5%，随后仅用约 30 分钟额外自主工作把演化出的 kernel 适配到 grouped-query attention。博客金句：「评估一个模型不等于评估一个 agent」「性能和通用性来自系统级架构，而非模型级能力 alone」。\n\n【背景与上下文】\n这是本频道连续第三周的 harness 主线补上最硬一块实证：8/17 Gergely 立「不建自己 harness 还算严肃科技公司吗」标准，8/22 latent.space《Agent Harness 的演化》给出理论框架（模型不断把 harness 吸进权重），现在 NVIDIA 给出可复现数据。ARC-AGI-3 是交互推理基准：agent 进入无说明、无规则、无目标陈述的陌生环境，必须通过交互推断环境动力学和目标——测的正是长程自主性。\n\n【影响与前瞻】\n对选型决策的直接启示：「买哪个模型」和「建什么 harness」是两个独立决策，且后者的影响力度以十个百分点计。银行语境下，同一 GLM/Claude 在不同编排层下表现差异巨大，采购评估应该测「模型+harness」组合而非裸模型跑分。caveat 三条：这是公开集不是隐藏集；动作数对比非受控实验（NVIDIA 自己承认）；RHAE 是相对首次人类基线的效率指标，与纯准确率口径不同。",
+      "source": "NVIDIA Developer Blog",
+      "source_type": "tavily",
+      "url": "https://developer.nvidia.com/blog/nvidia-avo-reaches-100-on-arc-agi-3-demonstrating-a-frontier-level-general-purpose-architecture-for-long-horizon-autonomous-agents/",
+      "timestamp": "2026-08-21T17:00:00Z",
+      "importance": 8,
+      "tags": [
+        "NVIDIA",
+        "ARC-AGI",
+        "Agent Harness",
+        "Claude Opus",
+        "长程自主"
+      ],
+      "batch_time": "2026-08-25T10:31:00+08:00"
+    },
+    {
+      "title": "OpenAI 深度披露 ChatGPT Work 改造史：内部 98% 员工用 Codex，企业订阅者仅 17%、个人订阅者不到 1%——agent 采用率鸿沟首次有官方数字",
+      "summary": "TechCrunch 8/24 长文披露 OpenAI 如何把对非技术员工「actively hostile」的 Codex 改造成通用 agent 产品 ChatGPT Work。最有价值的是 OpenAI 资助研究的硬数字：6 月 OpenAI 内部 98% 员工在用 Codex，组织订阅者只有 17%，个人订阅者不到 1%。通讯和财务团队最初看到的是「empty diff」式的工程师界面。核心判断：CLI 只覆盖开发者，agent 要到十亿人手里必须换形态——「Windows 取代 DOS 的原因」。",
+      "detail_content": "【核心事件】\nTechCrunch 8/24 刊发对 OpenAI 核心产品负责人 Thibault Sottiaux 和产品负责人 Ambrosino 的深度访谈，讲清 ChatGPT Work（Codex 的通用 agent 化版本）的改造史：OpenAI 自己的通讯和财务团队从「Codex 对他们 actively hostile」的时期开始用起——界面问他们代码问题、展示「你这个东西的 empty diff」。团队从 2 月到现在把它改成通用产品，让非工程师获得工程师已有的体验：一个不只回答问题、而是自主完成多步项目的 AI 工具。\n\n【关键细节与引用】\n文中最硬的数据来自 OpenAI 资助的研究《The Shift to Agentic AI: Evidence from Codex》：6 月时 98% 的 OpenAI 员工在用 Codex，组织订阅者只有 17%，个人订阅者不到 1%。Sottiaux 的话术：「ChatGPT 可以完全自主地、以令人愉悦且安全的方式为你完成非常复杂的任务——这是 OpenAI 的使命，把每个人都带上。」Ambrosino 谈形态选择：「开发者有个 CLI 就够了，但大多数人不用 CLI——Windows 取代 DOS 是有原因的。没有这些模型前面的产品，专家知道怎么得到同样结果，但你到不了十亿用户。」a16z 的 Christian Catalini 提供外部视角：「如果实验室不能快速掌握规模化所需的关键互补资产，价值将流向别处」——垂直对手 Harvey（法律）、Clay（销售）正以模型无关方式抢占非工程人群。\n\n【背景与上下文】\n「非程序员用 AI 造产品」是本频道第一优先级主题：8/17 ABC Legal 非开发者 committee 裂变、8/19 POLYWOOD、8/23 Cloudflare OS「让非技术员工 vibe code 并敢睡觉」都是同一主线的不同切面。本文补上的是采用率的分母——工具再强，渗透率才是转型进度的真实刻度。\n\n【影响与前瞻】\n对 Eason 的直接用途：微众内部推广 AI 的采用率对标数字。98% 是「造工具的人用工具」的严重偏差样本，17% 的组织订阅渗透才是真实企业基线——向管理层汇报时可以用这三档数字说明「我们处于哪个阶段」。形态结论也直接：CLI 覆盖工程师，要让风控、运营、HR 用起来必须给 GUI 产品化封装。caveat：这是 OpenAI 资助的研究 + 产品宣传期访谈，数字方向可信但绝对值有自利放大动机。",
+      "source": "TechCrunch",
+      "source_type": "tavily",
+      "url": "https://techcrunch.com/2026/08/24/openai-is-building-an-ai-agent-for-everything-will-everyone-use-them/",
+      "timestamp": "2026-08-24T15:00:00Z",
+      "importance": 8,
+      "tags": [
+        "OpenAI",
+        "ChatGPT Work",
+        "采用率",
+        "Codex",
+        "非工程师"
+      ],
+      "batch_time": "2026-08-25T10:31:00+08:00"
+    },
+    {
+      "title": "steipete 本周工程圈最高互动宣言（2198♥）：「我们必须远离无法用 prompt 修改的软件」——agent 原生软件的设计底线",
+      "summary": "Peter Steinberger 8/24 一句话推文拿下 2198♥、18.4 万浏览，成为本周工程圈最高互动：「We need to get away from software that we can't change with a prompt.」把 agent 原生软件的设计标准推到极限：不能被 prompt 修改的软件就是遗留系统。同日他另一条 TIL「prompt kiddie」（629♥）自嘲式新词走红——只会 prompt 不会原理的人，vibe coding 污名化的反弹开始出现。",
+      "detail_content": "【核心事件】\n8/24 steipete（Peter Steinberger，OpenClaw 最重度知名用户，57 万粉丝）发推：「We need to get away from software that we can't change with a prompt.」（我们必须远离那些无法用 prompt 修改的软件。）24 小时内 2198♥、18.4 万浏览，是本周工程 Twitter 最高互动单条。同日他的另一条「TIL: prompt kiddie」拿到 629♥——这个类比 script kiddie 的新词指只会写 prompt、不懂底层原理的人，评论区大量工程师用它自嘲。\n\n【关键细节与引用】\n这条推的分量来自 steipete 过去一个月的连续铺垫：8/21 他在 Berkeley Agentic AI Summit 提出「No Doors for Agents」（用户能看到的一切 agent 都能看到，UI 层权限隔离已失守），此前还有「环境隔离是唯一控制面」的判断。这次他把视角从「agent 怎么被治理」翻转到「软件本身该怎么设计」——判断标准激进到一句话：改不动的软件 = 遗留系统。\n\n【背景与上下文】\n这是 agent 原生软件设计哲学的最新一极。光谱另一极是 Cloudflare OS 的 capability 治理路线（8/23 已收：让非技术员工 vibe code 并敢睡觉），中间是 Anthropic SDLC playbook 的 hooks 流程治理（8/21 已收）。三者其实回答同一问题：当修改软件的主体从人变成 agent，软件的可修改性和可治理性怎么同时成立。\n\n【影响与前瞻】\n对 Eason：这条推在银行语境下天然有两种读法——激进读法（变更管理必须重构，否则 agent 时代的交付速度优势全无）和保守读法（「prompt 可改」在强监管行业恰恰是变更审计的噩梦，Cloudflare 的 capability 路线才是能落地的版本）。汇报时值得把这光谱两端摆出来。「prompt kiddie」一词的流行也值得留意：社区对 vibe coding 的反噬情绪在积累，与 Eason 一贯批判的 AI slop 现象同源。",
+      "source": "X：Peter Steinberger (@steipete)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/steipete/status/2091923535513928015",
+      "timestamp": "2026-08-24T16:20:11Z",
+      "importance": 7,
+      "tags": [
+        "steipete",
+        "Agent原生",
+        "软件设计",
+        "OpenClaw"
+      ],
+      "batch_time": "2026-08-25T10:31:00+08:00"
+    },
+    {
+      "title": "Gergely 511♥：让 agent 高效产出优质软件的答案，是重新发现 25 年前的软件架构——Ousterhout 浅/深模块、曳光弹开发、外科手术团队",
+      "summary": "Gergely Orosz 8/24 推文（511♥、3.7 万浏览）：「当你想办法让 agent 更高效地构建优质软件时，你开始重新发现几十年前的软件架构和编程实践——浅模块 vs 深模块、曳光弹、外科手术团队。」agent 时代不是架构知识的贬值而是升值。同日他预告 Pragmatic Engineer 明日发某大厂自建 AI coding harness 深度稿：2022-23 自建 CDE 的公司，现在把自建 background agent 跑在自己的 CDE 上。",
+      "detail_content": "【核心事件】\nGergely Orosz 8/24 发推：「当你寻找让 agent 更高效地构建良好、优质、有用软件的方法时，你开始发现（或重新发现）几十年前的软件架构和编程实践——Shallow vs deep modules（浅模块 vs 深模块）、Tracer bullets（曳光弹开发）、The surgeon team（外科手术团队）。」24 小时 511♥、3.7 万浏览。他点名的三个概念分别出自 Ousterhout《A Philosophy of Software Design》、《The Pragmatic Programmer》和《人月神话》——全部是 25 年以上的老书。\n\n【关键细节与引用】\n这不是他临时起意：2025 年 3 月他就发过「这么多人谈 AI coding 工具在复杂度/上下文长度上崩溃，却基本没人谈让 dev 和 AI 都容易维护演进的软件架构」。本次推文是那个判断的 agent 时代升级版。同日另一条 56♥ 推文做 pattern match 预告：「2022-2023 年自建云端开发环境（CDE）的那家公司，现在建了自己的 AI coding harness 和自己的后台 agent——后台 agent 就跑在它 2023 年的 CDE 上。iykyk」，并在回复中确认深度稿「明天发」（即今日 8/25）。\n\n【背景与上下文】\n与 steipete 同日的「prompt 可改」宣言形成有趣互补：steipete 讲软件对 agent 的可修改性（激进端），Gergely 讲老架构原则恰好是 agent 的可理解性接口（务实端）——浅模块深接口、清晰的边界本来就是降低认知负载的设计，而 agent 的上下文窗口限制放大了这一点。库内关联：8/22 latent.space《Agent Harness 的演化》（模型把 harness 吸进权重）、8/19 simonw 的「团队新角色=认知容量负载均衡」、8/21 Anthropic SDLC playbook 的流程治理——治理管流程，架构管 agent 能不能看懂你的系统。\n\n【影响与前瞻】\n对 Eason 的考核设计含义：如果 agent 的产出质量上限由代码库架构决定，那「AI 采用率」「代码产量」都不是好指标，架构健康度（模块边界清晰度、接口质量）才是慢变量。另外今日留意 Pragmatic Engineer 新稿——自建 CDE + 自建 harness + background agent 三层叠加的大厂案例，符合本频道第一优先级，明日抓取跟进。",
+      "source": "X：Gergely Orosz (@GergelyOrosz)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2091873261910978600",
+      "timestamp": "2026-08-24T13:00:25Z",
+      "importance": 7,
+      "tags": [
+        "Gergely Orosz",
+        "软件架构",
+        "Agent效率",
+        "Pragmatic Engineer"
+      ],
+      "batch_time": "2026-08-25T10:31:00+08:00"
+    },
+    {
+      "title": "每任务成本基准实测：CLI agent 全部落在 $1-3.3/任务（Claude Code $1.83、Opencode $1.03、Grok $2.03），Cursor 类 IDE agent $27.90——15 倍价差的选型含义",
+      "summary": "AIMultiple 8/22 发布 AI coding 工具每任务成本对比：CLI 阵营 Opencode $1.03、Claude Code $1.83、Grok $2.03、Goose $3.23，Junie 是 CLI 异常值 $7.58；IDE 阵营 Cursor 单任务 $27.90。CLI 与 IDE 的成本差距达一个数量级。口径是按任务计费而非席位订阅——与 8/25 ai-frontier 收录的 Kiro GPT-5.6「单任务成本降 82%」同属「按任务性价比计价」趋势。",
+      "detail_content": "【核心事件】\nAIMultiple 8/22 发布 Claude Code vs Cursor 等工具的成本基准：按单任务成本计，CLI 工具全面落在 $1-3.3 区间——Opencode $1.03、Claude Code $1.83、Grok $2.03、Goose $3.23；Junie 作为 CLI 阵营异常值达 $7.58；IDE 阵营的 Cursor 单任务 $27.90，Roo-Code 等亦在高位。CLI 与 IDE 的单任务成本差达一个数量级以上。\n\n【关键细节与引用】\n原文要点：「成本差距巨大。有能力的 CLI 工具每任务大约 $1 到 $3.25，而 Cursor $27.90。」该基准与同周 CellCog 的 harness 排名（Claude Code 以 hooks/subagents/动态工作流深度居首）互为参照。需要注意的是口径差异：IDE 工具多为席位订阅制，其「单任务成本」换算包含订阅摊销；CLI 走 API 按量计费，边际成本天然更低。\n\n【背景与上下文】\n「按任务计价」正在成为 agent 工具的新定价共识：8/25 ai-frontier 收录的 GPT-5.6 进驻 AWS Kiro 案例主打 Terminal-Bench 2.1 单任务成本降约 82%，8/17 OpenAI Codex 全工作流 agent 之后各家都在把成本口径从 token 转向任务。库内关联：8/16 Stripe 收购 OpenRouter（AI gateway 成战略基建）说明 token 层路由是成本优化的另一半。\n\n【影响与前瞻】\n对 Eason 的 ROI 汇报用途：这是把「AI 工具值不值」翻译成财务语言的参考数字——同一类任务 CLI 与 IDE 差 15 倍，选型差异直接决定推广成本曲线。方法论 caveat 必须带上：单一基准、任务难度分布和样本量未详审、订阅摊销口径存疑，汇报时只作量级参考不宜作精确依据。趋势判断可以立：agent 工具的成本结构正从「席位订阅」转向「按任务性价比」，采购谈判的锚点在变。",
+      "source": "AIMultiple",
+      "source_type": "tavily",
+      "url": "https://aimultiple.com/ai-coding-benchmark",
+      "timestamp": "2026-08-22T00:00:00Z",
+      "importance": 6,
+      "tags": [
+        "成本基准",
+        "Claude Code",
+        "Cursor",
+        "ROI"
+      ],
+      "batch_time": "2026-08-25T10:31:00+08:00"
+    }
+  ]
+}
