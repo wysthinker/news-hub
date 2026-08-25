@@ -1,0 +1,44 @@
+{
+  "channel_id": "ai-frontier",
+  "channel_name": "AI 前沿",
+  "generated_at": "2026-08-25T09:31:06+08:00",
+  "digest": "本次为 8/24 晚间漏收内容的补发批次（上午 09:30 主批次已发 4 条：EU 水印攻防、Togelius 信仰危机、Brockman 接管 OpenAI、Claude 读写 Gmail）。补发 2 条：①OpenAI 旗舰 GPT-5.6 全家族登陆 AWS 的 Kiro，Terminal-Bench 2.1 单任务成本降约 82%——agentic coding 分发战争开辟 OpenAI×AWS 新战线；②Anthropic 官博内部案例：field marketer 用 Claude Code+MCP 把周销售简报做成全自动个性化系统，错误驱动积累 9 条规则后移除人工审批——非技术团队 agent 化的反 slop 样本。",
+  "items": [
+    {
+      "title": "Anthropic 官博内部案例：field marketer 用 Claude Code 做全自动个性化销售周报——错误驱动积累 9 条规则后移除人工审批",
+      "summary": "Anthropic 营销团队 Adam Ward 把每周给销售做汇报的手工 slide 流程改成全自动系统：每个 AE 周一在 Slack 收到基于自己客户列表定制的 brief。方法是不写代码、用 MCP 连 BigQuery（聚合 HubSpot/Clay/Salesforce）。最有价值的是错误驱动的规则积累：Claude 编造过看起来很真的 URL → 硬规则「永不编造 URL」；源表列头六周重排三次 → 每次运行先读 header 验证列映射。一周内 9 条规则全部来自真实反馈，系统稳定后不再等人工审批，作者休假期间周一发送照常完成。BDR 团队复制 prompt 只改一个字段、两天上线。",
+      "detail_content": "【核心事件】Anthropic 官博 8/24 发布内部案例（8/24 19:50 UTC 上线，5 分钟阅读量级）：field marketer Adam Ward 用 Claude Code 把「每周给销售团队做汇报」从周日晚手工拼 slide + 周一 15 分钟 standup 的流程，改成了全自动个性化周报系统——每个 account executive 周一早上在 Slack 收到一条基于自己账户列表定制的 brief，no two messages are alike。项目起点是营销团队内部 hackathon，只用了一小时启动。\n\n【方法细节】他的路径对非技术团队极有参考性。①「You don't need to code, you need to explain」：把 Claude 当作深度理解业务问题的产品经理对话，甚至录下自己口述问题、把 transcript 喂给 Claude 补全业务上下文；②通过 MCP 连接 BigQuery——营销团队的 source of truth，聚合 HubSpot、Clay、Salesforce 数据；从 CRM 拉销售辖区、从 Slack 拉客户动态，两者拼合成个性化更新；③先手写一份 fake weekly update 给 Claude 当模板，结构是销售最爱的「本周前三件事」行动清单。\n\n【最有价值的部分：错误驱动的规则积累】先在 10 人试点组跑，第一周内 prompt 累积了 9 条内容规则，每条都追溯到一条真实反馈：Claude 遇到源表缺 URL 会编一个「plausible-looking」的链接 → 写成硬规则「never invent a URL」，链接只按源表逐字符渲染；源表列头六周内被重排三次 → prompt 改成每次运行先读 header row 验证列映射，不硬编码「看 C 列」而是「看有 event URL 的那一列」；行业闸门（零售客户不进金融晚宴邀请）；联系人 title 与活动受众不匹配则静默剔除；新销售没有客户则收欢迎短信而非空白。\n\n【规模化与结果】从试点推广到全部销售 segment；BDR 团队要自己的版本时，复制 prompt 只改一个字段（CRM 里账户映射关系不同），两天上线；客户成功和联盟团队也已接入。效果有硬数字：某高管晚宴一周内注册翻倍，纯因为「对的 rep 在周一早上看到了对的活动」。自动化里程碑：每次发送全量归档可回查，且系统已不需要作者审批——他休假期间周一发送自行完成，without a hitch。\n\n【影响与前瞻】这是「AI 自动化成功故事」的反 slop 范本：价值不在「AI 一周搞定 X」的叙事，而在错误→规则→信任逐步建立的完整过程——URL 幻觉怎么处理、schema 漂移怎么防御、什么时候才移除人工审批。对强监管行业（银行/金融）推业务团队 agent 化，这套「选一个自己深知好坏的手工流程起步→小群体试点→反馈编码成规则→稳定后移除审批」的路径可以直接搬：营销/运营团队给 RM 团队做产品与活动周报，就是同款场景。他的三条 best practices 也值得内化：从最耗时的手工任务起步（因为你知道什么是好输出）、自然语言指令+版本化管理（Google Doc → GitHub markdown）、与愿意反馈的小群体先跑。",
+      "source": "Anthropic 官方博客",
+      "source_type": "tavily",
+      "url": "https://claude.com/blog/how-an-anthropic-field-marketer-uses-claude-code-to-send-weekly-personalized-updates-to-every-sales-rep",
+      "timestamp": "2026-08-24T19:50:00Z",
+      "importance": 7,
+      "tags": [
+        "Anthropic",
+        "Claude Code",
+        "MCP",
+        "营销自动化",
+        "非技术团队"
+      ],
+      "batch_time": "2026-08-25T09:31:06+08:00"
+    },
+    {
+      "title": "OpenAI 旗舰 GPT-5.6 全家族登陆 AWS 的 Kiro：Terminal-Bench 单任务成本降约 82%，agentic coding 分发战争开辟 OpenAI×AWS 新战线",
+      "summary": "OpenAI 官博 8/24 宣布 GPT-5.6 全家族（Sol/Terra/Luna）进入 Kiro——AWS 的 spec-driven 开发 agent IDE，双方联合优化了环境与模型配合。官方硬数字：Terminal-Bench 2.1 上 GPT-5.6 Terra 在 Kiro 完成任务的成本降约 82%——注意口径是单任务成本（price-performance）而非准确率提升，标题措辞诚实。Kiro 原以 Claude 为核心模型，OpenAI 进驻意味着 AWS 在开发工具层做多模型对冲；agentic coding 竞争从「模型多强」转向「进驻多少开发环境」。",
+      "detail_content": "【核心事件】OpenAI 官博 8/24 宣布 GPT-5.6 模型全家族登陆 Kiro：包括 Sol、Terra、Luna 在内的旗舰系列进入这个 spec-driven 开发 agent，覆盖团队 plan、build、review、test 软件的完整工作流。OpenAI 与 AWS 联合对 Kiro 环境和 OpenAI 模型做了协同优化，并明确表示会继续合作改进模型在 Kiro 中的表现。\n\n【关键细节与引用】官方引用的硬数字：「Testing found that on Terminal-Bench 2.1, GPT‑5.6 Terra completed successful tasks in Kiro at roughly 82% cost reduction」——注意口径是每任务成本下降，不是准确率提升；标题「Advancing price-performance」的措辞是诚实的。Kiro 的核心卖点是 spec-driven development：把高层意图转成结构化需求、技术设计和可执行任务，模型带着清晰上下文开工、更快到达可用方案。功能清单：产品想法→结构化实施计划、多步编码任务更高一致性、全代码库上下文+团队规范、关键检查点人工审核、property-based testing 验证实现正确性。\n\n【背景与上下文】Kiro 是 AWS 2025 年推出的 agentic IDE，最初以 Claude 为核心模型（Amazon 重金投资 Anthropic 的背景下）。OpenAI 旗舰进驻 Kiro = AWS 在开发者工具层做多模型对冲，OpenAI 则在 ChatGPT/Codex 之外拓宽企业分发渠道。结合上周 SpaceX 完成收购 Cursor、Gergely 宣告「agent 正在吃掉自动化 SaaS」，agentic coding 的分发战争已经从模型能力竞争整体转向渠道占位竞争。\n\n【影响与前瞻】对开发者：agentic coding 的单任务成本正在快速塌方，82% 的降幅意味着按 token 计价的战争转向按「完成任务的性价比」计价，与 8 月以来美头部模型降价近 25% 的价格战同向。对竞争格局：OpenAI×AWS 组合 vs Anthropic（Claude Code 原生生态+企业渠道）vs SpaceX×Cursor（硬件垂直整合）三条路线各自绑定分发渠道。watch item：Kiro 内 Claude 与 GPT-5.6 的实际选用率数据，以及 OpenAI 模型是否继续进驻其他 AWS 开发者产品线。对评估 agentic coding 工具的团队：又多一个「OpenAI 模型+spec 驱动」的可选组合，选型时值得把 Kiro 纳入 Claude Code/Codex/Cursor 之外的对比清单。",
+      "source": "OpenAI 官方博客",
+      "source_type": "tavily",
+      "url": "https://openai.com/index/gpt-5-6-in-kiro/",
+      "timestamp": "2026-08-24T19:00:00Z",
+      "importance": 6,
+      "tags": [
+        "OpenAI",
+        "AWS",
+        "GPT-5.6",
+        "agentic coding",
+        "价格战"
+      ],
+      "batch_time": "2026-08-25T09:31:06+08:00"
+    }
+  ]
+}
