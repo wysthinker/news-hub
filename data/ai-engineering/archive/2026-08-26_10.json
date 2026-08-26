@@ -1,0 +1,61 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-08-26T10:00:00+08:00",
+  "digest": "本周主线是「agent 入口与 harness 归属」之争全面展开：Gergely 上周「别造 agent、给我 MCP」宣言（1862♥）迎来正面反驳——ashpreetbedi 用「编排即产品」三件套框架回击，而同一天 Pragmatic Engineer 深度复盘 Ramp 自建 coding agent Inspect（75% 合并 PR、5.5 人团队、100 万 session）证明非前沿实验室也能造出更强的 harness。外部产品侧 vs 内部工具层两条战线同时开打。另一条线是 agent 安全：Andrew Ng 的 OpenWorker 转型网安版，「开源可审计 harness + 敏感代码本地跑」给强监管行业提供了主权 agent 的新样本。",
+  "items": [
+    {
+      "title": "Ramp 自建 coding agent Inspect 深度复盘：75% 合并 PR 来自自建工具，5.5 人团队撬动「非前沿实验室也能造出更强的 harness」",
+      "summary": "Pragmatic Engineer 8/25 发布对 Ramp 内部 coding agent Inspect 的深度采访：75% 的合并 PR 由 Inspect 发起，7 月总 session 数破 100 万。自建理由是第三方 harness 跑在本地机器只能开 1-2 个并行 session、缺内部集成、无法验证自己的改动。团队仅 5.5 人（4 工程师+1 director+兼职 PM），150+ 工程师贡献过代码，80% 的 Inspect 代码由 Inspect 自己写。Gergely 判断：「buy, don't build」的行业惯例在 AI 工具上可能不成立。",
+      "detail_content": "【核心事件】Pragmatic Engineer 8 月 25 日发布深度报道《Why Ramp built its own in-house coding agent, Inspect》，Gergely Orosz 与 Jessica Salmon、Ivan Klaric 采访了 Ramp CTO Rahul Sengottuvelu、工程负责人 Hamid Dadkhah 和 Inspect 创始工程师 Zach Bruggeman。核心数字：Ramp 工程师可以自由选用任何工具，但 75% 的合并 PR 现在由 Inspect 发起；v2 版 2025 年 11 月上线，两个月后（今年 1 月）就达到 60% PR 占比，5 月升至 75%，7 月总 session 数突破 100 万。云沙箱从零到完全可用环境启动时间不到 5 秒。\n\n【关键细节与引用】Inspect 的定义是「跑在远程沙箱上的 coding agent，能访问大多数内部数据源，并在远程机器上验证所有后端和前端改动」。技术栈：OpenCode（开源 coding agent）做 harness、Modal 沙箱、Cloudflare Durable Objects + Agents SDK、React/Vite、SQLite。沙箱内打包了 Postgres/Redis/RabbitMQ/Temporal 等开发服务加 Chromium 和 VS Code Server。最关键的差异化是验证闭环：Inspect 跑测试、查遥测、查询 feature flags，前端改动自动截图验证——原文指出「多数第三方 AI harness 开箱即用做不到这些验证，因为它们缺遥测和 feature flag 系统的内部集成」。Ramp 还在 Inspect 平台上建了 200 多个内部 agent：ReviewBuddy 代码审查（一名工程师一周写完）、Oncall Assistant 事故响应、Testo 前端 QA（自动生成 Playwright 测试）、Ramp Research 数据分析、Sentry/Datadog 告警自动起草 PR。所有 Inspect session 默认公开可协作，不允许关闭。\n\n【背景与上下文】这不是孤例：Block 的叫 Goose（已开源）、Stripe 的叫 Minions、Shopify 的叫 River——一条「自建内部 harness」的完整战线。值得注意的是，此前行业普遍把 Ramp 当作 Claude Code 的大客户案例，但本文揭示其 75% PR 量级的绝对主力是自建 Inspect（harness 用的是 OpenCode 而非 Claude Code），模型层才是可替换的。Inspect 起源也很反直觉：v1 是给设计师改前端文案的 Chrome 扩展，两个「对 AI 不完全买账」的前端工程师负责重构，反而做成了平台。\n\n【影响与前瞻】Gergely 的核心判断是「AI 让 build 变得更便宜、更有利可图，'buy, don't build' 的工具惯例可能不适用于 AI 工具」，并预言 Codex/Claude Code/Cursor 很快会「复制」这些公司已经建好的东西（远程沙箱、内部集成、验证闭环）。对银行等大型组织的参照价值：5.5 人团队撬动 75% PR 的杠杆率、150+ 人共建的内部开源模式、以及「工程师自选工具 + 自建最优」并行的组织策略。caveat：Ramp 是工程文化极强的 fintech，沙箱内的内部集成深度依赖其平台工程基础，传统银行的迁移成本远高于表面数字所示。",
+      "source": "Pragmatic Engineer",
+      "source_type": "tavily",
+      "url": "https://newsletter.pragmaticengineer.com/p/why-ramp-built-inspect",
+      "timestamp": "2026-08-25T15:20:00Z",
+      "importance": 9,
+      "tags": [
+        "Ramp",
+        "自建harness",
+        "coding agent",
+        "Pragmatic Engineer",
+        "OpenCode"
+      ],
+      "batch_time": "2026-08-26T10:00:00+08:00"
+    },
+    {
+      "title": "「编排即产品」：ashpreetbedi 长推正面反驳 MCP-only 宣言——通用 agent 编排复杂工具链「是可笑的」",
+      "summary": "Anthropic 员工 ashpreetbedi 8/25 发长推，直接回应上周 Gergely「公司别做 agent、只暴露 MCP/CLI」的流行观点（该宣言 1862♥ 为上周工程圈最高互动）。核心反驳：扁平的工具调用列表无法暴露产品全部能力，真实工作流的 API 调用需要精心编排，headless 界面下授权（authz）极难做好。结论是企业需要三件套：MCP 接口 + 产品内 agent + 产品 agent 通过 MCP 暴露给任意第三方 agent。",
+      "detail_content": "【核心事件】Agentic Software Engineering 方法论代表人物、现 Anthropic 员工 ashpreetbedi（@ashpreetbedi）8 月 25 日发布长推，针对「公司应该停止构建 agent、只暴露 MCP/CLI」的流行观点发起正面反驳。这一观点正是 Gergely Orosz 上周宣言的核心主张（「除非你是前沿实验室，否则我不想用你的 agent——给我 MCP 接口」），两条推文相隔四天，构成 agent 入口之争最直接的隔空辩论。\n\n【关键细节与引用】他的论证分三层：其一，「几乎不可能通过扁平的工具调用列表暴露产品的全部能力」（It is almost impossible to expose the full strength of a product through a flat list of tool calls）；其二，真实工作流背后的 API 调用需要精心编排（careful orchestration）；其三，headless 界面下的授权极难处理。解决方案是三件套：「1. 一个用户可以接入任何 agent 的 MCP；2. 一个产品内 agent——公司控制、拥有并从中学习的精心策展体验，它是使用产品的新方式；3. 产品 agent 通过 MCP 暴露——用户通过自己选择的 agent 使用你公司的 agent。」简单请求（如「查我的 Stripe 订阅」）走 MCP 工具，复杂体验走公司自己的 agent。金句：「The orchestration is the product（编排即产品）。」以及「期望通用 agent 每次都按正确顺序编排复杂的工具调用链，是可笑的（laughable）」。他进一步类比：「说'给我全部工具'就像说'让我直接用你的 REST API'——我们只是还没见过好的 agentic 体验，就把这个观点立为标准，意味着我们永远都不会见到了。」\n\n【背景与上下文】这场辩论的背景是「agent 层坍缩」论：Gergely 认为用户入口会收敛到少数几个超级 agent，公司只需提供 MCP；而 ashpreetbedi 代表产品公司立场——编排质量本身就是差异化，放弃 agent 层等于放弃产品体验。同期 Ramp/Stripe/Block/Shopify 自建内部 harness 的实践（见同批次 Ramp Inspect 报道）从企业内部侧印证了「编排就是护城河」，但注意两者语境不同：Gergely 宣言针对对外产品交互层，Ramp 等自建的是内部工具层。\n\n【影响与前瞻】对 Eason 的直接价值：这两方论点可以拼成一个完整的决策框架——对外（客户交互）按 ashpreetbedi 三件套评估：MCP 接口是否完备、产品内 agent 是否承载核心体验、是否可被第三方 agent 调用；对内（工程效能）参照 Ramp 模式：自建 harness 的价值在内部集成深度与验证闭环，而非模型本身。银行推 agentic 服务时的「入口焦虑」（被 ChatGPT/超级 agent 管道化 vs 自建封闭 app）现在有了正反双方的完整论据链。",
+      "source": "X：ashpreetbedi (@ashpreetbedi)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/ashpreetbedi/status/2092370405168414951",
+      "timestamp": "2026-08-25T21:55:53Z",
+      "importance": 8,
+      "tags": [
+        "MCP",
+        "agent入口之争",
+        "orchestration",
+        "Anthropic"
+      ],
+      "batch_time": "2026-08-26T10:00:00+08:00"
+    },
+    {
+      "title": "Andrew Ng 发布 OpenWorker 网安版：开源可审计 harness + 三个内置安全 agent，主打「敏感代码不离机器」",
+      "summary": "Andrew Ng 8/25 宣布开源 agent OpenWorker 发布新版本，内置三个网络安全 agent：代码漏洞扫描、依赖供应链注入检测、云安全配置攻击面检查。核心卖点是 harness 完全开源可审计（「确认我们没有偷建后门把你的代码和数据外传」），且支持开源权重模型完全本地运行。他特别指出：合法安全工作（如复现已知漏洞做防御）在闭源模型上会触发拒绝。7/23 首发 9732♥，本条 1875♥。",
+      "detail_content": "【核心事件】Andrew Ng 8 月 25 日宣布其开源 agent 项目 OpenWorker 发布重大更新，从通用任务执行 agent 转向内置网络安全工作流。OpenWorker 7 月 23 日首发时定位是「不只聊天、而是交付完成的工作」——整理文档、发 Slack、更新日历。首发后团队发现用户最集中的使用场景是网络安全，于是本版本直接内置三个安全 agent：(1) 扫描代码漏洞；(2) 扫描依赖的供应链注入（supply chain injections）；(3) 检查云安全配置的攻击面。Ng 将此归入「shift left」运动——让开发者在部署前完成更多安全工作。\n\n【关键细节与引用】推文核心论点：「攻击者已经在用 AI；OpenWorker 致力于给防御者同样的杠杆（Attackers are already using AI; OpenWorker is committed to giving defenders the same leverage）。」架构上的关键选择：agent = 模型 + harness，而 OpenWorker 的 harness 完全开源，「安全团队可以审计它，确认我们没有偷建后门把你的代码和数据外传给某家公司甚至外国对手」。模型层完全自选：开源权重模型可完全本地运行（敏感代码永不离开你的机器）、ChatGPT 订阅、stealth preview 模型如 Ox Alpha、或任何 API key。一个被点名的细节：本地开源模型有助于「合法安全工作（比如复现已知漏洞以做防御）——这类工作在领先的闭源模型上会触发拒绝」。项目由 @rohitcprasad 主导开发。\n\n【背景与上下文】这条新闻落在 agent 安全主线上，与近期 Cloudflare WriteGuard（MCP 写操作四级风险分级）、steipete「No Doors for Agents」（Berkeley 峰会提出权限边界失守）形成呼应，但角度独特：前两者解决「agent 作恶怎么办」，OpenWorker 解决「安全团队自己用 agent 时怎么信任工具链」——开源可审计 harness + 本地模型是给强信任需求场景的答案。这也与 5 月 Composio 凭证泄露事件后「闭源集成平台的凭证风险」讨论形成对照：闭源平台的 OAuth token 和 API key 存放在你无法审计的服务器上。\n\n【影响与前瞻】对 Eason 的参照：银行安全团队评估 agent 工具时的三个新检查项——harness 是否开源可审计、是否支持敏感代码完全本地处理、安全工作流（漏洞复现/渗透测试）是否会被模型供应商的使用政策卡住。OpenWorker 的「shift left + 开源可审计 + 模型自选」组合对强监管行业是当前最完整的主权 agent 选项之一；caveat 是其能力上限依赖所选模型，且「Andrew Ng 名人项目」的工程成熟度需要自行验证（github.com/andrewyng/openworker）。",
+      "source": "X：Andrew Ng (@AndrewYNg)",
+      "source_type": "aihot",
+      "url": "https://x.com/AndrewYNg/status/2092315079576555806",
+      "timestamp": "2026-08-25T18:16:02Z",
+      "importance": 8,
+      "tags": [
+        "OpenWorker",
+        "Andrew Ng",
+        "网络安全",
+        "开源agent",
+        "shift left"
+      ],
+      "batch_time": "2026-08-26T10:00:00+08:00"
+    }
+  ]
+}
