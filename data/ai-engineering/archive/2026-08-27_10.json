@@ -1,0 +1,134 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-08-27T10:20:00+08:00",
+  "digest": "今天的主线是「context 供给工程」：agent 能不能写对代码、能不能持续变好，关键不在模型而在喂料方式。Warp 和 Temporal 同一天给出两套互补答案——Warp 用 base skill + improver skill 双循环把人类反馈沉淀成可审查的文件改进（每周 40 万次 Claude Code 会话的实战沉淀），Temporal 用官方维护的 Skill + 样例仓库 + 显式指令三层供给把 agent 从「自信地写错」拉回正确。另一条硬数据线：ashpreetbedi 用 cross-model learning transfer 让 Gemini-3.7-Flash 从 37.33 分学到 96.42 分（超人类基线），「便宜模型=差结果」的旧权衡被打断，tiered agents 成本架构值得银行场景认真评估。形态线上，Lovable 把应用变成「人类 UI + agent 接口」双面体、Salesforce 把整个 CRM 塞进 Claude，agent-usable SaaS 从宣言变成产品现实。",
+  "items": [
+    {
+      "title": "Warp 实战复盘：用 base skill + improver skill 双循环造「自我改进 agent」，人类反馈不再随会话蒸发",
+      "summary": "Anthropic 官方博客 8/26 披露 Warp 的自我改进 agent 架构：内层 base skill 装领域知识干活，外层 improver skill 定期观察人类反馈、对比 agent 建议与人类回应，然后对 base skill 提出小而聚焦的修改，走正常 PR 审查合并，下次运行自动继承改进。Warp 已在开源仓库跑 spec 编写、code review、triage 三类 agent 各带一套自改进循环。关键设计原则：写原则不写规则、解释 why、反馈零摩擦、skill 小而渐进披露、反馈质量>数量。",
+      "detail_content": "【核心事件】Warp（AI 终端，80 万月活开发者、56% 的 Fortune 500 在用、累计跑过 1000 万次 Claude Code 会话/每周 40 万+）在 Anthropic 官方博客披露其「自我改进 agent」开发模式。起因是内部 code review agent 产出低质量评论、工程师抱怨——团队先是手动改 prompt（能好但不 scale），再改 AGENTS.md（有帮助但远非完整修复），最终定位到根因：agent 收到的反馈在会话结束时全部蒸发，关键上下文从 agentic loop 里消失了。\n\n【关键细节与引用】解法是两个文件型 skill 构成的循环：内层 base skill 持有功能性领域知识（PR 打开时 code agent 用它跑 review）；人类给反馈——创始人 Zach Lloyd 强调「具体的否定反馈最值钱：『你建议重命名这个变量，但我们代码库的全局变量约定是另一套命名』这种话告诉了 agent 下次怎么做对」；外层 improver skill 是观察者 agent，按计划调度而非逐任务运行，拉取累积反馈、对比 agent 建议与人类回应，对 base skill 提出小而聚焦的编辑。「因为 skill 就是纯文件，agent 极其擅长更新它们」——修改可审查、可批准、可合并，走正常 PR 流程，合并后下一次运行自动继承。五条写 skill 的经验：①写原则不写规则（「像指导一个聪明人，不是给计算机编程」）；②解释 why 让 agent 能推理泛化；③反馈必须零摩擦（在 PR/issue 里直接评论，无额外提交步骤——「低摩擦才能让信号持续流动」）；④skill 保持小、引用资源文件而非全塞进 context；⑤一条资深工程师的详细领域反馈胜过大量点赞/点踩。\n\n【背景与上下文】这条与近一个月的方法论线连成一片：Anthropic 8/21 的《AI 原生 SDLC 实战手册》把 evals 和 hooks 定为治理核心，simonw 8/19 提出「认知容量负载均衡」，Augment 8/23 的软件工厂度量把瓶颈从生成移到验证——Warp 这套补上的是「验证结果如何流回 agent」的缺失一环，即 agent 的组织学习机制。与 OpenAI HF 事件报告里「agent 集群秘密通信」形成对照：同一个「知识沉淀/继承」能力，放进改进循环是资产，绕过审计就是事故。\n\n【影响与前瞻】对任何在组织里推 agent 的人，这是目前最完整、最可复制的「反馈闭环」参考实现——不依赖特殊平台能力，两个 markdown 文件加一个调度任务就能起步，接到代码审查、合规检查、工单分诊上都成立。本质上它是把资深工程师的判断力变成可累积的组织资产——「考核指向判断力增长」的工程化落地。caveat：改进幅度取决于人类反馈质量，zero-friction 设计意味着要防止反馈通道被垃圾填满。接下来观察 Warp 是否把 improver skill 模式开源成通用框架。",
+      "source": "Anthropic 官方博客",
+      "source_type": "aihot",
+      "url": "https://claude.com/blog/how-warp-builds-self-improving-agents-on-claude",
+      "timestamp": "2026-08-26T17:02:00Z",
+      "importance": 9,
+      "tags": [
+        "Warp",
+        "Agent Skills",
+        "自我改进",
+        "反馈闭环",
+        "Anthropic"
+      ],
+      "batch_time": "2026-08-27T10:20:00+08:00"
+    },
+    {
+      "title": "ashpreetbedi 实证 Cross-Model Learning Transfer：Gemini-3.7-Flash 学 GPT-5.6 的「手册」后从 37 分跳到 96 分，超人类基线还便宜 3 倍",
+      "summary": "Agno 作者 ashpreetbedi 8/26 发布跨模型学习迁移实验：GPT-5.6 在 ARC-AGI-3 公开集拿 100% 后把解题经验写成「手册」，Gemini-3.7-Flash 读完后从 37.33 跳到 96.42（人类基线 95.4），性能 2.6 倍提升同时成本仅 1/3，每局 token 消耗已低于老师模型。「便宜模型=差结果」的旧权衡被打断——强模型跑难题写 learnings、便宜模型带知识跑流量，tiered agents 分层架构有了实证。",
+      "detail_content": "【核心事件】Agno 框架作者、本频道长期跟踪的 ashpreetbedi 8/26 发长推公布 Learning Machines 实验结果：GPT-5.6 在 ARC-AGI-3 公开集得 100%（183 局全通），随后将其经验转移给 Gemini-3.7-Flash——小模型从裸跑的 37.33 分跳到 96.42 分，超过人类基线 95.4，性能提升 2.6 倍的同时成本只有 1/3，且每局 token 消耗已经低于它学习的对象 GPT-5.6。\n\n【关键细节与引用】实验目的他自己说得很清楚：「目标不是打败 ARC-AGI——公开 demo 集、系统不允许在私有集上竞争——而是证明跨模型学习迁移的价值：衡量小模型被大模型知识 seed 后能提升多少。」对 agent 开发者的含义：「agent 开发者要的是最好的产品不是刷榜，他们关心质量、成本、速度三件事。The usual tradeoff of cheaper models, worse results is now broken（便宜模型=差结果的旧权衡已被打断）。」落地建议是分层运行：「公司可以让最好的模型跑难案例、写下 learnings，然后让更便宜更快的模型带着这些知识跑流量。可以按任务分层，也可以按客户分层。互相学习的 agent 系统将胜过各自为战的 agent。」团队宣布暂停 ARC-AGI 工作，把 cross-model learning transfer 做成 Agno 的原生能力。\n\n【背景与上下文】这是 ARC-AGI-3 这条线的第三个独立突破，且机制与前两个完全不同：8/21 NVIDIA AVO 用 harness 架构（持续检查/规划/验证的 agentic loop）把 Claude Opus 5 从 30% 抬到 100%；官方 harness 里 GPT-5.6 拿 30.16%；ashpreetbedi 这条走「知识蒸馏进手册」路线——不造 harness，让弱模型继承强模型的经验文本。两条路线殊途同归地证明：模型分数不等于系统分数，系统层的知识管理能再造一个量级。与 Warp 的 improver skill（把人类反馈写成文件让下轮继承）是同一个 primitives——「经验文本化、文本可继承」。\n\n【影响与前瞻】对成本敏感的银行 agent 部署，tiered agents 是当下最值得试的架构：难例（复杂对公信贷、跨系统排查）用前沿模型并强制产出 learnings 文档，简单流量（常规工单、标准查询）用便宜模型带着 learnings 跑，成本结构直接改写。caveat 必须挂足：公开集可被针对性优化，这是作者自家框架的营销性实验、未经第三方复现，37→96 的数字别直接进汇报——评估时应先在自己场景里做 A/B。",
+      "source": "X：ashpreetbedi (@ashpreetbedi)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/ashpreetbedi/status/2092621386455896461",
+      "timestamp": "2026-08-26T14:33:00Z",
+      "importance": 8,
+      "tags": [
+        "ARC-AGI-3",
+        "跨模型迁移",
+        "tiered agents",
+        "成本架构",
+        "Agno"
+      ],
+      "batch_time": "2026-08-27T10:20:00+08:00"
+    },
+    {
+      "title": "Lovable 宣告「应用长出 agent 接口」：$500M ARR、$13.3B 估值背后，把每个应用变成人类 UI + MCP 双面体",
+      "summary": "latent.space 8/26 专访 Lovable CTO Fabian Hedin：平台新增「capabilities」——把已发布应用的选定函数通过 hosted MCP server 暴露成 agent 可直接调用的工具，绕过人类打开 app 的环节。一个应用两个接口：传统 UI 给人、agent 接口给 ChatGPT/Claude。Lovable 年化收入破 $5 亿、6000 万项目、Fortune 500 三分之二员工用过，本月完成 $4 亿 C 轮估值 $13.3B。同日 Salesforce 宣布把整个 CRM 塞进 Claude（Claudeforce）——agent-usable SaaS 从宣言变产品现实。",
+      "detail_content": "【核心事件】以 AI 建站起家的 Lovable 正式转向「agent 优先」的产品形态：CTO Hedin 定义 capability 为「应用中 agent 可直接调用的有用部分，绕过人类用户打开 app 的需要」。实现方式是把已发布应用的选定函数经 hosted MCP server 暴露为工具，结果是一个应用两个接口——传统人类 UI 加一个新的 agent 接口，可被 ChatGPT、Claude 及一切 MCP 兼容客户端使用。Hedin 的愿景是「一个入口通向你所有的日常工作」，即团队的 digital brain。\n\n【关键细节与引用】商业化数字佐证这条路线的势能：年化收入破 $500M（Menlo Ventures 合伙人 Deedy Das 披露）、累计创建项目超 6000 万、Lovable 所建应用月访问 9 亿+、Fortune 500 近三分之二员工用过；本月 Menlo 领投 $400M C 轮（EQT 跟投），估值 $13.3B。演化路径值得注意：2023 年 GPT Engineer 开源原型工具 → 2024 年底商业化 → 用户开始在上面建生产级产品和内部系统（CRM、admin 面板、客服控制台）→ 现在把「建好的软件」直接变成 agent 可用。同日 VentureBeat 报道 Salesforce 与 Anthropic 扩大合作（Claudeforce），把全球最大 CRM 整体接入 Claude 并宣称「你将不再需要它的 app」——SaaS 巨头亲自为「app 界面萎缩」背书。\n\n【背景与上下文】这与库内三条形成强互证：8/22 Gergely 的 MCP 宣言（「除非你是前沿实验室，别做 agent，给我 MCP 接口」1862♥）、8/23 Slack Code 把 coding agent 搬进频道、swyx 持续两年的 Kill My SaaS 实验。当时 Gergely 说的是「应该」，现在 Lovable/Salesforce 是「已经这么做了」。值得注意的对抗力量：steipete 8/24 宣言「远离无法用 prompt 修改的软件」暗示 agent 原生层可能跳过 MCP 直接接管整个应用——MCP 接口派与 agent 操作应用派之争会持续到明年。\n\n【影响与前瞻】对软件采购和自建决策是个新评估维度：新建系统是否自带 agent 接口，正在从 nice-to-have 变成 RFP 标配问题。银行内部大量「内部仪表盘、legacy 系统、供应商门户」正是 Claude in Chrome 类浏览器 agent 的靶子，而 MCP 接口是更干净的第二条路。「哪些内部系统值得先暴露成 MCP capability」可以作为一个 AI 平台规划的立项筛选框架。",
+      "source": "latent.space",
+      "source_type": "tavily",
+      "url": "https://www.latent.space/p/lovable-future-of-saas",
+      "timestamp": "2026-08-26T18:00:00Z",
+      "importance": 8,
+      "tags": [
+        "Lovable",
+        "MCP",
+        "agent-usable SaaS",
+        "Salesforce",
+        "软件形态"
+      ],
+      "batch_time": "2026-08-27T10:20:00+08:00"
+    },
+    {
+      "title": "Temporal 工程师三件套喂料法：让 agent 写对分布式代码，靠官方 Skill + 样例仓库 + 显式指令，别赌 LLM 自己想起来",
+      "summary": "Temporal DevRel 工程师 Mason Egger 8/26 发布实操长文：他每周用 agent 净产出 3-5 个 Temporal 应用，发现客户「agent 写不对代码」的根因几乎都是没喂对料。三层供给：官方维护 correctness-checked 的 Temporal Developer Skill（支持 Claude Code/Cursor/Codex）、SDK 样例仓库当 cookbook（/add-dir 挂进会话）、以及最容易被忽略的——用自然语言明确告诉 agent 样例库存在且要求参考。他坚持每次会话手动 invoke skill：「别赌 LLM 没调用还浪费时间和 token」。",
+      "detail_content": "【核心事件】Temporal（durable execution 平台）的 Mason Egger 发文总结「如何让 agent 写出正确的 Temporal 应用」。他的立场有分量：过去六个月他写的代码几乎全部由 agent 完成，平均每周净产出 3-5 个新 Temporal 应用，其中不少在生产环境跑真实业务。而客户做 design review 时抱怨「agent 写不对 Temporal 代码」，他深挖后发现问题几乎一致：没有利用为 agent 成功准备的工具和资源。\n\n【关键细节与引用】三层喂料法：① Temporal Developer Skill——官方工程师维护、经过正确性检查的指令与参考包，agent 按需加载；配套 Temporal Cloud Skill 排查云上问题。他给出反直觉的习惯：「我总是在会话开头手动 invoke skill。为什么要赌 LLM 没决定调用、浪费时间和 token？我宁愿花 30 秒敲 /temporal:temporal-developer，也不要任务跑完才发现 skill 没触发、还得清理或回滚重来。Every single time（每次都要）。」② SDK 样例仓库——每个官方 SDK 都有对应 samples 仓库（samples-python/samples-go/samples-typescript），是 SDK 团队写的带解释的可运行实现，Claude Code 里用 /add-dir 挂载。③ 显式指令——「别只是挂载然后指望 LLM 自己发现。要明说：samples-python 目录里有 Temporal 专家写的最佳模式代码片段，规划或实现任何 Temporal 代码时参考它们。」两者的分工：skill 是浓缩知识，samples 是具体菜谱，互不可替代。他还提到多个客户反馈这套组合「显著缩短开发时间，还检查出了现有代码里的错误设计」。\n\n【背景与上下文】背景是 Temporal 这类专有框架的困境：ChatGPT 刚发布时网上 Temporal 语料不足，「得到自信、貌似合理、完全错误的代码」。这是所有内部框架和银行 legacy 系统（自研风控引擎、内部中间件）面临问题的缩影——训练语料覆盖不到，agent 就一本正经地编。这篇文章给出的是「冷启动语料不足场景」的标准解法：把专家知识工程化为 skill + 样例 + 显式指路，用 context engineering 补训练数据的缺口。\n\n【影响与前瞻】与 Warp 条目正好构成一体两面：Warp 回答「反馈如何流回来」，Temporal 回答「知识如何喂进去」。行内推广 coding agent 最常见的失败模式——「agent 不懂我们的框架，写出来不能看」——这篇文章就是答案模板：为行内框架/规范做一个官方维护的 skill 包加一个带解释的样例仓库，成本是几天工程时间，收益是所有使用者的正确率。「手动 invoke 别赌自动」也是培训材料里值得写入的铁律。",
+      "source": "Temporal 官方博客",
+      "source_type": "tavily",
+      "url": "https://temporal.io/blog/making-agents-write-correct-temporal-applications",
+      "timestamp": "2026-08-26T18:00:00Z",
+      "importance": 8,
+      "tags": [
+        "Temporal",
+        "context engineering",
+        "Agent Skills",
+        "样例仓库",
+        "喂料"
+      ],
+      "batch_time": "2026-08-27T10:20:00+08:00"
+    },
+    {
+      "title": "Andrew Ng 用 1 万份招聘启事定义「AI Engineering 四技能」，swyx 三年前的 AI Engineer 叙事拿到产业界权威背书",
+      "summary": "Andrew Ng 8/14 发布 AI Engineering Skills Map（分析 1 万+ 招聘启事、数十场结构化访谈、调研综合而成），顶层四技能：构建与部署 AI 应用、软件工程基础、使用 coding agents、塑造构建方向（shaping the build）；随后把第一项拆成六个子技能（LLM 基础/grounding/agentic 系统/评测驱动开发/生产运营/ML 基础）。latent.space 8/25 收录并逐条点评：「Rise of the AI Engineer」提出的职业定义正式被教育界巨头采纳为课程标准。",
+      "detail_content": "【核心事件】Andrew Ng 的 DeepLearning.ai 重启并聚焦 AI Engineering，配套发布 AI Engineering Skills Map。方法论是产业数据驱动：分析超过 1 万份招聘启事、数十场与 AI 专家/招聘经理/猎头的结构化访谈、问卷调研与线上数据综合。四个顶层技能：①构建与部署 AI 应用；②软件工程基础；③使用 coding agents；④塑造构建方向（shaping the build）——即产品感和业务上下文，「知道何时快速做 MVP 给用户测、何时慢下来谨慎构建」。第一项随后展开为六个子技能：LLM 基础、用数据 grounding、构建 agentic 系统、评测驱动开发、生产运营、机器学习基础。\n\n【关键细节与引用】latent.space（swyx 主理，2023 年发表 Rise of the AI Engineer 定义了这个职业）的点评认为这是重要里程碑：「我们已经数不清 AI Engineer 叙事跨过了多少采用里程碑，但 Andrew Ng——Google Brain 和 Coursera 联合创始人——把 DeepLearning.ai 重新聚焦在 AI Engineering 上，肯定算一个。」点评里最有意思的一条判断：「这些 AI 工程技能广泛适用于所有岗位，不只是职衔叫 AI Engineer 的人」——即这是一张通用能力地图而非新工种说明书。Ng 对 evals 的强调（「用统计技术度量、驾驭、治理 AI 系统，核心技能是跑有纪律的 evals 和错误分析循环」）与工程界近一个月的共识（验证成本成为主战场）完全同频。\n\n【背景与上下文】swyx 的 AI Engineer 概念从 2023 年的争议叙事走到 2026 年被 Andrew Ng 做成教学产品，职业定义之争基本终结。与库内 8/25 条目「Andrew Ng 发布 OpenWorker 网安版」同一作者不同事件——那条是产品，这条是人才框架。AI Engineering 教育赛道同期进入巨头竞争：Udacity 的 Claude Nanodegree 也在同一周开放注册。\n\n【影响与前瞻】最实际的用法：行内 AI 人才盘点和培养路线图可以直接引用这张地图做权威锚点——特别是它把「使用 coding agents」单独列为顶层技能（而非附属技巧），为「AI 工具使用能力」纳入考核提供了外部权威依据。caveat：地图来自美国招聘市场分析，直接套中国银行业 JD 需要本地化裁剪；「shaping the build」这种软技能在强监管环境里对应的是「合规判断力」，汇报时可以主动做这个翻译。",
+      "source": "latent.space / DeepLearning.ai",
+      "source_type": "tavily",
+      "url": "https://www.latent.space/p/ainews-andrew-ng-gets-into-ai-engineering",
+      "timestamp": "2026-08-25T16:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Andrew Ng",
+        "AI Engineering",
+        "技能地图",
+        "人才培养",
+        "招聘"
+      ],
+      "batch_time": "2026-08-27T10:20:00+08:00"
+    },
+    {
+      "title": "Gergely 对谈 Casey Muratori：性能为什么重要却被全行业忽视——以及「我的游戏里不会有 AI」的反方声音",
+      "summary": "Pragmatic Engineer 8/26 发布与 Casey Muratori（《Handmade Hero》作者、性能原教旨主义者）的长对谈：为什么行业主流如此轻视软件性能，尽管性能对业务底线的证据充分。Casey 也是当下最知名的「拒绝用 AI 写代码」代表之一——他在节目里解释新游戏为何完全不用 AI：『我想亲手编程这些东西，如果只想要产出，我直接用 Unreal Engine 就好了』。同期 Gergely 在 Threads 补充：AI 不只是加速工程，它更快暴露弱 PRD、模糊范围和缓慢决策。",
+      "detail_content": "【核心事件】Gergely Orosz 的 Pragmatic Engineer 播客最新一期采访 Casey Muratori——程序员、游戏开发者、Molly Rocket 创始人、Handmade Hero 系列作者，在自家 Substack Computer, Enhance 长期 evangelize 软件性能。节目核心议题：行业为什么系统性地忽视性能，尽管来自顶级公司的证据显示性能对底线至关重要。Casey 三年前给 Gergely 的私信就点出这个悖论：「行业 zeitgeist 为什么这么不重视软件性能？似乎有压倒性的证据表明性能对他们的底线至关重要。我在社交媒体上发性能内容时听到大量轻蔑的借口——以至于我专门写文章编目了世界领先公司的支持性能的证据。」\n\n【关键细节与引用】节目看点里与本频道最相关的两条：①Casey 对 clean code 的批判（与库内 8/25 Gergely「重新发现 25 年前的软件架构」直接呼应——Ousterhout 的浅/深模块之辨正是这场争论的学术版）；②他明确新游戏不用 AI，且给出了非守旧的理由：「我想亲手编程游戏里的东西，因为我享受编程本身。如果我只想要产出（output），我直接用 Unreal Engine 就好了。手工家具与快装家具之别——没什么不对，只是选择。」这是 AI 工程讨论里少见的诚实立场：不从「AI 不行」出发，而从「过程即价值」出发。Gergely 同期在 Threads 的补充是另一面：「AI 不只是加速工程——它更快地暴露弱 PRD、不清晰的范围和缓慢的决策。」\n\n【背景与上下文】把这条放进本频道过去一个月的拼图：Addy Osmani 的「认知投降」警告、simonw 的 LOC 再合法化、Herrengt 的「中产消失论」、Charity Majors 的 ship unread code——主流叙事全在讨论「AI 时代工程师价值锚点」，Casey 代表最彻底的回答：价值锚点在过程本身。另外这期播客恰逢 Meta Project OT 崩盘调查（代码量 +220% 但用户可感功能仅 +36%）——性能/质量原教旨主义者对「AI 代码洪水」的批评正在被内部数据佐证。\n\n【影响与前瞻】对 AI 推广者的价值是「知己知彼」：组织里最顽固的抵抗者往往不是不懂 AI 的人，而是 Casey 型的工艺主义者，他们的论点（过程即价值、性能即底线）无法被「效率」话术说服。更聪明的吸纳方式是 Gergely 那句——把 AI 当暴露组织弱点的试剂，而不是替代者。银行系统里性能敏感的路径（清算、实时风控）恰好是 Casey 哲学的天然盟友，这些团队的 AI 引入策略应该完全不同于 CRUD 团队。",
+      "source": "Pragmatic Engineer",
+      "source_type": "tavily",
+      "url": "https://newsletter.pragmaticengineer.com/p/why-performant-code-matters-but-gets",
+      "timestamp": "2026-08-26T18:12:00Z",
+      "importance": 7,
+      "tags": [
+        "Gergely",
+        "性能",
+        "反方声音",
+        "播客",
+        "工程文化"
+      ],
+      "batch_time": "2026-08-27T10:20:00+08:00"
+    },
+    {
+      "title": "豆包工作（飞书合体）首评：中国企业 agent 接入的最低门槛路径，管理员看不到聊天记录",
+      "summary": "卡尔的 AI 沃茨实测飞书与豆包合体后的第一个 Agent 产品「豆包工作」：手机可远程控制最多 7 台设备、支持定时任务、自动读取本地 skill、侧边栏编辑直接同步飞书文档，且管理员看不到聊天记录。作者判断 Work Agent 是 token 消耗倍增器，飞书原生生态是豆包工作区别于 Claude Cowork、Codex Work 的核心优势——中国办公 Agent 入口战开打。",
+      "detail_content": "【核心事件】字节豆包与飞书整合后的第一个 agent 产品「豆包工作（豆包 Work）」上线，卡尔的 AI 沃茨发布首批评测。产品定位是接在飞书体系上的工作 agent：需要飞书账号登录才能解锁完整功能，实测能力包括手机远程控制最多 7 台设备、定时任务、自动读取本地 skill、侧边栏直接编辑并同步到飞书文档。一个对企业采用很敏感的点：管理员看不到聊天记录——个人工作内容不对组织透明。\n\n【关键细节与引用】作者的定位判断：「豆包工作是当前企业接入 Agent 门槛最低的路径」，并将 Work Agent 称为「token 消耗倍增器」——agent 持续在后台跑任务，token 消耗不是按对话而是按任务流计算。与海外同类对比：「飞书原生生态是豆包工作相比 Claude Cowork、Codex Work 的核心优势」——后两者没有中国办公套件的阵地。八个使用技巧覆盖远程控制、定时任务、skill 加载等具体玩法，反映产品完成度已过 demo 阶段。\n\n【背景与上下文】这条放进全球 agent 入口战争看：Anthropic 的 Claude Cowork、OpenAI 的 Codex Work、字节豆包工作，同一个月内密集落地，都是「agent 住进办公套件、用你的登录态替你干活」的形态。中国侧的独特变量是飞书/钉钉/企微三套办公体系的入口之争——谁拿到 agent 入口谁就拿到企业 token 消耗的主导权。豆包工作与 Claude in Chrome（8/26 GA）走的是同一条「复用既有登录与界面」路线，但一个绑生态一个绑浏览器。\n\n【影响与前瞻】对国内银行场景的参考价值是双向的：一方面「管理员看不到聊天记录」在强监管行业直接构成合规红线，银行内部引入任何 agent 产品时数据边界必须是第一筛选条件——这恰好是自建路线的差异化理由；另一方面它验证了「agent + 办公套件原生整合」的采用速度远超独立 agent 应用，行内自建 agent 平台时与 IM/文档系统的整合深度决定真实使用率。后续值得盯钉钉（阿里系模型）和企微（腾讯系混元）的对称动作——三件套齐了之后中国企业 agent 市场才算真正开局。",
+      "source": "微信公众号：卡尔的AI沃茨",
+      "source_type": "aihot",
+      "url": "https://mp.weixin.qq.com/s?__biz=Mzg3MTk3NzYzNw%3D%3D&mid=2247509950&idx=1&sn=18e7ecdceb66058f5",
+      "timestamp": "2026-08-26T08:27:00Z",
+      "importance": 6,
+      "tags": [
+        "豆包",
+        "飞书",
+        "办公 Agent",
+        "中国企业AI",
+        "实测"
+      ],
+      "batch_time": "2026-08-27T10:20:00+08:00"
+    }
+  ]
+}
