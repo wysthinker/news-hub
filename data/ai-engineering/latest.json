@@ -1,9 +1,136 @@
 {
   "channel_id": "ai-engineering",
   "channel_name": "AI 工程实战",
-  "generated_at": "2026-08-28T10:13:55.753180+08:00",
-  "digest": "本周主题是「编排的胜利与规模的账单」：Sapient 开源 PRAXIST，用开源模型 DeepSeek-v4-pro 加多层编排（并行 Research Peers + PI Panel + 研究图谱），在 MLE-bench 全部 75 个任务上以 1/12 成本打赢 Claude Code + Opus 4.8 全家桶——harness 战争继 NVIDIA AVO、Ramp Inspect 后最强一证；同一周 GitHub 交出 agentic coding 的基础设施账单：月 commit 量四个月从 14 亿翻到 29 亿，Actions 八月 uptime 跌到 98.13%，月均 23+ 次事故，CTO 道歉六天后又挂。Gergely 用拉黑 AI 生成邮件宣示「只读人类输出」，UiPath 创始人出书给出受监管企业的三层框架——agent 提议、人类决策、确定性软件执行。写码的规模红利和规模代价第一次同框出现。",
+  "generated_at": "2026-08-29T10:12:55.884333+08:00",
+  "digest": "本周主战场从「用不用 AI」彻底转向「成本与信任」：Uber 交出软件工厂最完整成本账（用量 7x 但总花费平稳，靠六因子方程逐项压价）；GitLab CEO 用 Stripe/Amplitude/Spotify 数据定义新度量单位 cost per accepted change——代码丰富之后稀缺的是信任；Gergely 把 Asana「$12K 干完 $6M」的厂商案例拆到原子级，反 slop 核查有了完整范本；独立研究者用 60-80% 攻击成功率击穿 Anthropic 委托测评的 0.00%，agent 权限治理再敲警钟。Grok 搜索连续第 68 天 502。",
   "items": [
+    {
+      "title": "Uber 交出软件工厂最完整成本账：用量 7x 总花费却平稳——六因子方程、code-mode 省 90%、Context Graph 让 20 分钟错答变 38 秒对答",
+      "summary": "Uber 工程博客发布深度复盘：2 月以来全公司周活用户涨 7x、周 agent 请求涨 9.4x，总 AI 花费却相对平稳——每千请求成本降 34%、每 session 成本从 6 月峰值降 52%。方法论是把总花费拆成六因子乘积逐项优化：MCP 工具从预载 50-70K tokens 改为 CLI 动态解析、code-mode 把轮询循环挪进子进程省 50-90%、prompt cache 按工程师实际停顿时长选 1 小时 TTL、subagent 默认换弱模型。这是「Token 经济学工程化」迄今最完整的公开样本。",
+      "detail_content": "【核心事件】\n\n8 月 28 日 Uber 工程博客发布《Running a Software Factory Efficiently at Uber Scale》，首次系统披露其 AI coding 成本工程全貌。基础盘：超过 70% 的 PR 由本地或云端 agent 贡献，工程师已构建 3600+ agent skills，每天执行超 3 万次。从 2 月到 8 月，全公司（工程师+非工程师）周活用户增长 7 倍，周 agent 请求增长 9.4 倍，而总花费自 4 月起相对平稳——固定模型对比下，每千次请求成本从峰值下降近 34%，每 session 成本从 6 月峰值下降 52%。\n\n【关键细节与引用】\n\n方法论核心是把总花费拆解为乘积方程：users × sessions/user × turns/session × requests/turn × tokens/request × price/token，每一项独立度量、独立压缩。具体杠杆：一是 benchmark 驱动选模型——uReview（AI 代码审查）用带已知 bug 的真实 PR 建评测集，按 F1×成本选 Pareto 前沿模型，且「前沿每几周就移动一次」持续换。二是 MCP 瘦身——100+ 工具预载 schema 就吃掉 50-70K tokens 且每轮重发，Uber 把 1000+ MCP server 全部投影成 CLI 命令按需解析。三是 code-mode——把 SQL 查询的多轮轮询写成一个 Python 循环跑在子进程，5 条相同查询实测省 55-71%，宽表查询从 143 万 tokens 降到 900。四是 cache 策略——工程师常停顿超 5 分钟，主线程从 5 分钟 TTL 换 1 小时（写入贵 2x 但读 0.1x），subagent 保持 5 分钟。五是默认值——400K tokens 强制压缩（即使模型支持 1M 窗口）、推理强度默认 Medium。六是 AI Context Graph：2400 万节点 8000 万边、整合 30+ 内部系统的上下文图，实测同一问题 grounded 38 秒答对，ungrounded 花 20 分钟还答错。\n\n【背景与上下文】\n\n这周有三部曲：GitLab 的「cost per accepted change」定义价值端，Augment 之前讲度量分层，Uber 这篇补齐成本端。对 Token 军备期的机构（微众日均 200 亿、招行 330 亿）这是直接对标物——Uber 证明「用量爆炸成本平稳」可以靠工程达成，而非靠砍用量。文中治理设计也值得抄：状态栏实时成本计数、50/80/100% 三档 Slack 提醒、16 类浪费模式自动诊断（如「简单多轮会话跑在 Opus 上」「40KB MCP 响应滞留 context 反复计费」），不做硬性配额。\n\n【影响与前瞻】\n\n战略结论藏在结尾：交互式开发会向 fully managed agents 迁移，因为只有托管环境才能完全控制模型路由、执行 harness 和开销——「优化一支专用 managed agent 舰队，天然比优化几千个工程师的终端会话更省更可扩展」。下一步是动态模型路由和实时反模式检测。对强监管行业的启示：成本治理可以做成仪表盘+自动诊断而非行政管制，这套思路搬到银行同样成立。",
+      "source": "Uber Engineering Blog",
+      "source_type": "tavily",
+      "url": "https://www.uber.com/us/en/blog/efficient-software-factory/",
+      "timestamp": "2026-08-28T07:00:00Z",
+      "importance": 9,
+      "tags": [
+        "Uber",
+        "成本工程",
+        "Token经济学",
+        "软件工厂",
+        "MCP",
+        "managed agents"
+      ],
+      "batch_time": "2026-08-29T10:00:00+08:00"
+    },
+    {
+      "title": "Gergely 拆解 Asana「$12K 干完 $6M」：5 年是「优先级推算的完工时间」、25% 早在 2024 年就迁完了——AI 迁移案例的反 slop 核查范本",
+      "summary": "Pragmatic Engineer 免费专题把 OpenAI 官宣的 Asana 案例（两周 $12K 替换五年 $6M 的 Enzyme 迁移）拆到原子级：Gergely 采访 Asana 开发生产力负责人 Dan Ubilla 确认——「5 年」是 opportunistic 优先级下的推算完成时间而非持续投入，$6M 是 back-of-envelope 估算且偏保守，且 25% 文件 2024 年就用 LLM 迁完了。同期 Airbnb 3500 测试 6 周迁完（75% 文件 4 小时内完成）、Uber 60 万测试 4 个月 2 工程师、Bun 53 万行两周 $165K。",
+      "detail_content": "【核心事件】\n\n8 月 27 日 Gergely Orosz 发《We need to talk about migrations with AI》，起因是 OpenAI 官网案例：「Asana cleared 5 years of engineering work in 2 weeks with Codex」——$12K 成本对比 $6M 估算。Gergely 先展示 Enzyme 与 React Testing Library 的语法差异确实巨大（两框架测试哲学根本不同：组件实例 vs 渲染后 DOM），再逐项核查数字。\n\n【关键细节与引用】\n\nGergely 找到 Asana Developer Productivity 负责人 Dan Ubilla 澄清：一、Asana 2024 年就开始 Enzyme 迁移，4000+ 文件中先迁了 25%（挑 ROI 最高的），剩余部分被定为 opportunistic（「nice to have」）优先级；二、「5 年」是这个低优先级任务按现状推算的自然完工时间，不是「团队连干 5 年」；三、$6M 是信封背面估算：单文件人工耗时×3000+ 文件×工程师时薪，没考虑熟练度递增也没考虑 LLM——「这个数字可能高估了，但重点是传达工作量之大」；四、团队选这个低优先级任务就是为了证明 LLM 能大幅加速迁移。Gergely 结论：「AI makes impractical migrations doable」——$6M 还是 $1M 不重要，pre-AI 这就是不该做的项目。\n\n【背景与上下文】\n\n横向坐标：Airbnb 2025 年 3 月用 Claude 3.7 Sonnet 六周迁完 3500 个组件测试（估算 1.5 人年，建重试循环后 75% 文件 4 小时迁完，97% 四天搞定期余 3% 一周收尾）；Uber 四个月两工程师完成 JUnit 4→5（60 万测试、1500 万行代码、改动 125 万行）；Bun 两周把 53 万行 Zig 迁到 Rust 花 $165K API 费。pre-AI 对照：Sentry 2021 年花 1.5 年 10 个工程师迁 1100 文件。这是 Gergely 继 OpenAI/Asana 案例首次核查（8/21，识破「5 年是排期非工时」）后的完整版，从「质疑」进阶到「拿到一手信源重构叙事」。\n\n【影响与前瞻】\n\n对 Eason 的反 slop 弹药库：厂商案例三问之后现在有了第四问——「分母是怎么算的」。汇报里引用任何「AI 省 X 钱」案例前，先问估算基准是否把熟练度递增、LLM 辅助、优先级权重算进去。Gergely 的正面判断也值得记：长尾积压的「灵魂抽干型」迁移（testing 框架、构建系统、语言版本）会集中爆发，因为这类任务验证回路清晰、风险可控，是 agent 最佳战场——银行的技术栈现代化清单可以按这个标准重排。",
+      "source": "The Pragmatic Engineer",
+      "source_type": "tavily",
+      "url": "https://blog.pragmaticengineer.com/the-pulse-we-need-to-talk-about-migrations-with-ai",
+      "timestamp": "2026-08-27T18:04:54Z",
+      "importance": 8,
+      "tags": [
+        "Gergely",
+        "反slop",
+        "Asana",
+        "Airbnb",
+        "代码迁移",
+        "案例核查"
+      ],
+      "batch_time": "2026-08-29T10:00:00+08:00"
+    },
+    {
+      "title": "GitLab CEO 长文《When code is abundant》：代码生产丰裕之后稀缺的是信任——新度量单位 cost per accepted change，Stripe 每周千条 minion PR、Amplitude PR 周期 5.2 小时砍到 44 分钟",
+      "summary": "GitLab CEO Bill Staples 发表 8 个月思考结晶的长文：软件工程 60 年围绕「代码珍贵」组织，LLM 打破这个约束后，瓶颈从「生产代码」移向「信任代码」。提出新经济单位 cost per accepted change（生成只是一项，环境/CI/审查/治理占大头），并给出 Stripe（每周 1000+ minion PR）、Amplitude（6 个月 PR 3x、bug 从 715 降到 319、CI 从 30 分钟到 3-4 分钟）、Spotify（Honk 1500+ AI PR）三个生产样本。金句：「30 分钟的 CI 管道击败你指向它的任何模型」。",
+      "detail_content": "【核心事件】\n\n8 月 24 日 GitLab CEO Bill Staples 发布《When code is abundant》，从 1 月的董事会备忘录发展而来。核心论点：LLM 让代码生产变得丰裕（abundant），但好软件依然稀缺——correct, secure, performant, compliant, maintainable 的缺口才是新瓶颈。60 年来软件工程的一切安排（保遗留系统、背技术债、重流程保护变更成本）都建立在「代码珍贵」之上，这个约束松动后整个系统随之移动。\n\n【关键细节与引用】\n\n三个生产样本：Stripe minions 每周 1000+ PR 完全由 agent 生成、人类审查；Amplitude 六个月 PR 数 3x、月报 bug 从 715 降到 319、PR 周期时间 5.2 小时→44 分钟、前端 CI 30 分钟→3-4 分钟，且设计师/PM/营销的非工程师 PR 从约 0 涨到 5%；Spotify 背景 agent Honk 已合并 1500+ AI PR。金句：「A thirty-minute CI pipeline defeats every model you point at it」「It will simply move the queue」（生成提速 10 倍但 CI/审查不动，只是把排队挪了位置）。Amplitude 的教训被点破：环境慢、CI 慢、工具不一致这些问题存活多年，只因代码产量限制了变更进入系统的速度——agent 拿掉油门后验证和审查成了堵点，Amplitude 重建的基础设施「很少是 AI，是因 AI 改变吞吐而变得必要的基础设施工程」。\n\n【背景与上下文】\n\n文章直接回应 Anthropic 8/21 的《AI-Native SDLC Playbook》（「Code is no longer the bottleneck」），并给出 GitLab 的产品化答案：agent platform + machine-scale execution + durable context + governance 四层架构，Duo Agent Platform、Orbit 上下文图、Governance for Agents。还提出三模式共存框架（人类控制的遗留系统/agent 加速开发/自主开发），警告「把所有工作负载过早塞进 Mode 3 可能是企业转型期最贵的错误之一」。自主性判定三问：agent 能用现有上下文做出有用变更吗？变更不靠人逐行读能验证吗？错了是系统接住还是靠人？\n\n【影响与前瞻】\n\n与 Uber 成本方程、Augment 度量分层构成「软件工厂三部曲」：Uber 管成本端、GitLab 定义价值单位、Augment 分层度量。「cost per accepted change」是可以直接搬进银行 AI 考核的度量——比「代码行数」「PR 数」都诚实，它逼着把验证、审查、治理的隐性成本显性化。CEO 署名但通篇硬数据，是平台厂商架构文里少见的可读样本。注意其商业立场：结论导向「模型可替换、agent 归客户、组织记忆要跨厂商存活」，读时打折但不减参考价值。",
+      "source": "GitLab Blog",
+      "source_type": "tavily",
+      "url": "https://about.gitlab.com/blog/when-code-is-abundant/",
+      "timestamp": "2026-08-24T00:00:00Z",
+      "importance": 8,
+      "tags": [
+        "GitLab",
+        "cost per accepted change",
+        "软件工厂",
+        "Amplitude",
+        "Stripe",
+        "SDLC"
+      ],
+      "batch_time": "2026-08-29T10:00:00+08:00"
+    },
+    {
+      "title": "独立研究者击穿 Claude Code Auto Mode 官方测评：恶意 ZIP + struct.py 影子模块拿到 60-80% 攻击成功率——Anthropic 委托测评显示 0.00%",
+      "summary": "安全研究者 wunderwuzzi（Embrace The Red）发文：用一个「请总结这个网站」的普通请求，通过 415 响应诱导 Claude 弃 WebFetch 改用 curl、下载特殊编码的 ZIP、在解压目录里让恶意 struct.py 影子模块劫持 base64 导入，实现代码执行——小样本下攻击成功率 60-80%。此前 Anthropic 委托 Trajectory Labs 对 72 个间接注入场景各测 10 次，图表显示 Opus 5 Auto Mode 攻击成功率 0.00%。同周 Claude Code v2.1.248 发布 restricted mode 作为对策。",
+      "detail_content": "【核心事件】\n\n8 月 26 日安全博客 Embrace The Red 发布《Breaking Claude Code Opus 5 Auto Mode》。背景：8 月中起 Auto Mode 成为 Claude Code 默认启动模式——用安全分类器替代人工审批提示。Anthropic 的 Boris Cherny 此前宣称分层防御（模型训练+输入探针+意图分类器）可将间接注入在未见攻击上的成功率降到约零，并委托 Trajectory Labs 测 72 场景×10 次，图表显示 0.00%。wunderwuzzi 的定向攻击链把这个数字打穿。\n\n【关键细节与引用】\n\n攻击链七步：服务器返回 415 Unsupported Media Type，Claude 自己决定改用 curl；响应重定向到特殊编码文件的 ZIP 归档；Claude 正确拒绝执行其中的二进制解码器、自己写了个 Python 解码器——但它把解码器跑在攻击者控制的解压目录里；恶意 struct.py 影子模块覆盖标准库；Claude import base64 时触发 poisoned struct.py，代码执行达成。原文关键句：「A model judging a sandbox isn't a sandbox」「Auto Mode IS NOT a substitute for running your agent in an isolated environment」。值得注意的细节：模型每一步都「正确」——拒二进制、自写解码器——坏结果来自环境组合，这正是 agent 时代安全的新形态。\n\n【背景与上下文】\n\n同周 Claude Code v2.1.248 发布 restricted mode（无 shell、无 WebFetch、文件访问钉死）作为工程对策。这与 steipete 8/22 在 Berkeley 提出的「No Doors for Agents」（用户能看到的一切 agent 都能看到）、Gergely 8/20 实锤的 Instinct 静默数据风险构成同一主线的三块拼图：权限边界从「问人」移到「模型自判」后，攻防不对称在恶化。0.00% vs 80% 的落差本身也是反 slop 教材：委托测评的 72 个场景测不出定向攻击，跟「benchmark 高分≠生产可靠」同构。\n\n【影响与前瞻】\n\n对银行业的直接含义：任何「让 agent 浏览外部内容+跑代码」的工作流，Auto Mode 级别的权限都不该过风控——隔离环境（容器/虚拟机/专用沙箱）是必选项而非优化项。汇报素材：引用厂商「攻击成功率 0%」话术前先问测评场景覆盖度。另外这个案例是极好的内部安全培训材料——攻击链每一步都是模型「合理行为」，适合拿来讲「为什么 agent 安全是环境问题不是模型问题」。",
+      "source": "Embrace The Red",
+      "source_type": "tavily",
+      "url": "https://embracethered.com/blog/posts/2026/breaking-claude-code-opus-5-and-automode/",
+      "timestamp": "2026-08-27T04:00:00Z",
+      "importance": 8,
+      "tags": [
+        "Claude Code",
+        "prompt injection",
+        "安全",
+        "agent权限",
+        "Auto Mode"
+      ],
+      "batch_time": "2026-08-29T10:00:00+08:00"
+    },
+    {
+      "title": "simonw 的 LLM 套话高亮器升到 38 个模式，2121♥：反 slop 从主张变成工具——Grant Slatton 拿它测自己博客发现「我也挺像 LLM」",
+      "summary": "Simon Willison 的 LLM cliché highlighter 上线 tools.simonwillison.net/llm-cliche-highlighter，已收录 38 个 LLM 高频套话模式，一键高亮任意文本中的机器腔。推文 2121♥ 成为本日工程圈最高互动之一，Grant Slatton 玩法出圈：跑自己的旧博客，发现人类作者也满嘴「堆叠反问句」和「回声句式」。反 slop 从「骂 AI 腔」进化到「可部署的检测工具」。",
+      "detail_content": "【核心事件】\n\n8 月 28 日 Simon Willison 宣布其 LLM cliché highlighter 已积累 38 个模式，部署在 tools.simonwillison.net/llm-cliche-highlighter，粘贴任意文本即可高亮命中的 LLM 式表达。推文获 2121♥，超过他上周 Qwen 3.8 27B 评测的互动量。工具热度带动社区玩法：Grant Slatton 把自己多年博客全跑一遍，自嘲发现「apparently I like stacked rhetorical questions and echoing sentence runs a lot」——人类作者比想象中更像 LLM。\n\n【背景与上下文】\n\n这条与 8/24 Gergely「我不读你没亲自写的 LLM 输出」三连拉黑、以及 Eason 一直在攒的反 slop 弹药库同主线，但进化了一格：从立场表达变成可执行工具。simonw 一贯的实用主义路径（给 LLM 写工具再开源给所有人用）在这里再次生效——工具不判断「是不是 AI 写的」，只高亮「哪些表达是机器高频套路」，把判断留给读者，这个克制恰好是它可信的原因。\n\n【影响与前瞻】\n\n三个直接用法：一、内部材料出门前自查——AI 起草的汇报/邮件先过一遍高亮器，机器腔会显著削弱可信度（尤其对高管读者）；二、反向用于提示词——把 38 个模式做成「避免清单」喂给起草 agent；三、考核设计参考——「去 AI 腔」可以是 AI 辅助写作的可量化质量指标之一。注意边界：Slatton 实验说明人类也踩这些模式，工具检测的是「套路密度」不是「作者身份」，别拿它做 AI 检测器用。",
+      "source": "X @simonw",
+      "source_type": "opentwitter",
+      "url": "https://x.com/simonw/status/2093277255438860358",
+      "timestamp": "2026-08-28T09:59:23Z",
+      "importance": 7,
+      "tags": [
+        "simonw",
+        "反slop",
+        "工具",
+        "AI写作"
+      ],
+      "batch_time": "2026-08-29T10:00:00+08:00"
+    },
+    {
+      "title": "Gergely 1767♥ 读实习生信号：「实习变少说明两件事——一年后没有转正计划，以及没有 mentor 容量」",
+      "summary": "Gergely Orosz 发推解读多家科技公司实习岗位收缩的信号意义：1. 没有一年后的转正计划（有实习意味着提前一年锁定校招）；2. 没有 mentor 容量——实习生至少需要一个 mentor 带教，而现在这个余量没了。评论区补充：连「不太好的实习」也比没有强。与 Canaries 入门级挤压研究互为印证，但这条给出的是雇主侧的行为逻辑。",
+      "detail_content": "【核心事件】\n\n8 月 28 日 Gergely Orosz 发推（1767♥，218 replies）分析科技公司实习岗位收缩：「Seeing internships become fewer at many tech companies tells me a bunch of stuff」——第一，公司不再运行「一年后转正」的招聘前置计划，实习本质是提前一年的校招锁定；第二，mentor 容量不足，实习生至少需要一名导师带，而现在没有这个余量。\n\n【背景与上下文】\n\n这条与 ai-org 频道长期跟踪的 Canaries 研究（入门级岗位挤压 19%）、Goldman 入门级弹性数据构成同一图景，但角度是雇主侧行为逻辑而非统计结果。值得注意的是「mentor 容量」这半句——它暗示 agent 转型期的组织时间分配正在重塑：senior 工程师的时间被 agent 编排、验证、迁移工作（参考本周 Uber/GitLab 两篇）占满，带新人的时间被挤出。Gergely 自己在同日回复中补充：即使不够好的实习体验，对实习生仍然好过没有实习。\n\n【影响与前瞻】\n\n对银行 AI 转型的考核设计是个提醒：如果 AI 提效的收益全部转化为「同样的人做更多的事」，组织会静默失去两项长期能力——新人培养管道和隐性知识传承（Canaries 机制）。在 KPI 里显性保留 mentorship 时间（比如 senior 的 agent 编排工作量封顶），是成本很低的对冲。Eason 在讨论 Gen Z 反 AI、入门级挤压话题时，这条可直接引用作雇主侧行为证据。",
+      "source": "X @GergelyOrosz",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2093222574461239526",
+      "timestamp": "2026-08-28T06:22:06Z",
+      "importance": 6,
+      "tags": [
+        "Gergely",
+        "实习",
+        "入门级",
+        "组织信号",
+        "mentorship"
+      ],
+      "batch_time": "2026-08-29T10:00:00+08:00"
+    },
+    {
+      "title": "Gergely 拆「AI-native 初创」神话：pre-AI 初创本来就是 3-5 人无 PM 无设计师——「AI-native startups are just startups」",
+      "summary": "Gergely 转发 Allen 的观点并补充：AI 出现之前的初创公司就一直是 3-5 人开发团队、没有 PM/设计师/UX/TPM——「AI-native 初创」就是初创公司本身，不是新物种。大公司团队更大是因为复杂度增长（「The cost of winning」），不是效率低下。这条把「AI 原生组织」叙事里的幸存者偏差点破了：小团队用 AI 做出产品 ≠ AI 创造了小团队模式。",
+      "detail_content": "【核心事件】\n\n8 月 28 日 Gergely Orosz（309♥）认同 Allen 的观察并展开：pre-AI 时代初创公司从来就是 3-5 人开发团队，没有 PM、设计师、UX、TPM 等职能——现在被称为「AI-native startups」的东西本质就是 startups。大公司团队更大，是因为复杂度随规模增长，不是组织臃肿。\n\n【背景与上下文】\n\n这条是对「AI 原生组织」营销叙事的直接拆解，与 Gergely 7/31 那条对「AI-native 初创凌晨两点加班文化」的批评一脉相承。叙事结构上的问题在于幸存者偏差：用「这家 5 人公司靠 AI 做出产品」证明「AI 让小团队成为新范式」，忽略了 5 人小团队本来就是初创的默认形态。对内汇报时遇到「我们要学习 AI-native 初创的组织模式」这类提案，这条是现成的反驳素材。\n\n【影响与前瞻】\n\n合理的问题意识应该是：大公司的哪些复杂度是本质的（合规、多产品线、遗留系统），哪些是可以被 agent 工具削掉的（跨团队协调成本、低价值流程）——Expedia 砍 8 个技术高管的重组（ai-org 8/26）是后者的具名样本。把「AI-native」当标签贴不如把这两个问题问清楚。单推信息量有限，作为引用素材收录。",
+      "source": "X @GergelyOrosz",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2093314087413268831",
+      "timestamp": "2026-08-28T12:25:44Z",
+      "importance": 6,
+      "tags": [
+        "Gergely",
+        "AI-native",
+        "组织神话",
+        "反slop"
+      ],
+      "batch_time": "2026-08-29T10:00:00+08:00"
+    },
     {
       "title": "Sapient 开源 PRAXIST：开源模型 + 多 agent 编排，在 MLE-bench 全 75 任务上以 1/12 成本打赢 Claude Code + Opus 4.8",
       "summary": "Sapient Intelligence 开源自主 R&D 系统 PRAXIST Beta。全部 75 个 MLE-bench 任务上，PRAXIST 用开源的 DeepSeek-v4-pro 拿下 49 枚金牌（gold rate 65.3%）、60 枚奖牌，比 Claude Code + Opus 4.8 基线多 44% 金牌；token 成本 $3,054 对 $38,370。架构核心是把研究做成持久过程：并行 Research Peers 探索竞争路线、共享记忆沉淀证据、PI Panel 决定下一个实验，research graph 保留 derived-from/supports/challenges 关系，失败的路径也能给后续方向排除法。",
