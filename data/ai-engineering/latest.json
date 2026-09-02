@@ -1,9 +1,151 @@
 {
   "channel_id": "ai-engineering",
   "channel_name": "AI 工程实战",
-  "generated_at": "2026-09-01T10:15:13.973994+08:00",
-  "digest": "本周主线是「工具在补安全课，方法论在补判断课」。OpenClaw 2.0 作为最大版本更新把易用性拉满（重新设计的安装+浏览器体验+共享云会话），但 Register 尖锐指出安全默认全关——sandbox 默认关闭、secret store 明文存储，与同日曝光的 Claude Code Auto Mode 60-80% 攻击成功率形成呼应：官方「best-effort classifier 不是安全保证」的口径意味着边界只能靠 OS 隔离。方法论侧，Stripe 交出年度最佳工程复盘：AI 的价值不是写代码而是「把想法变成可评估 artifact 的时间成本压缩 10 倍」，spec-first 委托模式值得直接抄；Addy Osmani 提醒 agent 时代「reps 要刻意补」；Dwarkesh 的 HF 事件爆款叙事被 Anil Seth/Gary Marcus 联手拆解为危险拟人化——反 slop 战线从内容质量延伸到叙事准确性。对企业推广者：非工程师部门的 Codex 增长数据（Legal 108x vs Engineering 5x）是「AI coding 不再是工程师故事」的最硬论据。",
+  "generated_at": "2026-09-02T10:13:57.570739+08:00",
+  "digest": "9 月第一个工作日，工程圈的主线是「反叙事」：Gergely 用 Meta 每年付 Slack 2000 万美元的事实，把「SaaS is dead」叙事按在地上摩擦（1136♥）；他免费放出的 AI 迁移专刊则给 Asana「$12K 干完 $6M」补上了完整反 slop 核查链——5 年是优先级推算的完工时间，25% 早在 2024 年就迁完了。simonw 翻 ~/.cache 发现 ChatGPT 桌面版偷偷打包了整套 LibreOffice（1764♥），OpenAI 在用开源办公套件填 agent 的文档处理能力缺口。加上 ashpreetbedi 的「Serve the agent, not the tools」和 latent.space 把 harness engineering 正式命名为核心 AI 工程技能，本周的信号很一致：Agent 时代的产品边界和工程技能栈正在快速定型，而会讲故事的和真干活的差距越拉越开。",
   "items": [
+    {
+      "title": "Gergely 反杀「SaaS is dead」叙事：Meta 每年付 Slack ~$20M 买聊天产品——有 75000 名工程师的公司为什么不用「2 个开发者 + AI」自建？",
+      "summary": "Gergely Orosz 发出本周工程圈最高互动推文（1136♥）：Meta 即将从 GChat 全面切换到 Slack，年费约 2000 万美元。他直接质问「SaaS is dead」的信徒：如果 2 个开发者 + AI 就能造出 Slack，Meta 为什么不省下这笔钱？关键细节是 Slack 的 MCP 支持 2025 年 10 月就发布、今年 2 月 GA，而 GChat 今天还只有 dev preview——agentic workflow 的支持差距才是 Meta 弃用不到一年的 GChat 的原因。",
+      "detail_content": "【核心事件】9 月 1 日，Gergely Orosz 连发数条推文引爆讨论：Meta 正在从 Google Chat 切换到 Slack，交易金额约每年 2000 万美元。头条推文直接点名「SaaS is dead! AI is killing it」叙事：「no it's not: Meta will be paying Slack easily ~$20M/year for a chat product. Ask yourself: if they could build something with 2 devs + AI why not do it? They'd save SO MUCH.」（Meta 每年轻松付给 Slack 2000 万美元买一个聊天产品。问问自己：如果 2 个开发者 + AI 就能造出来，为什么不造？能省好多钱。）\n\n【关键细节与引用】时间线是这条新闻最有意思的部分：Gergely 指出 Meta 不到一年前刚弃用了用了十多年的自研 Workchat、决定迁移到 GChat，现在又要再迁一次，且 GChat 的历史消息不会被迁移——「Very strange there's so little upfront planning」（如此缺乏前期规划令人惊讶）。切换的真实原因不是省成本而是 agentic 差距：Slack 的 MCP 支持 2025 年 10 月宣布、2026 年 2 月 GA，而 GChat 今天只有 MCP dev preview，落后整整 7 个月。他补充：「Meta has ~75,000 staff... they are using MORE vendors not less vs before」（Meta 有约 7.5 万员工，用的供应商比以前更多而不是更少）。\n\n【背景与上下文】这轮讨论的背景是过去一个月 ai-engineering 频道持续追踪的「agent 吃 SaaS」叙事——swyx 的 Kill My SaaS 实验、Zapier 被 agent 架构冲击、Gergely 此前拆解的「AI-native 初创神话」。这条推文是 Gergely 对整个叙事阵营最正面的一次回击，也与他上月「AI-native startups are just startups」形成呼应。\n\n【影响与前瞻】对 Eason 的银行场景这是个直接可用的反 slop 论据：当供应商讲「AI 让自建一切变得便宜」时，全球工程师密度最高的公司之一正在为成熟 SaaS 付更多钱——因为 agentic 时代的胜负手是生态集成深度（MCP 支持时间线）而非裸功能。选型时问「你的 MCP/agent 接口 GA 了吗」比「你有没有 AI 功能」更切要害。另外注意 Gergely 提到 Meta 内部还有个集成 monorepo 的内部版 Jetski——自建与采购的边界在头部公司是「混合」而非二选一。",
+      "source": "X：Gergely Orosz (@GergelyOrosz)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2094686709162131614",
+      "timestamp": "2026-09-01T07:20:00Z",
+      "importance": 9,
+      "tags": [
+        "SaaS叙事",
+        "Meta",
+        "Slack",
+        "MCP",
+        "agentic workflow",
+        "反slop"
+      ],
+      "batch_time": "2026-09-02T10:15:00+08:00"
+    },
+    {
+      "title": "Gergely 免费放出 AI 迁移专刊全文：Asana「$12K 干完 $6M」的完整核查链 + Uber/Bun/Airbnb 硬数字——「工程上不可行的迁移正在变得可行」",
+      "summary": "Pragmatic Engineer 把上周付费专刊《We need to talk about migrations with AI》免费放出（8/27 发布）。核心是对 OpenAI 那个 Asana 案例的深度核查：Gergely 找到 Asana 开发者生产力负责人 Dan Ubilla 逐条核实——5 年是「opportunistic 优先级下的推算完工时间」而非工时，25% 的文件 2024 年就用 LLM 迁完了，$6M 是信封背面估算。文中还收齐 Airbnb（6 周 3500 测试文件）、Uber（4 个月 60 万测试/1500 万行）、Bun（2 周 53 万行 Zig→Rust，$165K API 费）三大硬案例。",
+      "detail_content": "【核心事件】8 月 27 日发布、9 月 1 日免费放出的 Pragmatic Engineer 专刊，是迄今对「AI 干迁移」最完整的一次工程视角梳理。Gergely 从 OpenAI 官网那句「Asana cleared 5 years of engineering work in 2 weeks with Codex」出发，没有停留在嘲讽（他上月已经拆过一轮），而是找 Asana 开发者生产力负责人 Dan Ubilla 做了逐条核实，把厂商案例研究还原成了可信的工程事实。\n\n【关键细节与引用】核实结论要点：1) Asana 2024 年就开始用 LLM 迁移 Enzyme，4000+ 文件里先迁了 25% 挑最高 ROI 的；2) 剩余部分被归为「opportunistic（nice to have）」优先级，「5 年是这个优先级下推算的完工时间，不是一个团队连干 5 年」；3) $6M 的估算是「单文件工时 × 剩余文件数 × 工程师时薪」的信封背面算法，没考虑熟练度曲线也没考虑 LLM；4) $12K 首跑成本还能再压——用便宜 10 倍的开源模型跑后续迭代。三个参照案例：Airbnb 2025 年 3 月用 Claude 3.7 Sonnet 6 周迁完 3500 个 Enzyme 测试文件（构建重试循环后 75% 文件 4 小时迁完，97% 四天迁完）；Uber 4 个月两名工程师迁完 60 万个 JUnit 测试/1500 万行代码；Bun 两周 53 万行 Zig→Rust 花了 $165K API 费。\n\n【背景与上下文】Gergely 的核心论点：「Pre-AI, years-long migrations were rare」——2021 年 Sentry 迁 1100 个文件/9.5 万行 JS→TS 花了 1.5 年、约 10 名工程师、$2-4M；今天这类迁移从「工程上不可行」变成「几周的常规操作」。最大的收益不是省钱而是「不用再长期同时支持新旧两套库」。但他反复强调共同点：「engineers needed to plan for it, design verification loops, and be involved throughout」——规划、验证循环、全程参与，全是人的活。\n\n【影响与前瞻】对 Eason 这是一份可以直接进汇报的材料：银行存量系统迁移（测试框架、核心库升级）用 AI 提速的真实参照系在这里，同时它也是「引用厂商案例三问」的完整示范——问基数（多少文件已迁）、问优先级（5 年是什么口径）、问验证（谁确认迁移正确）。Asana 内部结论值得记住：领导和团队现在信了 LLM 迁移的用处，接下来会把它用到其他「long-running, otherwise soul-sucking migrations」上。",
+      "source": "The Pragmatic Engineer",
+      "source_type": "tavily",
+      "url": "https://blog.pragmaticengineer.com/the-pulse-we-need-to-talk-about-migrations-with-ai",
+      "timestamp": "2026-08-27T00:00:00Z",
+      "importance": 9,
+      "tags": [
+        "AI迁移",
+        "Asana",
+        "Uber",
+        "Airbnb",
+        "Bun",
+        "反slop核查",
+        "验证循环"
+      ],
+      "batch_time": "2026-09-02T10:15:00+08:00"
+    },
+    {
+      "title": "simonw 翻 ~/.cache 挖出大瓜：ChatGPT 桌面版打包了整套 LibreOffice（1764♥）——OpenAI 用 1.7GB 开源运行时填 agent 的文档处理缺口",
+      "summary": "Simon Willison 用 OmniDiskSweeper 清理缓存时发现：ChatGPT 桌面版（前身 Codex）在 ~/.cache 里藏了 1.7GB 的 codex-primary-runtime，包含完整 Python、Node.js、Poppler、git 和整套 LibreOffice 原生二进制。plugins/documents 目录下还有教 Codex 如何使用这些二进制的 skills。这解释了 agent 处理 Office 文档能力的真实来源：不是模型会读 docx，是打包了开源办公套件当工具。",
+      "detail_content": "【核心事件】9 月 1 日，simonw 发推（1764♥，本周其账号最高互动）：「Just noticed the ChatGPT desktop app (previously named Codex) bundles a full copy of the LibreOffice open source office suite, tucked away in a hidden folder in the ~/.cache directory」。随后的博文补充了细节：用 OmniDiskSweeper 扫 ~/.cache 时发现 codex-primary-runtime 文件夹里有 1.7GB 内容——完整的 Python 安装、完整的 Node.js 安装、Poppler/git 原生二进制，以及 LibreOffice（2010 年从 OpenOffice.org 分叉的开源办公套件）的全套原生二进制。\n\n【关键细节与引用】目录结构：~/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime/plugins/documents 里包含一系列 skills，教 Codex 怎么找到并使用这些二进制。也就是说 agent 的「文档处理能力」= 模型 + 打包好的开源工具链，LibreOffice 负责转换/渲染 Office 格式，Poppler 负责 PDF，git/Python/Node 负责其余。\n\n【背景与上下文】这条发现的时机很微妙：Claude Code 刚发布 --restricted 审计模式、社区正在激烈讨论 agent 的安全边界，而 OpenAI 的做法是把一个 1.7GB 的原生运行时静默装进用户缓存目录——既不透明也占空间，但工程上确实高效。Bluesky 上的讨论点出了另一层：微软格式的兼容性极难复刻，「一家 genAI 公司要达到 LibreOffice 级别的 Office 格式兼容性得花好几年」——所以打包 LibreOffice 是理性选择。这与 simonw 上周拆解 ChatGPT Work 的能力边界一脉相承：Work 处理文档的那些「魔法」，底层就是这套工具链。\n\n【影响与前瞻】对 Eason 的启示有两层：1) 评估任何 agent 产品的「文档能力」时，问一句「底层是模型原生还是打包工具链」——后者意味着版本、安全更新、供应链都值得审计；2) 银行做 agent 文档处理时，LibreOffice 这条开源路线是被 OpenAI 验证过的工程答案，比自己训练模型读二进制格式现实得多。另外留意：这个 1.7GB 缓存对终端设备管理（统一镜像、磁盘配额）是个新变量。",
+      "source": "Simon Willison's Weblog / X",
+      "source_type": "opentwitter",
+      "url": "https://x.com/simonw/status/2094864223683903800",
+      "timestamp": "2026-09-01T19:05:00Z",
+      "importance": 8,
+      "tags": [
+        "OpenAI",
+        "ChatGPT桌面版",
+        "LibreOffice",
+        "agent工具链",
+        "simonw"
+      ],
+      "batch_time": "2026-09-02T10:15:00+08:00"
+    },
+    {
+      "title": "ashpreetbedi 双连发：「Serve the agent, not the tools」+ 给工程 leaders 的 customer-facing agent 指南——「到这个十年末，agent 将是大多数软件的主要消费者」",
+      "summary": "Agno 创始人 ashpreetbedi 8/31 发推（95♥）：「Everyone's discovering MCP servers full of raw tools don't work. Serve the agent, not the tools. Let my agent talk to your agent」——人人都发现塞满裸工具的 MCP server 不好使，要服务的是 agent 而不是工具。9/1 再发长文指南，核心判断：到 2030 年 agents 将是大多数软件的主要消费者，拥有最好的 agent 将等同于拥有最好的产品。",
+      "detail_content": "【核心事件】ashpreetbedi（Agno 创始人，本频道长期追踪的 Agentic SE 方法论输出者）在 8 月 31 日到 9 月 1 日连续输出两条内容：一条是 95♥ 的 MCP 反思推文，一条是给工程 leaders 的 customer-facing agent 构建指南（X 长文）。\n\n【关键细节与引用】MCP 推文原文：「Everyone's discovering MCP servers full of raw tools don't work. Serve the agent, not the tools. Let my agent talk to your agent.」（人人都发现塞满裸工具的 MCP server 不好使。服务 agent，而不是服务工具。让我的 agent 直接跟你的 agent 对话。）指南的核心论断：「By the end of this decade, agents will be the primary consumer of most software and having the best agent will be synonymous with having the best product」（到这个十年末，agent 将是大多数软件的主要消费者，拥有最好的 agent 将等同于拥有最好的产品。）\n\n【背景与上下文】这条 MCP 反思与 Gergely 上周 1862♥ 的 MCP 宣言（「除非你是前沿实验室别造 agent，给我 MCP 接口」）、Slack 用 MCP 支持时间线赢得 Meta 大单形成三方互证，但视角不同：Gergely 站在「别造轮子」的工程管理侧，ashpreetbedi 站在「接口要为 agent 设计」的产品侧。共同指向：MCP 生态正在从「暴露一堆 REST 工具」的第一代，进化到「为 agent 消费习惯重新设计接口」的第二代。此前他曾提出「memory 是错误抽象，agent 需要 learning」（146♥），这条 MCP 观点延续了他一贯的「抽象层需要重设计」思路。\n\n【影响与前瞻】对 Eason：银行开放 API/MCP 给 agent 消费者（企业客户、合作方 agent）时，「裸工具列表」式接口已被实践证伪。设计原则应该是：面向 agent 的任务语义（high-level intent）而非工具语义（low-level operation）。Meta/Slack 的案例说明这个能力已经开始影响采购决策。",
+      "source": "X：Ashpreet Bedi (@ashpreetbedi)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/ashpreetbedi/status/2094568284850893188",
+      "timestamp": "2026-08-31T23:29:00Z",
+      "importance": 7,
+      "tags": [
+        "MCP",
+        "agent接口设计",
+        "ashpreetbedi",
+        "Agno"
+      ],
+      "batch_time": "2026-09-02T10:15:00+08:00"
+    },
+    {
+      "title": "RLanceMartin 实测贴士爆火（868♥）：Fable 5.1 低 effort 模式性价比反超——CursorBench 上以 1/3 成本打平 Fable 5 高 effort",
+      "summary": "Anthropic 员工 RLanceMartin（LangChain 前研究负责人）发 Fable 5.1 使用贴士：在 CursorBench 3.2.0 上，Fable 5.1 低 effort 与 Fable 5 高 effort 打平，成本只有 1/3；低 effort 的 Fable 5.1 在 $/task 上往往优于 Opus 和 Sonnet 且得分更高。对新模型的正确打开方式不是无脑切旗舰，而是重新校准 effort/成本曲线。",
+      "detail_content": "【核心事件】9 月 1 日 Fable 5.1 发布当天，RLanceMartin 发出 868♥ 的实测贴士推文，给出与新模型升级直接相关的成本视角：模型升级的正确姿势不是直接切换，而是重测 effort 档位与成本的最优组合。\n\n【关键细节与引用】推文原文：「Fable 5.1 at low effort is often competitive with Opus and Sonnet on $ / task while scoring higher. on CursorBench 3.2.0, Fable 5.1 at low effort is at parity w/ Fable 5 at high effort at a third of the cost.」（Fable 5.1 低 effort 在每任务成本上往往与 Opus/Sonnet 竞争的同时得分更高。在 CursorBench 3.2.0 上，Fable 5.1 低 effort 与 Fable 5 高 effort 持平，成本仅三分之一。）\n\n【背景与上下文】RLanceMartin 7 月加入 Anthropic（此前是 LangChain 的研究负责人，本频道追踪的 Programmatic Tool Calling 作者），他此前发布的 Fable 5 性能-成本测量（90♥）和 brain/hands 分离架构讲演都是高信息量输出。这条贴士结合 ai-frontier 昨天收的 cache read 降价 75%（$1→$0.25/M）来看更完整：Fable 5.1 的 agentic 负载降价是「模型档位 × effort 档位 × cache 折扣」三层叠加的。\n\n【影响与前瞻】对 Eason 的团队成本管理直接可用：Claude Code 团队升级 Fable 5.1 时，先跑一遍「低 effort + 新模型」的基准测试再定默认档位，典型 agentic 负载叠加 cache 降价最高可省 45%（Anthropic 官方口径）。这套「effort 校准」方法论适用于所有支持 effort 参数的模型，不只是 Claude。",
+      "source": "X：Lance Martin (@RLanceMartin)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/RLanceMartin/status/2094854835854295296",
+      "timestamp": "2026-09-01T18:28:00Z",
+      "importance": 7,
+      "tags": [
+        "Fable 5.1",
+        "成本优化",
+        "effort校准",
+        "Claude Code"
+      ],
+      "batch_time": "2026-09-02T10:15:00+08:00"
+    },
+    {
+      "title": "latent.space 周报把「harness engineering」正式命名为核心 AI 工程技能——context 管理成为独立研究前沿",
+      "summary": "latent.space 最新 AINews 周报总结出一个反复出现的主题：「harness engineering is becoming a core AI engineering skill」——多位独立从业者同时提出：非 vibe coding 的核心工作正在变成「看 trace、喂 RL 环境」。同刊还报道两篇 context 管理论文（WikiSkill/SKILL.state 用显式可变状态替代无限增长的对话历史；腾讯 ContextPilot 让 agent 编辑自己的工作上下文并按编辑粒度给 reward）。",
+      "detail_content": "【核心事件】latent.space 的 AINews 周报在汇总本周社区讨论时提炼出一个共识性判断：「Harness engineering」正在成为核心 AI 工程技能。证据是多个独立信源同时指向同一结论：@omarsar0 明确把 harness engineering 与 evals 并列；@dejavucoder 把非 vibe coding 定义为「increasingly about watching traces and feeding RL environments」（越来越关乎看 trace 和喂 RL 环境）；@AlexatVester 在问谁来做开源的 Codex 式 in-app browser。\n\n【关键细节与引用】同刊两个高信号研究动态：1) Google 及合作者的 WikiSkill/SKILL.state——用显式可变状态和持久化技能知识替代不断增长的对话历史，报告结果是长程任务准确率更高且累计 token 更少；2) 腾讯 ContextPilot——训练 agent 编辑自己的工作上下文，reward 直接打到「具体哪次上下文编辑」的粒度，比粗粒度 RL credit assignment 更精准。工程侧还有 DeepSeek Harness v0.1.2-alpha 的教训：插件化 agent 平台仍在定义公共边界，DOM 注入、内部符号、自定义 session 事件类型在快速迭代下特别脆。\n\n【背景与上下文】这是本频道连续第三周收到 harness 工程化信号：Sapient PRAXIST 开源编排打赢 Claude Code（8/28）、NVIDIA AVO 把 Opus 5 的 ARC-AGI-3 从 30% 抬到 100%（8/24）、Cloudflare 治理三连发（8/24）。latent.space 的命名意味着这个话题从个案发现进入「有名字的学科」阶段。\n\n【影响与前瞻】对 Eason：AI Coding 推广的下一步培训重点不是「怎么写 prompt」而是「怎么看 trace、怎么设计验证循环、怎么管 context」——这三个技能构成 harness engineering 的实操面。招聘和考核都可以开始用这套词汇。ContextPilot 的「编辑级 reward」思路对设计 agent 质量考核也有启发：奖励要打到具体动作粒度，而不是笼统的结果评分。",
+      "source": "latent.space",
+      "source_type": "tavily",
+      "url": "https://www.latent.space/p/ainews-fals-h3-max-live-breaks-the",
+      "timestamp": "2026-09-01T00:00:00Z",
+      "importance": 7,
+      "tags": [
+        "harness engineering",
+        "context管理",
+        "latent.space",
+        "AI工程技能"
+      ],
+      "batch_time": "2026-09-02T10:15:00+08:00"
+    },
+    {
+      "title": "Pragmatic Engineer 五周年：1.1M 订阅、数万付费、「工程师写给工程师」模式验证——Gergely 同时发起万元征文「软件工程正在如何改变」",
+      "summary": "9 月 1 日 Pragmatic Engineer 满五年（372♥ + 长文复盘）。2021 年创办时「软件工程师写给软件工程师的付费 newsletter 有没有市场」是个未知数，现在答案是 1.1M 读者、数万付费订阅、50 万 YouTube 订阅。Gergely 同时宣布年度订阅回到 $100 的创始价，并发起最高 $10,000 奖金的征文比赛，题目就是「Software is changing faster than ever」。同期他评论 AI 对内容生态的影响：AI slop 泛滥反而推高「pre-AI 作者」的可信度溢价。",
+      "detail_content": "【核心事件】The Pragmatic Engineer 创刊五周年（几乎精确到日）。Gergely 发推（372♥）回顾：「It wasn't clear that there'd be demand for a publication written by a software engineer, for software engineers. Turns out, there was, and far more」（当时并不清楚会不会有人要看一个软件工程师写给软件工程师的刊物。结果有，而且远超预期。）今天的数据：1.1M+ 读者、数万付费订阅（$15/月或 $150/年）、50 万+ YouTube 订阅。\n\n【关键细节与引用】复盘里的关键判断：这封 newsletter「15 years in the making」——2007 年开博客、2015 年更名、2019 年做邮件 digest、2021 年才收费，「not an overnight success」。同期推文里他对 AI 时代内容生态的判断值得记录：「I'd expect demand for 'pre-AI' publications/authors to increase... AI creates a LOT of 'slop': low-quality writing + videos」（我预期对 pre-AI 出版物/作者的需求会上升……AI 制造了大量 slop：低质量文字和视频）——slop 泛滥反而让可验证的人类性产生溢价。五周年动作：年度订阅重置回 $100 创始价（9/8 截止）、发起总额最高 $10,000 的征文比赛「how things are changing for you」、公布 9 月纽约两场线下活动。\n\n【背景与上下文】这与其 8/28 那条 223♥ 的「拉黑 AI 生成投稿」形成完整闭环：一个靠写作立足的人对 AI 内容的态度不是恐慌而是「划界」。对内容型业务的启示在 banking-ai 和 ai-org 频道都有映射——中文财经内容圈的「AI 生成研报泛滥」正在制造同样的可信度溢价机会。\n\n【影响与前瞻】对 Eason 的参考价值：1) 内部知识分享（工程团队写实践复盘）在 AI 时代价值上升而非下降，因为「人写的、可问责的」内容正在变稀缺；2) 征文比赛题目本身就是风向标——「软件工程正在如何改变」正是当下工程管理最值得内部讨论的议题，微众内部完全可以复制这个机制。",
+      "source": "The Pragmatic Engineer",
+      "source_type": "tavily",
+      "url": "https://newsletter.pragmaticengineer.com/p/the-pragmatic-engineer-five-years",
+      "timestamp": "2026-09-01T17:17:00Z",
+      "importance": 6,
+      "tags": [
+        "Pragmatic Engineer",
+        "五周年",
+        "AI slop",
+        "内容可信度"
+      ],
+      "batch_time": "2026-09-02T10:15:00+08:00"
+    },
+    {
+      "title": "Gergely 转述纽约 VPE 观察：AI 公司的 billboard 军备竞赛是烧钱行为艺术——「Devin 的广告到处都是，纯属浪费钱」",
+      "summary": "Gergely 转述一位纽约 VPE 的话（210♥）：「纽约到处都是 AI 公司的 billboard，Devin 的广告无处不在，真是浪费钱」。这个一手观察与 AI 广告投放退潮的行业数据互相印证——当 B2B AI 产品的采购决策越来越依赖「同行工程团队的实际使用反馈」而非品牌曝光时，户外广告对 developer 工具的转化价值正在被从业者集体质疑。",
+      "detail_content": "【核心事件】9 月 1 日 Gergely 发推（210♥）转述一个月前与一位纽约 VPE（工程副总裁）的对话（paraphrase）：「It's wild how here, in NYC, all these AI co's buy billboards. So many of them. There's eg all these Devin ones everywhere I go. What a waste of money.」（纽约到处都是 AI 公司买广告牌，Devin 的广告无处不在。真是浪费钱。）\n\n【关键细节与引用】这条推文的信号价值在于信源身份：说话的是负责工具采购决策的 VPE 本人，而不是营销从业者。Gergely 补充说他最近格外关注 Meta 相关信息（因为他也在追踪「Meta 因 AI 缩减团队规模 60%」的 Reuters 深度报道）。\n\n【背景与上下文】过去一年 AI coding 工具的营销投放确实激进——Devin、Lovable、Cursor 都投过大规模户外广告，与 2010 年代 SaaS 时代的 Google/Oracle billboard 大战相似。但开发者工具的采购路径历来是「工程师试用 → 团队采用 → 组织采购」，brand 广告在这条链路上的作用天然弱于 PLG（产品驱动增长）。当 Gergely 的读者群（资深工程师和工程管理者）开始公开表达反感时，说明泡沫期的「融资 → 投放」循环正在被一线决策者用脚投票。\n\n【影响与前瞻】对 Eason：这从一个侧面印证了 AI 工具选型「看同行实证而非广告」的原则——banking-ai 频道持续追踪的 Evident 榜单、同业案例的价值正在上升，而厂商营销声量的参考价值在下降。另外这是一个不错的组织行为观察样本：当行业从「抢心智」转入「拼留存」，营销预算的边际效用会断崖式下跌。",
+      "source": "X：Gergely Orosz (@GergelyOrosz)",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2094787336240275732",
+      "timestamp": "2026-09-01T13:59:00Z",
+      "importance": 6,
+      "tags": [
+        "AI营销",
+        "DevTool",
+        "Gergely",
+        "采购决策"
+      ],
+      "batch_time": "2026-09-02T10:15:00+08:00"
+    },
     {
       "title": "OpenClaw 2.0 最大版本更新：易用性拉满、安全默认全关——Register 批「glitter 洒在慢烧的垃圾箱上」",
       "summary": "OpenClaw 基金会发布史上最大更新 2.0：安装流程重做（配置后移、边聊边设置）、浏览器应用重建成 first-class 体验、新增共享云会话（多人协作同一 Claw 且记忆不丢）。但 Register 逐条核对 patch notes 后尖锐指出：共享会话控制明说「不是租户隔离也不是安全边界」、secret store 明文存储依赖文件系统权限、不可信代码沙箱默认关闭。给广大用户降低门槛的同时没有默认带安全，等于放大既有风险。",
@@ -386,25 +528,6 @@
       "batch_time": "2026-08-29T10:00:00+08:00"
     },
     {
-      "title": "Gergely 拆解 Asana「$12K 干完 $6M」：5 年是「优先级推算的完工时间」、25% 早在 2024 年就迁完了——AI 迁移案例的反 slop 核查范本",
-      "summary": "Pragmatic Engineer 免费专题把 OpenAI 官宣的 Asana 案例（两周 $12K 替换五年 $6M 的 Enzyme 迁移）拆到原子级：Gergely 采访 Asana 开发生产力负责人 Dan Ubilla 确认——「5 年」是 opportunistic 优先级下的推算完成时间而非持续投入，$6M 是 back-of-envelope 估算且偏保守，且 25% 文件 2024 年就用 LLM 迁完了。同期 Airbnb 3500 测试 6 周迁完（75% 文件 4 小时内完成）、Uber 60 万测试 4 个月 2 工程师、Bun 53 万行两周 $165K。",
-      "detail_content": "【核心事件】\n\n8 月 27 日 Gergely Orosz 发《We need to talk about migrations with AI》，起因是 OpenAI 官网案例：「Asana cleared 5 years of engineering work in 2 weeks with Codex」——$12K 成本对比 $6M 估算。Gergely 先展示 Enzyme 与 React Testing Library 的语法差异确实巨大（两框架测试哲学根本不同：组件实例 vs 渲染后 DOM），再逐项核查数字。\n\n【关键细节与引用】\n\nGergely 找到 Asana Developer Productivity 负责人 Dan Ubilla 澄清：一、Asana 2024 年就开始 Enzyme 迁移，4000+ 文件中先迁了 25%（挑 ROI 最高的），剩余部分被定为 opportunistic（「nice to have」）优先级；二、「5 年」是这个低优先级任务按现状推算的自然完工时间，不是「团队连干 5 年」；三、$6M 是信封背面估算：单文件人工耗时×3000+ 文件×工程师时薪，没考虑熟练度递增也没考虑 LLM——「这个数字可能高估了，但重点是传达工作量之大」；四、团队选这个低优先级任务就是为了证明 LLM 能大幅加速迁移。Gergely 结论：「AI makes impractical migrations doable」——$6M 还是 $1M 不重要，pre-AI 这就是不该做的项目。\n\n【背景与上下文】\n\n横向坐标：Airbnb 2025 年 3 月用 Claude 3.7 Sonnet 六周迁完 3500 个组件测试（估算 1.5 人年，建重试循环后 75% 文件 4 小时迁完，97% 四天搞定期余 3% 一周收尾）；Uber 四个月两工程师完成 JUnit 4→5（60 万测试、1500 万行代码、改动 125 万行）；Bun 两周把 53 万行 Zig 迁到 Rust 花 $165K API 费。pre-AI 对照：Sentry 2021 年花 1.5 年 10 个工程师迁 1100 文件。这是 Gergely 继 OpenAI/Asana 案例首次核查（8/21，识破「5 年是排期非工时」）后的完整版，从「质疑」进阶到「拿到一手信源重构叙事」。\n\n【影响与前瞻】\n\n对 Eason 的反 slop 弹药库：厂商案例三问之后现在有了第四问——「分母是怎么算的」。汇报里引用任何「AI 省 X 钱」案例前，先问估算基准是否把熟练度递增、LLM 辅助、优先级权重算进去。Gergely 的正面判断也值得记：长尾积压的「灵魂抽干型」迁移（testing 框架、构建系统、语言版本）会集中爆发，因为这类任务验证回路清晰、风险可控，是 agent 最佳战场——银行的技术栈现代化清单可以按这个标准重排。",
-      "source": "The Pragmatic Engineer",
-      "source_type": "tavily",
-      "url": "https://blog.pragmaticengineer.com/the-pulse-we-need-to-talk-about-migrations-with-ai",
-      "timestamp": "2026-08-27T18:04:54Z",
-      "importance": 8,
-      "tags": [
-        "Gergely",
-        "反slop",
-        "Asana",
-        "Airbnb",
-        "代码迁移",
-        "案例核查"
-      ],
-      "batch_time": "2026-08-29T10:00:00+08:00"
-    },
-    {
       "title": "GitLab CEO 长文《When code is abundant》：代码生产丰裕之后稀缺的是信任——新度量单位 cost per accepted change，Stripe 每周千条 minion PR、Amplitude PR 周期 5.2 小时砍到 44 分钟",
       "summary": "GitLab CEO Bill Staples 发表 8 个月思考结晶的长文：软件工程 60 年围绕「代码珍贵」组织，LLM 打破这个约束后，瓶颈从「生产代码」移向「信任代码」。提出新经济单位 cost per accepted change（生成只是一项，环境/CI/审查/治理占大头），并给出 Stripe（每周 1000+ minion PR）、Amplitude（6 个月 PR 3x、bug 从 715 降到 319、CI 从 30 分钟到 3-4 分钟）、Spotify（Honk 1500+ AI PR）三个生产样本。金句：「30 分钟的 CI 管道击败你指向它的任何模型」。",
       "detail_content": "【核心事件】\n\n8 月 24 日 GitLab CEO Bill Staples 发布《When code is abundant》，从 1 月的董事会备忘录发展而来。核心论点：LLM 让代码生产变得丰裕（abundant），但好软件依然稀缺——correct, secure, performant, compliant, maintainable 的缺口才是新瓶颈。60 年来软件工程的一切安排（保遗留系统、背技术债、重流程保护变更成本）都建立在「代码珍贵」之上，这个约束松动后整个系统随之移动。\n\n【关键细节与引用】\n\n三个生产样本：Stripe minions 每周 1000+ PR 完全由 agent 生成、人类审查；Amplitude 六个月 PR 数 3x、月报 bug 从 715 降到 319、PR 周期时间 5.2 小时→44 分钟、前端 CI 30 分钟→3-4 分钟，且设计师/PM/营销的非工程师 PR 从约 0 涨到 5%；Spotify 背景 agent Honk 已合并 1500+ AI PR。金句：「A thirty-minute CI pipeline defeats every model you point at it」「It will simply move the queue」（生成提速 10 倍但 CI/审查不动，只是把排队挪了位置）。Amplitude 的教训被点破：环境慢、CI 慢、工具不一致这些问题存活多年，只因代码产量限制了变更进入系统的速度——agent 拿掉油门后验证和审查成了堵点，Amplitude 重建的基础设施「很少是 AI，是因 AI 改变吞吐而变得必要的基础设施工程」。\n\n【背景与上下文】\n\n文章直接回应 Anthropic 8/21 的《AI-Native SDLC Playbook》（「Code is no longer the bottleneck」），并给出 GitLab 的产品化答案：agent platform + machine-scale execution + durable context + governance 四层架构，Duo Agent Platform、Orbit 上下文图、Governance for Agents。还提出三模式共存框架（人类控制的遗留系统/agent 加速开发/自主开发），警告「把所有工作负载过早塞进 Mode 3 可能是企业转型期最贵的错误之一」。自主性判定三问：agent 能用现有上下文做出有用变更吗？变更不靠人逐行读能验证吗？错了是系统接住还是靠人？\n\n【影响与前瞻】\n\n与 Uber 成本方程、Augment 度量分层构成「软件工厂三部曲」：Uber 管成本端、GitLab 定义价值单位、Augment 分层度量。「cost per accepted change」是可以直接搬进银行 AI 考核的度量——比「代码行数」「PR 数」都诚实，它逼着把验证、审查、治理的隐性成本显性化。CEO 署名但通篇硬数据，是平台厂商架构文里少见的可读样本。注意其商业立场：结论导向「模型可替换、agent 归客户、组织记忆要跨厂商存活」，读时打折但不减参考价值。",
@@ -724,146 +847,6 @@
         "实测"
       ],
       "batch_time": "2026-08-27T10:20:00+08:00"
-    },
-    {
-      "title": "Ramp 自建 coding agent Inspect 深度复盘：75% 合并 PR 来自自建工具，5.5 人团队撬动「非前沿实验室也能造出更强的 harness」",
-      "summary": "Pragmatic Engineer 8/25 发布对 Ramp 内部 coding agent Inspect 的深度采访：75% 的合并 PR 由 Inspect 发起，7 月总 session 数破 100 万。自建理由是第三方 harness 跑在本地机器只能开 1-2 个并行 session、缺内部集成、无法验证自己的改动。团队仅 5.5 人（4 工程师+1 director+兼职 PM），150+ 工程师贡献过代码，80% 的 Inspect 代码由 Inspect 自己写。Gergely 判断：「buy, don't build」的行业惯例在 AI 工具上可能不成立。",
-      "detail_content": "【核心事件】Pragmatic Engineer 8 月 25 日发布深度报道《Why Ramp built its own in-house coding agent, Inspect》，Gergely Orosz 与 Jessica Salmon、Ivan Klaric 采访了 Ramp CTO Rahul Sengottuvelu、工程负责人 Hamid Dadkhah 和 Inspect 创始工程师 Zach Bruggeman。核心数字：Ramp 工程师可以自由选用任何工具，但 75% 的合并 PR 现在由 Inspect 发起；v2 版 2025 年 11 月上线，两个月后（今年 1 月）就达到 60% PR 占比，5 月升至 75%，7 月总 session 数突破 100 万。云沙箱从零到完全可用环境启动时间不到 5 秒。\n\n【关键细节与引用】Inspect 的定义是「跑在远程沙箱上的 coding agent，能访问大多数内部数据源，并在远程机器上验证所有后端和前端改动」。技术栈：OpenCode（开源 coding agent）做 harness、Modal 沙箱、Cloudflare Durable Objects + Agents SDK、React/Vite、SQLite。沙箱内打包了 Postgres/Redis/RabbitMQ/Temporal 等开发服务加 Chromium 和 VS Code Server。最关键的差异化是验证闭环：Inspect 跑测试、查遥测、查询 feature flags，前端改动自动截图验证——原文指出「多数第三方 AI harness 开箱即用做不到这些验证，因为它们缺遥测和 feature flag 系统的内部集成」。Ramp 还在 Inspect 平台上建了 200 多个内部 agent：ReviewBuddy 代码审查（一名工程师一周写完）、Oncall Assistant 事故响应、Testo 前端 QA（自动生成 Playwright 测试）、Ramp Research 数据分析、Sentry/Datadog 告警自动起草 PR。所有 Inspect session 默认公开可协作，不允许关闭。\n\n【背景与上下文】这不是孤例：Block 的叫 Goose（已开源）、Stripe 的叫 Minions、Shopify 的叫 River——一条「自建内部 harness」的完整战线。值得注意的是，此前行业普遍把 Ramp 当作 Claude Code 的大客户案例，但本文揭示其 75% PR 量级的绝对主力是自建 Inspect（harness 用的是 OpenCode 而非 Claude Code），模型层才是可替换的。Inspect 起源也很反直觉：v1 是给设计师改前端文案的 Chrome 扩展，两个「对 AI 不完全买账」的前端工程师负责重构，反而做成了平台。\n\n【影响与前瞻】Gergely 的核心判断是「AI 让 build 变得更便宜、更有利可图，'buy, don't build' 的工具惯例可能不适用于 AI 工具」，并预言 Codex/Claude Code/Cursor 很快会「复制」这些公司已经建好的东西（远程沙箱、内部集成、验证闭环）。对银行等大型组织的参照价值：5.5 人团队撬动 75% PR 的杠杆率、150+ 人共建的内部开源模式、以及「工程师自选工具 + 自建最优」并行的组织策略。caveat：Ramp 是工程文化极强的 fintech，沙箱内的内部集成深度依赖其平台工程基础，传统银行的迁移成本远高于表面数字所示。",
-      "source": "Pragmatic Engineer",
-      "source_type": "tavily",
-      "url": "https://newsletter.pragmaticengineer.com/p/why-ramp-built-inspect",
-      "timestamp": "2026-08-25T15:20:00Z",
-      "importance": 9,
-      "tags": [
-        "Ramp",
-        "自建harness",
-        "coding agent",
-        "Pragmatic Engineer",
-        "OpenCode"
-      ],
-      "batch_time": "2026-08-26T10:00:00+08:00"
-    },
-    {
-      "title": "「编排即产品」：ashpreetbedi 长推正面反驳 MCP-only 宣言——通用 agent 编排复杂工具链「是可笑的」",
-      "summary": "Anthropic 员工 ashpreetbedi 8/25 发长推，直接回应上周 Gergely「公司别做 agent、只暴露 MCP/CLI」的流行观点（该宣言 1862♥ 为上周工程圈最高互动）。核心反驳：扁平的工具调用列表无法暴露产品全部能力，真实工作流的 API 调用需要精心编排，headless 界面下授权（authz）极难做好。结论是企业需要三件套：MCP 接口 + 产品内 agent + 产品 agent 通过 MCP 暴露给任意第三方 agent。",
-      "detail_content": "【核心事件】Agentic Software Engineering 方法论代表人物、现 Anthropic 员工 ashpreetbedi（@ashpreetbedi）8 月 25 日发布长推，针对「公司应该停止构建 agent、只暴露 MCP/CLI」的流行观点发起正面反驳。这一观点正是 Gergely Orosz 上周宣言的核心主张（「除非你是前沿实验室，否则我不想用你的 agent——给我 MCP 接口」），两条推文相隔四天，构成 agent 入口之争最直接的隔空辩论。\n\n【关键细节与引用】他的论证分三层：其一，「几乎不可能通过扁平的工具调用列表暴露产品的全部能力」（It is almost impossible to expose the full strength of a product through a flat list of tool calls）；其二，真实工作流背后的 API 调用需要精心编排（careful orchestration）；其三，headless 界面下的授权极难处理。解决方案是三件套：「1. 一个用户可以接入任何 agent 的 MCP；2. 一个产品内 agent——公司控制、拥有并从中学习的精心策展体验，它是使用产品的新方式；3. 产品 agent 通过 MCP 暴露——用户通过自己选择的 agent 使用你公司的 agent。」简单请求（如「查我的 Stripe 订阅」）走 MCP 工具，复杂体验走公司自己的 agent。金句：「The orchestration is the product（编排即产品）。」以及「期望通用 agent 每次都按正确顺序编排复杂的工具调用链，是可笑的（laughable）」。他进一步类比：「说'给我全部工具'就像说'让我直接用你的 REST API'——我们只是还没见过好的 agentic 体验，就把这个观点立为标准，意味着我们永远都不会见到了。」\n\n【背景与上下文】这场辩论的背景是「agent 层坍缩」论：Gergely 认为用户入口会收敛到少数几个超级 agent，公司只需提供 MCP；而 ashpreetbedi 代表产品公司立场——编排质量本身就是差异化，放弃 agent 层等于放弃产品体验。同期 Ramp/Stripe/Block/Shopify 自建内部 harness 的实践（见同批次 Ramp Inspect 报道）从企业内部侧印证了「编排就是护城河」，但注意两者语境不同：Gergely 宣言针对对外产品交互层，Ramp 等自建的是内部工具层。\n\n【影响与前瞻】对 Eason 的直接价值：这两方论点可以拼成一个完整的决策框架——对外（客户交互）按 ashpreetbedi 三件套评估：MCP 接口是否完备、产品内 agent 是否承载核心体验、是否可被第三方 agent 调用；对内（工程效能）参照 Ramp 模式：自建 harness 的价值在内部集成深度与验证闭环，而非模型本身。银行推 agentic 服务时的「入口焦虑」（被 ChatGPT/超级 agent 管道化 vs 自建封闭 app）现在有了正反双方的完整论据链。",
-      "source": "X：ashpreetbedi (@ashpreetbedi)",
-      "source_type": "opentwitter",
-      "url": "https://x.com/ashpreetbedi/status/2092370405168414951",
-      "timestamp": "2026-08-25T21:55:53Z",
-      "importance": 8,
-      "tags": [
-        "MCP",
-        "agent入口之争",
-        "orchestration",
-        "Anthropic"
-      ],
-      "batch_time": "2026-08-26T10:00:00+08:00"
-    },
-    {
-      "title": "Andrew Ng 发布 OpenWorker 网安版：开源可审计 harness + 三个内置安全 agent，主打「敏感代码不离机器」",
-      "summary": "Andrew Ng 8/25 宣布开源 agent OpenWorker 发布新版本，内置三个网络安全 agent：代码漏洞扫描、依赖供应链注入检测、云安全配置攻击面检查。核心卖点是 harness 完全开源可审计（「确认我们没有偷建后门把你的代码和数据外传」），且支持开源权重模型完全本地运行。他特别指出：合法安全工作（如复现已知漏洞做防御）在闭源模型上会触发拒绝。7/23 首发 9732♥，本条 1875♥。",
-      "detail_content": "【核心事件】Andrew Ng 8 月 25 日宣布其开源 agent 项目 OpenWorker 发布重大更新，从通用任务执行 agent 转向内置网络安全工作流。OpenWorker 7 月 23 日首发时定位是「不只聊天、而是交付完成的工作」——整理文档、发 Slack、更新日历。首发后团队发现用户最集中的使用场景是网络安全，于是本版本直接内置三个安全 agent：(1) 扫描代码漏洞；(2) 扫描依赖的供应链注入（supply chain injections）；(3) 检查云安全配置的攻击面。Ng 将此归入「shift left」运动——让开发者在部署前完成更多安全工作。\n\n【关键细节与引用】推文核心论点：「攻击者已经在用 AI；OpenWorker 致力于给防御者同样的杠杆（Attackers are already using AI; OpenWorker is committed to giving defenders the same leverage）。」架构上的关键选择：agent = 模型 + harness，而 OpenWorker 的 harness 完全开源，「安全团队可以审计它，确认我们没有偷建后门把你的代码和数据外传给某家公司甚至外国对手」。模型层完全自选：开源权重模型可完全本地运行（敏感代码永不离开你的机器）、ChatGPT 订阅、stealth preview 模型如 Ox Alpha、或任何 API key。一个被点名的细节：本地开源模型有助于「合法安全工作（比如复现已知漏洞以做防御）——这类工作在领先的闭源模型上会触发拒绝」。项目由 @rohitcprasad 主导开发。\n\n【背景与上下文】这条新闻落在 agent 安全主线上，与近期 Cloudflare WriteGuard（MCP 写操作四级风险分级）、steipete「No Doors for Agents」（Berkeley 峰会提出权限边界失守）形成呼应，但角度独特：前两者解决「agent 作恶怎么办」，OpenWorker 解决「安全团队自己用 agent 时怎么信任工具链」——开源可审计 harness + 本地模型是给强信任需求场景的答案。这也与 5 月 Composio 凭证泄露事件后「闭源集成平台的凭证风险」讨论形成对照：闭源平台的 OAuth token 和 API key 存放在你无法审计的服务器上。\n\n【影响与前瞻】对 Eason 的参照：银行安全团队评估 agent 工具时的三个新检查项——harness 是否开源可审计、是否支持敏感代码完全本地处理、安全工作流（漏洞复现/渗透测试）是否会被模型供应商的使用政策卡住。OpenWorker 的「shift left + 开源可审计 + 模型自选」组合对强监管行业是当前最完整的主权 agent 选项之一；caveat 是其能力上限依赖所选模型，且「Andrew Ng 名人项目」的工程成熟度需要自行验证（github.com/andrewyng/openworker）。",
-      "source": "X：Andrew Ng (@AndrewYNg)",
-      "source_type": "aihot",
-      "url": "https://x.com/AndrewYNg/status/2092315079576555806",
-      "timestamp": "2026-08-25T18:16:02Z",
-      "importance": 8,
-      "tags": [
-        "OpenWorker",
-        "Andrew Ng",
-        "网络安全",
-        "开源agent",
-        "shift left"
-      ],
-      "batch_time": "2026-08-26T10:00:00+08:00"
-    },
-    {
-      "title": "NVIDIA 实证 harness 战争：AVO 架构把 Claude Opus 5 的 ARC-AGI-3 成绩从 30% 抬到 100%，同一 agent 系统 7 天自主优化 GPU kernel 跑赢 FlashAttention-4",
-      "summary": "NVIDIA 技术博客披露 Agentic Variation Operators（AVO）agent 架构：裸模型 Claude Opus 5 在 ARC-AGI-3 只有 30%，包进 AVO 完整 agent 系统后拿下公开集全部 183 关、100.00 RHAE，比 VISTA 少用 12% 动作。同一套架构跑 GPU kernel 优化：连续自主运行 7 天、探索 500+ 方向、提交 40 个 kernel 版本，在 DGX B200 上比 FlashAttention-4 快最多 10.5%。核心论点：长程自主性能来自系统级架构（持久记忆+监督者），不是模型单点能力。",
-      "detail_content": "【核心事件】\nNVIDIA 研究团队（Terry Chen 领衔）8/21 发布技术博客，宣布其通用 coding agent 系统 AVO 在 ARC-AGI-3 公开集上取得 100.00 RHAE：25 个环境、183 关全部完成，共消耗 6,624 次环境动作。作为对照，裸 Claude Opus 5 在标准 harness 下只有 30% 基线——同一个模型，换一层系统，成绩差 70 个百分点。与 VISTA（此前完成同样 183 关的 harness）相比少用约 12% 动作（6,624 vs 7,542），但 NVIDIA 明确标注「这不应被视为受控消融实验，两套系统在 agent 后端、观察表示、记忆和上下文管理上都不同」。\n\n【关键细节与引用】\nAVO 的两个核心机制：持久记忆（persistent memory）携带历史实现、评估结果、编译器和 profiler 输出，「让 agent 从当前状态恢复，而不是反复重建搜索」；监督者（supervisor）监控整体轨迹的停滞和非生产循环，在搜索平台期时把主 agent 重定向到替代策略。观察接口上 AVO 用纯文本 64x64 网格，不发任何图像 token。GPU kernel 战绩：注意力 kernel 优化任务连续跑 7 天，比 cuDNN 快最多 3.5%、比 FlashAttention-4 快最多 10.5%，随后仅用约 30 分钟额外自主工作把演化出的 kernel 适配到 grouped-query attention。博客金句：「评估一个模型不等于评估一个 agent」「性能和通用性来自系统级架构，而非模型级能力 alone」。\n\n【背景与上下文】\n这是本频道连续第三周的 harness 主线补上最硬一块实证：8/17 Gergely 立「不建自己 harness 还算严肃科技公司吗」标准，8/22 latent.space《Agent Harness 的演化》给出理论框架（模型不断把 harness 吸进权重），现在 NVIDIA 给出可复现数据。ARC-AGI-3 是交互推理基准：agent 进入无说明、无规则、无目标陈述的陌生环境，必须通过交互推断环境动力学和目标——测的正是长程自主性。\n\n【影响与前瞻】\n对选型决策的直接启示：「买哪个模型」和「建什么 harness」是两个独立决策，且后者的影响力度以十个百分点计。银行语境下，同一 GLM/Claude 在不同编排层下表现差异巨大，采购评估应该测「模型+harness」组合而非裸模型跑分。caveat 三条：这是公开集不是隐藏集；动作数对比非受控实验（NVIDIA 自己承认）；RHAE 是相对首次人类基线的效率指标，与纯准确率口径不同。",
-      "source": "NVIDIA Developer Blog",
-      "source_type": "tavily",
-      "url": "https://developer.nvidia.com/blog/nvidia-avo-reaches-100-on-arc-agi-3-demonstrating-a-frontier-level-general-purpose-architecture-for-long-horizon-autonomous-agents/",
-      "timestamp": "2026-08-21T17:00:00Z",
-      "importance": 8,
-      "tags": [
-        "NVIDIA",
-        "ARC-AGI",
-        "Agent Harness",
-        "Claude Opus",
-        "长程自主"
-      ],
-      "batch_time": "2026-08-25T10:31:00+08:00"
-    },
-    {
-      "title": "OpenAI 深度披露 ChatGPT Work 改造史：内部 98% 员工用 Codex，企业订阅者仅 17%、个人订阅者不到 1%——agent 采用率鸿沟首次有官方数字",
-      "summary": "TechCrunch 8/24 长文披露 OpenAI 如何把对非技术员工「actively hostile」的 Codex 改造成通用 agent 产品 ChatGPT Work。最有价值的是 OpenAI 资助研究的硬数字：6 月 OpenAI 内部 98% 员工在用 Codex，组织订阅者只有 17%，个人订阅者不到 1%。通讯和财务团队最初看到的是「empty diff」式的工程师界面。核心判断：CLI 只覆盖开发者，agent 要到十亿人手里必须换形态——「Windows 取代 DOS 的原因」。",
-      "detail_content": "【核心事件】\nTechCrunch 8/24 刊发对 OpenAI 核心产品负责人 Thibault Sottiaux 和产品负责人 Ambrosino 的深度访谈，讲清 ChatGPT Work（Codex 的通用 agent 化版本）的改造史：OpenAI 自己的通讯和财务团队从「Codex 对他们 actively hostile」的时期开始用起——界面问他们代码问题、展示「你这个东西的 empty diff」。团队从 2 月到现在把它改成通用产品，让非工程师获得工程师已有的体验：一个不只回答问题、而是自主完成多步项目的 AI 工具。\n\n【关键细节与引用】\n文中最硬的数据来自 OpenAI 资助的研究《The Shift to Agentic AI: Evidence from Codex》：6 月时 98% 的 OpenAI 员工在用 Codex，组织订阅者只有 17%，个人订阅者不到 1%。Sottiaux 的话术：「ChatGPT 可以完全自主地、以令人愉悦且安全的方式为你完成非常复杂的任务——这是 OpenAI 的使命，把每个人都带上。」Ambrosino 谈形态选择：「开发者有个 CLI 就够了，但大多数人不用 CLI——Windows 取代 DOS 是有原因的。没有这些模型前面的产品，专家知道怎么得到同样结果，但你到不了十亿用户。」a16z 的 Christian Catalini 提供外部视角：「如果实验室不能快速掌握规模化所需的关键互补资产，价值将流向别处」——垂直对手 Harvey（法律）、Clay（销售）正以模型无关方式抢占非工程人群。\n\n【背景与上下文】\n「非程序员用 AI 造产品」是本频道第一优先级主题：8/17 ABC Legal 非开发者 committee 裂变、8/19 POLYWOOD、8/23 Cloudflare OS「让非技术员工 vibe code 并敢睡觉」都是同一主线的不同切面。本文补上的是采用率的分母——工具再强，渗透率才是转型进度的真实刻度。\n\n【影响与前瞻】\n对 Eason 的直接用途：微众内部推广 AI 的采用率对标数字。98% 是「造工具的人用工具」的严重偏差样本，17% 的组织订阅渗透才是真实企业基线——向管理层汇报时可以用这三档数字说明「我们处于哪个阶段」。形态结论也直接：CLI 覆盖工程师，要让风控、运营、HR 用起来必须给 GUI 产品化封装。caveat：这是 OpenAI 资助的研究 + 产品宣传期访谈，数字方向可信但绝对值有自利放大动机。",
-      "source": "TechCrunch",
-      "source_type": "tavily",
-      "url": "https://techcrunch.com/2026/08/24/openai-is-building-an-ai-agent-for-everything-will-everyone-use-them/",
-      "timestamp": "2026-08-24T15:00:00Z",
-      "importance": 8,
-      "tags": [
-        "OpenAI",
-        "ChatGPT Work",
-        "采用率",
-        "Codex",
-        "非工程师"
-      ],
-      "batch_time": "2026-08-25T10:31:00+08:00"
-    },
-    {
-      "title": "steipete 本周工程圈最高互动宣言（2198♥）：「我们必须远离无法用 prompt 修改的软件」——agent 原生软件的设计底线",
-      "summary": "Peter Steinberger 8/24 一句话推文拿下 2198♥、18.4 万浏览，成为本周工程圈最高互动：「We need to get away from software that we can't change with a prompt.」把 agent 原生软件的设计标准推到极限：不能被 prompt 修改的软件就是遗留系统。同日他另一条 TIL「prompt kiddie」（629♥）自嘲式新词走红——只会 prompt 不会原理的人，vibe coding 污名化的反弹开始出现。",
-      "detail_content": "【核心事件】\n8/24 steipete（Peter Steinberger，OpenClaw 最重度知名用户，57 万粉丝）发推：「We need to get away from software that we can't change with a prompt.」（我们必须远离那些无法用 prompt 修改的软件。）24 小时内 2198♥、18.4 万浏览，是本周工程 Twitter 最高互动单条。同日他的另一条「TIL: prompt kiddie」拿到 629♥——这个类比 script kiddie 的新词指只会写 prompt、不懂底层原理的人，评论区大量工程师用它自嘲。\n\n【关键细节与引用】\n这条推的分量来自 steipete 过去一个月的连续铺垫：8/21 他在 Berkeley Agentic AI Summit 提出「No Doors for Agents」（用户能看到的一切 agent 都能看到，UI 层权限隔离已失守），此前还有「环境隔离是唯一控制面」的判断。这次他把视角从「agent 怎么被治理」翻转到「软件本身该怎么设计」——判断标准激进到一句话：改不动的软件 = 遗留系统。\n\n【背景与上下文】\n这是 agent 原生软件设计哲学的最新一极。光谱另一极是 Cloudflare OS 的 capability 治理路线（8/23 已收：让非技术员工 vibe code 并敢睡觉），中间是 Anthropic SDLC playbook 的 hooks 流程治理（8/21 已收）。三者其实回答同一问题：当修改软件的主体从人变成 agent，软件的可修改性和可治理性怎么同时成立。\n\n【影响与前瞻】\n对 Eason：这条推在银行语境下天然有两种读法——激进读法（变更管理必须重构，否则 agent 时代的交付速度优势全无）和保守读法（「prompt 可改」在强监管行业恰恰是变更审计的噩梦，Cloudflare 的 capability 路线才是能落地的版本）。汇报时值得把这光谱两端摆出来。「prompt kiddie」一词的流行也值得留意：社区对 vibe coding 的反噬情绪在积累，与 Eason 一贯批判的 AI slop 现象同源。",
-      "source": "X：Peter Steinberger (@steipete)",
-      "source_type": "opentwitter",
-      "url": "https://x.com/steipete/status/2091923535513928015",
-      "timestamp": "2026-08-24T16:20:11Z",
-      "importance": 7,
-      "tags": [
-        "steipete",
-        "Agent原生",
-        "软件设计",
-        "OpenClaw"
-      ],
-      "batch_time": "2026-08-25T10:31:00+08:00"
-    },
-    {
-      "title": "Gergely 511♥：让 agent 高效产出优质软件的答案，是重新发现 25 年前的软件架构——Ousterhout 浅/深模块、曳光弹开发、外科手术团队",
-      "summary": "Gergely Orosz 8/24 推文（511♥、3.7 万浏览）：「当你想办法让 agent 更高效地构建优质软件时，你开始重新发现几十年前的软件架构和编程实践——浅模块 vs 深模块、曳光弹、外科手术团队。」agent 时代不是架构知识的贬值而是升值。同日他预告 Pragmatic Engineer 明日发某大厂自建 AI coding harness 深度稿：2022-23 自建 CDE 的公司，现在把自建 background agent 跑在自己的 CDE 上。",
-      "detail_content": "【核心事件】\nGergely Orosz 8/24 发推：「当你寻找让 agent 更高效地构建良好、优质、有用软件的方法时，你开始发现（或重新发现）几十年前的软件架构和编程实践——Shallow vs deep modules（浅模块 vs 深模块）、Tracer bullets（曳光弹开发）、The surgeon team（外科手术团队）。」24 小时 511♥、3.7 万浏览。他点名的三个概念分别出自 Ousterhout《A Philosophy of Software Design》、《The Pragmatic Programmer》和《人月神话》——全部是 25 年以上的老书。\n\n【关键细节与引用】\n这不是他临时起意：2025 年 3 月他就发过「这么多人谈 AI coding 工具在复杂度/上下文长度上崩溃，却基本没人谈让 dev 和 AI 都容易维护演进的软件架构」。本次推文是那个判断的 agent 时代升级版。同日另一条 56♥ 推文做 pattern match 预告：「2022-2023 年自建云端开发环境（CDE）的那家公司，现在建了自己的 AI coding harness 和自己的后台 agent——后台 agent 就跑在它 2023 年的 CDE 上。iykyk」，并在回复中确认深度稿「明天发」（即今日 8/25）。\n\n【背景与上下文】\n与 steipete 同日的「prompt 可改」宣言形成有趣互补：steipete 讲软件对 agent 的可修改性（激进端），Gergely 讲老架构原则恰好是 agent 的可理解性接口（务实端）——浅模块深接口、清晰的边界本来就是降低认知负载的设计，而 agent 的上下文窗口限制放大了这一点。库内关联：8/22 latent.space《Agent Harness 的演化》（模型把 harness 吸进权重）、8/19 simonw 的「团队新角色=认知容量负载均衡」、8/21 Anthropic SDLC playbook 的流程治理——治理管流程，架构管 agent 能不能看懂你的系统。\n\n【影响与前瞻】\n对 Eason 的考核设计含义：如果 agent 的产出质量上限由代码库架构决定，那「AI 采用率」「代码产量」都不是好指标，架构健康度（模块边界清晰度、接口质量）才是慢变量。另外今日留意 Pragmatic Engineer 新稿——自建 CDE + 自建 harness + background agent 三层叠加的大厂案例，符合本频道第一优先级，明日抓取跟进。",
-      "source": "X：Gergely Orosz (@GergelyOrosz)",
-      "source_type": "opentwitter",
-      "url": "https://x.com/GergelyOrosz/status/2091873261910978600",
-      "timestamp": "2026-08-24T13:00:25Z",
-      "importance": 7,
-      "tags": [
-        "Gergely Orosz",
-        "软件架构",
-        "Agent效率",
-        "Pragmatic Engineer"
-      ],
-      "batch_time": "2026-08-25T10:31:00+08:00"
-    },
-    {
-      "title": "每任务成本基准实测：CLI agent 全部落在 $1-3.3/任务（Claude Code $1.83、Opencode $1.03、Grok $2.03），Cursor 类 IDE agent $27.90——15 倍价差的选型含义",
-      "summary": "AIMultiple 8/22 发布 AI coding 工具每任务成本对比：CLI 阵营 Opencode $1.03、Claude Code $1.83、Grok $2.03、Goose $3.23，Junie 是 CLI 异常值 $7.58；IDE 阵营 Cursor 单任务 $27.90。CLI 与 IDE 的成本差距达一个数量级。口径是按任务计费而非席位订阅——与 8/25 ai-frontier 收录的 Kiro GPT-5.6「单任务成本降 82%」同属「按任务性价比计价」趋势。",
-      "detail_content": "【核心事件】\nAIMultiple 8/22 发布 Claude Code vs Cursor 等工具的成本基准：按单任务成本计，CLI 工具全面落在 $1-3.3 区间——Opencode $1.03、Claude Code $1.83、Grok $2.03、Goose $3.23；Junie 作为 CLI 阵营异常值达 $7.58；IDE 阵营的 Cursor 单任务 $27.90，Roo-Code 等亦在高位。CLI 与 IDE 的单任务成本差达一个数量级以上。\n\n【关键细节与引用】\n原文要点：「成本差距巨大。有能力的 CLI 工具每任务大约 $1 到 $3.25，而 Cursor $27.90。」该基准与同周 CellCog 的 harness 排名（Claude Code 以 hooks/subagents/动态工作流深度居首）互为参照。需要注意的是口径差异：IDE 工具多为席位订阅制，其「单任务成本」换算包含订阅摊销；CLI 走 API 按量计费，边际成本天然更低。\n\n【背景与上下文】\n「按任务计价」正在成为 agent 工具的新定价共识：8/25 ai-frontier 收录的 GPT-5.6 进驻 AWS Kiro 案例主打 Terminal-Bench 2.1 单任务成本降约 82%，8/17 OpenAI Codex 全工作流 agent 之后各家都在把成本口径从 token 转向任务。库内关联：8/16 Stripe 收购 OpenRouter（AI gateway 成战略基建）说明 token 层路由是成本优化的另一半。\n\n【影响与前瞻】\n对 Eason 的 ROI 汇报用途：这是把「AI 工具值不值」翻译成财务语言的参考数字——同一类任务 CLI 与 IDE 差 15 倍，选型差异直接决定推广成本曲线。方法论 caveat 必须带上：单一基准、任务难度分布和样本量未详审、订阅摊销口径存疑，汇报时只作量级参考不宜作精确依据。趋势判断可以立：agent 工具的成本结构正从「席位订阅」转向「按任务性价比」，采购谈判的锚点在变。",
-      "source": "AIMultiple",
-      "source_type": "tavily",
-      "url": "https://aimultiple.com/ai-coding-benchmark",
-      "timestamp": "2026-08-22T00:00:00Z",
-      "importance": 6,
-      "tags": [
-        "成本基准",
-        "Claude Code",
-        "Cursor",
-        "ROI"
-      ],
-      "batch_time": "2026-08-25T10:31:00+08:00"
     }
   ]
 }
