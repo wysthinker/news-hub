@@ -1,0 +1,134 @@
+{
+  "channel_id": "ai-engineering",
+  "channel_name": "AI 工程实战",
+  "generated_at": "2026-09-03T10:00:00+08:00",
+  "digest": "agent 的「执行位置」和「成本度量」同时成为本周工程主战场。DoorDash 把月度 13 万个工程任务从开发者笔记本搬进 Firecracker 沙箱 + MCP 网关的 Flux 平台；Cursor 让云 agent 的「手脚」跑回企业内网（Self-Hosted Machines）——执行隔离、审计留痕、kill switch 的参考架构对强监管行业已经凑齐。另一条线是成本工程：GitHub Copilot 用四个 harness 级优化证明「省 token 的不是更短的输出，而是完整任务视角」，Google 官方频道开始正教 harness engineering，上周 latent.space 命名的概念本周学科化。组织侧，Gergely 在 Uber 裁员当周发出「带新人的满足感是 Claude 给不了的」——junior 管道断供的争论从数据层烧到情绪层。",
+  "items": [
+    {
+      "title": "DoorDash Flux：月度 13 万工程任务跑在云端 agent 上，Firecracker 沙箱 + MCP 网关的完整参考架构",
+      "summary": "DoorDash 把工程 agent 从开发者笔记本迁到自建 Flux 云平台：单月自动化 13 万个工程任务、每周 2.5 万+次自动代码审查、300+ playbook。架构四件套：Firecracker microVM 沙箱（搭建 p95 <5秒）、自研 MCP 网关做 scoped 权限+审计、YAML playbook 定义安全边界、Slack/GitHub/cron 多调用面。离开笔记本的理由清单值得每个企业抄：本地执行吃凭据、难监控、依赖设备在线。",
+      "detail_content": "【核心事件】InfoQ 8月31日报道，DoorDash 已将工程 agent 工作负载从开发者笔记本整体迁移到自建 Flux 云平台。规模数字：单月自动化 13 万个工程任务，每周 2.5 万+次自动代码审查，300+ 个 playbook、每周 1 万+次调用，工作流可无人值守并行。\n\n【关键细节】Flux 围绕四个平台原语构建：云沙箱（Firecracker microVM 隔离，预装仓库/构建工具/secrets/依赖，端到端搭建 p95 <5 秒）、Agent Gateway（自研 MCP 网关，提供 scoped 权限并记录 agent 活动用于审计和策略执行）、Playbook（YAML 定义任务/工具/权限/验证/安全边界，agent 步骤与确定性代码可混合）、调用面（Slack、GitHub、cron、CLI、对话界面皆可触发）。落地轨迹：从自动代码审查起步（高频且可度量），扩展到 CI triage、on-call 任务、维护工作流、ticket 驱动开发。一个组织设计细节：Slack 集成从私有频道改为公开线程，让工程师互相观察 agent 怎么被委派。\n\n【为什么离开笔记本】官方列出的理由本身就是一份企业 agent 治理清单：本地执行受 CPU/内存限制、依赖开发者设备持续在线、自治 agent 能拿到开发者本人可用的凭据和内部系统权限、且难以监控 agent 在哪运行/访问什么系统/代表谁操作。安全架构师 Radoslav Krehlik 评价：这是在笔记本 agent 撞上电力、在线时长和安全的墙之后建的。TOP GROUP 联合创始人 Duy Nguyễn 的总结最精辟：「一旦 agent 接管后台工作，难题从模型选择转移到控制：身份、权限、沙箱、审计日志、配额，和真正的 kill switch。」\n\n【影响与前瞻】这是继 Uber 软件工厂、GitHub 云沙箱之后，「agent 执行基础设施」的第三个完整公开架构。对银行等强监管行业，Flux 的价值不在规模而在边界设计——执行隔离、权限收敛、审计留痕三件事都是可直搬的模式。",
+      "source": "InfoQ",
+      "source_type": "tavily",
+      "url": "https://www.infoq.com/news/2026/08/doordash-flux-cloud-agent/",
+      "timestamp": "2026-08-31T14:28:00Z",
+      "importance": 9,
+      "tags": [
+        "DoorDash",
+        "Agent架构",
+        "云沙箱",
+        "MCP网关",
+        "代码审查"
+      ],
+      "batch_time": "2026-09-03T10:00:00+08:00"
+    },
+    {
+      "title": "GitHub Copilot 成本工程复盘：省钱的不是更短的输出，四个 harness 级优化各降 2-5%",
+      "summary": "GitHub 官方博客 9/2 发文拆解 Copilot 的成本优化方法论，核心原则「优化完整任务而非工具调用」。反例是 RTK 压缩工具：shell 输出变短后模型重开原文/重跑命令，本地省 token 全局更贵。四个上线优化：选择性压缩（-5.5%）、砍行号前缀（-5%）、prompt 压缩（每回合省 1300 token）、后台任务结果直投（-2.3%）。「这些改动没让模型变聪明，只是删掉了模型从来不需要做的工作。」",
+      "detail_content": "【核心事件】GitHub 博客 9月2日发布工程复盘《How we make AI coding more cost efficient without sacrificing task quality》，作者为 Copilot CLI 两位工程师。四个已上线的优化全部来自 harness 层而非模型层：选择性输出压缩（在线 -5.5%）、去掉 view 工具的行号前缀（离线推理成本 -5%、在线 -3%）、task 工具 prompt 压缩（每回合省约 1300 token，折合每活跃小时成本 -2.9%）、后台任务完成通知直投结果（AI Credits -2.3%）。\n\n【关键细节】方法论核心是「优化完成的任务，不是工具调用」。他们评估了社区流行的 RTK（Rust Token Killer，压缩 shell 输出再给 agent 读）：单个工具响应确实变短，但被删掉的信息模型需要时就去重开原始输出或重跑命令——恢复步骤增加回合数并携带更多上下文，「我们在本地省了 token，在全球花了更多」。\n\n最终上线的三段式压缩策略：1) cat/git diff/git show 及任意脚本的 source 类输出原样保留；2) grep 等搜索结果重排但不丢任何匹配；3) 只对 install/build/test 类重复噪声做压缩，且保留完整原文的恢复路径——agent 打开存档原文的频率本身就是压缩是否过狠的评估信号。\n\n【最值得抄的教训】prompt 压缩的反例：meta-prompting 循环把 task 工具 prompt 压掉一半后，线上实验发现独立子 agent 被改成串行执行——压缩把「谨慎并行」的指引重写成了硬调度策略。他们停掉实验、给该行为补回归测试，最终修复只是一句话：\"Independent agents can run in parallel; consider side effects.\"。原话：「prompt 行为需要测试。没被测试的行为，会被更短的 prompt 悄悄删掉。」\n\n【影响与前瞻】这是「harness 边际收益 > 换更强模型」主线又一块硬实证（上周 Sapient PRAXIST 1/12 成本、Uber 六因子方程之后第三块）。对企业考核的直接启示：AI 编码成本该度量完整任务成本（含恢复/重试回合），而不是单次交互 token 数。",
+      "source": "GitHub Blog",
+      "source_type": "aihot",
+      "url": "https://github.blog/ai-and-ml/github-copilot/how-we-make-ai-coding-more-cost-efficient-without-sacrificing-task-quality/",
+      "timestamp": "2026-09-02T18:00:00Z",
+      "importance": 8,
+      "tags": [
+        "GitHub Copilot",
+        "成本优化",
+        "harness",
+        "token经济学",
+        "评估方法"
+      ],
+      "batch_time": "2026-09-03T10:00:00+08:00"
+    },
+    {
+      "title": "Cursor Self-Hosted Machines：云 agent 的大脑在云端、手脚进内网，内部 60% 的 PR 已由云 agent 创建",
+      "summary": "Cursor 9/2 推出 Self-Hosted Machines：云 agent 现在可在企业自管机器池上执行工具调用。架构上 agent loop/推理仍在 Cursor 云端，工具执行移到企业网络内的 worker（长连出站 HTTPS，Cursor 不主动连入）。单机与机器池两种形态，支持空闲快照休眠，AWS Lambda/Cloudflare/Modal/E2B 等 8 家沙箱伙伴。Cursor 内部数据：云 agent 创建的 PR 已占合并总量 60%+。",
+      "detail_content": "【核心事件】Cursor 9月2日发布 Self-Hosted Machines：cloud agents 可以在企业自己管理的机器池上执行，而 agent 的推理、规划和编排仍留在 Cursor 云端。Cursor 同时披露内部数据——云 agent 创建的 PR 已超过内部合并 PR 的 60%，且「在其服务的多家最大型企业中占据越来越大的软件工作份额」。\n\n【关键细节】架构拆分方式：工具执行移到企业环境内的机器（持有仓库工作副本、编辑文件、跑命令），一个 worker 通过 Cursor CLI 的 agent worker start 建立长连出站 HTTPS 连接到 Cursor 云——「Cursor 永远不会主动连进你的网络」。两种配置：My Machines（单笔记本/VM，个人用）和 Pools（团队命名队列，请求到达时按团队提供的 spawn 脚本自动扩容，空闲可快照休眠、同 ID 恢复 workspace）。沙箱层不锁定：AWS Lambda、Cloudflare、Coder、Daytona、E2B、Modal、Namespace、Vercel 八家伙伴，Linux worker 也支持 computer use（Chrome/Chromium 可视化操作）。\n\n【边界与代价】官方坦承的权衡：工具输出会回流 Cursor 云端做推理、可能包含代码，agent transcript 可能被 Cursor 处理和存储——「只有执行环境移动了」意味着数据分级评估仍然必须。\n\n【影响与前瞻】这是「agent 大脑在外、手脚在内」的混合主权模式第一次被头部 coding agent 厂商产品化。对数据不出行但有 agentic 需求的金融机构，这是目前市面上最接近合规要求的形态之一；同一天 DoorDash 自建 Flux 的报道放在一起看，两条路线（买混合 vs 全自建）的样本都齐了。",
+      "source": "Cursor Blog",
+      "source_type": "aihot",
+      "url": "https://cursor.com/blog/self-hosted-machines",
+      "timestamp": "2026-09-02T12:00:00Z",
+      "importance": 7,
+      "tags": [
+        "Cursor",
+        "云agent",
+        "自托管",
+        "数据主权",
+        "企业部署"
+      ],
+      "batch_time": "2026-09-03T10:00:00+08:00"
+    },
+    {
+      "title": "Google 官方开始教 harness engineering：ADK 2.0 代码演示沙箱/修复循环/kill switch",
+      "summary": "Google AI 作者频道 9/2 在 dev.to 发文《What is harness engineering and why should I care?》，借 OpenAI「3 人团队 0 行手写代码发布产品」的案例正式定义并教授 harness 工程：harness = 包裹 LLM 的所有确定性组件。三原则：严格边界、修复循环、给地图不给手册。附 ADK 2.0 + Antigravity SDK 完整代码。上周 latent.space 刚命名这一技能，本周 Google 官方学科化。",
+      "detail_content": "【核心事件】Google AI 官方作者频道 9月2日在 dev.to 发布《What is harness engineering and why should I care?》。起点是 OpenAI 博客分享的实验：3 名工程师构建并发布了一个内部 beta 产品，0 行手写代码——应用逻辑、测试、CI 配置、文档、可观测性、内部工具全部由 Codex 写。文章的回答：「他们没写应用，他们设计了 harness。」\n\n【关键细节】定义：harness 由包裹 LLM 的所有确定性组件构成——编排层、执行沙箱、状态持久化、验证工具。比喻是赛马：harness 是跑道、眼罩和缰绳。三原则：1) 严格边界——不让 agent 猜能碰什么，用沙箱强制；2) 修复循环——构建/测试失败时自动把干净的错误日志喂回 agent 让它自修；3) 给地图不给手册——不要巨大的指令文件，而是让仓库结构化、agent 渐进发现上下文。\n\n代码演示用 ADK 2.0 + Antigravity SDK：workspace 限定在 ./sandbox、trajectories 目录存记忆；测试作为工作流图的路由节点（通过→END，失败→loop_back 携带错误重试）；迭代计数器做 kill switch——agent 陷入「破坏-修复」死循环时安全拔电。\n\n【背景与上下文】上周 latent.space 周报刚把 harness engineering 正式命名为核心 AI 工程技能（与 evals 并列），本周 Google 官方就跟上出教程——一个概念从社区话语到平台厂商正式学科只用了一周。文末还串起了 Google 自己的配套内容：Cloud Run 沙箱 codelab、Loop Engineering 深度文、用 agentic pipeline 做遗留系统现代化的企业案例。\n\n【对 Eason】向管理层解释 AI Coding 治理时，harness 就是 agent 时代的 SDLC 治理对象——边界、验证、kill switch 三件套比「提示词工程」精确得多，也和银行既有审计语言天然对接。",
+      "source": "dev.to (Google AI)",
+      "source_type": "aihot",
+      "url": "https://dev.to/googleai/what-is-harness-engineering-and-why-should-i-care-8n0",
+      "timestamp": "2026-09-02T15:28:05Z",
+      "importance": 7,
+      "tags": [
+        "Google",
+        "harness工程",
+        "ADK",
+        "agent治理",
+        "kill switch"
+      ],
+      "batch_time": "2026-09-03T10:00:00+08:00"
+    },
+    {
+      "title": "simonw 拆 Fable 5.1 system prompt：歌词禁令紧跟 Sony 诉讼，用 GPT-5.6 盯 Claude 因为「不信它总结自己」",
+      "summary": "Simon Willison 9/2 逐条 diff Fable 5.1 消费端 system prompt：整段新增歌词/诗歌/书摘禁令（时点恰在 Sony/Warner 起诉后几天）、禁止画版权角色（「蓝色刺猬」官方示例换滑板蝾螈）。他让 Fable 5.1 自己重建了 system prompt 追踪仓库（伪 commit 历史+Atom feed），总结却交给 GPT-5.6 Luna——「不信 Claude 总结自己的 prompt，内容可能影响它的观点」。另发现 end_conversation 规则藏在未公开的功能拼接层。",
+      "detail_content": "【核心事件】Anthropic 发布 Claude 消费端应用（claude.ai/移动端）的 Fable 5.1 system prompt，Simon Willison 9月2日发文拆解与 Fable 5 的差异。工程便利贴：platform.claude.com/docs 任意页加 .md 后缀即返回 Markdown，diff 极其容易。\n\n【关键细节】最大新增是整段歌词禁令：「不复现歌词、诗歌、书籍文章段落——包括最后几行、副歌 hook、一段段粘贴自称原创也一样；一旦拒绝，整个会话对改写版持续拒绝；1929 年前作品除外（莎士比亚十四行、济慈颂歌没问题），但 Claude 按自己知道的日期判断而非用户的说法」。Simon 点出时点：就在 Sony Music Publishing 和 Warner Chappell 起诉 Anthropic 用歌词数据库训练的消息爆出后几天。同步新增禁止画版权角色/logo，覆盖 SVG/canvas/CSS/ASCII 全部载体，官方示例是被要求画「跑得很快的蓝色刺猬」时换成「滑板蝾螈」。\n\n【方法论的教科书细节】Simon 用 Fable 5.1 把自己维护的 prompt 时间线重建成 simonw/claude-system-prompts 仓库：每模型一个文件、合成 commit 历史回溯到每次变更日期、GitHub Actions 每日自动跑。变更摘要用 GPT-5.6 Luna 生成——理由是「我不信任 Claude 总结自己的 system prompt，prompt 内容可能影响它的观点」。这是评估里「利益冲突回避」的完美小案例。\n\n【发现的缺口】追问已不在 prompt 里的 end_conversation 工具时，Fable 5.1 答出了完整规则——这些规则藏在按 feature/工具动态拼接的层里（memory、web search、artifact 各有专属块），「关键部分仍未发布」。其他变化：首次出现非 Anthropic 域名（dancesafe.org 等三个戒毒减害站）、可靠知识截止 2026 年 6 月、风格指令明确禁用 genuinely/honestly/straightforward 三个词。",
+      "source": "Simon Willison",
+      "source_type": "tavily",
+      "url": "https://simonwillison.net/2026/Sep/2/claudes-new-system-prompt/",
+      "timestamp": "2026-09-02T14:18:00Z",
+      "importance": 7,
+      "tags": [
+        "Anthropic",
+        "system prompt",
+        "版权",
+        "评估方法",
+        "simonw"
+      ],
+      "batch_time": "2026-09-03T10:00:00+08:00"
+    },
+    {
+      "title": "Gergely 在 Uber 裁员当周发问：「带新人上手的那种满足感，跟 Claude 聊天得不到」",
+      "summary": "Gergely Orosz 9/2 推文（558♥）引用 VPE 的话追问行业何时重新发现招实习生的真正理由——「那从来不只是产能」。发在 Uber 裁 3300 协调岗、HN 热帖「AI 正在删掉软件工程的中产层」讨论的同一周，junior 管道断供的争论从数据层烧到情绪层。与本频道长期线索（Indeed senior 占比 70%、Cisco junior 岗仅 5.9%）形成呼应。",
+      "detail_content": "【核心事件】Gergely Orosz 9月2日推文（558♥/19RT）：引用一段话「带一个 junior 工程师上手的那种满足感，是和 Claude 聊天得不到的」，并追问「行业什么时候才能重新发现我们招实习生和应届生的真正理由？那从来不只是（即时）产能」。\n\n【上下文】这条推不是孤立情绪：同一周 Uber 宣布 2020 年来最大裁员（约 3300 个协调型岗位），麦肯锡转述 Uber 前四个月烧光全年 AI 编码预算；HN 热帖《AI is removing the middle class of software engineering?》讨论的正是 junior 被替代后「从坏工程师到好工程师」的成长管道也在消失——「我们开始意识到 AI 替代了多少 junior 开发者，让通往 senior 的管道更难（甚至消失），但没足够关注我们同时也在失去从『差』到『好』的管道」。\n\n【数据呼应】本频道长期追踪的入门级挤压链条再添情绪证据：Indeed 软件开发岗 senior 占比 70%（2019 年 55%）、Cisco 网安 junior 岗仅 5.9% vs senior+65%、Canaries 研究入门级就业降幅最大。Gergely 这条推把冷数据翻译成了从业者能共鸣的语言，评论区大量一线 manager 认领。\n\n【对 Eason】AI Coding 考核设计里一个真实约束浮出水面：senior 全员带 agent 之后，组织的学习回路在哪、未来的 mentor 从哪来。「招新人的理由从来不只是产能」这个句式可以直接搬进 AI 转型汇报——它把「入门级挤压」从成本问题重新定义为组织能力投资问题。",
+      "source": "X @GergelyOrosz",
+      "source_type": "opentwitter",
+      "url": "https://x.com/GergelyOrosz/status/2094795587125612544",
+      "timestamp": "2026-09-02T20:03:55Z",
+      "importance": 6,
+      "tags": [
+        "Gergely",
+        "初级工程师",
+        "入门级挤压",
+        "组织学习",
+        "mentor管道"
+      ],
+      "batch_time": "2026-09-03T10:00:00+08:00"
+    },
+    {
+      "title": "RLanceMartin 开源 prompt 审计命令：在 Claude Code 里一键修掉束缚前沿模型的「反模式」",
+      "summary": "LangChain 工程师 Lance Martin 9/2 发布 claude-api skill 新命令 /claude-api prompt-audit（459♥）：在 Claude Code 里对现有 prompt 跑一遍审计，自动定位并修复常见「反模式」——包括验证仪式（verification rituals）、推理脚手架（reasoning scaffolds）等 Claude 特有问题。开源且 Claude Code 内置该 skill。prompt 从「靠经验写」进入「用工具审计」阶段。",
+      "detail_content": "【核心事件】LangChain 工程师 Lance Martin（@RLanceMartin）9月2日推文（459♥/35RT）宣布在 claude-api skill 中新增命令：在 Claude Code 里运行 /claude-api prompt-audit，即可审计并修复常见 prompt「反模式」。他注明该 skill 已开源、Claude Code 内置，反模式清单针对 Claude 调优（如验证仪式、推理脚手架）但对其他前沿模型大概率适用。\n\n【背景】这类「反模式」的含义：老一代 prompt 技巧（让模型「一步步思考」的脚手架、要求反复自检的验证仪式）在 2026 年的前沿模型上已经变成负资产——模型自带更强推理和自检，多余的指令挤占上下文还可能干扰行为。Anthropic 官方文档也在推同样的事：旧技巧该删就删。\n\n【信号】本周三条新闻拼出同一个趋势：GitHub 给 prompt 压缩配回归测试（「没被测试的行为会被更短的 prompt 悄悄删掉」）、Anthropic commerce agents 指南的 Skills 化、再到这个开源审计命令——prompt 已从「写作技巧」变成需要 lint、测试、版本管理的工程资产。对团队的意义：prompt 质量不再依赖个别工程师的手感，可以工具化巡检。\n\n【顺手一提】Lance Martin 是本频道优先信源，上月的 Fable 5.1 低 effort 模式性价比实测（868♥）也出自他——这类「实测+开源工具」双输出是他区别于纯观点账号的地方。",
+      "source": "X @RLanceMartin",
+      "source_type": "opentwitter",
+      "url": "https://x.com/RLanceMartin/status/2094898000000000000",
+      "timestamp": "2026-09-02T15:20:29Z",
+      "importance": 6,
+      "tags": [
+        "prompt工程",
+        "Claude Code",
+        "开源工具",
+        "LangChain",
+        "反模式"
+      ],
+      "batch_time": "2026-09-03T10:00:00+08:00"
+    }
+  ]
+}
